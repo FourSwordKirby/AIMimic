@@ -10,7 +10,7 @@ public class MovementState : State<Player> {
         : base(playerInstance, fsm)
     {
         player = playerInstance;
-        this.targetLocation = targetLocation;
+        this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, - 10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
     }
 
     override public void Enter()
@@ -26,7 +26,7 @@ public class MovementState : State<Player> {
 
     override public void FixedExecute()
     {
-        if(Mathf.Sign((targetLocation - player.transform.position).x) != Mathf.Sign(player.selfBody.velocity.x))
+        if (Mathf.Sign((targetLocation - player.transform.position).x) != Mathf.Sign(player.selfBody.velocity.x))
         {
             targetLocation = player.effectivePosition;
         }

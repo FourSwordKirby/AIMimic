@@ -61,7 +61,6 @@ public class Player : MonoBehaviour {
             facingDirection = Vector3.right;
         else
             facingDirection = Vector3.left;
-        facingDirection = facingDirection * 2;
 
         //if (health <= 0)
         //{

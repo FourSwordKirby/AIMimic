@@ -8,19 +8,19 @@ using System.Collections;
 public class GenericHurtbox : Hurtbox {
     override public void TakeDamage(float damage)
     {
-        owner.LostHealth(damage);
+        //owner.LostHealth(damage);
     }
 
     override public void TakeHit(float hitlag, float hitstun, Vector2 knockback)
     {
-        Debug.Log("ouch");
-        return;
+        //knockback = -Mathf.Sign(owner.facingDirection.x) * knockback;
+        //owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, owner.ActionFsm));
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         Hitbox hitbox = col.GetComponent<Hitbox>();
-        if(hitbox != null)
+        if(hitbox != null && hitbox.owner != this.owner)
         {
             if(owner.isBlocking)
             {

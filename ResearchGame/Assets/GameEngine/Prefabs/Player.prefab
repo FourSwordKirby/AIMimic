@@ -38,7 +38,8 @@ GameObject:
   - 4: {fileID: 4000010132111066}
   - 212: {fileID: 212000012452051556}
   - 114: {fileID: 114000013998660860}
-  - 65: {fileID: 65000011621812214}
+  - 61: {fileID: 61000012887441228}
+  - 61: {fileID: 61000010562025126}
   m_Layer: 0
   m_Name: MeleeHitbox
   m_TagString: Untagged
@@ -54,10 +55,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000013944909074}
-  - 212: {fileID: 212000014169779720}
-  - 50: {fileID: 50000013348576212}
-  - 114: {fileID: 114000011529612818}
-  - 114: {fileID: 114000013190288274}
+  - 212: {fileID: 212000012490568532}
+  - 50: {fileID: 50000013996198470}
+  - 114: {fileID: 114000011357730092}
+  - 114: {fileID: 114000012294789520}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -71,7 +72,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011137943148}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.25, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,7 +85,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010862446062}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,7 +98,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014033558720}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -106,7 +107,7 @@ Transform:
   - {fileID: 4000013625136864}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &50000013348576212
+--- !u!50 &50000013996198470
 Rigidbody2D:
   serializedVersion: 2
   m_ObjectHideFlags: 1
@@ -137,19 +138,35 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!65 &65000011621812214
-BoxCollider:
+--- !u!61 &61000010562025126
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011137943148}
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114000011529612818
+  m_Size: {x: 1, y: 1}
+--- !u!61 &61000012887441228
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011137943148}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+--- !u!114 &114000011357730092
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -165,21 +182,9 @@ MonoBehaviour:
   movementSpeed: 10
   opponent: {fileID: 0}
   grounded: 1
+  isBlocking: 1
   projectilePrefabs: []
---- !u!114 &114000012396878602
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010862446062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f15a62e1101fe0a4d889199ffb53ec40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxName: Hurtbox
-  owner: {fileID: 114000011529612818}
---- !u!114 &114000013190288274
+--- !u!114 &114000012294789520
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -193,6 +198,19 @@ MonoBehaviour:
   CollisionBoxes:
   - {fileID: 114000013998660860}
   - {fileID: 114000012396878602}
+--- !u!114 &114000012396878602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010862446062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15a62e1101fe0a4d889199ffb53ec40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxName: Hurtbox
+  owner: {fileID: 114000011357730092}
 --- !u!114 &114000013998660860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -205,14 +223,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boxName: MeleeHitbox
-  owner: {fileID: 114000011529612818}
-  damage: 0
-  knockbackVector: {x: 0, y: 0}
-  hitlag: 0
-  hitstun: 0
-  blockstun: 0
+  owner: {fileID: 114000011357730092}
+  damage: 10
+  knockbackVector: {x: 1, y: 0}
+  hitlag: 0.05
+  hitstun: 0.1
+  chipDamage: 5
+  blockstun: 0.05
   isProjectile: 0
-  shieldDamage: 0
   prioirty: 0
   meterGain: 0
 --- !u!212 &212000012452051556
@@ -248,7 +266,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!212 &212000014169779720
+--- !u!212 &212000012490568532
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

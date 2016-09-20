@@ -10,12 +10,12 @@ public class JumpState : State<Player>
         : base(playerInstance, fsm)
     {
         player = playerInstance;
-        this.targetLocation = targetLocation;
+        this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, - 10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
     }
 
     override public void Enter()
     {
-        float displacement = targetLocation.x - player.transform.position.x;
+        float displacement = targetLocation.x - player.effectivePosition.x;
         if (displacement == 0)
             player.selfBody.velocity = getJumpVelocity(2, 0, 0.7f);
         else if (displacement > 0)

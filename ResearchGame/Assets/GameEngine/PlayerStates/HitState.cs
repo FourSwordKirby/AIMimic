@@ -35,16 +35,8 @@ public class HitState : State<Player>
             
             if (hitlag <= 0)
             {
-                //transition into a tumble animation or something
-
-                //record the players direction for DI purposes
-                Vector2 DIVector = Controls.getDirection(player);
-                
-                //This formula might change in the future
-                knockback += DIVector;
-
-                if (player.grounded && knockback.y < 0)
-                    knockback = new Vector2(knockback.x, -0.8f * knockback.y);
+                if (player.grounded)
+                    knockback = new Vector2(knockback.x, 0);
                 player.selfBody.velocity = knockback;
             }
             return;

@@ -34,6 +34,12 @@ public class IdleState : State<Player> {
         {
             player.Attack();
         }
+
+        //Locks the position of the player
+        if (Vector2.Distance(player.transform.position, player.effectivePosition) <= Parameters.positionLeeway)
+        {
+            player.transform.position = player.effectivePosition;
+        }
     }
 
     override public void FixedExecute()
@@ -42,11 +48,6 @@ public class IdleState : State<Player> {
         {
             Vector2 movementVector = (player.effectivePosition - new Vector2(player.transform.position.x, 0)).normalized;
             player.selfBody.velocity = movementVector;
-        }
-        else 
-        {
-            //TODO: Doesn't actually work currently, jump ins are bugged due to this. Probably because floating points and edge collisions
-            player.transform.position = player.effectivePosition;
         }
     }
 

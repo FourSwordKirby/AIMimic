@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
         hit_boxes = GameObject.FindObjectsOfType<GameObject>().Where(x => x.GetComponent<Collider2D>() != null).ToArray();
 
-        timeLimit = 10.0f;
+        timeLimit = 5.0f;
         timeRemaining = timeLimit;
     }
 
