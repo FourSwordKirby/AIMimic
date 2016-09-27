@@ -8,7 +8,7 @@ using System.Collections;
 public class GenericHurtbox : Hurtbox {
     override public void TakeDamage(float damage)
     {
-        //owner.LostHealth(damage);
+        owner.LostHealth(damage);
     }
 
     override public void TakeHit(float hitlag, float hitstun, Vector2 knockback)
@@ -24,6 +24,7 @@ public class GenericHurtbox : Hurtbox {
         {
             if(owner.isBlocking)
             {
+                Debug.Log("BLOCK");
                 TakeDamage(hitbox.chipDamage);
                 TakeHit(hitbox.hitlag, hitbox.blockstun, hitbox.knockbackVector);
             }

@@ -6,6 +6,8 @@ public class AttackState : State<Player>
     private Player player;
     private GameObject meleeHitbox;
 
+    private float attackDistance;
+
     public float startup;
     public float duration;
     public float endlag;
@@ -16,6 +18,8 @@ public class AttackState : State<Player>
     {
         player = playerInstance;
         meleeHitbox = player.hitboxManager.getHitbox("MeleeHitbox").gameObject;
+
+        attackDistance = 0.55f;
 
         startup = 0.1f;
         duration = 0.2f;
@@ -34,17 +38,17 @@ public class AttackState : State<Player>
         timer += Time.deltaTime;
         if (timer < startup)
         {
-            meleeHitbox.transform.position += player.facingDirection * (Time.deltaTime/startup);
+            meleeHitbox.transform.position += player.facingDirection * attackDistance * (Time.deltaTime/startup);
         }
         else if (timer < startup + duration)
         {
             if(timer <= Time.deltaTime +startup)
-                meleeHitbox.transform.localPosition = player.facingDirection;
+                meleeHitbox.transform.localPosition = player.facingDirection * attackDistance;
             player.hitboxManager.activateHitBox("MeleeHitbox");
         }
         else if (timer < startup + duration + endlag)
         {
-            meleeHitbox.transform.position -= player.facingDirection * (Time.deltaTime / endlag);
+            meleeHitbox.transform.position -= player.facingDirection * attackDistance * (Time.deltaTime / endlag);
             player.hitboxManager.activateHitBox("MeleeHitbox");
         }
         else

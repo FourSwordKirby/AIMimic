@@ -38,6 +38,7 @@ public class IdleState : State<Player> {
         //Locks the position of the player
         if (Vector2.Distance(player.transform.position, player.effectivePosition) <= Parameters.positionLeeway)
         {
+            player.selfBody.velocity = Vector2.zero;
             player.transform.position = player.effectivePosition;
         }
     }
