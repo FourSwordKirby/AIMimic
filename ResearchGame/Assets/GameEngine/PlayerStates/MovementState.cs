@@ -17,6 +17,7 @@ public class MovementState : State<Player> {
     {
         Vector2 movementVector = (targetLocation - player.transform.position).normalized * player.movementSpeed;
         player.selfBody.velocity = movementVector;
+        Debug.Log(player.name + "moving");
     }
 
     override public void Execute()
@@ -40,6 +41,7 @@ public class MovementState : State<Player> {
 
     override public void Exit()
     {
+        Debug.Log(player.name + "not moving");
         return;
     }
 }
