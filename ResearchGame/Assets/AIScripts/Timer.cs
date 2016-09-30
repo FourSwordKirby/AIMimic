@@ -8,6 +8,6 @@ public class Timer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        currentText.text = GameManager.timeRemaining.ToString();
+        currentText.text = ((int)(GameManager.timeRemaining)).ToString();
 	}
 }

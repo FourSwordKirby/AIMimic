@@ -34,11 +34,13 @@ public class GameManager : MonoBehaviour {
             }
         }
 
+        /*
         Camera = GameObject.FindObjectOfType<CameraControls>();
         if (Camera == null)
         {
             Debug.Log("Cannot find camera on the current scene.");
         }
+        */
 
         Players = new List<Player>(GameObject.FindObjectsOfType<Player>());
         if (Players == null)

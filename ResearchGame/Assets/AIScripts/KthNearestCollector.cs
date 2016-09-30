@@ -18,11 +18,13 @@ public class KthNearestCollector {
     }
 
 
-    static string dir = @"C:\Users\Roger Liu\Desktop\Log.txt";
+    static string dir = Application.streamingAssetsPath + "/PlayerLogs/Log.txt";
     static string serializationFile = dir;
 
     public static void writeToLog()
     {
+        Debug.Log("wrote to log");
+
         string datalog = "";
         StringWriter textWriter = new StringWriter();
         XmlWriter writer = XmlWriter.Create(textWriter);

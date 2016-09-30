@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 
-public class KthNearestAI : MonoBehaviour {
+public class ReplayAI : MonoBehaviour
+{
     /// <summary>
     /// Parameter for how many neighbors to look at
     /// </summary>
-    public int k;
-    
     Player controlledPlayer;
     Player AIPlayer;
 
@@ -19,45 +19,23 @@ public class KthNearestAI : MonoBehaviour {
         controlledPlayer = GameManager.Players[0];
         AIPlayer = GameManager.Players[1];
 
-        AIPlayer.sprite.color = Color.green;
+        AIPlayer.sprite.color = Color.gray;
 
         priorSnapshots = KthNearestCollector.readFromLog();
+        priorSnapshots = priorSnapshots.OrderBy(x => -x.timeRemaining).ToList();
+
+        Debug.Log(priorSnapshots.Count);
     }
 
-    public float actionResponseTime;
-    private float counter;
-    private float distanceThreshold = 2;//Very termporary. may need to datamine????
-
+    int actionCount = 0;
     void Update()
     {
-        //You know what, for now the AI does an action every second.
-        counter += Time.deltaTime;
-        if (counter >= actionResponseTime)
+        if (actionCount < priorSnapshots.Count && GameManager.timeRemaining < priorSnapshots[actionCount].timeRemaining)
         {
-            counter = 0.0f;
+            Action chosenAction = priorSnapshots[actionCount].actionTaken;
+            actionCount++;
 
-            List<GameSnapshot> closestNeighbors = new List<GameSnapshot>(k);
-            float closestDistance = float.MaxValue;
-
-            foreach (GameSnapshot snapshot in priorSnapshots)
-            {
-                float distance = snapshot.snapshotDistance(controlledPlayer, AIPlayer, GameManager.timeRemaining);
-
-                if(distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestNeighbors.Add(snapshot);
-                }
-            }
-
-            Action chosenAction = Action.Idle;
-            if (closestDistance < distanceThreshold)
-            {
-                chosenAction = closestNeighbors[closestNeighbors.Count - 1].actionTaken;
-            }
-
-
-            switch(chosenAction)
+            switch (chosenAction)
             {
                 case Action.WalkLeft:
                     AIPlayer.Walk(Parameters.InputDirection.W);
@@ -84,8 +62,6 @@ public class KthNearestAI : MonoBehaviour {
                     AIPlayer.Idle();
                     break;
             }
-
-            Debug.Log("Action: " + chosenAction + " was taken at time " + GameManager.timeRemaining);
         }
     }
 

@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
 
     //self references to various components
     public Rigidbody2D selfBody { get; private set; }
+    public SpriteRenderer sprite;
     public List<GameObject> projectilePrefabs;
     public CollisionboxManager hitboxManager { get; private set; }
 
@@ -99,6 +100,8 @@ public class Player : MonoBehaviour {
     //FIX THE WALKING
     public void Walk(Parameters.InputDirection dir)
     {
+        if (this.ActionFsm.CurrentState.GetType() == typeof(MovementState))
+            return;
         Vector2 originalPositon = this.transform.position; 
         Vector2 movementVector = Vector2.zero;
         if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)

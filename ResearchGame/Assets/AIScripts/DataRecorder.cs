@@ -3,67 +3,71 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class DataRecorder : MonoBehaviour {
+    Player controlledPlayer;
     Player opponentPlayer;
-    Player targetPlayer;
 
     bool returnedToNeutral;
     bool matchOver;
 
     void Start()
     {
-        opponentPlayer = GameManager.Players[0];
-        targetPlayer = GameManager.Players[1];
+        controlledPlayer = GameManager.Players[0];
+        opponentPlayer = GameManager.Players[1];
+        opponentPlayer.sprite.color = Color.blue;
 
         returnedToNeutral = true;
     }
 
 	// Update is called once per frame
+    //TODO: make this actually data record the results of the input
 	void Update () {
         if (GameManager.timeRemaining < 0 && !matchOver)
         {
+            opponentPlayer.sprite.color = Color.red;
             KthNearestCollector.writeToLog();
             matchOver = true;
         }
 
         /*For each button press, make sure that the game has a snap shot of it*/
         Action actionTaken = Action.Idle;
-        if (Controls.attackInputDown(targetPlayer))
+        if (Controls.attackInputDown(opponentPlayer))
         {
             actionTaken = Action.Attack;
-            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, targetPlayer,
+            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer,
                                                     (int)GameManager.timeRemaining, actionTaken);
             KthNearestCollector.addSnapshot(snapshot);
         }
-        else if (Controls.shieldInputDown(targetPlayer))
+        else if (Controls.shieldInputDown(opponentPlayer))
         {
             actionTaken = Action.Block;
-            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, targetPlayer,
+            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer,
                                                     (int)GameManager.timeRemaining, actionTaken);
             KthNearestCollector.addSnapshot(snapshot);
         }
-        else if (Controls.jumpInputDown(targetPlayer))
+        else if (Controls.jumpInputDown(opponentPlayer))
         {
-            if (Controls.getDirection(targetPlayer).x == 0)
+            if (Controls.getDirection(opponentPlayer).x == 0)
                 actionTaken = Action.JumpNeutral;
-            if (Controls.getDirection(targetPlayer).x < 0)
+            if (Controls.getDirection(opponentPlayer).x < 0)
                 actionTaken = Action.JumpLeft;
-            if (Controls.getDirection(targetPlayer).x > 0)
+            if (Controls.getDirection(opponentPlayer).x > 0)
                 actionTaken = Action.JumpRight;
             
-            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, targetPlayer,
+            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer,
                                                     (int)GameManager.timeRemaining, actionTaken);
             KthNearestCollector.addSnapshot(snapshot);
         }
-        else if (Controls.getDirection(targetPlayer).magnitude > 0)
+        else if (Controls.getDirection(opponentPlayer).magnitude > 0)
         {
-            if (returnedToNeutral)
+            if (returnedToNeutral || opponentPlayer.ActionFsm.CurrentState.GetType() == typeof(IdleState))
             {
-                if (Controls.getDirection(targetPlayer).x < 0)
+                if (Controls.getDirection(opponentPlayer).x < 0)
                     actionTaken = Action.WalkLeft;
-                if (Controls.getDirection(targetPlayer).x > 0)
+                if (Controls.getDirection(opponentPlayer).x > 0)
                     actionTaken = Action.WalkRight;
-
-                GameSnapshot snapshot = new GameSnapshot(opponentPlayer, targetPlayer,
+                Debug.Log("added snapshot");
+                Debug.Log(KthNearestCollector.snapshots.Count);
+                GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer,
                                                         (int)GameManager.timeRemaining, actionTaken);
                 KthNearestCollector.addSnapshot(snapshot);
             }
@@ -72,6 +76,12 @@ public class DataRecorder : MonoBehaviour {
             return;
         }
 
-        returnedToNeutral = true;
+        if(!returnedToNeutral)
+        {
+            actionTaken = Action.Idle;
+            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer,
+                                            (int)GameManager.timeRemaining, actionTaken);
+            returnedToNeutral = true;
+        }
     }
 }
