@@ -6,13 +6,10 @@ using System;
 
 //PROBABLY NOT NEEDED FOR THE BASICS OF GETTING THIS TO WORK
 public class CameraControls : MonoBehaviour {
+    public BoxCollider2D CameraBounds;
+    public FocalPoint focus;
 
     private Camera cameraComponent;
-    
-    public BoxCollider2D CameraBounds;
-
-    private List<GameObject>visibleTargets; //accounts for all other targets that aren't just the main focus
-
     private float original_camera_size;
     private float min_camera_size;
     private float max_camera_size;
@@ -40,51 +37,51 @@ public class CameraControls : MonoBehaviour {
 	void Start () {
         cameraComponent = GetComponent<Camera>();
 
-        //foreach(Player player in GameManager.Players){
-        //    focus.addTargets(player);
-        //}
+        foreach(Player player in GameManager.Players){
+            focus.addTargets(player.gameObject);
+        }
         //foreach (AIPlayer player in GameManager.AIPlayers)
         //{
         //    focus.addTargets(player);
         //}
 
-        //original_camera_size = cameraComponent.orthographicSize;
-        //min_camera_size = 0.75f * original_camera_size;
-        //max_camera_size = 2.0f * original_camera_size;
-        //target_camera_size = original_camera_size;
+        original_camera_size = cameraComponent.orthographicSize;
+        min_camera_size = 0.75f * original_camera_size;
+        max_camera_size = 2.0f * original_camera_size;
+        target_camera_size = original_camera_size;
 
-        //transform.position = focus.transform.position + new Vector3(0, 0, Z_OFFSET);
+        transform.position = focus.transform.position + new Vector3(0, 0, Z_OFFSET);
 	}
 	
-	//void FixedUpdate () {
- //       //Now follow the target
- //       if (transform.position != focus.transform.position + new Vector3(0, 0, Z_OFFSET))
- //       {
- //           float x = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).x;
- //           float y = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).y;
- //           GetComponent<Rigidbody2D>().velocity = new Vector2(x * PAN_SPEED, y * PAN_SPEED);
- //       }
- //       else
- //       {
- //           GetComponent<Rigidbody2D>().velocity.Set(0.0f, 0.0f);
- //       }
+	void FixedUpdate () {
+        //Now follow the target
+        if (transform.position != focus.transform.position + new Vector3(0, 0, Z_OFFSET))
+        {
+            float x = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).x;
+            float y = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).y;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(x * PAN_SPEED, y * PAN_SPEED);
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().velocity.Set(0.0f, 0.0f);
+        }
+    
+        //Keep the camera in bounds
+        Vector3 pos;
+        pos.x = Mathf.Clamp(transform.position.x, CameraBounds.bounds.min.x + cameraComponent.orthographicSize * Screen.width / Screen.height,
+                                                  CameraBounds.bounds.max.x - cameraComponent.orthographicSize * Screen.width / Screen.height);
+        pos.y = Mathf.Clamp(transform.position.y, CameraBounds.bounds.min.y + cameraComponent.orthographicSize,
+                                                  CameraBounds.bounds.max.y - cameraComponent.orthographicSize);
+        pos.z = transform.position.z;
+        transform.position = pos;
+    
+        //external gradual resizing
+        float cameraSize = cameraComponent.orthographicSize;
+        //Current issue is that if the character moves too quickly, the opponent then leaves the FOV too quickly, resulting in an awkward camera
+        if (cameraSize < target_camera_size)
+            cameraComponent.orthographicSize = Mathf.MoveTowards(cameraSize, cameraSize * 1 + ZOOM_RATE, zoomSpeed * Time.deltaTime);
+        if (cameraSize > target_camera_size)
+            cameraComponent.orthographicSize = Mathf.MoveTowards(cameraSize, cameraSize * 1 - ZOOM_RATE, zoomSpeed * Time.deltaTime);
+    }
 
- //       //Keep the camera in bounds
- //       Vector3 pos;
- //       pos.x = Mathf.Clamp(transform.position.x, CameraBounds.bounds.min.x + cameraComponent.orthographicSize * Screen.width / Screen.height,
- //                                                 CameraBounds.bounds.max.x - cameraComponent.orthographicSize * Screen.width / Screen.height);
- //       pos.y = Mathf.Clamp(transform.position.y, CameraBounds.bounds.min.y + cameraComponent.orthographicSize,
- //                                                 CameraBounds.bounds.max.y - cameraComponent.orthographicSize);
- //       pos.z = transform.position.z;
- //       transform.position = pos;
-
- //       //external gradual resizing
- //       float cameraSize = cameraComponent.orthographicSize;
- //       //Current issue is that if the character moves too quickly, the opponent then leaves the FOV too quickly, resulting in an awkward camera
- //       if (cameraSize < target_camera_size)
- //           cameraComponent.orthographicSize = Mathf.MoveTowards(cameraSize, cameraSize * 1 + ZOOM_RATE, zoomSpeed * Time.deltaTime);
- //       if (cameraSize > target_camera_size)
- //           cameraComponent.orthographicSize = Mathf.MoveTowards(cameraSize, cameraSize * 1 - ZOOM_RATE, zoomSpeed * Time.deltaTime);
-        
-//	}
 }

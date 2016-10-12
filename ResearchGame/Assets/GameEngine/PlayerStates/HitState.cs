@@ -23,7 +23,6 @@ public class HitState : State<Player>
 
     override public void Enter()
     {
-        //Go into a hit animation
     }
 
     override public void Execute()

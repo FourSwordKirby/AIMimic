@@ -30,6 +30,8 @@ public class AttackState : State<Player>
 
     override public void Enter()
     {
+        Execute();
+        FixedExecute();
     }
 
     override public void Execute()

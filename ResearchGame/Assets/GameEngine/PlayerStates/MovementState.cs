@@ -17,6 +17,8 @@ public class MovementState : State<Player> {
     {
         Vector2 movementVector = (targetLocation - player.transform.position).normalized * player.movementSpeed;
         player.selfBody.velocity = movementVector;
+        Execute();
+        FixedExecute();
     }
 
     override public void Execute()

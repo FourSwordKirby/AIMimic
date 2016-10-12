@@ -14,11 +14,11 @@ public class ShieldState :  State<Player> {
     override public void Enter()
     {
         //player.shield.RaiseShield();
-        //return;
+        player.isBlocking = true;
     }
 
     override public void Execute()
-    { 
+    {
     //    if (player.shield.currentShieldSize < 0)
     //    {
     //        player.ActionFsm.ChangeState(new HitState(player, 0.01f, 3.0f, Vector2.zero, player.ActionFsm));
@@ -35,8 +35,9 @@ public class ShieldState :  State<Player> {
     }
 
     override public void Exit()
-    { 
-    //    player.shield.LowerShield();
-    //    return;
+    {
+        player.isBlocking = false;
+        //    player.shield.LowerShield();
+        //    return;
     }
 }

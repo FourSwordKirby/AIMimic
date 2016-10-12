@@ -47,11 +47,6 @@ public class GameManager : MonoBehaviour {
         {
             Debug.Log("Cannot find players on the current scene.");
         }
-        //AIPlayers = new List<AIPlayer>(GameObject.FindObjectsOfType<AIPlayer>());
-        //if (AIPlayers == null)
-        //{
-        //    Debug.Log("Cannot find AI on the current scene.");
-        //}
 
         hit_boxes = GameObject.FindObjectsOfType<GameObject>().Where(x => x.GetComponent<Collider2D>() != null).ToArray();
 

@@ -108,13 +108,14 @@ public class Player : MonoBehaviour {
             movementVector = Vector2.right * movementSpeed;
         else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
             movementVector = Vector2.left * movementSpeed;
+        else
+            return;
         this.ActionFsm.ChangeState(new MovementState(this, this.ActionFsm, (originalPositon + movementVector.normalized)));
     }
 
     //Invincible to lows. Forward hop goes 2 spaces. Will jump over 1 space close opponents
     public void Jump(Parameters.InputDirection dir)
     {
-        Vector2 originalPositon = this.transform.position;
         Vector2 movementVector = Vector2.zero;
 
         if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
@@ -132,8 +133,7 @@ public class Player : MonoBehaviour {
     }
     public void Block()
     {
-        //Do this at some point
-        //this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm))
+        this.ActionFsm.ChangeState(new ShieldState(this, this.ActionFsm));
     }
 
     public void Idle()

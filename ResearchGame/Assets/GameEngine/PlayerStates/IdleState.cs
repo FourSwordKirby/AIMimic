@@ -11,7 +11,8 @@ public class IdleState : State<Player> {
         player = playerInstance;
     }
 
-    override public void Enter(){
+    override public void Enter()
+    {
     }
 
     override public void Execute()

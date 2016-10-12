@@ -240,7 +240,7 @@ MonoBehaviour:
   movementSpeed: 10
   opponent: {fileID: 0}
   grounded: 1
-  isBlocking: 1
+  isBlocking: 0
   sprite: {fileID: 212000010195425386}
   projectilePrefabs: []
 --- !u!114 &114000012294789520
@@ -285,8 +285,8 @@ MonoBehaviour:
   owner: {fileID: 114000011357730092}
   damage: 10
   knockbackVector: {x: 1, y: 0}
-  hitlag: 0.05
-  hitstun: 0.1
+  hitlag: 1
+  hitstun: 10
   chipDamage: 5
   blockstun: 0.05
   isProjectile: 0

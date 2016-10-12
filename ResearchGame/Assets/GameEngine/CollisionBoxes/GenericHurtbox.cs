@@ -13,8 +13,8 @@ public class GenericHurtbox : Hurtbox {
 
     override public void TakeHit(float hitlag, float hitstun, Vector2 knockback)
     {
-        //knockback = -Mathf.Sign(owner.facingDirection.x) * knockback;
-        //owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, owner.ActionFsm));
+        owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, owner.ActionFsm));
+        knockback = -Mathf.Sign(owner.facingDirection.x) * knockback;
     }
 
     void OnTriggerEnter2D(Collider2D col)

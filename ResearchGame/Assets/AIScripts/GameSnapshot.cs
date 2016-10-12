@@ -6,7 +6,8 @@ public class GameSnapshot {
 
     public Action actionTaken;
 
-    public int timeRemaining;
+    public float timeDelay;
+    public float timeRemaining;
 
     public float p1Health;
     public float p2Health;
@@ -26,7 +27,7 @@ public class GameSnapshot {
         //Exists just for the xml serializer
     }
 
-    public GameSnapshot(Player p1, Player p2, int timeRemaining, Action p2Action)
+    public GameSnapshot(Player p1, Player p2, float delay, float timeRemaining, Action p2Action)
     {
         this.actionTaken = p2Action;
 
@@ -64,18 +65,17 @@ public class GameSnapshot {
      
         float deltaTime = this.timeRemaining - timeRemaining;
      
-        float deltaP1Health = this.p1Health - p1.health;
-        float deltaP2Health = this.p2Health - p2.health;
+        //float deltaP1Health = this.p1Health - p1.health;
+        //float deltaP2Health = this.p2Health - p2.health;
      
      
-        //Remember, in this scenario we are player 2 reacting to the actions of player 1
-        float deltaXDistance = this.xDistance - (p2.effectivePosition.x - p1.effectivePosition.x);
-        float deltaYDistance = this.yDistance - (p2.effectivePosition.y - p1.effectivePosition.y);
+        ////Remember, in this scenario we are player 2 reacting to the actions of player 1
+        //float deltaXDistance = this.xDistance - (p2.effectivePosition.x - p1.effectivePosition.x);
+        //float deltaYDistance = this.yDistance - (p2.effectivePosition.y - p1.effectivePosition.y);
      
-        float deltaP1CornerDistance = this.p1CornerDistance - getCornerDistance(p1.effectivePosition.x);
-        float deltaP2CornerDistance = this.p2CornerDistance - getCornerDistance(p2.effectivePosition.x);
+        //float deltaP1CornerDistance = this.p1CornerDistance - getCornerDistance(p1.effectivePosition.x);
+        //float deltaP2CornerDistance = this.p2CornerDistance - getCornerDistance(p2.effectivePosition.x);
 
         return Mathf.Pow(Mathf.Pow(deltaTime, 2.0f),  0.5f);
-        return 0;
     }
 }
