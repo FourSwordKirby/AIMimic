@@ -4,11 +4,17 @@ using System.Collections;
 public class JumpState : State<Player>
 {
     private Player player;
-    private Vector3 targetLocation;
+    public Vector3 targetLocation { get; private set; }
+
+    //Used primarily by the datarecorder
+    public int jumpDir;
 
     public JumpState(Player playerInstance, StateMachine<Player> fsm, Vector3 targetLocation)
         : base(playerInstance, fsm)
     {
+        float displacement = targetLocation.x - playerInstance.effectivePosition.x;
+        jumpDir = displacement < 0 ? -1 : displacement > 0 ? 1: 0;
+
         player = playerInstance;
         this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, - 10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
     }
@@ -17,12 +23,17 @@ public class JumpState : State<Player>
     {
         float displacement = targetLocation.x - player.effectivePosition.x;
         if (displacement == 0)
+        {
             player.selfBody.velocity = getJumpVelocity(2, 0, 0.7f);
+        }
         else if (displacement > 0)
+        {
             player.selfBody.velocity = getJumpVelocity(1.5f, displacement, 0.7f);
-        else 
+        }
+        else
+        {   
             player.selfBody.velocity = getJumpVelocity(1.5f, displacement, 0.7f);
-
+        }
         player.grounded = false;
         return;
     }

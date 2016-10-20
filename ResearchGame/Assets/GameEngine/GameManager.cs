@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public static CameraControls Camera;
     public static GameObject[] hit_boxes;
 
-    public static float timeLimit;
+    public float timeLimit;
     public static float timeRemaining;
 
     private static List<GameObject> spawnPoints;
@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour {
 
         hit_boxes = GameObject.FindObjectsOfType<GameObject>().Where(x => x.GetComponent<Collider2D>() != null).ToArray();
 
-        timeLimit = 5.0f;
         timeRemaining = timeLimit;
     }
 

@@ -69,10 +69,10 @@ public class KthNearestAI : MonoBehaviour {
                     AIPlayer.Jump(Parameters.InputDirection.N);
                     break;
                 case Action.JumpLeft:
-                    AIPlayer.Walk(Parameters.InputDirection.W);
+                    AIPlayer.Jump(Parameters.InputDirection.W);
                     break;
                 case Action.JumpRight:
-                    AIPlayer.Walk(Parameters.InputDirection.E);
+                    AIPlayer.Jump(Parameters.InputDirection.E);
                     break;
                 case Action.Attack:
                     AIPlayer.Attack();

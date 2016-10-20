@@ -729,7 +729,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 7.4440255
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -912,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1081220779
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1610,6 +1610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a13b35a2ed39394a9d6517df830360e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeLimit: 5
 --- !u!4 &1539022178
 Transform:
   m_ObjectHideFlags: 0
@@ -1653,7 +1654,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1539022176}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0465fcf4d5b7d58429debab30fa5fa0d, type: 3}
   m_Name: 
@@ -1889,18 +1890,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1820428116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3336eae3dbcf90d4f99ba4dc495f4068, type: 3}
+  m_Script: {fileID: 11500000, guid: a0521d870e7dd474eb7f83b0aa7b33c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTile: {fileID: 114000010924672108, guid: 0971f45c50bae5e4188741b283ffe25f,
-    type: 2}
-  tileHeight: 1
-  tileWidth: 1
-  height: 10
-  width: 21
-  xOrigin: -10
+  floorTile: {fileID: 0}
+  tileHeight: 0
+  tileWidth: 0
+  height: 0
+  width: 0
+  xOrigin: 0
   yOrigin: 0
-  spreadDelay: 0.2
+  spreadDelay: 0
 --- !u!212 &1820428119
 SpriteRenderer:
   m_ObjectHideFlags: 0

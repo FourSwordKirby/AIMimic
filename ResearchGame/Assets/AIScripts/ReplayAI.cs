@@ -33,6 +33,7 @@ public class ReplayAI : MonoBehaviour
         if (actionCount < priorSnapshots.Count && GameManager.timeRemaining < priorSnapshots[actionCount].timeRemaining)
         {
             Action chosenAction = priorSnapshots[actionCount].actionTaken;
+            Debug.Log(chosenAction);
             actionCount++;
 
             switch (chosenAction)
@@ -47,10 +48,10 @@ public class ReplayAI : MonoBehaviour
                     AIPlayer.Jump(Parameters.InputDirection.N);
                     break;
                 case Action.JumpLeft:
-                    AIPlayer.Walk(Parameters.InputDirection.W);
+                    AIPlayer.Jump(Parameters.InputDirection.W);
                     break;
                 case Action.JumpRight:
-                    AIPlayer.Walk(Parameters.InputDirection.E);
+                    AIPlayer.Jump(Parameters.InputDirection.E);
                     break;
                 case Action.Attack:
                     AIPlayer.Attack();

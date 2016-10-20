@@ -31,7 +31,12 @@ public class DataRecorder : MonoBehaviour {
             matchOver = true;
         }
 
+        /*For each button press, make sure that the game has a snap shot of it*/
+        RecordAction();
+    }
 
+    private void RecordAction()
+    {
         string currentState = opponentPlayer.ActionFsm.CurrentState.ToString();
 
         if (currentState == previousState)
@@ -40,10 +45,9 @@ public class DataRecorder : MonoBehaviour {
         }
         previousState = currentState;
 
-        /*For each button press, make sure that the game has a snap shot of it*/
         Action actionTaken = Action.Idle;
         float delay = previousTime - GameManager.timeRemaining;
-        if (Controls.attackInputDown(opponentPlayer))
+        if (currentState == "AttackState")
         {
             actionTaken = Action.Attack;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
@@ -51,7 +55,7 @@ public class DataRecorder : MonoBehaviour {
             KthNearestCollector.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
-        else if (Controls.shieldInputDown(opponentPlayer))
+        else if (currentState == "BlockState")
         {
             actionTaken = Action.Block;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
@@ -59,27 +63,27 @@ public class DataRecorder : MonoBehaviour {
             KthNearestCollector.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
-        else if (Controls.jumpInputDown(opponentPlayer))
+        else if (currentState == "JumpState")
         {
-            if (Controls.getDirection(opponentPlayer).x == 0)
+            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir == 0)
                 actionTaken = Action.JumpNeutral;
-            if (Controls.getDirection(opponentPlayer).x < 0)
+            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir < 0)
                 actionTaken = Action.JumpLeft;
-            if (Controls.getDirection(opponentPlayer).x > 0)
+            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir > 0)
                 actionTaken = Action.JumpRight;
-            
+
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                     GameManager.timeRemaining, actionTaken);
             KthNearestCollector.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
-        else if (Controls.getDirection(opponentPlayer).magnitude > 0)
+        else if (currentState == "MovementState")
         {
-            if (returnedToNeutral || opponentPlayer.ActionFsm.CurrentState.GetType() == typeof(IdleState))
+            if (returnedToNeutral)
             {
-                if (Controls.getDirection(opponentPlayer).x < 0)
+                if (((MovementState)opponentPlayer.ActionFsm.CurrentState).moveDir < 0)
                     actionTaken = Action.WalkLeft;
-                if (Controls.getDirection(opponentPlayer).x > 0)
+                if (((MovementState)opponentPlayer.ActionFsm.CurrentState).moveDir > 0)
                     actionTaken = Action.WalkRight;
                 GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                         GameManager.timeRemaining, actionTaken);
@@ -91,7 +95,7 @@ public class DataRecorder : MonoBehaviour {
             return;
         }
 
-        if(!returnedToNeutral)
+        if (!returnedToNeutral)
         {
             actionTaken = Action.Idle;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
