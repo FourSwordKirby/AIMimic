@@ -1,25 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Runtime.Serialization;
 
 [System.Serializable]
+[DataContract]
 public class GameSnapshot {
 
+    [DataMember]
     public Action actionTaken;
 
+    [DataMember]
     public float timeDelay;
+    [DataMember]
     public float timeRemaining;
 
+    [DataMember]
     public float p1Health;
+    [DataMember]
     public float p2Health;
 
+    [DataMember]
     public float xDistance;
+    [DataMember]
     public float yDistance;
 
+    [DataMember]
     public float p1CornerDistance;
+    [DataMember]
     public float p2CornerDistance;
 
 
     //Planned additional features
+    [DataMember]
     private float frameAdvantage;
 
     public GameSnapshot()

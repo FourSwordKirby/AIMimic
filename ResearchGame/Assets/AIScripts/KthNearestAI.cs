@@ -8,7 +8,8 @@ public class KthNearestAI : MonoBehaviour {
     /// Parameter for how many neighbors to look at
     /// </summary>
     public int k;
-    
+    public string playerProfileName;
+
     Player controlledPlayer;
     Player AIPlayer;
 
@@ -21,7 +22,7 @@ public class KthNearestAI : MonoBehaviour {
 
         AIPlayer.sprite.color = Color.green;
 
-        priorSnapshots = KthNearestCollector.readFromLog();
+        priorSnapshots = Session.readFromLog(playerProfileName);
     }
 
     public float actionResponseTime;

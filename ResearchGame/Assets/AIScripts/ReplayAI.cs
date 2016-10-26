@@ -6,9 +6,8 @@ using System.Linq;
 
 public class ReplayAI : MonoBehaviour
 {
-    /// <summary>
-    /// Parameter for how many neighbors to look at
-    /// </summary>
+    public string playerProfileName;
+
     Player controlledPlayer;
     Player AIPlayer;
 
@@ -21,7 +20,7 @@ public class ReplayAI : MonoBehaviour
 
         AIPlayer.sprite.color = Color.gray;
 
-        priorSnapshots = KthNearestCollector.readFromLog();
+        priorSnapshots = Session.readFromLog(playerProfileName);
         priorSnapshots = priorSnapshots.OrderBy(x => -x.timeRemaining).ToList();
 
         Debug.Log(priorSnapshots.Count);
