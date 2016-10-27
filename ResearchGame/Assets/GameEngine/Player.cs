@@ -96,17 +96,49 @@ public class Player : MonoBehaviour {
     {
     }
 
+    public void performAction(Action action)
+    {
+        switch(action) {
+            case Action.Idle:
+                this.Idle();
+                break;
+            case Action.Attack:
+                this.Attack();
+                break;
+            case Action.Block:
+                this.Block();
+                break;
+            case Action.JumpNeutral:
+                this.Jump(Parameters.InputDirection.N);
+                break;
+            case Action.JumpLeft:
+                this.Jump(Parameters.InputDirection.W);
+                break;
+            case Action.JumpRight:
+                this.Jump(Parameters.InputDirection.E);
+                break;
+            case Action.WalkLeft:
+                this.Walk(Parameters.InputDirection.W);
+                break;
+            case Action.WalkRight:
+                this.Walk(Parameters.InputDirection.E);
+                break;
+            default:
+                this.Idle();
+                break;
+        }
+
+    }
+
     //Interface for the AI
     //FIX THE WALKING
     public void Walk(Parameters.InputDirection dir)
     {
-        if (this.ActionFsm.CurrentState.GetType() == typeof(MovementState))
-            return;
         Vector2 originalPositon = this.transform.position; 
         Vector2 movementVector = Vector2.zero;
-        if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
+        if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
             movementVector = Vector2.right * movementSpeed;
-        else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
+        else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.NW)
             movementVector = Vector2.left * movementSpeed;
         else
             return;

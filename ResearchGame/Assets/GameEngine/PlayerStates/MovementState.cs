@@ -9,6 +9,10 @@ public class MovementState : State<Player> {
     //Used primarily by the datarecorder
     public int moveDir;
 
+    //TODO: INPUT BUFFER FOR NEXT MOVE
+    private Action nextAction = Action.Idle;
+
+
     public MovementState(Player playerInstance, StateMachine<Player> fsm, Vector3 targetLocation)
         : base(playerInstance, fsm)
     {
@@ -22,24 +26,40 @@ public class MovementState : State<Player> {
     override public void Enter()
     {
         Vector2 movementVector = (targetLocation - player.transform.position).normalized * player.movementSpeed;
+        Debug.Log(movementVector);
         player.selfBody.velocity = movementVector;
     }
 
     override public void Execute()
     {
-        //TODO: allow for buffers into jumps etc.
         Parameters.InputDirection dir = Controls.getInputDirection(player);
+        //Only activate this near the end
+        //Also encapsulate all of this in some generic everyclass thing lol
         //Change this to be a jump button
-        if (Controls.jumpInputDown(player))
+        nextAction = Action.Idle;
+        if (Controls.jumpInputHeld(player))
         {
-            player.Jump(dir);
+            if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
+                nextAction = Action.JumpRight;
+            else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
+                nextAction = Action.JumpLeft;
+            else
+                nextAction = Action.JumpNeutral;
             return;
         }
 
         if (dir != Parameters.InputDirection.None)
         {
-            player.Walk(dir);
+            if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
+                nextAction = Action.WalkRight;
+            else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
+                nextAction = Action.WalkLeft;
             return;
+        }
+
+        if (Controls.attackInputDown(player))
+        {
+            nextAction = Action.Attack;
         }
     }
 
@@ -53,7 +73,8 @@ public class MovementState : State<Player> {
         {
             player.selfBody.velocity = Vector2.zero;
             player.transform.position = targetLocation;
-            player.Idle();
+            Debug.Log(nextAction);
+            player.performAction(nextAction);
         }
     }
 

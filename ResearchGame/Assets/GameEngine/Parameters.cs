@@ -5,6 +5,18 @@ public class Parameters : MonoBehaviour {
 
     public static float positionLeeway = 0.1f;
     
+    //TODO: Refactor datarecorder to case on action?
+    public enum Action 
+    {
+        Idle,
+        NeutralJump,
+        LeftJump,
+        RightJump,
+        LeftMove,
+        RightMove,
+        Attack
+    }
+
     public enum InputDirection
     {
         W,
