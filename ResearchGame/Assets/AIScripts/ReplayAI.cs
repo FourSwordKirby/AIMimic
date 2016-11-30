@@ -8,19 +8,19 @@ public class ReplayAI : MonoBehaviour
 {
     public string playerProfileName;
 
-    Player controlledPlayer;
+    //Player controlledPlayer;
     Player AIPlayer;
 
     private List<GameSnapshot> priorSnapshots;
 
     void Start()
     {
-        controlledPlayer = GameManager.Players[0];
+        //controlledPlayer = GameManager.Players[0];
         AIPlayer = GameManager.Players[1];
 
         AIPlayer.sprite.color = Color.gray;
 
-        priorSnapshots = Session.readFromLog(playerProfileName);
+        priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
         priorSnapshots = priorSnapshots.OrderBy(x => -x.timeRemaining).ToList();
 
         Debug.Log(priorSnapshots.Count);
@@ -58,8 +58,8 @@ public class ReplayAI : MonoBehaviour
                 case Action.Block:
                     AIPlayer.Block();
                     break;
-                case Action.Idle:
-                    AIPlayer.Idle();
+                case Action.Stand:
+                    AIPlayer.Stand();
                     break;
             }
         }

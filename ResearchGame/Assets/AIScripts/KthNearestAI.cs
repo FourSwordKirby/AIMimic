@@ -22,7 +22,7 @@ public class KthNearestAI : MonoBehaviour {
 
         AIPlayer.sprite.color = Color.green;
 
-        priorSnapshots = Session.readFromLog(playerProfileName);
+        priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
     }
 
     public float actionResponseTime;
@@ -51,7 +51,7 @@ public class KthNearestAI : MonoBehaviour {
                 }
             }
 
-            Action chosenAction = Action.Idle;
+            Action chosenAction = Action.Stand;
             if (closestDistance < distanceThreshold)
             {
                 chosenAction = closestNeighbors[closestNeighbors.Count - 1].actionTaken;
@@ -81,8 +81,8 @@ public class KthNearestAI : MonoBehaviour {
                 case Action.Block:
                     AIPlayer.Block();
                     break;
-                case Action.Idle:
-                    AIPlayer.Idle();
+                case Action.Stand:
+                    AIPlayer.Stand();
                     break;
             }
 

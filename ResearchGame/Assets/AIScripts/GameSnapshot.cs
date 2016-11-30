@@ -1,37 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-[System.Serializable]
-[DataContract]
+
 public class GameSnapshot {
 
-    [DataMember]
     public Action actionTaken;
 
-    [DataMember]
     public float timeDelay;
-    [DataMember]
     public float timeRemaining;
 
-    [DataMember]
     public float p1Health;
-    [DataMember]
     public float p2Health;
 
-    [DataMember]
     public float xDistance;
-    [DataMember]
     public float yDistance;
 
-    [DataMember]
     public float p1CornerDistance;
-    [DataMember]
     public float p2CornerDistance;
 
+    //Used to label this action/sequence of actions
+    public List<string> labels;
+    //public HashSet<string> labelSet; Not implemented yet bc we aren't sure how the workflow for labeling data will work
 
     //Planned additional features
-    [DataMember]
     private float frameAdvantage;
 
     public GameSnapshot()
@@ -41,10 +34,6 @@ public class GameSnapshot {
 
     public GameSnapshot(Player p1, Player p2, float delay, float timeRemaining, Action p2Action)
     {
-        this.actionTaken = p2Action;
-
-        this.timeRemaining = timeRemaining;
-
         p1Health = p1.health;
         p2Health = p2.health;
 
@@ -55,6 +44,13 @@ public class GameSnapshot {
 
         p1CornerDistance = getCornerDistance(p1.effectivePosition.x);
         p2CornerDistance = getCornerDistance(p2.effectivePosition.x);
+
+        this.timeDelay = delay;
+        this.timeRemaining = timeRemaining;
+        this.actionTaken = p2Action;
+
+        this.labels = new List<string>();
+        labels.Add("wtf");
     }
 
     override public string ToString()
@@ -81,13 +77,13 @@ public class GameSnapshot {
         //float deltaP2Health = this.p2Health - p2.health;
      
      
-        ////Remember, in this scenario we are player 2 reacting to the actions of player 1
-        //float deltaXDistance = this.xDistance - (p2.effectivePosition.x - p1.effectivePosition.x);
-        //float deltaYDistance = this.yDistance - (p2.effectivePosition.y - p1.effectivePosition.y);
+        //Remember, in this scenario we are player 2 reacting to the actions of player 1
+        float deltaXDistance = this.xDistance - (p2.effectivePosition.x - p1.effectivePosition.x);
+        float deltaYDistance = this.yDistance - (p2.effectivePosition.y - p1.effectivePosition.y);
      
-        //float deltaP1CornerDistance = this.p1CornerDistance - getCornerDistance(p1.effectivePosition.x);
-        //float deltaP2CornerDistance = this.p2CornerDistance - getCornerDistance(p2.effectivePosition.x);
+        float deltaP1CornerDistance = this.p1CornerDistance - getCornerDistance(p1.effectivePosition.x);
+        float deltaP2CornerDistance = this.p2CornerDistance - getCornerDistance(p2.effectivePosition.x);
 
-        return Mathf.Pow(Mathf.Pow(deltaTime, 2.0f),  0.5f);
+        return Mathf.Pow(Mathf.Pow(deltaTime, 2.0f),  0.5f) + deltaXDistance + deltaYDistance + deltaP1CornerDistance + deltaP2CornerDistance;
     }
 }

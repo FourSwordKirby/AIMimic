@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
-    private static GameManager instance;
+    public static GameManager instance;
 
     public static List<Player> Players;
-    //public static List<AIPlayer> AIPlayers;
     public static CameraControls Camera;
     public static GameObject[] hit_boxes;
 
     public float timeLimit;
     public static float timeRemaining;
 
-    private static List<GameObject> spawnPoints;
-
-    //Holds the Kth nearest stuff
-    //private KthNearestCollector collector;
+    public List<GameObject> spawnPoints;
+    public Text RoundText;
+    public Text P1Text;
+    public Text P2Text;
 
     void Awake()
     {
@@ -34,14 +34,6 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        /*
-        Camera = GameObject.FindObjectOfType<CameraControls>();
-        if (Camera == null)
-        {
-            Debug.Log("Cannot find camera on the current scene.");
-        }
-        */
-
         Players = new List<Player>(GameObject.FindObjectsOfType<Player>());
         if (Players == null)
         {
@@ -55,12 +47,22 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        for(int i = 0; i < Players.Count;i++)
+        {
+            Players[i].name = "Player " + i;
+            Players[i].transform.position = spawnPoints[i].transform.position;
+        }
     }
 
     void Update()
     {
         if (timeRemaining > 0)
             timeRemaining -= Time.deltaTime;
+        if(timeRemaining < 0)
+        {
+            if (Input.GetKey(KeyCode.R))
+                SceneManager.LoadScene(0);
+        }
     }
 
 

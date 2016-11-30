@@ -28,7 +28,7 @@ public class StockCount : MonoBehaviour {
     {
         this.stockCount = stockCount;
 
-        if (stockCount > 5)
+        if (this.stockCount > 5)
         {
             foreach (Image positionImage in stockImages)
             {
@@ -40,7 +40,7 @@ public class StockCount : MonoBehaviour {
         {
             for (int i = 0; i < stockImages.Count; i++)
             {
-                if(i < stockCount)
+                if(i < this.stockCount)
                     stockImages[i].enabled = true;
                 else
                     stockImages[i].enabled = false;

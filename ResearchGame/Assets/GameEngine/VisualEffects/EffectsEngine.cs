@@ -16,8 +16,6 @@ public class EffectsEngine : MonoBehaviour {
     public AudioLowPassFilter bgmLowPass;
     public AudioReverbFilter bgmReverb;
 
-    private float p1RestingHeartRate;
-
     private float age;
 
     void Start()
@@ -36,11 +34,6 @@ public class EffectsEngine : MonoBehaviour {
         {
             StartCoroutine(dynamicBackground.DropletPattern((int)player2.effectivePosition.x, (int)player2.effectivePosition.y));
             //StartCoroutine(dynamicBackground.DropletPattern(1, 0));
-        }
-
-        if(p1HeartRate > p1RestingHeartRate)
-        {
-
         }
     }
 }

@@ -8,6 +8,10 @@ public class Timer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        currentText.text = ((int)(GameManager.timeRemaining)).ToString();
+        int time = (int)(GameManager.timeRemaining);
+        if (time < 10)
+            currentText.text = "0" + time.ToString();
+        else
+            currentText.text = time.ToString();
 	}
 }

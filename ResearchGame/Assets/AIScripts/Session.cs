@@ -6,12 +6,10 @@ using System.Linq;
 using System;
 
 public class Session {
-
     public List<GameSnapshot> snapshots = new List<GameSnapshot>();
 
     private string playerProfileName;
-    string filePath;
-    string serializationFile;
+    private string filePath;
 
     public Session(string playerProfileName)
     {
@@ -23,7 +21,6 @@ public class Session {
         DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
 
         filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";        
-        serializationFile = filePath;
     }
 
     public void addSnapshot(GameSnapshot snapshot)
@@ -45,7 +42,24 @@ public class Session {
         Debug.Log("wrote to log");
     }
 
-    public static List<GameSnapshot> readFromLog(string playerProfileName, int sessionNumber = -1)
+    public static List<List<GameSnapshot>> RetrievePlayerHistory(string playerProfileName)
+    {
+        string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/";
+        Directory.CreateDirectory(directoryPath);
+
+        DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
+
+        List<List<GameSnapshot>> playerHistory = new List<List<GameSnapshot>>();
+        int logCount = playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count();
+        for (int i = 0; i < logCount; i++)
+        {
+            playerHistory.Add(RetrievePlayerSession(playerProfileName, i));
+        }
+        return playerHistory;
+    }
+
+    //If sessionNumber is -1, we retrieve the latest recorded session
+    public static List<GameSnapshot> RetrievePlayerSession(string playerProfileName, int sessionNumber = -1)
     {
         string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/";
         DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
@@ -60,7 +74,6 @@ public class Session {
         List<GameSnapshot> mySnapshots = new List<GameSnapshot>();
         for (int i = 0; i < serializeObjects.Length; i++)
         {
-            Debug.Log(serializeObjects[i]);
             mySnapshots.Add(JsonUtility.FromJson<GameSnapshot>(serializeObjects[i]));
         }
         return mySnapshots;

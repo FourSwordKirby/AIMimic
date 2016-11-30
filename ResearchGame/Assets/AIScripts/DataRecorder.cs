@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class DataRecorder : MonoBehaviour {
     public string playerProfileName;
+    public bool enablePlaystyleLabeling;
+
 
     Player controlledPlayer;
     Player opponentPlayer;
@@ -28,18 +30,39 @@ public class DataRecorder : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
-        if (GameManager.timeRemaining < 0 && !matchOver)
+	void Update () 
+    {
+        if (GameManager.timeRemaining < 0)
         {
             opponentPlayer.sprite.color = Color.red;
+            if(enablePlaystyleLabeling)
+            {
+                GameManager.instance.RoundText.text = "press o for offensive";
+                if (Input.GetKeyDown("o"))
+                {
+                    matchOver = true;
+                }
+                if (Input.GetKeyDown("p"))
+                {
+                    matchOver = true;
+                }
+            }
+            else
+            {
+                matchOver = true;
+            }
+        }
+
+        if(matchOver)
+        {
             session.writeToLog();
-            matchOver = true;
         }
 
         /*For each button press, make sure that the game has a snap shot of it*/
         RecordAction();
     }
 
+    //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)
     private void RecordAction()
     {
         string currentState = opponentPlayer.ActionFsm.CurrentState.ToString();
@@ -50,7 +73,7 @@ public class DataRecorder : MonoBehaviour {
         }
         previousState = currentState;
 
-        Action actionTaken = Action.Idle;
+        Action actionTaken = Action.Stand;
         float delay = previousTime - GameManager.timeRemaining;
         if (currentState == "AttackState")
         {
@@ -102,7 +125,7 @@ public class DataRecorder : MonoBehaviour {
 
         if (!returnedToNeutral)
         {
-            actionTaken = Action.Idle;
+            actionTaken = Action.Stand;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                             GameManager.timeRemaining, actionTaken);
             session.addSnapshot(snapshot);

@@ -2,7 +2,8 @@
 using System.Collections;
 
 public enum Action {
-    Idle,
+    Stand,
+    Crouch,
     WalkLeft,
     WalkRight,
     JumpNeutral,
