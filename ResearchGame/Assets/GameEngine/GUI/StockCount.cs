@@ -4,49 +4,46 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class StockCount : MonoBehaviour {
-    public List<Image> stockImages;
-    public Image multipleStockImage;
+    public List<Image> roundImages;
 
-    public Sprite stockSprite;
-    public Sprite multipleStockSprite;
-
+    public int roundLimit;
     private int stockCount;
+
+    private float fillTime = 1.0f;
+    private float timer = 0;
 
     void Start()
     {
-        foreach (Image positionImage in stockImages)
+        foreach (Image positionImage in roundImages)
         {
-            positionImage.enabled = false;
-            positionImage.sprite = stockSprite;
+            positionImage.fillAmount = 0;
+        }
+    }
+
+    void Update()
+    {
+        for (int i = 0; i < roundImages.Count; i++)
+        {
+            if(i < roundLimit)
+                roundImages[i].gameObject.SetActive(true);
+            else
+                roundImages[i].gameObject.SetActive(false);
         }
 
-        multipleStockImage.enabled = false;
-        multipleStockImage.sprite = multipleStockSprite;
+        if (timer < fillTime)
+            timer += Time.deltaTime;
+        for (int i = 0; i < roundImages.Count; i++)
+        {
+            if (i < this.stockCount)
+                roundImages[i].fillAmount = Mathf.Max(roundImages[i].fillAmount, timer / fillTime);
+            else
+                roundImages[i].fillAmount = 0;
+        }
     }
 
     public void SetStockCount(int stockCount)
     {
+        timer = 0;
         this.stockCount = stockCount;
-
-        if (this.stockCount > 5)
-        {
-            foreach (Image positionImage in stockImages)
-            {
-                positionImage.enabled = false;
-            }
-            multipleStockImage.enabled = true;
-        }
-        else
-        {
-            for (int i = 0; i < stockImages.Count; i++)
-            {
-                if(i < this.stockCount)
-                    stockImages[i].enabled = true;
-                else
-                    stockImages[i].enabled = false;
-            }
-
-            multipleStockImage.enabled = false;
-        }
     }
 }

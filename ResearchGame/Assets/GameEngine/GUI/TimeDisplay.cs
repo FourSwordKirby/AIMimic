@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour {
+public class TimeDisplay : MonoBehaviour {
 
     public Text currentText;
 	

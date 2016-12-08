@@ -22,7 +22,6 @@ public class GameSnapshot {
 
     //Used to label this action/sequence of actions
     public List<string> labels;
-    //public HashSet<string> labelSet; Not implemented yet bc we aren't sure how the workflow for labeling data will work
 
     //Planned additional features
     private float frameAdvantage;

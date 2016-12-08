@@ -14,6 +14,16 @@ public abstract class Hitbox : Collisionbox{
     public float blockstun;
     public bool isProjectile;
 
+    public hitType type;
+    public bool knockdown;
+
     public int prioirty;
     public float meterGain;
+
+    public enum hitType
+    {
+        mid,
+        low,
+        high
+    }
 }

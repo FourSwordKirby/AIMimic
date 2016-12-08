@@ -17,8 +17,9 @@ public class KthNearestAI : MonoBehaviour {
 
     void Start()
     {
-        controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.Players[1];
+        controlledPlayer = GameManager.instance.p1;
+        AIPlayer = GameManager.instance.p2;
+        AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.green;
 

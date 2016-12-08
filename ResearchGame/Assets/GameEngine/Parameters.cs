@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Parameters : MonoBehaviour {
 
-    public static float positionLeeway = 0.1f;
+    public static float positionLeeway = 0.01f;
     
     //TODO: Refactor datarecorder to case on action?
     public enum Action 

@@ -14,16 +14,21 @@ public class AirAttackState : State<Player>
 
     private float timer;
 
+    private Vector3 startPosition;
+    private Vector3 endPosition;
+
     public AirAttackState(Player playerInstance, StateMachine<Player> fsm) : base(playerInstance, fsm)
     {
+        GameManager.instance.playSound("AirSwipe");
+
         player = playerInstance;
         meleeHitbox = player.hitboxManager.getHitbox("AirMeleeHitbox").gameObject;
 
-        attackDistance = 1.55f;
+        attackDistance = 0.55f;
 
-        startup = 0.1f;
-        duration = 0.2f;
-        endlag = 0.1f;
+        startup = 0.05f;
+        duration = 0.05f;
+        endlag = 1.2f;
 
         timer = 0;
     }
@@ -31,6 +36,18 @@ public class AirAttackState : State<Player>
     override public void Enter()
     {
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
+        meleeHitbox.GetComponent<SpriteRenderer>().flipX = player.sprite.flipX;
+
+        startPosition = Vector3.zero;
+        endPosition = player.facingDirection * attackDistance;
+
+        if (player.comboCount >= 2)
+        {
+            player.chainable = false;
+            meleeHitbox.GetComponent<Hitbox>().knockdown = true;
+        }
+
+        player.selfBody.angularVelocity = -540.0f * player.facingDirection.x;
     }
 
     override public void Execute()
@@ -39,32 +56,48 @@ public class AirAttackState : State<Player>
         timer += Time.deltaTime;
         if (timer < startup)
         {
-            meleeHitbox.transform.localScale = Vector3.Lerp(new Vector3(0.5f, 0.5f, 1), new Vector3(attackDistance, attackDistance, 1), timer / startup);
+            meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, timer / startup);
         }
         else if (timer < startup + duration)
         {
-            meleeHitbox.transform.localScale = Vector3.Lerp(new Vector3(0.5f, 0.5f, 1), new Vector3(attackDistance, attackDistance, 1), timer / startup);
-            player.hitboxManager.activateHitBox("AirMeleeHitbox");
+            if(timer - Time.deltaTime < startup)
+                player.hitboxManager.activateHitBox("AirMeleeHitbox");
+
+            meleeHitbox.transform.localPosition = endPosition;
         }
         else if (timer < startup + duration + endlag)
         {
-            meleeHitbox.transform.localScale = Vector3.Lerp(new Vector3(0.5f, 0.5f, 1), new Vector3(1.5f, 1.5f, 1), ((startup + duration + endlag)-timer) / endlag);
-            player.hitboxManager.activateHitBox("AirMeleeHitbox");
+            if (timer - Time.deltaTime < startup + duration)
+            {
+                player.hitboxManager.deactivateHitBox("AirMeleeHitbox");
+                meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+            }
+
+            meleeHitbox.transform.localPosition = Vector3.Lerp(endPosition, startPosition, (timer - startup - duration) / endlag);
         }
         else
         {
-            meleeHitbox.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-            player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
+            meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+            meleeHitbox.transform.localPosition = Vector2.zero;
         }
     }
 
     override public void FixedExecute()
     {
+        //Hitting the ground early
+        if (player.grounded && player.selfBody.velocity.y <= 0)
+        {
+            player.Stand();
+            return;
+        }
     }
 
     override public void Exit()
     {
         player.hitboxManager.deactivateHitBox("AirMeleeHitbox");
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+        meleeHitbox.transform.localPosition = Vector2.zero;
+        player.selfBody.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        player.selfBody.angularVelocity = 0;
     }
 }

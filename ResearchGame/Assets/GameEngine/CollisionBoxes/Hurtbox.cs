@@ -17,5 +17,10 @@ public abstract class Hurtbox : Collisionbox {
     /// This function will apply these main features to the hurtbox that is getting hit
     /// In the case that thereis no hitstun or hitlag, it is advised to not go into a hitstun state
     /// </summary>
-    public abstract void TakeHit(float hitlag, float hitstun, Vector2 knockback);
+    public abstract void TakeHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown);
+
+    /// <summary>
+    /// Similar to the above, except occurs when blocking a hit
+    /// </summary>
+    public abstract void BlockHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown);
 }

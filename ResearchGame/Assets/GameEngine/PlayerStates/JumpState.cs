@@ -21,21 +21,21 @@ public class JumpState : State<Player>
 
     override public void Enter()
     {
+        GameManager.instance.playSound("Jump");
+        player.StandAnim();
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
         {
-            player.selfBody.velocity = getJumpVelocity(2, 0, 0.7f);
+            player.selfBody.velocity = getJumpVelocity(player.neutralJumpHeight, 0, 0.7f);
         }
         else if (displacement > 0)
         {
-            player.selfBody.velocity = getJumpVelocity(1.5f, displacement, 0.7f);
+            player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
         }
         else
         {   
-            player.selfBody.velocity = getJumpVelocity(1.5f, displacement, 0.7f);
+            player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
         }
-        player.grounded = false;
-        return;
     }
     public Vector2 getJumpVelocity(float height, float distance, float time)
     {
@@ -63,7 +63,7 @@ public class JumpState : State<Player>
 
     override public void FixedExecute()
     {
-        if (player.transform.position.y < Parameters.positionLeeway && player.selfBody.velocity.y < 0)
+        if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             player.Stand();
             return;
@@ -72,8 +72,5 @@ public class JumpState : State<Player>
 
     override public void Exit()
     {
-        //TODO, figure out how to keep the player rooted at the end
-        //player.selfBody.velocity = Vector2.zero;
-        player.grounded = true;
     }
 }

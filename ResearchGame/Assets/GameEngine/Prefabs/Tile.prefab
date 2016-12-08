@@ -19,7 +19,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011911867302}
-  - 114: {fileID: 114000010924672108}
   - 212: {fileID: 212000013089648158}
   m_Layer: 8
   m_Name: Tile
@@ -41,26 +40,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &114000010924672108
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011308625036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3ce356003295c547986fddcc2f88357, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 212000013089648158}
-  triggered: 0
-  activateTime: 1
-  resetTime: 3
-  activeColor: {r: 1, g: 1, b: 1, a: 1}
-  inactiveColor: {r: 0, g: 0, b: 0, a: 1}
-  parentOrganizer: {fileID: 0}
-  xPos: 0
-  yPos: 0
 --- !u!212 &212000013089648158
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -17,8 +17,8 @@ public class ModelComparer : MonoBehaviour {
 
     void Start()
     {
-        controlledPlayer = GameManager.Players[0];
-        opponentPlayer = GameManager.Players[1];
+        controlledPlayer = GameManager.instance.p1;
+        opponentPlayer = GameManager.instance.p2;
 
         priorSessions = Session.RetrievePlayerHistory(playerProfileName);
     }

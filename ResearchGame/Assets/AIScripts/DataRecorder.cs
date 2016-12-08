@@ -6,9 +6,8 @@ public class DataRecorder : MonoBehaviour {
     public string playerProfileName;
     public bool enablePlaystyleLabeling;
 
-
-    Player controlledPlayer;
-    Player opponentPlayer;
+    public Player controlledPlayer;
+    public Player opponentPlayer;
 
     bool returnedToNeutral;
     bool matchOver;
@@ -16,50 +15,45 @@ public class DataRecorder : MonoBehaviour {
     float previousTime = GameManager.timeRemaining;
     string previousState = "";
 
-    Session session;
+    List<Session> sessions;
+    Session currentSession;
 
     void Start()
     {
-        controlledPlayer = GameManager.Players[0];
-        opponentPlayer = GameManager.Players[1];
-        opponentPlayer.sprite.color = Color.blue;
-
         returnedToNeutral = true;
 
-        session = new Session(playerProfileName);
+        sessions = new List<Session>(); 
+        currentSession = new Session(playerProfileName);
     }
 
 	// Update is called once per frame
 	void Update () 
     {
-        if (GameManager.timeRemaining < 0)
+        /*For each button press, make sure that the game has a snap shot of it*/
+        if (!GameManager.instance.roundOver)
         {
-            opponentPlayer.sprite.color = Color.red;
-            if(enablePlaystyleLabeling)
-            {
-                GameManager.instance.RoundText.text = "press o for offensive";
-                if (Input.GetKeyDown("o"))
-                {
-                    matchOver = true;
-                }
-                if (Input.GetKeyDown("p"))
-                {
-                    matchOver = true;
-                }
-            }
-            else
-            {
-                matchOver = true;
-            }
+            opponentPlayer.sprite.color = 0.5f * Color.red + 0.5f * Color.black;
+            RecordAction();
         }
-
-        if(matchOver)
+        else if(currentSession.snapshots.Count > 0)
         {
+            sessions.Add(currentSession);
+            currentSession = new Session(playerProfileName);
+        }
+    }
+
+    public void writeToLog(int p1Class, int p2Class)
+    {
+        int pClass = (GameManager.instance.p1 == this.opponentPlayer)? p1Class : p2Class;
+
+        string strClass = pClass == 1 ? "offense" : "defense";
+        foreach (Session session in sessions)
+        {
+            foreach (GameSnapshot snapshot in session.snapshots)
+                snapshot.labels.Add(strClass);
+            Debug.Log(session.snapshots.Count);
             session.writeToLog();
         }
-
-        /*For each button press, make sure that the game has a snap shot of it*/
-        RecordAction();
     }
 
     //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)
@@ -80,7 +74,7 @@ public class DataRecorder : MonoBehaviour {
             actionTaken = Action.Attack;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                     GameManager.timeRemaining, actionTaken);
-            session.addSnapshot(snapshot);
+            currentSession.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
         else if (currentState == "BlockState")
@@ -88,7 +82,7 @@ public class DataRecorder : MonoBehaviour {
             actionTaken = Action.Block;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                     GameManager.timeRemaining, actionTaken);
-            session.addSnapshot(snapshot);
+            currentSession.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
         else if (currentState == "JumpState")
@@ -102,7 +96,7 @@ public class DataRecorder : MonoBehaviour {
 
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                     GameManager.timeRemaining, actionTaken);
-            session.addSnapshot(snapshot);
+            currentSession.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
         }
         else if (currentState == "MovementState")
@@ -115,7 +109,7 @@ public class DataRecorder : MonoBehaviour {
                     actionTaken = Action.WalkRight;
                 GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                                         GameManager.timeRemaining, actionTaken);
-                session.addSnapshot(snapshot);
+                currentSession.addSnapshot(snapshot);
                 previousTime = GameManager.timeRemaining;
             }
 
@@ -128,7 +122,7 @@ public class DataRecorder : MonoBehaviour {
             actionTaken = Action.Stand;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
                                             GameManager.timeRemaining, actionTaken);
-            session.addSnapshot(snapshot);
+            currentSession.addSnapshot(snapshot);
             previousTime = GameManager.timeRemaining;
             returnedToNeutral = true;
         }

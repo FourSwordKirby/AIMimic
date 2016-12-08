@@ -11,10 +11,20 @@ public class GenericHurtbox : Hurtbox {
         owner.LostHealth(damage);
     }
 
-    override public void TakeHit(float hitlag, float hitstun, Vector2 knockback)
+    override public void TakeHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
-        owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, owner.ActionFsm));
-        knockback = -Mathf.Sign(owner.facingDirection.x) * knockback;
+        if (knockdown)
+            GameManager.instance.playSound("ComboEnder");
+        else
+            GameManager.instance.playSound("PunchHit");
+
+        owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, knockdown, owner.ActionFsm));
+    }
+
+    override public void BlockHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
+    {
+        GameManager.instance.playSound("Block");
+        owner.ActionFsm.SuspendState(new SuspendState(owner, owner.ActionFsm, hitstun, owner.ActionFsm.CurrentState));
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -22,16 +32,41 @@ public class GenericHurtbox : Hurtbox {
         Hitbox hitbox = col.GetComponent<Hitbox>();
         if(hitbox != null && hitbox.owner != this.owner)
         {
-            if(owner.isBlocking)
+            hitbox.Deactivate();
+
+            Vector3 hitLocation = (this.transform.position + col.bounds.ClosestPoint(this.transform.position))/2.0f;
+
+            if (owner.isBlocking && !((hitbox.type == Hitbox.hitType.low && !owner.isCrouching) || (hitbox.type == Hitbox.hitType.high && owner.isCrouching)))
             {
+                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
+                hitbox.owner.chainable = true;
+                hitbox.owner.selfBody.velocity -= 1.5f * hitbox.owner.facingDirection.x * Vector2.right;
+
                 Debug.Log("BLOCK");
                 TakeDamage(hitbox.chipDamage);
-                TakeHit(hitbox.hitlag, hitbox.blockstun, hitbox.knockbackVector);
+                owner.selfBody.velocity = hitbox.owner.facingDirection.x * Vector2.right;
+                BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.5f*hitbox.knockbackVector.x * Vector2.right, false);
+                GameManager.SpawnBlockIndicator(hitLocation);
             }
             else
             {
+                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
+                hitbox.owner.chainable = true;
+                GameManager.AddCombo(hitbox.owner);
+                hitbox.owner.selfBody.velocity -= 0.25f * hitbox.owner.facingDirection.x * Vector2.right;
+                
                 TakeDamage(hitbox.damage);
-                TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector);
+                if(owner.grounded)
+                {
+                    if (!hitbox.knockdown && !owner.knockedDown)
+                        TakeHit(hitbox.hitlag, hitbox.hitstun, Vector2.right * hitbox.knockbackVector.x, hitbox.knockdown);
+                    else
+                        TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector, hitbox.knockdown);
+                }
+                else
+                    TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector, true);
+
+                GameManager.SpawnHitIndicator(hitLocation);
             }
         }
     }

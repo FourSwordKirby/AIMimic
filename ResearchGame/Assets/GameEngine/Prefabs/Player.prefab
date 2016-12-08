@@ -54,7 +54,7 @@ GameObject:
   - 4: {fileID: 4000010132111066}
   - 212: {fileID: 212000012452051556}
   - 114: {fileID: 114000013998660860}
-  - 61: {fileID: 61000012887441228}
+  - 61: {fileID: 61000012542741478}
   m_Layer: 0
   m_Name: AirMeleeHitbox
   m_TagString: Untagged
@@ -87,12 +87,13 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010270865358}
   - 58: {fileID: 58000010018539540}
+  - 114: {fileID: 114000013087150574}
   m_Layer: 0
   m_Name: FloorECB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1000013058351930
 GameObject:
@@ -110,7 +111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013948304696
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 1000013948304696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.25, z: 1}
+  m_LocalScale: {x: 1, y: 0.25, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
@@ -183,11 +184,11 @@ Transform:
   m_GameObject: {fileID: 1000011137943148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.25, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &4000010270865358
 Transform:
   m_ObjectHideFlags: 1
@@ -208,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011071412132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.6, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -221,8 +222,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011225401050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.47099996, y: 0.9, z: 0}
-  m_LocalScale: {x: 0.18584958, y: 0.11536409, z: 0.11536409}
+  m_LocalPosition: {x: 0.25, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011577036212}
@@ -234,7 +235,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014132474588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -267,22 +268,22 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!4 &4000013944909074
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014033558720}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011577036212}
   - {fileID: 4000010028982518}
-  - {fileID: 4000013625136864}
   - {fileID: 4000010132111066}
+  - {fileID: 4000013625136864}
   - {fileID: 4000012400566816}
   - {fileID: 4000010270865358}
   m_Father: {fileID: 0}
@@ -297,13 +298,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 5
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!58 &58000010018539540
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -346,7 +347,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
---- !u!61 &61000012887441228
+--- !u!61 &61000012542741478
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -357,9 +358,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.44}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.72, y: 1.13}
 --- !u!61 &61000013641300408
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -387,13 +388,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   maxMeter: 0
-  movementSpeed: 8
+  movementSpeed: 4
+  neutralJumpHeight: 4
+  directionJumpHeight: 3
   opponent: {fileID: 0}
+  stunned: 0
+  knockedDown: 0
   grounded: 1
+  chainable: 0
   isCrouching: 0
   isBlocking: 0
-  sprite: {fileID: 212000010195425386}
+  comboCount: 0
+  normalSprite: {fileID: 21300000, guid: 0204f35e83bed704fa11d719722eb245, type: 3}
+  hitSprite: {fileID: 21300000, guid: 960c3db20a61cd74681709d342116cf2, type: 3}
+  AIControlled: 0
   spriteContainer: {fileID: 1000014132474588}
+  sprite: {fileID: 212000010195425386}
+  shield: {fileID: 1000011225401050}
   projectilePrefabs: []
 --- !u!114 &114000012144575440
 MonoBehaviour:
@@ -408,13 +419,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxName: MeleeHitbox
   owner: {fileID: 114000011357730092}
-  damage: 10
-  knockbackVector: {x: 1, y: 0}
-  hitlag: 1
-  hitstun: 10
-  chipDamage: 5
-  blockstun: 0.05
+  damage: 50
+  knockbackVector: {x: 2, y: 6}
+  hitlag: 0.25
+  hitstun: 0.5
+  chipDamage: 0
+  blockstun: 0.23
   isProjectile: 0
+  type: 0
+  knockdown: 0
   prioirty: 0
   meterGain: 0
 --- !u!114 &114000012294789520
@@ -457,6 +470,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 114000011357730092}
+--- !u!114 &114000013087150574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012593005348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a6eb219bb04d144a84fc8be22522d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 114000011357730092}
 --- !u!114 &114000013998660860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -471,12 +496,14 @@ MonoBehaviour:
   boxName: AirMeleeHitbox
   owner: {fileID: 114000011357730092}
   damage: 10
-  knockbackVector: {x: 0, y: 0}
-  hitlag: 1
-  hitstun: 10
-  chipDamage: 5
+  knockbackVector: {x: 1, y: -2}
+  hitlag: 0.5
+  hitstun: 1
+  chipDamage: 0
   blockstun: 0.05
   isProjectile: 0
+  type: 2
+  knockdown: 0
   prioirty: 0
   meterGain: 0
 --- !u!212 &212000010195425386
@@ -508,7 +535,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 56f77d6fac0b90241b44c8cb70b21eb0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0204f35e83bed704fa11d719722eb245, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -541,8 +568,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cf7dcf8f2a4d9a24eae06e8324ac7455, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e2a09d034793bce408e6b6f92911ec7e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.622}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!212 &212000012445182308
@@ -607,7 +634,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 434149701
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7049708b08ae1d9419cb13802035753f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23cc83876f59f4f4481416bea851e994, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0

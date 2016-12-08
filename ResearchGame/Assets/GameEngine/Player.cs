@@ -7,28 +7,40 @@ public class Player : MonoBehaviour {
     public float maxHealth;
     public float maxMeter;
     public float movementSpeed;
+    public float neutralJumpHeight;
+    public float directionJumpHeight;
     private float baseKnockdownThreshold;
     
     public float health { get; private set; }
     public float meter { get; private set; }
-    public int stocks { get; private set; }
     public const int DEFAULT_STOCK_COUNT = 4;
 
     public Player opponent;
+    public bool stunned = false;
+    public bool knockedDown = false;
     public bool grounded = true;
+    public bool chainable = false;
     public bool isCrouching;
     public bool isBlocking;
+
+    public int comboCount;
+
+    //Hacky bullshit that should be cleaned and purged
+    public Sprite normalSprite;
+    public Sprite hitSprite;
+
+    public bool AIControlled;
 
     public Vector2 effectivePosition { get; private set; }
     public Vector3 facingDirection { get; private set; }
 
-    
     public StateMachine<Player> ActionFsm { get; private set; }
 
     //self references to various components
     public Rigidbody2D selfBody { get; private set; }
-    public SpriteRenderer sprite;
     public GameObject spriteContainer;
+    public SpriteRenderer sprite;
+    public GameObject shield;
     public List<GameObject> projectilePrefabs;
     public CollisionboxManager hitboxManager { get; private set; }
 
@@ -37,7 +49,6 @@ public class Player : MonoBehaviour {
     {
         health = maxHealth;
         meter = 0.0f;
-        stocks = DEFAULT_STOCK_COUNT;
     }
 
     // Use this for initialization of variables that rely on other objects
@@ -48,6 +59,25 @@ public class Player : MonoBehaviour {
         hitboxManager = this.GetComponent<CollisionboxManager>();
 
         ActionFsm = new StateMachine<Player>(this);
+        State<Player> startState = new IdleState(this, this.ActionFsm);
+        ActionFsm.InitialState(startState);
+    }
+
+    public void Reset()
+    {
+        health = maxHealth;
+        meter = 0.0f;
+
+        ActionFsm.ClearStates();
+        this.selfBody.gravityScale = 1.0f;
+        this.selfBody.velocity = Vector3.zero;
+        this.hitboxManager.deactivateAllHitboxes();
+        this.hitboxManager.activateHitBox("Hurtbox");
+
+        this.spriteContainer.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        this.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
+        this.Stand();
+
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
     }
@@ -66,13 +96,17 @@ public class Player : MonoBehaviour {
             this.sprite.flipX = true;
             facingDirection = Vector3.left;
         }
-        if(isCrouching)
+
+        if(grounded && !stunned)
         {
-            this.spriteContainer.transform.localScale = Vector3.one - Vector3.up* 0.5f;
-        }
-        else
-        {
-            this.spriteContainer.transform.localScale = Vector3.one;
+            if (isCrouching)
+            {
+                CrouchAnim();
+            }
+            else
+            {
+                StandAnim();
+            }
         }
     }
 
@@ -92,6 +126,20 @@ public class Player : MonoBehaviour {
     {
         if (damage > 0)
             this.health -= damage;
+    }
+
+    public void StandAnim()
+    {
+        this.spriteContainer.transform.localScale = Vector3.one;
+        this.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
+        this.sprite.transform.localPosition = 0.25f * Vector3.up;
+    }
+
+    public void CrouchAnim()
+    {
+        this.spriteContainer.transform.localScale = Vector3.one - Vector3.up * 0.5f;
+        this.spriteContainer.transform.localPosition = -0.5f * Vector3.up;
+        this.sprite.transform.localPosition = 0.5f * Vector3.up;
     }
 
     public void Die()
@@ -141,18 +189,19 @@ public class Player : MonoBehaviour {
         //Vector2 originalPositon = this.transform.position; 
         Vector2 movementVector = Vector2.zero;
         if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
-            movementVector = Vector2.right * movementSpeed;
+            movementVector = Vector2.right;
         else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.NW)
-            movementVector = Vector2.left * movementSpeed;
+            movementVector = Vector2.left;
         else
             return;
-        this.ActionFsm.ChangeState(new MovementState(this, this.ActionFsm, (effectivePosition + movementVector.normalized)));
+        this.ActionFsm.ChangeState(new MovementState(this, this.ActionFsm, movementVector.x));
     }
 
     //Invincible to lows. Forward hop goes 2 spaces. Will jump over 1 space close opponents
     public void Jump(Parameters.InputDirection dir)
     {
         Vector2 movementVector = Vector2.zero;
+        this.Stand();
 
         if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
             movementVector = Vector2.right * movementSpeed;
@@ -160,30 +209,32 @@ public class Player : MonoBehaviour {
             movementVector = Vector2.left * movementSpeed;
         else
             movementVector = Vector2.zero;
-        this.ActionFsm.ChangeState(new JumpState(this, this.ActionFsm, (effectivePosition + 2 * movementVector.normalized)));
+        this.ActionFsm.ChangeState(new JumpState(this, this.ActionFsm, ((Vector2)(transform.position)+ 2 * movementVector.normalized)));
     }
 
     public void Attack()
     {
-        if(this.grounded)
-            this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm));
+        if(this.grounded && this.selfBody.velocity.y <= 0 && this.transform.position.y <= 0.1f)
+            this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
         else
             this.ActionFsm.ChangeState(new AirAttackState(this, this.ActionFsm));
     }
     public void Block()
     {
-        this.ActionFsm.ChangeState(new ShieldState(this, this.ActionFsm));
+        this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm));
     }
 
     public void Stand()
     {
         this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
         this.isCrouching = false;
+        StandAnim();
     }
 
     public void Crouch()
     {
         this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
         this.isCrouching = true;
+        CrouchAnim();
     }
 }

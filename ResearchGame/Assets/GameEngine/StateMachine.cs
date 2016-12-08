@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class StateMachine<CoreType> where CoreType : MonoBehaviour {
 
@@ -11,7 +12,7 @@ public class StateMachine<CoreType> where CoreType : MonoBehaviour {
     public StateMachine(CoreType owner)
     {
         this.owner = owner;
-        StateStack = null;
+        StateStack = new Stack<State<CoreType>>();
         CurrentState = null;
     } 
 
@@ -73,5 +74,15 @@ public class StateMachine<CoreType> where CoreType : MonoBehaviour {
             CurrentState.Exit();
             CurrentState = StateStack.Pop();
         }
+    }
+
+    public void ClearStates()
+    {
+        while (StateStack.Count != 0)
+        {
+            CurrentState.Exit();
+            CurrentState = StateStack.Pop();
+        }
+        CurrentState.Exit();
     }
 }

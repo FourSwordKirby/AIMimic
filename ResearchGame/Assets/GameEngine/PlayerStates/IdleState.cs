@@ -13,22 +13,19 @@ public class IdleState : State<Player> {
 
     override public void Enter()
     {
-        this.player.selfBody.drag = 5.0f;
+        this.player.selfBody.drag = 20.0f;
+        this.player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        this.player.selfBody.angularVelocity = 0;
     }
 
     override public void Execute()
     {
         Parameters.InputDirection dir = Controls.getInputDirection(player);
+
         //Change this to be a jump button
         if (Controls.jumpInputDown(player))
         {
             player.Jump(dir);
-            return;
-        }
-
-        if (dir != Parameters.InputDirection.None)
-        {
-            player.Walk(dir);
             return;
         }
 
@@ -37,27 +34,35 @@ public class IdleState : State<Player> {
             player.Attack();
         }
 
+        if (!player.AIControlled)
+        {
+            if (Controls.shieldInputHeld(player))
+            {
+                player.Block();
+            }
+
+            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+            {
+                player.isCrouching = true;
+                return;
+            }
+            else
+            {
+                player.isCrouching = false;
+            }
+        }
+
+        if (dir != Parameters.InputDirection.None)
+        {
+            player.Walk(dir);
+            return;
+        }
     }
 
     override public void FixedExecute()
     {
-        //if(this.player.selfBody.velocity.magnitude > 0)
-        //    this.player.selfBody.velocity -= 
-        ////Locks the position of the player
-        /*
-        if (Vector2.Distance(player.transform.position, player.effectivePosition) <= Parameters.positionLeeway)
-        {
-            player.selfBody.velocity = Vector2.zero;
-            player.transform.position = player.effectivePosition;
-            return;
-        }
-
-        if (Vector2.Distance(player.transform.position, player.effectivePosition) > Parameters.positionLeeway)
-        {
-            Vector2 movementVector = (player.effectivePosition - new Vector2(player.transform.position.x, 0)).normalized;
-            player.selfBody.velocity = movementVector;
-        }
-        */
+        //if(!player.isCrouching)
+        //    this.player.selfBody.velocity = Vector2.zero;
     }
 
     override public void Exit()

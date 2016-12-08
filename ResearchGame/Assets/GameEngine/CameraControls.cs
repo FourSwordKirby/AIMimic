@@ -37,9 +37,8 @@ public class CameraControls : MonoBehaviour {
 	void Start () {
         cameraComponent = GetComponent<Camera>();
 
-        foreach(Player player in GameManager.Players){
-            focus.addTargets(player.gameObject);
-        }
+        focus.addTargets(GameManager.instance.p1.gameObject);
+        focus.addTargets(GameManager.instance.p2.gameObject);
         //foreach (AIPlayer player in GameManager.AIPlayers)
         //{
         //    focus.addTargets(player);

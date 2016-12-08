@@ -16,7 +16,8 @@ public class ReplayAI : MonoBehaviour
     void Start()
     {
         //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.Players[1];
+        AIPlayer = GameManager.instance.p2;
+        AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.gray;
 
