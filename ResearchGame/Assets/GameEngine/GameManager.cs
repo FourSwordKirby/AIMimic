@@ -162,12 +162,12 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            if (roundEndTimer > 0.5f)
+            if (roundEndTimer > 0.0f)
             {
                 roundEndTimer -= Time.deltaTime;
                 if (roundEndTimer <= 0.5f)
                 {
-                    rematchUI.gameObject.SetActive(true);
+                    rematchUI.Activate();
                 }
                 return;
             }

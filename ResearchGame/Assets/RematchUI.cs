@@ -22,9 +22,17 @@ public class RematchUI : MonoBehaviour {
     public bool classifierEnabled;
     public int position;
 
+    float delay = 1.0f;
 
     // Update is called once per frame
     void Update () {
+        if(delay > 0)
+        {
+            delay -= Time.deltaTime;
+            return;
+        }
+
+
         if (!classifierEnabled)
         {
             position = 1;
@@ -86,5 +94,11 @@ public class RematchUI : MonoBehaviour {
                 GameManager.instance.Quit();
             }
         }
+    }
+
+    public void Activate()
+    {
+        this.gameObject.SetActive(true);
+        delay = 0.5f;
     }
 }

@@ -214,7 +214,7 @@ public class Player : MonoBehaviour {
 
     public void Attack()
     {
-        if(this.grounded && this.selfBody.velocity.y <= 0 && this.transform.position.y <= 0.1f)
+        if(/*this.grounded &&*/this.selfBody.velocity.y <= 0 && this.transform.position.y <= 0.01f)
             this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
         else
             this.ActionFsm.ChangeState(new AirAttackState(this, this.ActionFsm));
