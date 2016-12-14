@@ -32,7 +32,7 @@ public class DataRecorder : MonoBehaviour {
         /*For each button press, make sure that the game has a snap shot of it*/
         if (!GameManager.instance.roundOver)
         {
-            opponentPlayer.sprite.color = 0.5f * Color.red + 0.5f * Color.black;
+            //opponentPlayer.sprite.color = 0.5f * Color.red + 0.5f * Color.black;
             RecordAction();
         }
         else if(currentSession.snapshots.Count > 0)

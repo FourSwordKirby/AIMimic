@@ -379,6 +379,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 50681292}
+--- !u!1 &53168939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 53168940}
+  - 114: {fileID: 53168941}
+  m_Layer: 0
+  m_Name: ReplayAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &53168940
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53168939}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1539022178}
+  m_RootOrder: 0
+--- !u!114 &53168941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 53168939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0465fcf4d5b7d58429debab30fa5fa0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileName: Dunjunmstr
 --- !u!1001 &66324165
 Prefab:
   m_ObjectHideFlags: 0
@@ -588,6 +629,16 @@ Prefab:
         type: 2}
       propertyPath: damage
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013998660860, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: damage
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
@@ -1427,19 +1478,19 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!114 &516807227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 516807225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddf7c73152ded6542b02e0def1bf6f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerProfileName: FourSwordKirby
+  playerProfileName: Dunjunmstr
   enablePlaystyleLabeling: 0
   controlledPlayer: {fileID: 2021633135}
   opponentPlayer: {fileID: 173988561}
@@ -1696,7 +1747,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000014033558720, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
       propertyPath: m_Name
-      value: Player1
+      value: Player 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
         type: 2}
@@ -1707,6 +1758,11 @@ Prefab:
         type: 2}
       propertyPath: damage
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013998660860, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: damage
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
@@ -2263,7 +2319,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 273, y: 242}
+  m_AnchoredPosition: {x: 330, y: 242}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795269582
@@ -2480,8 +2536,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -236, y: 225}
-  m_SizeDelta: {x: 235, y: 43}
+  m_AnchoredPosition: {x: -260, y: 225}
+  m_SizeDelta: {x: 320, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839442939
 MonoBehaviour:
@@ -2520,7 +2576,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
 --- !u!222 &839442941
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2650,7 +2706,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
 --- !u!222 &849811515
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2672,8 +2728,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 236, y: 225}
-  m_SizeDelta: {x: 235, y: 43}
+  m_AnchoredPosition: {x: 260, y: 225}
+  m_SizeDelta: {x: 320, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &856622468
 GameObject:
@@ -3693,7 +3749,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -272, y: 242}
+  m_AnchoredPosition: {x: -330, y: 242}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1135138093
@@ -4604,7 +4660,6 @@ GameObject:
   - 4: {fileID: 1539022178}
   - 114: {fileID: 1539022177}
   - 114: {fileID: 1539022180}
-  - 114: {fileID: 1539022181}
   - 114: {fileID: 1539022182}
   m_Layer: 0
   m_Name: GameManager
@@ -4646,6 +4701,7 @@ MonoBehaviour:
   rematchUI: {fileID: 1675345197}
   recorders:
   - {fileID: 1794244194}
+  - {fileID: 516807227}
   sfx:
   - {fileID: 8300000, guid: 625f549096a819744a653554c8fabe61, type: 3}
   - {fileID: 8300000, guid: be12a1d634e7d65408c5b4de077db911, type: 3}
@@ -4666,6 +4722,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 53168940}
   - {fileID: 1794244193}
   - {fileID: 516807226}
   m_Father: {fileID: 0}
@@ -4684,18 +4741,6 @@ MonoBehaviour:
   k: 2
   playerProfileName: Dunjunmstr
   actionResponseTime: 0.05
---- !u!114 &1539022181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1539022176}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0465fcf4d5b7d58429debab30fa5fa0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerProfileName: Dunjunmstr
 --- !u!114 &1539022182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5058,19 +5103,19 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!114 &1794244194
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1794244192}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddf7c73152ded6542b02e0def1bf6f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerProfileName: Dunjunmstr
+  playerProfileName: FourSwordKirby
   enablePlaystyleLabeling: 0
   controlledPlayer: {fileID: 173988561}
   opponentPlayer: {fileID: 2021633135}

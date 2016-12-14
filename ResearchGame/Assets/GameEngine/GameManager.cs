@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour {
     public List<AudioClip> sfx;
 
     private static float countDown = 4.0f;
-    private static float roundEndTimer = 1.5f;
+    private static float roundEndTimer = 2.5f;
     public bool roundOver { get; private set; }
     private bool firstBoot = true;
 
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this);
+            //DontDestroyOnLoad(this);
         }
         else
         {
@@ -63,6 +63,12 @@ public class GameManager : MonoBehaviour {
             {
                 Destroy(this.gameObject);
             }
+        }
+
+        if(recordData)
+        {
+            recorders[0].playerProfileName = p1Name;
+            recorders[1].playerProfileName = p2Name;
         }
 
         hit_boxes = GameObject.FindObjectsOfType<GameObject>().Where(x => x.GetComponent<Collider2D>() != null).ToArray();
@@ -99,6 +105,7 @@ public class GameManager : MonoBehaviour {
             }
             else 
             {
+                roundOver = false;
                 RoundText.text = "GO!";
                 p1.enabled = true;
                 p2.enabled = true;
@@ -153,7 +160,7 @@ public class GameManager : MonoBehaviour {
             if (roundEndTimer > 0)
             {
                 roundEndTimer -= Time.deltaTime;
-                if (roundEndTimer < 1.0f)
+                if (roundEndTimer < 0.5f)
                 {
                     if (roundEndTimer <= 0 || Controls.attackInputDown(p1) || Controls.attackInputDown(p2))
                         LoadRound();
@@ -176,8 +183,9 @@ public class GameManager : MonoBehaviour {
 
     public void Quit()
     {
-        if(recordData)
+        if(recordData || recorders[1].enabled)
         {
+            recorders[1].writeToLog(rematchUI.p1Class, rematchUI.p2Class);
             foreach (DataRecorder recorder in recorders)
                 recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
         }
@@ -191,6 +199,8 @@ public class GameManager : MonoBehaviour {
 
         p1Victories = 0;
         p2Victories = 0;
+        P1RoundCount.SetStockCount(p1Victories);
+        P2RoundCount.SetStockCount(p2Victories);
         currentRound = 1;
 
         P1RoundCount.roundLimit = roundToWin;
@@ -204,8 +214,7 @@ public class GameManager : MonoBehaviour {
 
         Time.timeScale = 1.0f;
         countDown = 4.0f;
-        roundEndTimer = 1.5f;
-        roundOver = false;
+        roundEndTimer = 2.5f;
 
         p1.enabled = false;
         p2.enabled = false;

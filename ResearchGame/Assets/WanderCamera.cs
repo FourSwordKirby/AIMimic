@@ -8,7 +8,6 @@ public class WanderCamera : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("Hey");
         this.transform.position += Vector3.right * xdirection + Vector3.up * ydirection;
         if (this.transform.position.x > 5 || this.transform.position.x < -5)
             xdirection = Random.Range(0.005f, 0.015f) * -Mathf.Sign(xdirection);

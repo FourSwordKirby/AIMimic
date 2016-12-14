@@ -9,18 +9,18 @@ public class Session {
     public List<GameSnapshot> snapshots = new List<GameSnapshot>();
 
     private string playerProfileName;
+    private string directoryPath;
+    private DirectoryInfo playerDir;
     private string filePath;
 
     public Session(string playerProfileName)
     {
         this.playerProfileName = playerProfileName;
 
-        string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
+        directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
         Directory.CreateDirectory(directoryPath);
 
-        DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
-
-        filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";        
+        playerDir = new DirectoryInfo(directoryPath);   
     }
 
     public void addSnapshot(GameSnapshot snapshot)
@@ -31,8 +31,9 @@ public class Session {
     public void writeToLog()
     {
         string datalog = "";
+        filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
 
-        for(int i = 0; i < snapshots.Count; i++)
+        for (int i = 0; i < snapshots.Count; i++)
         {
             datalog += JsonUtility.ToJson(snapshots[i], true);
             if(i != snapshots.Count-1)

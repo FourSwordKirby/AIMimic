@@ -19,6 +19,8 @@ public class MenuManager : MonoBehaviour {
     public Image useAIImage;
     public Dropdown roundDropdown;
 
+    public Image instructions;
+
     public InputField p1Text;
     public InputField p2Text;
 
@@ -81,6 +83,17 @@ public class MenuManager : MonoBehaviour {
             p2ready = false;
         }
         */
+
+        if ((Input.GetButtonDown("P1 Enhance") || Input.GetButtonDown("P2 Enhance")) && !Input.GetKey(KeyCode.Alpha4) && !Input.GetKey(KeyCode.P))
+        {
+            instructions.gameObject.SetActive(!instructions.gameObject.activeSelf);
+        }
+
+        if(instructions.gameObject.activeSelf)
+        {
+            p1ready = false;
+            p2ready = false;
+        }
 
         //Round Count
         roundsToWin = roundDropdown.value + 1;

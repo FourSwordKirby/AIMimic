@@ -22,7 +22,7 @@ public class RematchUI : MonoBehaviour {
     public bool classifierEnabled;
     public int position;
 
-    float delay = 1.0f;
+    float delay = 0.5f;
 
     // Update is called once per frame
     void Update () {

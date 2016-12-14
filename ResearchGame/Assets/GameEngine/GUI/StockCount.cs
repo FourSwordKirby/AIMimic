@@ -32,6 +32,7 @@ public class StockCount : MonoBehaviour {
 
         if (timer < fillTime)
             timer += Time.deltaTime;
+
         for (int i = 0; i < roundImages.Count; i++)
         {
             if (i < this.stockCount)
