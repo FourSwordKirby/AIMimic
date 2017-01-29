@@ -6,7 +6,7 @@ public class DataRecorder : MonoBehaviour {
     public string playerProfileName;
     public bool enablePlaystyleLabeling;
 
-    public Player controlledPlayer;
+    public Player recordedPlayer;
     public Player opponentPlayer;
 
     bool returnedToNeutral;
@@ -44,7 +44,7 @@ public class DataRecorder : MonoBehaviour {
 
     public void writeToLog(int p1Class, int p2Class)
     {
-        int pClass = (GameManager.instance.p1 == this.opponentPlayer)? p1Class : p2Class;
+        int pClass = (GameManager.instance.p1 == this.recordedPlayer)? p1Class : p2Class;
 
         string strClass = pClass == 1 ? "offense" : "defense";
         foreach (Session session in sessions)
@@ -59,7 +59,7 @@ public class DataRecorder : MonoBehaviour {
     //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)
     private void RecordAction()
     {
-        string currentState = opponentPlayer.ActionFsm.CurrentState.ToString();
+        string currentState = recordedPlayer.ActionFsm.CurrentState.ToString();
 
         if (currentState == previousState)
         {
@@ -72,7 +72,7 @@ public class DataRecorder : MonoBehaviour {
         if (currentState == "AttackState")
         {
             actionTaken = Action.Attack;
-            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
+            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
                                                     GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
             previousTime = GameManager.currentFrame;
@@ -80,21 +80,21 @@ public class DataRecorder : MonoBehaviour {
         else if (currentState == "BlockState")
         {
             actionTaken = Action.Block;
-            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
+            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
                                                     GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
             previousTime = GameManager.currentFrame;
         }
         else if (currentState == "JumpState")
         {
-            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir == 0)
+            if (((JumpState)recordedPlayer.ActionFsm.CurrentState).jumpDir == 0)
                 actionTaken = Action.JumpNeutral;
-            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir < 0)
+            if (((JumpState)recordedPlayer.ActionFsm.CurrentState).jumpDir < 0)
                 actionTaken = Action.JumpLeft;
-            if (((JumpState)opponentPlayer.ActionFsm.CurrentState).jumpDir > 0)
+            if (((JumpState)recordedPlayer.ActionFsm.CurrentState).jumpDir > 0)
                 actionTaken = Action.JumpRight;
 
-            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
+            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
                                                     GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
             previousTime = GameManager.currentFrame;
@@ -103,11 +103,11 @@ public class DataRecorder : MonoBehaviour {
         {
             if (returnedToNeutral)
             {
-                if (((MovementState)opponentPlayer.ActionFsm.CurrentState).moveDir < 0)
+                if (((MovementState)recordedPlayer.ActionFsm.CurrentState).moveDir < 0)
                     actionTaken = Action.WalkLeft;
-                if (((MovementState)opponentPlayer.ActionFsm.CurrentState).moveDir > 0)
+                if (((MovementState)recordedPlayer.ActionFsm.CurrentState).moveDir > 0)
                     actionTaken = Action.WalkRight;
-                GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
+                GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
                                                         GameManager.currentFrame, actionTaken);
                 currentSession.addSnapshot(snapshot);
                 previousTime = GameManager.currentFrame;
@@ -120,7 +120,7 @@ public class DataRecorder : MonoBehaviour {
         if (!returnedToNeutral)
         {
             actionTaken = Action.Stand;
-            GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
+            GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
                                             GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
             previousTime = GameManager.currentFrame;

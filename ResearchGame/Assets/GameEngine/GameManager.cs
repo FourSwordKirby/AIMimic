@@ -141,6 +141,12 @@ public class GameManager : MonoBehaviour {
                     RoundText.text = "P1 WINS";
                 if (p2Victories >= roundToWin)
                     RoundText.text = "P2 WINS";
+
+                if(!p1.grounded && !p1.stunned)
+                    p1.enabled = false;
+                if (!p2.grounded && !p2.stunned)
+                    p2.enabled = false;
+
                 P1RoundCount.SetStockCount(p1Victories);
                 P2RoundCount.SetStockCount(p2Victories);
                 roundOver = true;
@@ -176,11 +182,11 @@ public class GameManager : MonoBehaviour {
 
     public void Quit()
     {
-        if(recordData || recorders[1].enabled)
+        if(recordData || recorders[0].enabled)
         {
-            recorders[1].writeToLog(rematchUI.p1Class, rematchUI.p2Class);
-            foreach (DataRecorder recorder in recorders)
-                recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
+            recorders[0].writeToLog(rematchUI.p1Class, rematchUI.p2Class);
+            //foreach (DataRecorder recorder in recorders)
+            //    recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
         }
         SceneManager.LoadScene(0);
     }

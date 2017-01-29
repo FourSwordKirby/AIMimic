@@ -8,8 +8,8 @@ public class GameSnapshot {
 
     public Action actionTaken;
 
-    public float timeDelay;
-    public float timeRemaining;
+    public float frameDelay;
+    public float frameTaken;
 
     public float p1Health;
     public float p2Health;
@@ -31,7 +31,7 @@ public class GameSnapshot {
         //Exists just for the xml serializer
     }
 
-    public GameSnapshot(Player p1, Player p2, float delay, float timeRemaining, Action p2Action)
+    public GameSnapshot(Player p1, Player p2, float delay, float frameTaken, Action p2Action)
     {
         p1Health = p1.health;
         p2Health = p2.health;
@@ -44,8 +44,8 @@ public class GameSnapshot {
         p1CornerDistance = getCornerDistance(p1.effectivePosition.x);
         p2CornerDistance = getCornerDistance(p2.effectivePosition.x);
 
-        this.timeDelay = delay;
-        this.timeRemaining = timeRemaining;
+        this.frameDelay = delay;
+        this.frameTaken = frameTaken;
         this.actionTaken = p2Action;
 
         this.labels = new List<string>();
@@ -70,7 +70,7 @@ public class GameSnapshot {
     public float snapshotDistance(Player p1, Player p2, float timeRemaining)
     {
      
-        float deltaTime = this.timeRemaining - timeRemaining;
+        float deltaTime = this.frameTaken - timeRemaining;
      
         //float deltaP1Health = this.p1Health - p1.health;
         //float deltaP2Health = this.p2Health - p2.health;

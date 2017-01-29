@@ -30,7 +30,7 @@ public class ModelComparer : MonoBehaviour {
         {
             foreach (GameSnapshot snapshot in session)
             {
-                if (GameManager.timeRemaining - snapshot.timeRemaining < 1.0f)
+                if (GameManager.timeRemaining - snapshot.frameTaken < 1.0f)
                     distance += snapshot.snapshotDistance(controlledPlayer, opponentPlayer, GameManager.timeRemaining);
             }
         }

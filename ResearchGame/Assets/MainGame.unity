@@ -415,12 +415,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 53168939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0465fcf4d5b7d58429debab30fa5fa0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerProfileName: Dunjunmstr
+  playerProfileName: Test
 --- !u!1001 &66324165
 Prefab:
   m_ObjectHideFlags: 0
@@ -1542,15 +1542,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 516807225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddf7c73152ded6542b02e0def1bf6f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerProfileName: Dunjunmstr
   enablePlaystyleLabeling: 0
-  controlledPlayer: {fileID: 2021633135}
-  opponentPlayer: {fileID: 173988561}
+  recordedPlayer: {fileID: 173988561}
+  opponentPlayer: {fileID: 2021633135}
 --- !u!1 &526856572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,10 +1811,6 @@ Prefab:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 173988561}
-    - target: {fileID: 1000013058351930, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -5180,15 +5176,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1794244192}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddf7c73152ded6542b02e0def1bf6f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerProfileName: FourSwordKirby
+  playerProfileName: Test
   enablePlaystyleLabeling: 0
-  controlledPlayer: {fileID: 173988561}
-  opponentPlayer: {fileID: 2021633135}
+  recordedPlayer: {fileID: 2021633135}
+  opponentPlayer: {fileID: 173988561}
 --- !u!1 &1820428116
 GameObject:
   m_ObjectHideFlags: 0

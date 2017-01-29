@@ -16,13 +16,13 @@ public class ReplayAI : MonoBehaviour
     void Start()
     {
         //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.instance.p2;
+        AIPlayer = GameManager.instance.p1;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.gray;
 
         priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
-        priorSnapshots = priorSnapshots.OrderBy(x => -x.timeRemaining).ToList();
+        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
         Debug.Log(priorSnapshots.Count);
     }
@@ -30,7 +30,7 @@ public class ReplayAI : MonoBehaviour
     int actionCount = 0;
     void Update()
     {
-        if (actionCount < priorSnapshots.Count && GameManager.timeRemaining < priorSnapshots[actionCount].timeRemaining)
+        if (actionCount < priorSnapshots.Count && GameManager.currentFrame == priorSnapshots[actionCount].frameTaken)
         {
             Action chosenAction = priorSnapshots[actionCount].actionTaken;
             Debug.Log(chosenAction);
