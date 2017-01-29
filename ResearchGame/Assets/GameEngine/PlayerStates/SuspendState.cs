@@ -5,8 +5,8 @@ public class SuspendState : State<Player>
 {
     private Player player;
 
-    private float duration;
-    private float timer;
+    private float frameDuration;
+    private float frameCounter;
 
     private State<Player> hiddenState;
 
@@ -20,7 +20,7 @@ public class SuspendState : State<Player>
     {
         player = playerInstance;
 
-        this.duration = duration;
+        this.frameDuration = duration;
         this.hiddenState = state;
 
         origPos = player.transform.position;
@@ -31,14 +31,16 @@ public class SuspendState : State<Player>
 
     override public void Enter()
     {
-        player.selfBody.simulated = false;
+        if(!player.grounded)
+            player.selfBody.simulated = false;
+        player.selfBody.isKinematic = true;
     }
 
     override public void Execute()
     {
-        timer += Time.deltaTime;
+        frameCounter++;
 
-        if (timer > duration)
+        if (frameCounter > frameDuration)
         {
             player.ActionFsm.ResumeState();
         }
@@ -52,7 +54,9 @@ public class SuspendState : State<Player>
 
     override public void Exit()
     {
-        player.selfBody.simulated = true;
+        if(!player.grounded)
+            player.selfBody.simulated = true;
+        player.selfBody.isKinematic = false;
         player.selfBody.velocity = origVel;
         player.selfBody.angularVelocity = origAngleVel;
     }

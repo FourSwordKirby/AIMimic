@@ -38,9 +38,9 @@ public class GenericHurtbox : Hurtbox {
 
             if (owner.isBlocking && !((hitbox.type == Hitbox.hitType.low && !owner.isCrouching) || (hitbox.type == Hitbox.hitType.high && owner.isCrouching)))
             {
-                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
-                hitbox.owner.chainable = true;
                 hitbox.owner.selfBody.velocity -= 1.5f * hitbox.owner.facingDirection.x * Vector2.right;
+                hitbox.owner.chainable = true;
+                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
 
                 Debug.Log("BLOCK");
                 TakeDamage(hitbox.chipDamage);
@@ -50,10 +50,10 @@ public class GenericHurtbox : Hurtbox {
             }
             else
             {
-                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
-                hitbox.owner.chainable = true;
-                GameManager.AddCombo(hitbox.owner);
                 hitbox.owner.selfBody.velocity -= 0.25f * hitbox.owner.facingDirection.x * Vector2.right;
+                hitbox.owner.chainable = true;
+                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
+                GameManager.AddCombo(hitbox.owner);
                 
                 TakeDamage(hitbox.damage);
                 if(owner.grounded)

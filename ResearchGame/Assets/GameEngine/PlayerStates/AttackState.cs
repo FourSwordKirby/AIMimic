@@ -12,7 +12,7 @@ public class AttackState : State<Player>
     public float duration;
     public float endlag;
     
-    private float timer;
+    private float frameCounter;
 
     private Vector3 startPosition;
     private Vector3 endPosition;
@@ -26,11 +26,11 @@ public class AttackState : State<Player>
 
         attackDistance = 0.55f;
 
-        startup = 0.05f;
-        duration = 0.05f;
-        endlag = 0.25f;
+        startup = 0.05f * Application.targetFrameRate;
+        duration = 0.05f * Application.targetFrameRate; ;
+        endlag = 0.25f * Application.targetFrameRate; ;
 
-        timer = 0;
+        frameCounter = 0;
     }
 
     override public void Enter()
@@ -72,24 +72,24 @@ public class AttackState : State<Player>
                 player.Attack();
         }
 
-        timer += Time.deltaTime;
-        if (timer < startup)
+        frameCounter ++;
+        if (frameCounter < startup)
         {
-            meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, timer / startup);
+            meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / startup);
         }
-        else if (timer < startup + duration)
+        else if (frameCounter < startup + duration)
         {
-            if (timer - Time.deltaTime < startup)
+            if (frameCounter - 1 < startup)
                 player.hitboxManager.activateHitBox("MeleeHitbox");
 
             meleeHitbox.transform.localPosition = endPosition;
         }
-        else if (timer < startup + duration + endlag)
+        else if (frameCounter < startup + duration + endlag)
         {
-            if (timer - Time.deltaTime < startup + duration)
+            if (frameCounter - 1 < startup + duration)
                 player.hitboxManager.deactivateHitBox("MeleeHitbox");
 
-            meleeHitbox.transform.localPosition = Vector3.Lerp(endPosition, startPosition, (timer-startup-duration) / endlag);
+            meleeHitbox.transform.localPosition = Vector3.Lerp(endPosition, startPosition, (frameCounter-startup-duration) / endlag);
         }
         else
         {

@@ -6,7 +6,7 @@ public class TechState : State<Player>
 
     private Player player;
 
-    private float timer = 100;
+    private float timer = 0;
     private float animTime = 0.5f;
 
     public TechState(Player playerInstance, StateMachine<Player> fsm)

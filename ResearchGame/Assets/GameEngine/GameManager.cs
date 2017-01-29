@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
-        //Application.targetFrameRate = 60;
-        //QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
         if (recordData)
         {
             recorders[0].playerProfileName = p1Name;

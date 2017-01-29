@@ -16,11 +16,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013625136864}
-  - 114: {fileID: 114000012396878602}
-  - 61: {fileID: 61000010510310976}
+  - component: {fileID: 4000013625136864}
+  - component: {fileID: 114000012396878602}
+  - component: {fileID: 61000010510310976}
   m_Layer: 0
   m_Name: Hurtbox
   m_TagString: Untagged
@@ -33,10 +33,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010929173848}
-  - 212: {fileID: 212000010195425386}
+  - component: {fileID: 4000010929173848}
+  - component: {fileID: 212000010195425386}
   m_Layer: 0
   m_Name: MainSprite
   m_TagString: Untagged
@@ -49,12 +49,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010132111066}
-  - 212: {fileID: 212000012452051556}
-  - 114: {fileID: 114000013998660860}
-  - 61: {fileID: 61000012542741478}
+  - component: {fileID: 4000010132111066}
+  - component: {fileID: 212000012452051556}
+  - component: {fileID: 114000013998660860}
+  - component: {fileID: 61000012542741478}
   m_Layer: 0
   m_Name: AirMeleeHitbox
   m_TagString: Untagged
@@ -67,10 +67,10 @@ GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011557403462}
-  - 212: {fileID: 212000011807568560}
+  - component: {fileID: 4000011557403462}
+  - component: {fileID: 212000011807568560}
   m_Layer: 0
   m_Name: shield
   m_TagString: Untagged
@@ -83,11 +83,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010270865358}
-  - 58: {fileID: 58000010018539540}
-  - 114: {fileID: 114000013087150574}
+  - component: {fileID: 4000010270865358}
+  - component: {fileID: 58000010018539540}
+  - component: {fileID: 114000013087150574}
   m_Layer: 0
   m_Name: FloorECB
   m_TagString: Untagged
@@ -100,11 +100,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012400566816}
-  - 114: {fileID: 114000012741134476}
-  - 61: {fileID: 61000013641300408}
+  - component: {fileID: 4000012400566816}
+  - component: {fileID: 114000012741134476}
+  - component: {fileID: 61000013641300408}
   m_Layer: 0
   m_Name: PlayerECB
   m_TagString: Untagged
@@ -117,12 +117,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000010028982518}
-  - 212: {fileID: 212000012445182308}
-  - 114: {fileID: 114000012144575440}
-  - 61: {fileID: 61000010859559732}
+  - component: {fileID: 4000010028982518}
+  - component: {fileID: 212000012445182308}
+  - component: {fileID: 114000012144575440}
+  - component: {fileID: 61000010859559732}
   m_Layer: 0
   m_Name: MeleeHitbox
   m_TagString: Untagged
@@ -135,12 +135,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000013944909074}
-  - 50: {fileID: 50000013996198470}
-  - 114: {fileID: 114000011357730092}
-  - 114: {fileID: 114000012294789520}
+  - component: {fileID: 4000013944909074}
+  - component: {fileID: 50000013996198470}
+  - component: {fileID: 114000011357730092}
+  - component: {fileID: 114000012294789520}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -153,9 +153,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000011577036212}
+  - component: {fileID: 4000011577036212}
   m_Layer: 0
   m_Name: SpriteContainer
   m_TagString: Untagged
@@ -172,10 +172,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.25, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010132111066
 Transform:
   m_ObjectHideFlags: 1
@@ -185,10 +185,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.25, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010270865358
 Transform:
   m_ObjectHideFlags: 1
@@ -198,10 +198,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000010929173848
 Transform:
   m_ObjectHideFlags: 1
@@ -211,10 +211,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.6, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011577036212}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011557403462
 Transform:
   m_ObjectHideFlags: 1
@@ -224,10 +224,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.25, y: 0.5, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011577036212}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011577036212
 Transform:
   m_ObjectHideFlags: 1
@@ -237,12 +237,12 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011557403462}
   - {fileID: 4000010929173848}
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000012400566816
 Transform:
   m_ObjectHideFlags: 1
@@ -252,10 +252,10 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013625136864
 Transform:
   m_ObjectHideFlags: 1
@@ -265,20 +265,19 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013944909074}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000013944909074
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014033558720}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011577036212}
   - {fileID: 4000010028982518}
@@ -288,19 +287,23 @@ Transform:
   - {fileID: 4000010270865358}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50000013996198470
 Rigidbody2D:
-  serializedVersion: 2
+  serializedVersion: 4
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014033558720}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 5
-  m_IsKinematic: 0
+  m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -399,8 +402,8 @@ MonoBehaviour:
   isCrouching: 0
   isBlocking: 0
   comboCount: 0
-  normalSprite: {fileID: 21300000, guid: 0204f35e83bed704fa11d719722eb245, type: 3}
-  hitSprite: {fileID: 21300000, guid: 960c3db20a61cd74681709d342116cf2, type: 3}
+  normalSprite: {fileID: 21300000, guid: 56f77d6fac0b90241b44c8cb70b21eb0, type: 3}
+  hitSprite: {fileID: 21300000, guid: 2fa5da22128b8584e8ee4ac89cf59997, type: 3}
   AIControlled: 0
   spriteContainer: {fileID: 1000014132474588}
   sprite: {fileID: 212000010195425386}
@@ -419,12 +422,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxName: MeleeHitbox
   owner: {fileID: 114000011357730092}
-  damage: 50
+  damage: 5
   knockbackVector: {x: 2, y: 6}
-  hitlag: 0.25
-  hitstun: 0.5
+  hitlag: 15
+  hitstun: 30
   chipDamage: 0
-  blockstun: 0.23
+  blockstun: 12
   isProjectile: 0
   type: 0
   knockdown: 0
@@ -495,12 +498,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxName: AirMeleeHitbox
   owner: {fileID: 114000011357730092}
-  damage: 10
+  damage: 8
   knockbackVector: {x: 1, y: -2}
-  hitlag: 0.5
-  hitstun: 1
+  hitlag: 30
+  hitstun: 60
   chipDamage: 0
-  blockstun: 0.05
+  blockstun: 3
   isProjectile: 0
   type: 2
   knockdown: 0
@@ -520,7 +523,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -528,14 +533,14 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0204f35e83bed704fa11d719722eb245, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56f77d6fac0b90241b44c8cb70b21eb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -553,7 +558,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -561,7 +568,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -586,7 +593,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -594,7 +603,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -619,7 +628,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -627,7 +638,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

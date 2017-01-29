@@ -10,10 +10,10 @@ public class HitState : State<Player>
     private Vector2 knockback;
     private bool knockedDown;
 
-    private float hitGravityScale = 20.0f;
+    private float hitGravityScale = 25.0f;
 
-    private float timer = 0.0f;
-    private float animTime = 0.5f;
+    private float frameCounter = 0.0f;
+    private float knockdownAnimFrameTime = 0.5f * Application.targetFrameRate;
 
     public HitState(Player playerInstance, float hitlag, float hitstun, Vector2 knockback, bool knockedDown, StateMachine<Player> fsm)
         : base(playerInstance, fsm)
@@ -40,12 +40,12 @@ public class HitState : State<Player>
 
     override public void Execute()
     {
-        if (timer < hitlag)
+        if (frameCounter < hitlag)
         {
-            timer += Time.deltaTime;
+            frameCounter ++;
             player.selfBody.simulated = false;
             
-            if (timer >= hitlag)
+            if (frameCounter >= hitlag)
             {
                 knockback = new Vector2(-player.facingDirection.x * knockback.x, knockback.y);
                 player.selfBody.simulated = true;
@@ -54,15 +54,15 @@ public class HitState : State<Player>
             return;
         }
 
-        if (timer < hitlag + hitstun)
+        if (frameCounter < hitlag + hitstun)
         {
-            timer += Time.deltaTime;
-            if(player.knockedDown)
+            frameCounter++;
+            if (player.knockedDown)
             {
                 player.StandAnim();
-                player.spriteContainer.transform.rotation = Quaternion.Lerp(Quaternion.AngleAxis(0, Vector3.forward), Quaternion.AngleAxis(90.0f * player.facingDirection.x, Vector3.forward), (timer - hitlag) / animTime);
+                player.spriteContainer.transform.rotation = Quaternion.Lerp(Quaternion.AngleAxis(0, Vector3.forward), Quaternion.AngleAxis(90.0f * player.facingDirection.x, Vector3.forward), (frameCounter - hitlag) / knockdownAnimFrameTime);
 
-                if (timer >= hitlag + hitstun)
+                if (frameCounter >= hitlag + hitstun)
                 {
                     GameManager.EndCombo(player.opponent);
                     player.ActionFsm.ChangeState(new TechState(player, player.ActionFsm));
@@ -70,7 +70,7 @@ public class HitState : State<Player>
             }
             else
             {
-                if (timer >= hitlag + hitstun)
+                if (frameCounter >= hitlag + hitstun)
                 {
                     GameManager.EndCombo(player.opponent);
                     player.stunned = false;
