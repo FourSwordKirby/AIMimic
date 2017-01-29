@@ -38,6 +38,8 @@ public class AttackState : State<Player>
         GameManager.instance.playSound("PunchWiff");
 
         this.player.selfBody.drag = 20.0f;
+        this.player.selfBody.velocity = Vector2.zero;
+
         if (!player.isCrouching)
         {
             startPosition = Vector3.zero;

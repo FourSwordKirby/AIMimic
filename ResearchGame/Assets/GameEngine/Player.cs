@@ -158,6 +158,9 @@ public class Player : MonoBehaviour {
             case Action.Attack:
                 this.Attack();
                 break;
+            case Action.AirAttack:
+                this.AirAttack();
+                break;
             case Action.Block:
                 this.Block();
                 break;
@@ -214,11 +217,14 @@ public class Player : MonoBehaviour {
 
     public void Attack()
     {
-        if(/*this.grounded &&*/this.selfBody.velocity.y <= 0 && this.transform.position.y <= 0.01f)
-            this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
-        else
-            this.ActionFsm.ChangeState(new AirAttackState(this, this.ActionFsm));
+        this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
     }
+
+    public void AirAttack()
+    {
+        this.ActionFsm.ChangeState(new AirAttackState(this, this.ActionFsm));
+    }
+
     public void Block()
     {
         this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm));

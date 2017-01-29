@@ -95,8 +95,11 @@ public class AirAttackState : State<Player>
     override public void Exit()
     {
         player.hitboxManager.deactivateHitBox("AirMeleeHitbox");
+
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
         meleeHitbox.transform.localPosition = Vector2.zero;
+        meleeHitbox.GetComponent<Hitbox>().knockdown = false;
+
         player.selfBody.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         player.selfBody.angularVelocity = 0;
     }

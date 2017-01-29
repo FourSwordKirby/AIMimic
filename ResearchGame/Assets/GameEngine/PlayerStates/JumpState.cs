@@ -57,7 +57,7 @@ public class JumpState : State<Player>
     {
         if (Controls.attackInputDown(player))
         {
-            player.Attack();
+            player.AirAttack();
         }
     }
 

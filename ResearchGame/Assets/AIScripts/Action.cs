@@ -10,5 +10,6 @@ public enum Action {
     JumpLeft,
     JumpRight,
     Attack,
+    AirAttack,
     Block
 }
