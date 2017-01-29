@@ -8,6 +8,10 @@ using System;
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
+    public static bool recordData;
+    public static bool useAI;
+    public List<DataRecorder> recorders;
+
     public Player p1;
     public Player p2;
     public int p1Victories;
@@ -17,8 +21,6 @@ public class GameManager : MonoBehaviour {
     public static int roundToWin = 1;
     public static string p1Name;
     public static string p2Name;
-    public static bool recordData;
-    public static bool useAI;
 
     public CameraControls Camera;
     public static GameObject[] hit_boxes;
@@ -40,32 +42,22 @@ public class GameManager : MonoBehaviour {
     public ComboText P2ComboText;
     public RematchUI rematchUI;
 
-    public List<DataRecorder> recorders;
-
     //Shouldn't be here but hacking
     public List<AudioClip> sfx;
 
-    private static float countDown = 4.0f;
-    private static float roundEndTimer = 2.5f;
+    private static float countDown;
+    private static float roundEndTimer;
     public bool roundOver { get; private set; }
     private bool firstBoot = true;
 
+    public static int currentFrame { get; private set; }
+
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            //DontDestroyOnLoad(this);
-        }
-        else
-        {
-            if (this != instance)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-
-        if(recordData)
+        instance = this;
+        //Application.targetFrameRate = 60;
+        //QualitySettings.vSyncCount = 0;
+        if (recordData)
         {
             recorders[0].playerProfileName = p1Name;
             recorders[1].playerProfileName = p2Name;
@@ -113,12 +105,13 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        if(!roundOver)
+        currentFrame++;
+        if (!roundOver)
         {
             RoundText.text = "";
             if (timeRemaining > 0)
                 timeRemaining -= Time.deltaTime;
-            if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
+            if (p1.health <= 0 || p2.health <= 0 || currentFrame >= SecondsToFrames(timeLimit))
             {
                 Time.timeScale = 0.75f;
                 currentRound++;
@@ -155,7 +148,7 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        if(!((p1Victories >= roundToWin)|| (p2Victories >= roundToWin)))
+        if (!((p1Victories >= roundToWin)|| (p2Victories >= roundToWin)))
         {
             if (roundEndTimer > 0)
             {
@@ -216,13 +209,20 @@ public class GameManager : MonoBehaviour {
         countDown = 4.0f;
         roundEndTimer = 2.5f;
 
+        timeRemaining = timeLimit;
+        currentFrame = 0;
+
         p1.enabled = false;
         p2.enabled = false;
-        timeRemaining = timeLimit;
         p1.Reset();
         p2.Reset();
         p1.transform.position = spawnPoint1.transform.position;
         p2.transform.position = spawnPoint2.transform.position;
+    }
+
+    private float SecondsToFrames(float timeLimit)
+    {
+        return timeLimit * Application.targetFrameRate;
     }
 
     public static void SpawnBlockIndicator(Vector3 position)

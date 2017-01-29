@@ -1,0 +1,174 @@
+Mono path[0] = 'C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Builds/Research2.0_Data/Managed'
+Mono path[1] = 'C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Builds/Research2.0_Data/Mono'
+Mono config path = 'C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Builds/Research2.0_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Builds/Research2.0_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55012
+Multi-casting "[IP] 10.0.0.18 [Port] 55012 [Flags] 2 [Guid] 427744418 [EditorId] 4165478938 [Version] 1048832 [Id] WindowsPlayer(Hinamizawa) [Debug] 0" to [225.0.0.222:54997]...
+PlayerConnection already initialized - listening to [10.0.0.18:55012]
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GPU (ID=0x134b)
+    Vendor:   NVIDIA
+    VRAM:     996 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.060 seconds
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Builds\Research2.0_Data\Managed\System.dll (this message is harmless)
+desktop: 3000x2000 60Hz; virtual: 9840x2160 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.227078 ms
+Joystick connected ("Wireless Controller").
+ 
+(Filename: C:/buildslave/unity/build/PlatformDependent/Win/RawInput.cpp Line: 1353)
+
+Joystick connected ("Wireless Controller").
+ 
+(Filename: C:/buildslave/unity/build/PlatformDependent/Win/RawInput.cpp Line: 1353)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.256830 ms
+System memory in use before: 72.2 MB.
+System memory in use after: 40.4 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 806.
+Total: 29.800665 ms (FindLiveObjects: 0.045128 ms CreateObjectMapping: 0.029128 ms MarkObjects: 0.424616 ms  DeleteObjects: 29.294407 ms)
+
+40
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:54)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:188)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/DataRecorder.cs Line: 54)
+
+wrote to log
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Session:writeToLog() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\Session.cs:43)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:55)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:188)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/Session.cs Line: 43)
+
+52
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:54)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:188)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/DataRecorder.cs Line: 54)
+
+wrote to log
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Session:writeToLog() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\Session.cs:43)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:55)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:188)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/Session.cs Line: 43)
+
+3
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:54)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/DataRecorder.cs Line: 54)
+
+wrote to log
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Session:writeToLog() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\Session.cs:43)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:55)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/Session.cs Line: 43)
+
+40
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:54)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/DataRecorder.cs Line: 54)
+
+wrote to log
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Session:writeToLog() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\Session.cs:43)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:55)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/Session.cs Line: 43)
+
+52
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:54)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/DataRecorder.cs Line: 54)
+
+wrote to log
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Session:writeToLog() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\Session.cs:43)
+DataRecorder:writeToLog(Int32, Int32) (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\AIScripts\DataRecorder.cs:55)
+GameManager:Quit() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\GameEngine\GameManager.cs:190)
+RematchUI:Update() (at C:\Users\Roger Liu\Desktop\AIMimic\ResearchGame\Assets\RematchUI.cs:94)
+ 
+(Filename: C:/Users/Roger Liu/Desktop/AIMimic/ResearchGame/Assets/AIScripts/Session.cs Line: 43)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.807796 ms
+System memory in use before: 71.5 MB.
+System memory in use after: 49.9 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 576.
+Total: 2.995286 ms (FindLiveObjects: 0.030769 ms CreateObjectMapping: 0.015589 ms MarkObjects: 0.441436 ms  DeleteObjects: 2.505850 ms)
+
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1cbc -> priority: 1 

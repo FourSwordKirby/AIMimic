@@ -31,7 +31,7 @@ public class SuspendState : State<Player>
 
     override public void Enter()
     {
-        player.selfBody.isKinematic = true;
+        player.selfBody.simulated = false;
     }
 
     override public void Execute()
@@ -52,7 +52,7 @@ public class SuspendState : State<Player>
 
     override public void Exit()
     {
-        player.selfBody.isKinematic = false;
+        player.selfBody.simulated = true;
         player.selfBody.velocity = origVel;
         player.selfBody.angularVelocity = origAngleVel;
     }

@@ -43,12 +43,12 @@ public class HitState : State<Player>
         if (timer < hitlag)
         {
             timer += Time.deltaTime;
-            player.selfBody.isKinematic = true;
+            player.selfBody.simulated = false;
             
             if (timer >= hitlag)
             {
                 knockback = new Vector2(-player.facingDirection.x * knockback.x, knockback.y);
-                player.selfBody.isKinematic = false;
+                player.selfBody.simulated = true;
                 player.selfBody.velocity = knockback;
             }
             return;

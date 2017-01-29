@@ -12,7 +12,7 @@ public class DataRecorder : MonoBehaviour {
     bool returnedToNeutral;
     bool matchOver;
 
-    float previousTime = GameManager.timeRemaining;
+    float previousTime = GameManager.currentFrame;
     string previousState = "";
 
     List<Session> sessions;
@@ -68,22 +68,22 @@ public class DataRecorder : MonoBehaviour {
         previousState = currentState;
 
         Action actionTaken = Action.Stand;
-        float delay = previousTime - GameManager.timeRemaining;
+        float delay = previousTime - GameManager.currentFrame;
         if (currentState == "AttackState")
         {
             actionTaken = Action.Attack;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
-                                                    GameManager.timeRemaining, actionTaken);
+                                                    GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
-            previousTime = GameManager.timeRemaining;
+            previousTime = GameManager.currentFrame;
         }
         else if (currentState == "BlockState")
         {
             actionTaken = Action.Block;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
-                                                    GameManager.timeRemaining, actionTaken);
+                                                    GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
-            previousTime = GameManager.timeRemaining;
+            previousTime = GameManager.currentFrame;
         }
         else if (currentState == "JumpState")
         {
@@ -95,9 +95,9 @@ public class DataRecorder : MonoBehaviour {
                 actionTaken = Action.JumpRight;
 
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
-                                                    GameManager.timeRemaining, actionTaken);
+                                                    GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
-            previousTime = GameManager.timeRemaining;
+            previousTime = GameManager.currentFrame;
         }
         else if (currentState == "MovementState")
         {
@@ -108,9 +108,9 @@ public class DataRecorder : MonoBehaviour {
                 if (((MovementState)opponentPlayer.ActionFsm.CurrentState).moveDir > 0)
                     actionTaken = Action.WalkRight;
                 GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
-                                                        GameManager.timeRemaining, actionTaken);
+                                                        GameManager.currentFrame, actionTaken);
                 currentSession.addSnapshot(snapshot);
-                previousTime = GameManager.timeRemaining;
+                previousTime = GameManager.currentFrame;
             }
 
             returnedToNeutral = false;
@@ -121,9 +121,9 @@ public class DataRecorder : MonoBehaviour {
         {
             actionTaken = Action.Stand;
             GameSnapshot snapshot = new GameSnapshot(controlledPlayer, opponentPlayer, delay,
-                                            GameManager.timeRemaining, actionTaken);
+                                            GameManager.currentFrame, actionTaken);
             currentSession.addSnapshot(snapshot);
-            previousTime = GameManager.timeRemaining;
+            previousTime = GameManager.currentFrame;
             returnedToNeutral = true;
         }
     }
