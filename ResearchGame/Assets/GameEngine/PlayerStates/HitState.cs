@@ -65,6 +65,8 @@ public class HitState : State<Player>
                 if (frameCounter >= hitlag + hitstun)
                 {
                     GameManager.EndCombo(player.opponent);
+
+                    //We don't call preformAction because it's not voluntarily done on the part of the player
                     player.ActionFsm.ChangeState(new TechState(player, player.ActionFsm));
                 }
             }
@@ -73,8 +75,10 @@ public class HitState : State<Player>
                 if (frameCounter >= hitlag + hitstun)
                 {
                     GameManager.EndCombo(player.opponent);
-                    player.stunned = false;
-                    player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
+                    player.stunned = false;            
+                    
+                    //We don't call preformAction because it's not voluntarily done on the part of the player
+                    player.Idle();
                 }
             }
         }

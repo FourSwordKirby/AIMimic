@@ -25,36 +25,46 @@ public class IdleState : State<Player> {
         //Change this to be a jump button
         if (Controls.jumpInputDown(player))
         {
-            player.Jump(dir);
+            if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
+                player.performAction(Action.JumpRight);
+            else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
+                player.performAction(Action.JumpLeft);
+            else
+                player.performAction(Action.JumpNeutral);
             return;
         }
 
         if (Controls.attackInputDown(player))
         {
-            player.Attack();
+            player.performAction(Action.Attack);
         }
 
         if (!player.AIControlled)
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.Block();
+                player.performAction(Action.Block);
             }
 
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
-                player.isCrouching = true;
+                if(!player.isCrouching)
+                    player.performAction(Action.Crouch);
                 return;
             }
             else
             {
-                player.isCrouching = false;
+                if (player.isCrouching)
+                    player.performAction(Action.Stand);
             }
         }
 
         if (dir != Parameters.InputDirection.None)
         {
-            player.Walk(dir);
+            if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.SE)
+                player.performAction(Action.WalkRight);
+            else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.SW)
+                player.performAction(Action.WalkLeft);
             return;
         }
     }

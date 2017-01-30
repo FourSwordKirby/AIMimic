@@ -24,38 +24,42 @@ public class BlockState :  State<Player> {
     {
         Parameters.InputDirection dir = Controls.getInputDirection(player);
 
-        //Shield Animations
-        if (!player.isCrouching)
+        if (!player.AIControlled)
         {
-        }
-        else
-        {
+            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+            {
+                player.shield.transform.localPosition = 0.25f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
+                player.shield.transform.localScale = Vector3.one * 0.5f + Vector3.up * 0.5f;
+                player.shield.transform.localScale *= 0.75f;
+                if (!player.isCrouching)
+                    player.performAction(Action.Crouch);
+            }
+            else
+            {
+                player.shield.transform.localPosition = 0.5f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
+                player.shield.transform.localScale = Vector3.one * 0.5f;
+                if (player.isCrouching)
+                    player.performAction(Action.Stand);
+            }
+
+            if (!Controls.shieldInputHeld(player))
+            {
+                player.performAction(Action.Idle);
+                return;
+            }
         }
 
         if (Controls.jumpInputDown(player))
         {
-            player.Jump(dir);
+            Action chosenAction;
+            if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
+                chosenAction = Action.JumpRight;
+            else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
+                chosenAction = Action.JumpLeft;
+            else
+                chosenAction = Action.JumpNeutral;
+            player.performAction(chosenAction);
             return;
-        }
-
-        if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
-        {
-            player.shield.transform.localPosition = 0.25f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
-            player.shield.transform.localScale = Vector3.one * 0.5f + Vector3.up * 0.5f;
-            player.shield.transform.localScale *= 0.75f;
-            player.isCrouching = true;
-            return;
-        }
-        else
-        {
-            player.shield.transform.localPosition = 0.5f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
-            player.shield.transform.localScale = Vector3.one * 0.5f;
-            player.isCrouching = false;
-        }
-
-        if (!Controls.shieldInputHeld(player))
-        {
-            player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
         }
     }
 

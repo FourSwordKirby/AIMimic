@@ -47,7 +47,9 @@ public class TechState : State<Player>
             {
                 player.spriteContainer.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
                 player.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
-                player.Stand();
+
+                //We don't call preformAction because it's not voluntarily done on the part of the player
+                player.Idle();
             }
         }
     }

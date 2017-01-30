@@ -71,7 +71,7 @@ public class AttackState : State<Player>
         if(player.chainable)
         {
             if (Controls.attackInputDown(player))
-                player.Attack();
+                player.performAction(Action.Attack);
         }
 
         frameCounter ++;
@@ -96,7 +96,8 @@ public class AttackState : State<Player>
         else
         {
             meleeHitbox.transform.localPosition = Vector2.zero;
-            player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
+            //We don't call preformAction because it's not voluntarily done on the part of the player
+            player.Idle();
         }
     }
 

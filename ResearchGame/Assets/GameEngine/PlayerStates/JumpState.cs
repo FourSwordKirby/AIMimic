@@ -22,7 +22,7 @@ public class JumpState : State<Player>
     override public void Enter()
     {
         GameManager.instance.playSound("Jump");
-        player.StandAnim();
+        player.Stand();
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
         {
@@ -57,15 +57,16 @@ public class JumpState : State<Player>
     {
         if (Controls.attackInputDown(player))
         {
-            player.AirAttack();
+            player.performAction(Action.AirAttack);
         }
     }
 
     override public void FixedExecute()
     {
         if (player.grounded && player.selfBody.velocity.y <= 0)
-        {
-            player.Stand();
+        {            
+            //We don't call preformAction because it's not voluntarily done on the part of the player
+            player.Idle();
             return;
         }
     }

@@ -49,7 +49,7 @@ public class MovementState : State<Player> {
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.Block();
+                player.performAction(Action.Block);
                 return;
             }
         }
@@ -58,10 +58,10 @@ public class MovementState : State<Player> {
         {
             if (!player.AIControlled)
             {
-                if (dir == Parameters.InputDirection.None)
-                    player.performAction(Action.Stand);
-                else
-                    player.performAction(Action.Crouch);
+                //if (dir == Parameters.InputDirection.None)
+                    player.performAction(Action.Idle);
+                //else
+                //    player.performAction(Action.Crouch);
             }
         }
     }

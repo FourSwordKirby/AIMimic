@@ -16,7 +16,7 @@ public class ReplayAI : MonoBehaviour
     void Start()
     {
         //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.instance.p1;
+        AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.gray;
@@ -36,33 +36,7 @@ public class ReplayAI : MonoBehaviour
             Debug.Log(chosenAction);
             actionCount++;
 
-            switch (chosenAction)
-            {
-                case Action.WalkLeft:
-                    AIPlayer.Walk(Parameters.InputDirection.W);
-                    break;
-                case Action.WalkRight:
-                    AIPlayer.Walk(Parameters.InputDirection.E);
-                    break;
-                case Action.JumpNeutral:
-                    AIPlayer.Jump(Parameters.InputDirection.N);
-                    break;
-                case Action.JumpLeft:
-                    AIPlayer.Jump(Parameters.InputDirection.W);
-                    break;
-                case Action.JumpRight:
-                    AIPlayer.Jump(Parameters.InputDirection.E);
-                    break;
-                case Action.Attack:
-                    AIPlayer.Attack();
-                    break;
-                case Action.Block:
-                    AIPlayer.Block();
-                    break;
-                case Action.Stand:
-                    AIPlayer.Stand();
-                    break;
-            }
+            AIPlayer.performAction(chosenAction);
         }
     }
 

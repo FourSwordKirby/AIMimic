@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour {
             }
             else 
             {
+                currentFrame++;
                 roundOver = false;
                 RoundText.text = "GO!";
                 p1.enabled = true;
@@ -142,13 +143,24 @@ public class GameManager : MonoBehaviour {
                 if (p2Victories >= roundToWin)
                     RoundText.text = "P2 WINS";
 
-                if(!p1.grounded && !p1.stunned)
+                //if(p1.grounded && !p1.stunned)
                     p1.enabled = false;
-                if (!p2.grounded && !p2.stunned)
+                //if(p2.grounded && !p2.stunned)
                     p2.enabled = false;
 
                 P1RoundCount.SetStockCount(p1Victories);
                 P2RoundCount.SetStockCount(p2Victories);
+
+                //At the end of a round, we log that round in the data recorder
+                if (recordData || recorders[0].enabled || recorders[1].enabled)
+                {
+                    foreach (DataRecorder recorder in recorders)
+                    {
+                        if (recorder.enabled)
+                            recorder.logSession();
+                    }
+                }
+
                 roundOver = true;
             }
             return;
@@ -182,12 +194,15 @@ public class GameManager : MonoBehaviour {
 
     public void Quit()
     {
-        if(recordData || recorders[0].enabled)
+        if (recordData || recorders[0].enabled || recorders[1].enabled)
         {
-            recorders[0].writeToLog(rematchUI.p1Class, rematchUI.p2Class);
-            //foreach (DataRecorder recorder in recorders)
-            //    recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
+            foreach (DataRecorder recorder in recorders)
+            {
+                if (recorder.enabled)
+                    recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
+            }
         }
+
         SceneManager.LoadScene(0);
     }
 

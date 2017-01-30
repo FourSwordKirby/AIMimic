@@ -11,5 +11,6 @@ public enum Action {
     JumpRight,
     Attack,
     AirAttack,
-    Block
+    Block,
+    Idle
 }
