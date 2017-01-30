@@ -7,7 +7,7 @@ public class MovementState : State<Player> {
     private Vector3 targetLocation;
 
     //Used primarily by the datarecorder
-    public int moveDir;
+    public Vector3 movementVector;
 
     //TODO: INPUT BUFFER FOR NEXT MOVE
     private Action nextAction = Action.Stand;
@@ -16,19 +16,20 @@ public class MovementState : State<Player> {
     public MovementState(Player playerInstance, StateMachine<Player> fsm, float dir)
         : base(playerInstance, fsm)
     {
-        moveDir = (int)dir; //displacement < 0 ? -1 : displacement > 0 ? 1 : 0;
-
         player = playerInstance;
+        movementVector = Vector3.right * (int)dir * player.movementSpeed;
     }
 
     override public void Enter()
     {
-        Vector2 movementVector = Vector2.right * moveDir * player.movementSpeed;
+        //Vector2 movementVector = Vector2.right * moveDir * player.movementSpeed;
         player.selfBody.velocity = movementVector;
     }
 
     override public void Execute()
     {
+        //player.transform.position += movementVector * 1 / Application.targetFrameRate;
+
         Parameters.InputDirection dir = Controls.getInputDirection(player);
         if (Controls.jumpInputHeld(player))
         {
@@ -68,15 +69,15 @@ public class MovementState : State<Player> {
 
     override public void FixedExecute()
     {
-        Parameters.InputDirection dir = Controls.getInputDirection(player);
-        Vector2 movementVector;
-        if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E)
-            movementVector = Vector2.right * player.movementSpeed;
-        else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W)
-            movementVector = Vector2.left * player.movementSpeed;
-        else
-            movementVector = player.selfBody.velocity;
-        player.selfBody.velocity = movementVector;
+            //Parameters.InputDirection dir = Controls.getInputDirection(player);
+            //Vector2 movementVector;
+            //if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E)
+            //    movementVector = Vector2.right * player.movementSpeed;
+            //else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W)
+            //    movementVector = Vector2.left * player.movementSpeed;
+            //else
+            //    movementVector = player.selfBody.velocity;
+            //player.selfBody.velocity = movementVector;
     }
 
     override public void Exit()

@@ -7,13 +7,12 @@ public class JumpState : State<Player>
     public Vector3 targetLocation { get; private set; }
 
     //Used primarily by the datarecorder
-    public int jumpDir;
+    public Vector3 jumpVector;
 
     public JumpState(Player playerInstance, StateMachine<Player> fsm, Vector3 targetLocation)
         : base(playerInstance, fsm)
     {
         float displacement = targetLocation.x - playerInstance.transform.position.x;
-        jumpDir = displacement < 0 ? -1 : displacement > 0 ? 1: 0;
 
         player = playerInstance;
         this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, - 10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
@@ -36,6 +35,7 @@ public class JumpState : State<Player>
         {   
             player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
         }
+        jumpVector = player.selfBody.velocity;
     }
     public Vector2 getJumpVelocity(float height, float distance, float time)
     {
@@ -51,7 +51,7 @@ public class JumpState : State<Player>
         return new Vector2(xVel, yVel);
     }
 
-
+    public float gravScale;
     /*error with collision boxes puts player in air state when he actually isn't*/
     override public void Execute()
     {

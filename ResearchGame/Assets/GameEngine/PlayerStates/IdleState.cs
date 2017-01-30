@@ -14,6 +14,7 @@ public class IdleState : State<Player> {
     override public void Enter()
     {
         this.player.selfBody.drag = 20.0f;
+        this.player.selfBody.velocity = Vector3.zero;
         this.player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         this.player.selfBody.angularVelocity = 0;
     }

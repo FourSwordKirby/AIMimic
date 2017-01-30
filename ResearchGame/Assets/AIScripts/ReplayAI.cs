@@ -33,7 +33,6 @@ public class ReplayAI : MonoBehaviour
         if (actionCount < priorSnapshots.Count && GameManager.currentFrame == priorSnapshots[actionCount].frameTaken)
         {
             Action chosenAction = priorSnapshots[actionCount].actionTaken;
-            Debug.Log(chosenAction);
             actionCount++;
 
             AIPlayer.performAction(chosenAction);

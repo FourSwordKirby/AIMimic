@@ -46,8 +46,6 @@ public class AirAttackState : State<Player>
             player.chainable = false;
             meleeHitbox.GetComponent<Hitbox>().knockdown = true;
         }
-
-        player.selfBody.angularVelocity = -540.0f * player.facingDirection.x;
     }
 
     override public void Execute()
@@ -80,6 +78,18 @@ public class AirAttackState : State<Player>
             meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
             meleeHitbox.transform.localPosition = Vector2.zero;
         }
+
+        if (frameCounter < 20)
+        {
+            player.transform.rotation =
+            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-player.facingDirection.x * Vector3.forward * 179), frameCounter / 20);
+        }
+        else
+        {
+            player.transform.rotation =
+            Quaternion.Lerp(Quaternion.Euler(-player.facingDirection.x * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 20)/ 20);
+        }
+        //.selfBody.angularVelocity = -540.0f * player.facingDirection.x;
     }
 
     override public void FixedExecute()

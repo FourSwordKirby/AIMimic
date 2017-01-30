@@ -152,7 +152,7 @@ public class Player : MonoBehaviour {
     public void performAction(Action action)
     {
         //Recording our action
-        Debug.Log("recorded " + action + "frame " + GameManager.currentFrame);
+        Debug.Log("recorded " + action + " position " + this.transform.position.x);
         if (dataRecorder.enabled)
             dataRecorder.RecordAction(action);
 
