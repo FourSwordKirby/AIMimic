@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-public class ReplayAI : MonoBehaviour
+public class ngramAI : MonoBehaviour
 {
     public string playerProfileName;
 
     //Player controlledPlayer;
     Player AIPlayer;
+    Player Opponent;
 
     private List<GameSnapshot> priorSnapshots;
 
@@ -30,16 +31,39 @@ public class ReplayAI : MonoBehaviour
     int actionCount = 0;
     void Update()
     {
-        if (actionCount < priorSnapshots.Count && GameManager.currentFrame == priorSnapshots[actionCount].frameTaken)
-        {
-            Action chosenAction = priorSnapshots[actionCount].actionTaken;
-            Vector3 AIPosition = priorSnapshots[actionCount].p2Position;
-
-            actionCount++;
-            AIPlayer.transform.position = AIPosition;
-            AIPlayer.performAction(chosenAction);
-        }
     }
 
-    //Need to make the player actually do an action here.
+
+    //Encapsulate the state of the opponent player, reduced to easily identifiable enums
+    void getPlayerState()
+    {
+        
+    }
+}
+
+public enum xDistance
+{
+    Far,
+    Near,
+    Adjacent
+}
+
+public enum yDistance
+{
+    Far,
+    Near,
+    Level
+}
+
+public enum Health
+{
+    High,
+    Med,
+    Low
+}
+
+public enum Cornered
+{
+    yes,
+    no
 }

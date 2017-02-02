@@ -6,6 +6,8 @@ using System.Runtime.Serialization;
 
 public class GameSnapshot {
 
+    public Parameters.PlayerStatus opponentStatus;
+
     public Action actionTaken;
 
     public float frameDelay;
@@ -13,6 +15,9 @@ public class GameSnapshot {
 
     public float p1Health;
     public float p2Health;
+
+    public Vector3 p1Position;
+    public Vector3 p2Position;
 
     public float xDistance;
     public float yDistance;
@@ -36,6 +41,8 @@ public class GameSnapshot {
         p1Health = p1.health;
         p2Health = p2.health;
 
+        p1Position = p1.transform.position;
+        p2Position = p2.transform.position;
 
         //Remember, in this scenario we are player 2 reacting to the actions of player 1
         xDistance = p2.effectivePosition.x - p1.effectivePosition.x;

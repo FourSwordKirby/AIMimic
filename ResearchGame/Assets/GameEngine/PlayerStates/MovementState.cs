@@ -69,15 +69,7 @@ public class MovementState : State<Player> {
 
     override public void FixedExecute()
     {
-            //Parameters.InputDirection dir = Controls.getInputDirection(player);
-            //Vector2 movementVector;
-            //if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E)
-            //    movementVector = Vector2.right * player.movementSpeed;
-            //else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W)
-            //    movementVector = Vector2.left * player.movementSpeed;
-            //else
-            //    movementVector = player.selfBody.velocity;
-            //player.selfBody.velocity = movementVector;
+            player.selfBody.velocity = movementVector;
     }
 
     override public void Exit()

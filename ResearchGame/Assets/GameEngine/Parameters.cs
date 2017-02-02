@@ -4,18 +4,6 @@ using System.Collections;
 public class Parameters : MonoBehaviour {
 
     public static float positionLeeway = 0.01f;
-    
-    //TODO: Refactor datarecorder to case on action?
-    public enum Action 
-    {
-        Idle,
-        NeutralJump,
-        LeftJump,
-        RightJump,
-        LeftMove,
-        RightMove,
-        Attack
-    }
 
     public enum InputDirection
     {
@@ -29,14 +17,6 @@ public class Parameters : MonoBehaviour {
         SW,
         None
     };
-
-    //Do we need this?
-    public enum PlayerStatus
-    {
-        Default, //Normal everyday state
-        Invincible //No damageno knockback
-    };
-
 
     public static InputDirection vectorToDirection(Vector2 inputVector)
     {
