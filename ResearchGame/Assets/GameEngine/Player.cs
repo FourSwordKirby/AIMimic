@@ -45,7 +45,8 @@ public class Player : MonoBehaviour {
     public CollisionboxManager hitboxManager { get; private set; }
 
     //Player keeps track of recording data bc it's impossible to record merely from observation tbh
-    public DataRecorder dataRecorder;
+    private DataRecorder dataRecorder;
+    private bool isOpponent;
 
     //Used for the initialization of internal, non-object variables
     void Awake()
@@ -153,8 +154,8 @@ public class Player : MonoBehaviour {
     {
         //Recording our action
         Debug.Log("recorded " + action + " position " + this.transform.position.x);
-        if (dataRecorder.enabled)
-            dataRecorder.RecordAction(action);
+        if (dataRecorder != null)
+            dataRecorder.RecordAction(action, isOpponent);
 
         switch(action) {
             case Action.Stand:
@@ -200,6 +201,9 @@ public class Player : MonoBehaviour {
     //Interface for doing actions in the game
     void Walk(Parameters.InputDirection dir)
     {
+        if (!this.grounded)
+            return;
+
         //Vector2 originalPositon = this.transform.position; 
         Vector2 movementVector = Vector2.zero;
         if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
@@ -214,6 +218,9 @@ public class Player : MonoBehaviour {
     //Invincible to lows. Forward hop goes 2 spaces. Will jump over 1 space close opponents
     void Jump(Parameters.InputDirection dir)
     {
+        if (!this.grounded)
+            return;
+
         Vector2 movementVector = Vector2.zero;
         this.Idle();
 
@@ -243,7 +250,8 @@ public class Player : MonoBehaviour {
 
     public void Idle()
     {
-        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
+        if(this.grounded)
+            this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
     }
 
     public void Stand()
@@ -256,5 +264,11 @@ public class Player : MonoBehaviour {
     {
         this.isCrouching = true;
         CrouchAnim();
+    }
+
+    public void SetRecorder(DataRecorder dataRecorder, bool isOpponent)
+    {
+        this.dataRecorder = dataRecorder;
+        this.isOpponent = isOpponent;
     }
 }

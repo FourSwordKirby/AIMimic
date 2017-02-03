@@ -5,39 +5,47 @@ using System.Collections.Generic;
 public class DataRecorder : MonoBehaviour {
     public string playerProfileName;
     public bool enablePlaystyleLabeling;
+    public bool currentlyLogging;
 
-    public Player recordedPlayer;
     public Player opponentPlayer;
+    public Player recordedPlayer;
 
-    bool returnedToNeutral;
-    bool matchOver;
+    public Action latestOpponentAction = Action.Idle;
+    public Action latestPlayerAction = Action.Idle;
 
     float previousTime = GameManager.currentFrame;
-    string previousState = "";
-    bool wasCrouching = false;
 
+    public Session currentSession;
     List<Session> sessions;
-    Session currentSession;
 
     void Start()
     {
-        returnedToNeutral = true;
-
         sessions = new List<Session>(); 
         currentSession = new Session(playerProfileName);
+
+        opponentPlayer.SetRecorder(this, true);
+        recordedPlayer.SetRecorder(this, false);
+
+        if (currentlyLogging)
+            recordedPlayer.sprite.color = Color.yellow;
     }
 
-    public void logSession()
+    public void LogSession()
     {
-        sessions.Add(currentSession);
+        if (currentSession.snapshots.Count > 0)
+            sessions.Add(currentSession);
+        ClearSession();
+    }
+
+    public void ClearSession()
+    {
         currentSession = new Session(playerProfileName);
     }
 
-    public void writeToLog(int p1Class, int p2Class)
+    public void WriteToLog(int p1Class, int p2Class)
     {
         //Catchall for any incomplete session that we haven't logged
-        if (currentSession.snapshots.Count > 0)
-            sessions.Add(currentSession);
+        LogSession();
 
         int pClass = (GameManager.instance.p1 == this.recordedPlayer)? p1Class : p2Class;
 
@@ -51,14 +59,23 @@ public class DataRecorder : MonoBehaviour {
         }
     }
 
-    public void RecordAction(Action actionTaken)
+    public void RecordAction(Action actionTaken, bool isOpponent)
     {
+        if (isOpponent)
+            latestOpponentAction = actionTaken;
+        else
+            latestPlayerAction = actionTaken;
+
+        int initIndex = isOpponent ? 0 : 1;
+
         float delay = previousTime - GameManager.currentFrame;
-        GameSnapshot snapshot = new GameSnapshot(opponentPlayer, recordedPlayer, delay,
-                                GameManager.currentFrame, actionTaken);
+        GameSnapshot snapshot = new GameSnapshot(initIndex, opponentPlayer, recordedPlayer, delay,
+                                                GameManager.currentFrame, latestOpponentAction, latestPlayerAction);
         currentSession.addSnapshot(snapshot);
         previousTime = GameManager.currentFrame;
     }
+
+
 
     /*Code that was used when we were trying to record the player's action by just observing it's state. Obsolete now.
     //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)

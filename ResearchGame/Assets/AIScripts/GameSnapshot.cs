@@ -6,9 +6,10 @@ using System.Runtime.Serialization;
 
 public class GameSnapshot {
 
-    public Parameters.PlayerStatus opponentStatus;
+    public int initiatedPlayer; //-1 means not initiated by a player, 0 means p1 and 1 means p2
 
-    public Action actionTaken;
+    public Action p1Action;
+    public Action p2Action;
 
     public float frameDelay;
     public float frameTaken;
@@ -29,15 +30,22 @@ public class GameSnapshot {
     public List<string> labels;
 
     //Planned additional features
-    private float frameAdvantage;
+    //private float frameAdvantage;
 
     public GameSnapshot()
     {
         //Exists just for the xml serializer
     }
 
-    public GameSnapshot(Player p1, Player p2, float delay, float frameTaken, Action p2Action)
+
+    //Basically, whenever the player we're recording does a move or when the opponent does a move
+    //We want to know what the player is doing
+    //Example, say the recorded player is moving right, we need the player to move right for every
+    //action that the opponent is doing in that time
+    public GameSnapshot(int initiatedPlayer, Player p1, Player p2, float delay, float frameTaken, Action p1Action, Action p2Action)
     {
+        this.initiatedPlayer = initiatedPlayer;
+
         p1Health = p1.health;
         p2Health = p2.health;
 
@@ -53,7 +61,7 @@ public class GameSnapshot {
 
         this.frameDelay = delay;
         this.frameTaken = frameTaken;
-        this.actionTaken = p2Action;
+        this.p2Action = p2Action;
 
         this.labels = new List<string>();
         labels.Add("wtf");
@@ -61,7 +69,7 @@ public class GameSnapshot {
 
     override public string ToString()
     {
-        return actionTaken.ToString();
+        return p2Action.ToString();
     }
 
     //Insert helper functions here for getting various atributes

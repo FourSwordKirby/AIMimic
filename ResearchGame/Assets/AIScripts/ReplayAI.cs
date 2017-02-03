@@ -24,6 +24,8 @@ public class ReplayAI : MonoBehaviour
         priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
         priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
+        priorSnapshots = priorSnapshots.FindAll(x => x.initiatedPlayer == 1);
+
         Debug.Log(priorSnapshots.Count);
     }
 
@@ -32,7 +34,7 @@ public class ReplayAI : MonoBehaviour
     {
         if (actionCount < priorSnapshots.Count && GameManager.currentFrame == priorSnapshots[actionCount].frameTaken)
         {
-            Action chosenAction = priorSnapshots[actionCount].actionTaken;
+            Action chosenAction = priorSnapshots[actionCount].p2Action;
             Vector3 AIPosition = priorSnapshots[actionCount].p2Position;
 
             actionCount++;

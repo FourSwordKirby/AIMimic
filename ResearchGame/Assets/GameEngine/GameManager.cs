@@ -156,8 +156,8 @@ public class GameManager : MonoBehaviour {
                 {
                     foreach (DataRecorder recorder in recorders)
                     {
-                        if (recorder.enabled)
-                            recorder.logSession();
+                        if (recorder.currentlyLogging)
+                            recorder.LogSession();
                     }
                 }
 
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour {
             foreach (DataRecorder recorder in recorders)
             {
                 if (recorder.enabled)
-                    recorder.writeToLog(rematchUI.p1Class, rematchUI.p2Class);
+                    recorder.WriteToLog(rematchUI.p1Class, rematchUI.p2Class);
             }
         }
 
