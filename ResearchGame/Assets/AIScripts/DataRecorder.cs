@@ -10,9 +10,6 @@ public class DataRecorder : MonoBehaviour {
     public Player opponentPlayer;
     public Player recordedPlayer;
 
-    public Action latestOpponentAction = Action.Idle;
-    public Action latestPlayerAction = Action.Idle;
-
     float previousTime = GameManager.currentFrame;
 
     public Session currentSession;
@@ -59,6 +56,9 @@ public class DataRecorder : MonoBehaviour {
         }
     }
 
+
+    public Action latestOpponentAction = Action.Idle;
+    public Action latestPlayerAction = Action.Idle;
     public void RecordAction(Action actionTaken, bool isOpponent)
     {
         if (isOpponent)

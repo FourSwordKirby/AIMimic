@@ -17,6 +17,8 @@ public class AirAttackState : State<Player>
     private Vector3 startPosition;
     private Vector3 endPosition;
 
+    private float direction;
+
     public AirAttackState(Player playerInstance, StateMachine<Player> fsm) : base(playerInstance, fsm)
     {
         GameManager.instance.playSound("AirSwipe");
@@ -40,6 +42,7 @@ public class AirAttackState : State<Player>
 
         startPosition = Vector3.zero;
         endPosition = player.facingDirection * attackDistance;
+        direction = player.facingDirection.x;
 
         if (player.comboCount >= 2)
         {
@@ -79,15 +82,16 @@ public class AirAttackState : State<Player>
             meleeHitbox.transform.localPosition = Vector2.zero;
         }
 
+        //Animate the player
         if (frameCounter < 20)
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-player.facingDirection.x * Vector3.forward * 179), frameCounter / 20);
+            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-direction * Vector3.forward * 179), frameCounter / 20);
         }
         else
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(-player.facingDirection.x * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 20)/ 20);
+            Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 20)/ 20);
         }
         //.selfBody.angularVelocity = -540.0f * player.facingDirection.x;
     }

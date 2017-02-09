@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.Linq;
 
 
 public class GameSnapshot {
@@ -10,6 +10,9 @@ public class GameSnapshot {
 
     public Action p1Action;
     public Action p2Action;
+
+    public PlayerStatus p1Status;
+    public PlayerStatus p2Status;
 
     public float frameDelay;
     public float frameTaken;
@@ -46,6 +49,14 @@ public class GameSnapshot {
     {
         this.initiatedPlayer = initiatedPlayer;
 
+        this.frameDelay = delay;
+        this.frameTaken = frameTaken;
+        this.p1Action = p1Action;
+        this.p2Action = p2Action;
+
+        this.p1Status = StateToStatus(p1);
+        this.p2Status = StateToStatus(p2);
+
         p1Health = p1.health;
         p2Health = p2.health;
 
@@ -58,10 +69,6 @@ public class GameSnapshot {
 
         p1CornerDistance = getCornerDistance(p1.effectivePosition.x);
         p2CornerDistance = getCornerDistance(p2.effectivePosition.x);
-
-        this.frameDelay = delay;
-        this.frameTaken = frameTaken;
-        this.p2Action = p2Action;
 
         this.labels = new List<string>();
         labels.Add("wtf");
@@ -81,7 +88,54 @@ public class GameSnapshot {
         return Mathf.Min(leftCornerDist, rightCornerDist);
     }
 
-    //Insert a way of comparing attributes;
+    public PlayerStatus StateToStatus(Player p)
+    {
+        State<Player> state = p.ActionFsm.CurrentState;
+
+        if (p.ActionFsm.StateStack.Count == 0)
+            state = p.ActionFsm.CurrentState;
+        else
+            state = p.ActionFsm.StateStack.First(x => !(x is SuspendState));
+
+        if (state is IdleState)
+        {
+            if (!p.isCrouching)
+                return PlayerStatus.Stand;
+            else
+                return PlayerStatus.Crouch;
+        }
+        if (state is BlockState)
+        {
+            if (!p.isCrouching)
+                return PlayerStatus.Highblock;
+            else
+                return PlayerStatus.Lowblock;
+        }
+        else if (state is MovementState)
+        {
+            return PlayerStatus.Stand;
+        }
+        else if (state is JumpState)
+        {
+            return PlayerStatus.Air;
+        }
+        else if (state is AttackState || state is AirAttackState)
+        {
+            return PlayerStatus.Attacking;
+        }
+        else if (state is HitState)
+        {
+            return PlayerStatus.Hit;
+        }
+        else if (state is TechState)
+        {
+            return PlayerStatus.Tech;
+        }
+        else
+            return PlayerStatus.Other;
+    }
+
+    //A way to compare attributes
     public float snapshotDistance(Player p1, Player p2, float timeRemaining)
     {
      

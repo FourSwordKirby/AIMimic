@@ -28,16 +28,11 @@ public class BlockState :  State<Player> {
         {
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
-                player.shield.transform.localPosition = 0.25f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
-                player.shield.transform.localScale = Vector3.one * 0.5f + Vector3.up * 0.5f;
-                player.shield.transform.localScale *= 0.75f;
                 if (!player.isCrouching)
                     player.performAction(Action.Crouch);
             }
             else
             {
-                player.shield.transform.localPosition = 0.5f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
-                player.shield.transform.localScale = Vector3.one * 0.5f;
                 if (player.isCrouching)
                     player.performAction(Action.Stand);
             }
@@ -47,6 +42,18 @@ public class BlockState :  State<Player> {
                 player.performAction(Action.Idle);
                 return;
             }
+        }
+
+        if(player.isCrouching)
+        {
+            player.shield.transform.localPosition = 0.25f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
+            player.shield.transform.localScale = Vector3.one * 0.5f + Vector3.up * 0.5f;
+            player.shield.transform.localScale *= 0.75f;
+        }
+        else
+        {
+            player.shield.transform.localPosition = 0.5f * Vector3.up + 0.25f * player.facingDirection.x * Vector3.right;
+            player.shield.transform.localScale = Vector3.one * 0.5f;
         }
 
         if (Controls.jumpInputDown(player))

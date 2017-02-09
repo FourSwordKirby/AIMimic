@@ -152,6 +152,9 @@ public class Player : MonoBehaviour {
 
     public void performAction(Action action)
     {
+        if (!isValidAction(action))
+            return;
+
         //Recording our action
         Debug.Log("recorded " + action + " position " + this.transform.position.x);
         if (dataRecorder != null)
@@ -195,7 +198,43 @@ public class Player : MonoBehaviour {
                 this.Idle();
                 break;
         }
+    }
 
+    //Temp hacks to make the AI behave
+    bool isValidAction(Action action)
+    {
+        //Temp hacks to make the AI behave
+        if (this.stunned || (this.ActionFsm.CurrentState is SuspendState))
+            return false;
+
+        switch (action)
+        {
+            case Action.Stand:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.Crouch:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.Attack:
+                //Temp hacks to make the AI behave
+                return this.grounded && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+           case Action.AirAttack:
+                return !this.grounded && (this.ActionFsm.CurrentState is JumpState);
+            case Action.Block:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.Idle:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.JumpNeutral:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.JumpLeft:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.JumpRight:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.WalkLeft:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;
+            case Action.WalkRight:
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;
+            default:
+                return false;
+        }
     }
 
     //Interface for doing actions in the game
@@ -245,12 +284,16 @@ public class Player : MonoBehaviour {
 
     void Block()
     {
+        //Temp hacks to make the AI behave
+        if (!this.grounded)
+            return;
         this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm));
     }
 
     public void Idle()
     {
-        if(this.grounded)
+        //Temp hacks to make the AI behave
+        if (this.grounded)
             this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
     }
 
@@ -262,6 +305,9 @@ public class Player : MonoBehaviour {
 
     public void Crouch()
     {
+        //Temp hacks to make the AI behave
+        if (!this.grounded)
+            return;
         this.isCrouching = true;
         CrouchAnim();
     }
