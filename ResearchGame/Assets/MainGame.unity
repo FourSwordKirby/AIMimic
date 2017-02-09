@@ -612,6 +612,11 @@ Prefab:
       propertyPath: opponentPlayer
       value: 
       objectReference: {fileID: 2021633135}
+    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -3867,7 +3872,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfileName: Test
   enablePlaystyleLabeling: 0
-  currentlyLogging: 0
+  currentlyLogging: 1
   opponentPlayer: {fileID: 2021633135}
   recordedPlayer: {fileID: 173988561}
   latestOpponentAction: 10

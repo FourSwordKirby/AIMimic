@@ -65,6 +65,8 @@ public class Player : MonoBehaviour {
         ActionFsm = new StateMachine<Player>(this);
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
+
+        performAction(Action.Idle);
     }
 
     public void Reset()
@@ -73,6 +75,7 @@ public class Player : MonoBehaviour {
         meter = 0.0f;
 
         ActionFsm.ClearStates();
+        this.stunned = false;
         this.selfBody.gravityScale = 1.0f;
         this.selfBody.velocity = Vector3.zero;
         this.hitboxManager.deactivateAllHitboxes();
@@ -156,7 +159,7 @@ public class Player : MonoBehaviour {
             return;
 
         //Recording our action
-        Debug.Log("recorded " + action + " position " + this.transform.position.x);
+        //Debug.Log("recorded " + action + " position " + this.transform.position.x);
         if (dataRecorder != null)
             dataRecorder.RecordAction(action, isOpponent);
 

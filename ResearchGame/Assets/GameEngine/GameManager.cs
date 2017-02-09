@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
     public int p2Victories;
     public int currentRound;
 
-    public static int roundToWin = 1;
+    public static int roundToWin = 2;
     public static string p1Name;
     public static string p2Name;
 

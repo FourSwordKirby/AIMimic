@@ -40,24 +40,30 @@ public class GhostAI : MonoBehaviour
         for(int i = 0; i < priorSnapshots.Count; i++)
         {
             GameSnapshot snapshot = priorSnapshots[i];
-            GhostAISituation state = new GhostAISituation(snapshot);
-            if(!frequencyTable.ContainsKey(state))                      
-                frequencyTable.Add(state, new List<Action>());
-            frequencyTable[state].Add(snapshot.p2Action);
+            GhostAISituation situation = new GhostAISituation(snapshot);
+            print(situation);
+
+
+            if (!frequencyTable.ContainsKey(situation))                      
+                frequencyTable.Add(situation, new List<Action>());
+            frequencyTable[situation].Add(snapshot.p2Action);
         }
     }
 
     int frameInterval = 5;
-    Action[] currentHistory = new Action[2] { Action.Idle, Action.Idle }; //Dummy 2 gram model used
     void Update()
     {
+        if (!AIPlayer.enabled)
+            return; 
+
         if (GameManager.currentFrame % frameInterval == 0)
         {
             GameSnapshot currentState = getGameState();
-            Debug.Log(currentState);
             if (currentState == null)
                 return;
             GhostAISituation currentSituation = new GhostAISituation(currentState);
+            print(currentSituation);
+
 
             Action action;
             if (frequencyTable.ContainsKey(currentSituation))
@@ -71,8 +77,11 @@ public class GhostAI : MonoBehaviour
             else
             {
                 //action = Action.Block;
+                Debug.Log("SUPER RANDOM");
                 action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
             }
+
+
             AIPlayer.performAction(action);
         }
     }
@@ -85,7 +94,7 @@ public class GhostAI : MonoBehaviour
     }
 }
 
-public class GhostAISituation
+public class GhostAISituation : System.IEquatable<GhostAISituation>
 {
     public xDistance deltaX;
     public yDistance deltaY;
@@ -95,17 +104,17 @@ public class GhostAISituation
     public GhostAISituation(GameSnapshot snapshot)
     {
         //xDistance
-        if(snapshot.xDistance < 2)
+        if(snapshot.xDistance < 1)
             deltaX = xDistance.Adjacent;
-        else if (snapshot.xDistance < 4)
+        else if (snapshot.xDistance < 3)
             deltaX = xDistance.Near;
         else
             deltaX = xDistance.Far;
 
         //yDistance
-        if (snapshot.xDistance < 0.5f)
+        if (snapshot.yDistance < 0.5f)
             deltaY = yDistance.Level;
-        else if (snapshot.xDistance < 1)
+        else if (snapshot.yDistance < 1)
             deltaY = yDistance.Near;
         else
             deltaY = yDistance.Far;
@@ -114,23 +123,39 @@ public class GhostAISituation
         opponentStatus = snapshot.p1Status;
     }
 
-    public override bool Equals(System.Object obj)
+    public bool Equals(GhostAISituation situation)
     {
-        // If parameter cannot be cast to ThreeDPoint return false:
-        GhostAISituation situation = obj as GhostAISituation;
-        if ((object)situation == null)
-        {
-            return false;
-        }
-
-        // Return true if the fields match:
+        Debug.Log("called");
         return deltaX == situation.deltaX &&
                 deltaY == situation.deltaY &&
                 opponentStatus == situation.opponentStatus;
     }
+    
+    /*
+    public static bool operator !=(GhostAISituation a, GhostAISituation b)
+    {
+        //Debug.Log("??");
+        //// If parameter cannot be cast to ThreeDPoint return false:
+        //GhostAISituation situation = obj as GhostAISituation;
+        //if ((object)situation == null)
+        //{
+        //    return false;
+        //}
+
+        // Return true if the fields match:
+        return !(a.deltaX == b.deltaX &&
+                a.deltaY == b.deltaY &&
+                a.opponentStatus == b.opponentStatus);
+    }
+    */
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return ((int)deltaX + (int)deltaY + (int)opponentStatus);
+    }
+
+    public override string ToString()
+    {
+        return deltaX + " " + deltaY + " " + opponentStatus;
     }
 }
