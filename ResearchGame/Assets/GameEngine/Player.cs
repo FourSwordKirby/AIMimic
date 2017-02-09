@@ -160,6 +160,10 @@ public class Player : MonoBehaviour {
 
         //Recording our action
         //Debug.Log("recorded " + action + " position " + this.transform.position.x);
+
+        if (!this.isOpponent)
+            print(action);
+
         if (dataRecorder != null)
             dataRecorder.RecordAction(action, isOpponent);
 
@@ -232,9 +236,9 @@ public class Player : MonoBehaviour {
             case Action.JumpRight:
                 return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.WalkLeft:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking && !this.isCrouching;
             case Action.WalkRight:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking && !this.isCrouching;
             default:
                 return false;
         }

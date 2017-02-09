@@ -41,7 +41,6 @@ public class GhostAI : MonoBehaviour
         {
             GameSnapshot snapshot = priorSnapshots[i];
             GhostAISituation situation = new GhostAISituation(snapshot);
-            print(situation);
 
 
             if (!frequencyTable.ContainsKey(situation))                      
@@ -62,8 +61,7 @@ public class GhostAI : MonoBehaviour
             if (currentState == null)
                 return;
             GhostAISituation currentSituation = new GhostAISituation(currentState);
-            print(currentSituation);
-
+            
 
             Action action;
             if (frequencyTable.ContainsKey(currentSituation))
@@ -125,7 +123,6 @@ public class GhostAISituation : System.IEquatable<GhostAISituation>
 
     public bool Equals(GhostAISituation situation)
     {
-        Debug.Log("called");
         return deltaX == situation.deltaX &&
                 deltaY == situation.deltaY &&
                 opponentStatus == situation.opponentStatus;
