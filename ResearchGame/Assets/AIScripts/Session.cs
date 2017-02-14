@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 
 public class Session {
+    //Future
     public RoundMetadata roundMetaData;
     public List<GameSnapshot> snapshots;
 
@@ -14,10 +15,10 @@ public class Session {
     private DirectoryInfo playerDir;
     private string filePath;
 
-    public Session(string playerProfileName, int p1Wins, int p2Wins)
+    public Session(string playerProfileName)
     {
         this.playerProfileName = playerProfileName;
-        roundMetaData = new RoundMetadata(p1Wins, p2Wins);
+        roundMetaData = new RoundMetadata(0, 0);
         snapshots = new List<GameSnapshot>();
 
         directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
