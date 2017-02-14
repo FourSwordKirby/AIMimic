@@ -6,21 +6,24 @@ using System.Linq;
 using System;
 
 public class Session {
-    public List<GameSnapshot> snapshots = new List<GameSnapshot>();
+    public RoundMetadata roundMetaData;
+    public List<GameSnapshot> snapshots;
 
     private string playerProfileName;
     private string directoryPath;
     private DirectoryInfo playerDir;
     private string filePath;
 
-    public Session(string playerProfileName)
+    public Session(string playerProfileName, int p1Wins, int p2Wins)
     {
         this.playerProfileName = playerProfileName;
+        roundMetaData = new RoundMetadata(p1Wins, p2Wins);
+        snapshots = new List<GameSnapshot>();
 
         directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
         Directory.CreateDirectory(directoryPath);
 
-        playerDir = new DirectoryInfo(directoryPath);   
+        playerDir = new DirectoryInfo(directoryPath);
     }
 
     public void addSnapshot(GameSnapshot snapshot)
@@ -30,8 +33,9 @@ public class Session {
 
     public void writeToLog()
     {
-        string datalog = "";
         filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
+
+        string datalog = "Metadata";
 
         for (int i = 0; i < snapshots.Count; i++)
         {
