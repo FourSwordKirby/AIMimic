@@ -153,10 +153,10 @@ public class Player : MonoBehaviour {
     {
     }
 
-    public void performAction(Action action)
+    public bool performAction(Action action)
     {
         if (!isValidAction(action))
-            return;
+            return false;
 
         //Recording our action
         //Debug.Log("recorded " + action + " position " + this.transform.position.x);
@@ -205,6 +205,7 @@ public class Player : MonoBehaviour {
                 this.Idle();
                 break;
         }
+        return true;
     }
 
     //Temp hacks to make the AI behave

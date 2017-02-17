@@ -29,11 +29,13 @@ public class SuspendState : State<Player>
         origAngleVel = player.selfBody.angularVelocity;
     }
 
+
     override public void Enter()
     {
-        if(!player.grounded)
+        if (!player.grounded)
             player.selfBody.simulated = false;
-        player.selfBody.isKinematic = true;
+        else
+            player.selfBody.drag = 0.0f;
     }
 
     override public void Execute()
@@ -48,6 +50,9 @@ public class SuspendState : State<Player>
 
     override public void FixedExecute()
     {
+
+        float xNew = Mathf.Max(0.0f, Mathf.Abs(player.selfBody.velocity.x) - 0.1f);
+        player.selfBody.velocity = new Vector2(Mathf.Sign(player.selfBody.velocity.x) * xNew, player.selfBody.velocity.y);
         //player.transform.position = origPos;
         //player.transform.rotation = origRot;
     }
@@ -56,7 +61,9 @@ public class SuspendState : State<Player>
     {
         if(!player.grounded)
             player.selfBody.simulated = true;
-        player.selfBody.isKinematic = false;
+        else
+            player.selfBody.drag = 20.0f;
+
         player.selfBody.velocity = origVel;
         player.selfBody.angularVelocity = origAngleVel;
     }

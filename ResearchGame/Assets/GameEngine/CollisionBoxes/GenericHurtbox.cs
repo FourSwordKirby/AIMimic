@@ -24,6 +24,7 @@ public class GenericHurtbox : Hurtbox {
     override public void BlockHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
         GameManager.instance.playSound("Block");
+        owner.selfBody.velocity = -owner.facingDirection.x* knockback;
         owner.ActionFsm.SuspendState(new SuspendState(owner, owner.ActionFsm, hitstun, owner.ActionFsm.CurrentState));
     }
 
@@ -44,8 +45,7 @@ public class GenericHurtbox : Hurtbox {
 
                 Debug.Log("BLOCK");
                 TakeDamage(hitbox.chipDamage);
-                owner.selfBody.velocity = hitbox.owner.facingDirection.x * Vector2.right;
-                BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.5f*hitbox.knockbackVector.x * Vector2.right, false);
+                BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.0f * Vector2.right * hitbox.knockbackVector.x, false);
                 GameManager.SpawnBlockIndicator(hitLocation);
             }
             else
@@ -59,7 +59,7 @@ public class GenericHurtbox : Hurtbox {
                 if(owner.grounded)
                 {
                     if (!hitbox.knockdown && !owner.knockedDown)
-                        TakeHit(hitbox.hitlag, hitbox.hitstun, Vector2.right * hitbox.knockbackVector.x, hitbox.knockdown);
+                        TakeHit(hitbox.hitlag, hitbox.hitstun, Vector2.right * hitbox.knockbackVector.x, hitbox.knockdown); //Keeps the player grounded
                     else
                         TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector, hitbox.knockdown);
                 }
