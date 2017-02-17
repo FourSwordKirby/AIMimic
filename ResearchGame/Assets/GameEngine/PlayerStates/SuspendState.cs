@@ -53,8 +53,6 @@ public class SuspendState : State<Player>
 
         float xNew = Mathf.Max(0.0f, Mathf.Abs(player.selfBody.velocity.x) - 0.1f);
         player.selfBody.velocity = new Vector2(Mathf.Sign(player.selfBody.velocity.x) * xNew, player.selfBody.velocity.y);
-        //player.transform.position = origPos;
-        //player.transform.rotation = origRot;
     }
 
     override public void Exit()

@@ -64,7 +64,7 @@ public class GameSnapshot {
         p2Position = p2.transform.position;
 
         //Remember, in this scenario we are player 2 reacting to the actions of player 1
-        xDistance = p2.effectivePosition.x - p1.effectivePosition.x;
+        xDistance = Mathf.Abs(p2.effectivePosition.x - p1.effectivePosition.x);
         yDistance = p2.effectivePosition.y - p1.effectivePosition.y;
 
         p1CornerDistance = getCornerDistance(p1.effectivePosition.x);

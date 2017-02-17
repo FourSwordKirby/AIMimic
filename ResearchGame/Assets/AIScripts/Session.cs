@@ -36,7 +36,7 @@ public class Session {
     {
         filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
 
-        string datalog = "Metadata";
+        string datalog = "";//"Metadata";
 
         for (int i = 0; i < snapshots.Count; i++)
         {
