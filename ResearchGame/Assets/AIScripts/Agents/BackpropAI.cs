@@ -8,7 +8,7 @@ using System.Linq;
 //The AI's behavior patterns should mimic Test using ngrams. That is, it should do the same moves that Test does in certain situations
 //given some history.
 
-public class GhostAI : MonoBehaviour
+public class BackpropAI : MonoBehaviour
 {
     public string playerProfileName;
     public DataRecorder dataRecorder;
@@ -16,18 +16,17 @@ public class GhostAI : MonoBehaviour
     Player AIPlayer;
     Player Opponent;
 
-    private List<GameSnapshot> priorSnapshots;
-
     public Text DebugText;
+
+    private int backpropDepth = 3;
+    private List<GameSnapshot> priorSnapshots;
 
     //Implementation of the ghost AI
     //Basically, given the game's state, we look at what the player we're imitating did in that state
     //It will then do the action appropriate to the situation
     //That list of actions is essentially a frequency table.
-    private Dictionary<AISituation, ActionLookupTable> frequencyTable
-        = new Dictionary<AISituation, ActionLookupTable>();
 
-    //private AdaptiveActionSelector actionSelector;
+    private AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
 
     void Start()
     {
@@ -35,32 +34,21 @@ public class GhostAI : MonoBehaviour
         AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
-        AIPlayer.sprite.color = Color.magenta;
-
-        priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
-        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
-
-        Debug.Log(priorSnapshots.Count);
-
-        for(int i = 0; i < priorSnapshots.Count; i++)
-        {
-            GameSnapshot snapshot = priorSnapshots[i];
-            AISituation situation = new AISituation(snapshot);
-
-            if (!frequencyTable.ContainsKey(situation))
-                frequencyTable.Add(situation, new ActionLookupTable());
-            frequencyTable[situation].IncreaseFrequency(snapshot.p2Action);
-        }
+        AIPlayer.sprite.color = Color.green;
     }
 
     int frameInterval = 5;
 
     GameSnapshot pastState = null;
-    AISituation pastSituation = null;
-    Action pastAction;
-    
+    List<AISituation> pastSituations = new List<AISituation>();
+    List<Action> pastActions = new List<Action>();
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+            //actionSelector.loadTable(Application.streamingAssetsPath + "/ActionTables/TestTable");
+            actionSelector.storeTable(Application.streamingAssetsPath + "/ActionTables/TestTable");
+
         if (!AIPlayer.enabled)
             return; 
 
@@ -72,40 +60,38 @@ public class GhostAI : MonoBehaviour
                 return;
 
             //Get the reward if applicable
-            if(pastState != null && pastSituation != null)
+            if(pastState != null && pastSituations.Count() > 0)
             {
                 float reward = GetReward(pastState, currentState);
-
-                //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
-                //Should really make the AI have a handle on some kind of strategy for all situations
-                if (frequencyTable.ContainsKey(pastSituation))
+                float gamma = 0.9f;
+                for (int i = 0; i < pastSituations.Count(); i++)
                 {
-                    frequencyTable[pastSituation].IncreaseWeight(pastAction, reward);
-                    DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + frequencyTable[pastSituation].GetValue(pastAction);
+                    AISituation pastSituation = pastSituations[pastSituations.Count() - 1 - i];
+                    Action pastAction = pastActions[pastSituations.Count() - 1 - i];
+
+                    //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
+                    //Should really make the AI have a handle on some kind of strategy for all situations
+                    actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma,i) * reward);
+                    DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
                 }
             }
 
             AISituation currentSituation = new AISituation(currentState);
             
-            Action action;
-            if (frequencyTable.ContainsKey(currentSituation))
-            {
-                ActionLookupTable sampleActions = frequencyTable[currentSituation];
-                action = sampleActions.GetRandomAction();
-            }
-            else
-            {
-                Debug.Log("SUPER RANDOM");
-                action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-            }
-
+            Action action = actionSelector.GetAction(currentSituation);
             bool actionSucceeded = AIPlayer.performAction(action);
 
             //If we successfully did the action, update the past action and past situation
             if (actionSucceeded)
             {
-                pastAction = action;
-                pastSituation = currentSituation;
+                pastActions.Add(action);
+                pastSituations.Add(currentSituation);
+
+                if(pastActions.Count > backpropDepth && pastSituations.Count > backpropDepth)
+                {
+                    pastActions.RemoveAt(0);
+                    pastSituations.RemoveAt(0);
+                }
             }
             pastState = currentState;
         }
