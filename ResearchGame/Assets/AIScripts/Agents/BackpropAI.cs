@@ -13,13 +13,12 @@ public class BackpropAI : MonoBehaviour
     public string playerProfileName;
     public DataRecorder dataRecorder;
 
-    Player AIPlayer;
-    Player Opponent;
+    public Player AIPlayer;
+    public Player Opponent;
 
     public Text DebugText;
 
-    private int backpropDepth = 3;
-    private List<GameSnapshot> priorSnapshots;
+    public int backpropDepth = 3;
 
     //Implementation of the ghost AI
     //Basically, given the game's state, we look at what the player we're imitating did in that state
@@ -47,7 +46,7 @@ public class BackpropAI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
             //actionSelector.loadTable(Application.streamingAssetsPath + "/ActionTables/TestTable");
-            actionSelector.storeTable(Application.streamingAssetsPath + "/ActionTables/TestTable");
+            actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/TestTable");
 
         if (!AIPlayer.enabled)
             return; 

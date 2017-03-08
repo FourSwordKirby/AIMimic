@@ -77,7 +77,8 @@ public class AdaptiveActionSelector
             }
         }
 
-        actionTable[situation][(int)action].weight = Mathf.Max(0, actionTable[situation][(int)action].weight + reward);
+        actionTable[situation][(int)action].weight = actionTable[situation][(int)action].weight + reward;
+        rebalanceWeights(actionTable[situation]);
     }
 
     public float GetWeight(AISituation situation, Action action)
@@ -110,7 +111,7 @@ public class AdaptiveActionSelector
         return actionTable[situation][0].action;
     }
 
-    public void storeTable(string filePath)
+    public void StoreTable(string filePath)
     {
         string datalog = "";//"Metadata";
 
@@ -140,7 +141,7 @@ public class AdaptiveActionSelector
         File.WriteAllText(filePath + "_readable.txt", datalog);
     }
 
-    public void loadTable(string filePath)
+    public void LoadTable(string filePath)
     {
         actionTable = new Dictionary<AISituation, List<AIAction>>();
 
@@ -159,6 +160,20 @@ public class AdaptiveActionSelector
                 actionTable[situation].Add(action);
             }
         }
+    }
+
+    private void rebalanceWeights(List<AIAction> actions)
+    {
+        float minWeight = actions.Min(x => x.weight);
+
+        if(minWeight < 1)
+        {
+            //Nomalizes all of the action weights so that the min action has at least value 1
+            foreach (AIAction action in actions)
+                action.weight += (-minWeight + 1);
+        }
+
+        //This does have the problem of not giving us an idea of a "bad" situation, may need to reevaluate when designing an actual value function
     }
 }
 
@@ -181,6 +196,9 @@ internal class AIAction
     }
 }
 
+/// <summary>
+/// A simplified version of the game state used by the AI. Simplifies things by removing the continuous elements
+/// </summary>
 public class AISituation : System.IEquatable<AISituation>
 {
     public xDistance deltaX;

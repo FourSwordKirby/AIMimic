@@ -395,7 +395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &53168940
 Transform:
   m_ObjectHideFlags: 0
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 53168939}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0465fcf4d5b7d58429debab30fa5fa0d, type: 3}
   m_Name: 
@@ -1962,6 +1962,54 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 626023930}
+--- !u!1 &649166559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 649166560}
+  - component: {fileID: 649166561}
+  m_Layer: 0
+  m_Name: EpsilonExploreAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &649166560
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649166559}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1539022178}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &649166561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 649166559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd7a957e4f15f74dabfa4046b0a47cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileName: Test
+  AIColor: {r: 0, g: 0, b: 0, a: 1}
+  dataRecorder: {fileID: 1138904622}
+  Opponent: {fileID: 2021633135}
+  AIPlayer: {fileID: 173988561}
+  DebugText: {fileID: 1894823374}
+  epsilon: 0.05
+  backpropDepth: 3
 --- !u!1 &676811753
 GameObject:
   m_ObjectHideFlags: 0
@@ -4142,13 +4190,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1261004521}
   - component: {fileID: 1261004523}
+  - component: {fileID: 1261004522}
   m_Layer: 0
   m_Name: BackpropAI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1261004521
 Transform:
   m_ObjectHideFlags: 0
@@ -4162,7 +4211,7 @@ Transform:
   m_Father: {fileID: 1539022178}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1261004523
+--- !u!114 &1261004522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -4170,12 +4219,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1261004520}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff241de9c0acbe46a3f1409f13d7f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileName: Test
+  AIColor: {r: 1, g: 0, b: 0, a: 1}
+  dataRecorder: {fileID: 1138904622}
+  Opponent: {fileID: 0}
+  AIPlayer: {fileID: 0}
+  DebugText: {fileID: 1894823374}
+  backpropDepth: 3
+--- !u!114 &1261004523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1261004520}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f02f0366b81db6345bd1376ca1ea09f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerProfileName: Test
   dataRecorder: {fileID: 1138904622}
+  AIPlayer: {fileID: 0}
+  Opponent: {fileID: 0}
   DebugText: {fileID: 1894823374}
+  backpropDepth: 3
 --- !u!1 &1266888947
 GameObject:
   m_ObjectHideFlags: 0
@@ -4930,6 +5000,7 @@ Transform:
   - {fileID: 1325983225}
   - {fileID: 1299767548}
   - {fileID: 1261004521}
+  - {fileID: 649166560}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
