@@ -8,14 +8,24 @@ import random
 #4 = use powerful bullet
 
 def get_p2_action(life, bullets):
-    #do a thing
-    #do this tomorrow
-    return random.randint(1,5)
+    if(bullets == 0):
+        return 1
+    elif(bullets >= 3):
+        return 4
+    else:
+        return random.choice([1,2,3])
 
+def get_optimal_p2_action(life, bullets):
+    if(bullets == 0):
+        return random.choice([1,3])
+    elif(bullets >= 3):
+        return random.choice([1,2,3,4])
+    else:
+        return random.choice([1,2,3])
 
 def main():
     starting_life = 1
-    starting_bullets = 1
+    starting_bullets = 0
 
     p1_life = starting_life
     p2_life = starting_life
@@ -25,6 +35,10 @@ def main():
 
     f = open('p1_action.txt', 'r')
     past_p1_actions = f.read()
+    f.close()
+
+    f = open('p2_action.txt', 'r')
+    past_p2_actions = f.read()
     f.close()
 
     p1_actions = []
@@ -52,8 +66,11 @@ def main():
         # if(p2_move != 1 and p2_move != 2 and p2_move != 3 and p2_move != 4):
         #     print ("enter a valid action")
         #     continue
-        p2_move = get_p2_action(p2_life, p2_bullets)
+        p2_move = get_optimal_p2_action(p2_life, p2_bullets)
 
+
+        recorded_p1_move = "action: " + str(p1_move) + " health: ", p1_life, " bullets: ", p1_bullets
+        recorded_p2_move = "action: " + str(p2_move) + " health: ", p2_life, " bullets: ", p2_bullets
 
 
         print(".")
@@ -66,9 +83,6 @@ def main():
 
         if(p1_move == 1):
             p1_bullets += 1
-        if(p2_move == 1):
-            p2_bullets += 1
-
         if(p1_move == 2):
             if(p1_bullets <= 0):
                 print("enter a valid p1 action")
@@ -76,6 +90,16 @@ def main():
             p1_bullets -= 1
             if(p2_move != 3):
                 p2_life -= 1
+        if(p1_move == 4):
+            if(p1_bullets < 3):
+                print("enter a valid p1 action")
+                continue
+            p1_bullets -= 3
+            p2_life -= 1
+
+
+        if(p2_move == 1):
+            p2_bullets += 1
         if(p2_move == 2):
             if(p2_bullets <= 0):
                 print("enter a valid p2 action")
@@ -83,19 +107,17 @@ def main():
             p2_bullets -= 1
             if(p1_move != 3):
                 p1_life -= 1
-
-        if(p1_move == 4):
-            if(p1_bullets < 3):
-                print("enter a valid p1 action")
-                continue
-            p1_bullets -= 3
-            p2_life -= 1
         if(p2_move == 4):
             if(p2_bullets < 3):
                 print("enter a valid p2 action")
                 continue
             p2_bullets -= 3
             p1_life -= 1
+
+        p1_actions.append(recorded_p1_move)
+        p2_actions.append(recorded_p2_move)
+        round += 1
+
 
         if(p1_move == 1):
             print("P1: RELOADING")
@@ -117,18 +139,17 @@ def main():
 
 
         time.sleep(0.5)
-        print("P1 health: ", p1_life, " bullets ", p1_bullets)
-        print("P2 health: ", p2_life, " bullets ", p2_bullets)
+        print("P1 health: ", p1_life, " bullets: ", p1_bullets)
+        print("P2 health: ", p2_life, " bullets: ", p2_bullets)
         time.sleep(0.5)
-        p1_actions.append(p1_move)
-        p2_actions.append(p2_move)
-
-
-        round += 1
 
 
     f = open('p1_action.txt', 'w')
     f.write(past_p1_actions + '\n' + str(p1_actions)) 
+    f.close()
+
+    f = open('p2_action.txt', 'w')
+    f.write(past_p2_actions + '\n' + str(p2_actions)) 
     f.close()
 
 if __name__ == '__main__':
