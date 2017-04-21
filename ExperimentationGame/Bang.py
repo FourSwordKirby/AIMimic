@@ -113,22 +113,35 @@ def main():
 
     env = BangEnv(3, 0)
 
+    gamma = 0.9
+    value_func = player1.value_iteration(env, gamma, max_iterations=int(1e4), tol=1e-5)
+    policy = player1.value_function_to_policy(env, gamma, value_func)
+
     for i in range(num_trials):
         p1_actions = []
         p2_actions = []
         round = 0
-        env.reset()
+        state = env.reset()
 
         #specific stuff used for similarity
         p2_log = [[]]
         p2_recent_actions = [None]*3
 
-        while(not env.is_terminal()):
+        while True:
             #print("===========[ROUND " + str(round) + " OF BANG]===========")
             # print("P1 health: ", p1_life, " bullets ", p1_bullets)
             # print("P2 health: ", p2_life, " bullets ", p2_bullets)
 
-            p1_move = player1.get_p1_action(env, env.current_state())
+            #print(policy[state])
+            softmax = sum(map(lambda x: 1.5**x, policy[state].values()))
+            rng = random.uniform(0.0, softmax)
+            threshold = 0.0
+            for action in policy[state].keys():
+                threshold += 1.5**(policy[state][action])
+                if rng < threshold:
+                    p1_move = action
+                    break
+            p2_move = random.choice(env.p1_actions(env.mirror_state(state)))
             # p1_move = input("Enter p1 attack: ") #getpass.getpass("Enter p1 attack: ")
             # if(not p1_move.isdigit()):
             #     print ("enter a valid action")
@@ -138,7 +151,6 @@ def main():
             #     print ("enter a valid action")
             #     continue
 
-            p2_move = player2.get_p2_action(env, env.current_state())
             # p2_move = getpass.getpass("Enter p2 attack: ")
             # if(not p2_move.isdigit()):
             #     print ("enter a valid action")
@@ -154,23 +166,28 @@ def main():
             # p2_recent_actions.pop(0)
             # p2_recent_actions.append(p2_move)
 
-            p1_reward, p2_reward, new_state = env.step(p1_move, p2_move)
+            print("state", state)
+            print("policy", policy[state])
+            print("p1_move", p1_move)
+            print("p2_move", p2_move)            
+            new_state, p1_reward, p2_reward, is_terminal = env.step(p1_move, p2_move)
 
             #train players on the reward
             #print(env.p1_life, env.p1_bullets)
             #print(env.p2_life, env.p2_bullets)
             
-            if env.is_terminal():
-                p1_move = player1.get_p1_action(env, env.current_state())
-                p2_move = player2.get_p2_action(env, env.current_state())
-                player1.update_policy(env)
+            if is_terminal:
+                #p1_move = player1.get_p1_action(env, env.current_state())
+                #p2_move = player2.get_p2_action(env, env.current_state())
+                #player1.update_policy(env)
                 if env.p2_life == 0:
                     p1_wins += 1
                 else:
                     p2_wins += 1
                 print(p1_wins, p2_wins)
-                #player2.update_policy(env)
+                break
             else:
+                state = new_state
                 round += 1
             # result = process_action(p1_move, p2_move, p1_life, p1_bullets, p2_life, p2_bullets)
             # if result != None:
