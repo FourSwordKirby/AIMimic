@@ -3,6 +3,8 @@ import os
 import time
 import random
 import argparse
+import json
+from copy import copy
 from datetime import datetime
 from functools import reduce
 
@@ -18,8 +20,7 @@ from BangEnv import BangEnv
 def ParseBangLogs(log_name):
     data_file = open(log_name)
     contents = data_file.read()
-    entries = contents.split("\n")
-    entries = map(lambda x: eval(x.rstrip()), entries)
+    entries = eval(contents)
     return entries
 
 def BangLogToNgram(entries, n = 3):
@@ -27,7 +28,7 @@ def BangLogToNgram(entries, n = 3):
     for round in entries:
         history = [None]*n
         for action in round:
-            action = int(action[0][8])
+            action = action[5]
             history.append(action)
             if(len(history) > n):
                 history.pop(0)
@@ -76,13 +77,15 @@ def ComparePlaystyles(p1_hist, p2_hist):
             continue
 
         difference += float(abs(p1_count - p2_count)) / float((p1_count + p2_count))
-
     similarity -= normalize * difference
 
     return similarity
 
 
 #Ways to get actions
+def get_reasonable_random_action(env, state):
+    return random.choice(env.p1_actions(state))
+
 def get_optimal_action(policy, state):
     best_action = None
     best_value = -1000000
@@ -141,7 +144,6 @@ def get_similar_action(env, state, current_hist, prior_hist, ngram):
             most_similar = similarity
             chosen_action = action
         current_hist[str(added_hist)] -= 1
-
     return chosen_action
 
 #This will be used to pick an action based on balancing between optimality and playing like the target player
@@ -159,13 +161,6 @@ def FinishGame():
     print("Game End")
     quit()
 
-
-#Preloaded Data
-prior_hist = BangLogToNgram(ParseBangLogs("p1_action.txt"))
-#Making the prior arbitrarily large to accommodate for the current history data overflowing
-for key in prior_hist:
-    prior_hist[key] *=  200
-
 #System parameters
 n = 3
 num_trials = 1000
@@ -179,32 +174,37 @@ starting_bullets = 0
 def main():
     parser = argparse.ArgumentParser(description='Run the game Bang in various modes')
     parser.add_argument('--playable', default="False", help='Determines whether the game is human-playable')
-    parser.add_argument('--test', default="False", help='Describes if we are currently testing AI discernability')
+    parser.add_argument('--mode', default="sim", help='Decides the mode we are in, either training, testing, or simulating')
     parser.add_argument('--AI', default="player", help='Describes the mode that the AI runs in')
-    parser.add_argument('--profile', default='Roger', help='Directory to save data to')
+    parser.add_argument('--opponent', default='Roger', help='opponent profile to load')
+    parser.add_argument('--profile', default='new_player', help='Directory to save data to')
     args = parser.parse_args()
 
     p1_wins = 0
     p2_wins = 0
     ties = 0
-    current_hist = dict()
-    true_current_hist = dict()
+
+    ngram_file = open('running_ngram.txt')
+    contents = ngram_file.read()
+    if(contents == ""):
+        current_hist = dict()
+    else:
+        current_hist = json.loads(contents) 
+    true_current_hist = copy(current_hist)
 
     env = BangEnv(starting_life, starting_bullets)
 
     #Used to randomly select between some sets of AI
-    if(args.test == "True"): 
+    if(args.mode == "test"): 
         rng = random.uniform(0.0, 0.9)
-        print(rng)
         if(rng < 0.5): args.AI = "player"
         elif (rng < 0.6): args.AI = "ngram"
         elif (rng < 0.7): args.AI = "sim"
         elif (rng < 0.8): args.AI = "opt"
         elif (rng < 0.9): args.AI = "opt-rand"
 
-    if(args.playable):
+    if(args.playable == "True"):
         StartGame()
-
         #Logging
         if not os.path.exists(args.profile):
             os.makedirs(args.profile)
@@ -212,10 +212,18 @@ def main():
         log_file_name = args.profile + "/" + time_str + "_" + args.AI + ".log"
         my_log = open(log_file_name, 'a', 1)
 
+    #Optimal AI setup
     if(args.AI == "opt" or args.AI == "opt-rand"):
         gamma = 0.9
         value_func = player1.value_iteration(env, gamma, max_iterations=int(1e4), tol=1e-5)
         policy = player1.value_function_to_policy(env, gamma, value_func)
+
+    #Similarity AI setup
+    prior_hist = BangLogToNgram(ParseBangLogs(args.opponent + "/profile.txt"))
+    #Making the prior arbitrarily large to accommodate for the current history data overflowing
+    for key in prior_hist:
+        prior_hist[key] *=  300
+
 
     for i in range(num_trials):
         p1_actions = []
@@ -228,46 +236,44 @@ def main():
         while True:
             # Code for when we want to have player input
             if(args.playable == "True"):
-                print("p1: Health ", state[0], "| Bullets ", state[1])
-                print("p2: Health ", state[2], "| Bullets ", state[3])
-                my_log.write("p1: Health " + str(state[0]) + "| Bullets " + str(state[1]) + "\n")
-                my_log.write("p2: Health " + str(state[2]) + "| Bullets " + str(state[3]) + "\n")
+                print("=================")
+                print("p1: Health ", state[0], " | Bullets ", state[1])
+                print("p2: Health ", state[2], " | Bullets ", state[3])
+                my_log.write("p1: Health " + str(state[0]) + " | Bullets " + str(state[1]) + "\n")
+                my_log.write("p2: Health " + str(state[2]) + " | Bullets " + str(state[3]) + "\n")
 
                 os.system("stty -echo")
                 p1_valid = False
                 p2_valid = False
 
-                while(not p1_valid):
-                    p1_move = int(input("Enter p1 attack: "))
-                    print("\n")
-                    p1_valid = p1_move in env.valid_p1_actions(state)
-                    if(not p1_valid):
-                        print("Please choose an valid action")
+                if(args.mode == "test"):
+                    while(not p1_valid):
+                        p1_move = int(input("Enter p1 attack: "))
+                        print("")
+                        p1_valid = p1_move in env.valid_p1_actions(state)
+                        if(not p1_valid):
+                            print("Please choose an valid action")
 
                 while(not p2_valid):
                     p2_move = int(input("Enter p2 attack: "))
-                    print("\n")
+                    print("")
                     p2_valid = p2_move in env.valid_p1_actions(env.mirror_state(state))
                     if(not p2_valid):
                         print("Please choose an valid action")
                 
                 os.system("stty echo")
-
-
-                if(args.AI == "ngram"): p1_move = get_ngram_action(env, state, prior_hist, ngram)
-                if(args.AI == "sim"): p1_move = get_similar_action(env, state, current_hist, prior_hist, ngram)
-                if(args.AI == "opt"): p1_move = get_optimal_action(policy, state)
-                if(args.AI == "opt-rand"): p1_move = get_stochastic_optimal_action(policy, state)
             else:
-                if(args.AI == "ngram"): p1_move = get_ngram_action(env, state, prior_hist, ngram)
-                if(args.AI == "sim"): p1_move = get_similar_action(env, state, current_hist, prior_hist, ngram)
-                if(args.AI == "opt"): p1_move = get_optimal_action(policy, state)
-                if(args.AI == "opt-rand"): p1_move = get_stochastic_optimal_action(policy, state)
+                p2_move = get_reasonable_random_action(env, env.mirror_state(state))
 
-                p2_move = random.choice(env.valid_p1_actions(env.mirror_state(state)))
+            if(args.AI == "ngram"): p1_move = get_ngram_action(env, state, prior_hist, ngram)
+            if(args.AI == "sim"): p1_move = get_similar_action(env, state, current_hist, prior_hist, ngram)
+            if(args.AI == "opt"): p1_move = get_optimal_action(policy, state)
+            if(args.AI == "opt-rand"): p1_move = get_stochastic_optimal_action(policy, state)
+            if(args.AI == "rand"): p1_move = get_reasonable_random_action(env, state)
 
+ 
             new_state, p1_reward, p2_reward, is_terminal = env.step(p1_move, p2_move)
-            
+
             #results of a round when human playable
             if(args.playable == "True"):
                 print("p1 action: ", p1_move)
@@ -297,21 +303,21 @@ def main():
             if is_terminal:
                 #Final display of victory
                 if(args.playable == "True"):
-                    print("p1: Health ", new_state[0], "| Bullets ", new_state[1])
-                    print("p2: Health ", new_state[2], "| Bullets ", new_state[3])
+                    print("p1: Health ", new_state[0], " | Bullets ", new_state[1])
+                    print("p2: Health ", new_state[2], " | Bullets ", new_state[3])
         
                     if env.p1_life == 0 and env.p2_life == 0:
                         print("TIE GAME")
-                        my_log.write("Result: TIE GAME")
+                        my_log.write("Result: 0\n")
                     elif env.p2_life == 0:
                         print("P1 VICTORY")
-                        my_log.write("Result: P1 GAME")
+                        my_log.write("Result: 1\n")
                     else:
                         print("P2 VICTORY")
-                        my_log.write("RESULT: P2 GAME")
+                        my_log.write("RESULT: 2\n")
                     
                     #User questions whether its the AI or a player
-                    if(args.test == "True"):
+                    if(args.mode == "test"):
                         valid_answer = False
                         while(not valid_answer):
                             is_AI = input("Were you playing against an AI (y/n)? ")
@@ -319,6 +325,12 @@ def main():
                             if(not valid_answer):
                                 print("Please choose an valid option")
                         my_log.write("Player Decision: " + str(is_AI))
+
+                    #Hold onto the ngram for later tests
+                    if(args.AI == "sim"):
+                        f = open('running_ngram.txt', 'w')
+                        f.write(json.dumps(current_hist))
+
                     FinishGame()
 
                 #If not human playable, silently count wins and losses
@@ -333,28 +345,14 @@ def main():
                 state = new_state
                 round += 1
 
-            # result = process_action(p1_move, p2_move, p1_life, p1_bullets, p2_life, p2_bullets)
-            # if result != None:
-            #     p1_life, p1_bullets, p2_life, p2_bullets = result[0], result[1], result[2], result[3]
-            # else:
-            #     continue
-
-
-            #Used for logging
-            # recorded_p1_move = "action: " + str(p1_move) + " health: ", str(p1_life), " bullets: ", str(p1_bullets)
-            # recorded_p2_move = "action: " + str(p2_move) + " health: ", str(p2_life), " bullets: ", str(p2_bullets)
-
-            # p1_actions.append(recorded_p1_move)
-            # p2_actions.append(recorded_p2_move)
-
     print("p1 wins: ", p1_wins, " | ", "p2 wins: ", p2_wins, " | ", "ties: ", ties)
 
     for key in true_current_hist:
         true_current_hist[key] /=  num_trials
     for key in prior_hist:
-        prior_hist[key] /=  len(list(ParseBangLogs("p1_action.txt")))
-        
+        prior_hist[key] /=  len(list(BangLogToNgram(ParseBangLogs(args.opponent + "/profile.txt"))))
     print("Similarity: ", ComparePlaystyles(true_current_hist, prior_hist))
+
 
     """    
     #Logging

@@ -35,7 +35,10 @@ class BangEnv(object):
             actions.append(3)
         if(p1_bullets >= 3):
             actions.append(4)
-        
+
+        if(p2_life == 1 and p1_life >= 3 and p1_bullets > 0):
+            actions = [1]
+
         if(p1_bullets >= 3 and p2_life == 1):
             actions = [4]
 

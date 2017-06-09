@@ -68,7 +68,6 @@ class OptimalPlayer(object):
             if iterations >= max_iterations:
                 break
 
-        print("iterations: ", iterations)
         return values#, iterations
 
     def value_function_to_policy(self, env, gamma, value_function):
