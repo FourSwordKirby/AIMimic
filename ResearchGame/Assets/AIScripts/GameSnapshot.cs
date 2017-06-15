@@ -14,7 +14,8 @@ public class GameSnapshot {
     public PlayerStatus p1Status;
     public PlayerStatus p2Status;
 
-    public float frameDelay;
+    public float p1Duration;
+    public float p2Duration;
     public float frameTaken;
 
     public float p1Health;
@@ -45,12 +46,16 @@ public class GameSnapshot {
     //We want to know what the player is doing
     //Example, say the recorded player is moving right, we need the player to move right for every
     //action that the opponent is doing in that time
-    public GameSnapshot(int initiatedPlayer, Player p1, Player p2, float delay, float frameTaken, Action p1Action, Action p2Action)
+    public GameSnapshot(int initiatedPlayer, float frameTaken,
+                            Player p1, Player p2, 
+                            float p1Duration, float p2Duration,
+                            Action p1Action, Action p2Action)
     {
         this.initiatedPlayer = initiatedPlayer;
-
-        this.frameDelay = delay;
         this.frameTaken = frameTaken;
+
+        this.p1Duration = p1Duration;
+        this.p2Duration = p2Duration;
         this.p1Action = p1Action;
         this.p2Action = p2Action;
 

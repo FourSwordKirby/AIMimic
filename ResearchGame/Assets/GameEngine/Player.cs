@@ -9,13 +9,11 @@ public class Player : MonoBehaviour {
     public float movementSpeed;
     public float neutralJumpHeight;
     public float directionJumpHeight;
-    private float baseKnockdownThreshold;
-    
+
     public float health { get; private set; }
     public float meter { get; private set; }
     public const int DEFAULT_STOCK_COUNT = 4;
 
-    public Player opponent;
     public bool stunned = false;
     public bool knockedDown = false;
     public bool grounded = true;
@@ -24,6 +22,11 @@ public class Player : MonoBehaviour {
     public bool isBlocking;
 
     public int comboCount;
+
+    //Meta stuff for the data recorder
+    public Player opponent;
+    public bool isPlayer1;
+
 
     //Hacky bullshit that should be cleaned and purged
     public Sprite normalSprite;
@@ -46,7 +49,6 @@ public class Player : MonoBehaviour {
 
     //Player keeps track of recording data bc it's impossible to record merely from observation tbh
     private DataRecorder dataRecorder;
-    private bool isOpponent;
 
     //Used for the initialization of internal, non-object variables
     void Awake()
@@ -66,7 +68,7 @@ public class Player : MonoBehaviour {
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
 
-        performAction(Action.Idle);
+        PerformAction(Action.Idle);
     }
 
     public void Reset()
@@ -149,23 +151,16 @@ public class Player : MonoBehaviour {
         this.sprite.transform.localPosition = 0.5f * Vector3.up;
     }
 
-    public void Die()
+    public bool PerformAction(Action action)
     {
-    }
-
-    public bool performAction(Action action)
-    {
-        if (!isValidAction(action))
+        if (!IsValidAction(action))
             return false;
 
-        //Recording our action
-        //Debug.Log("recorded " + action + " position " + this.transform.position.x);
-
-        if (!this.isOpponent)
+        if (!this.isPlayer1)
             print(action);
-
+        
         if (dataRecorder != null)
-            dataRecorder.RecordAction(action, isOpponent);
+            dataRecorder.RecordAction(action, this.isPlayer1);
 
         switch(action) {
             case Action.Stand:
@@ -209,7 +204,7 @@ public class Player : MonoBehaviour {
     }
 
     //Temp hacks to make the AI behave
-    bool isValidAction(Action action)
+    bool IsValidAction(Action action)
     {
         //Temp hacks to make the AI behave
         if (this.stunned || (this.ActionFsm.CurrentState is SuspendState))
@@ -307,22 +302,36 @@ public class Player : MonoBehaviour {
 
     public void Stand()
     {
+        if (!this.grounded)
+            return;
         this.isCrouching = false;
         StandAnim();
     }
 
     public void Crouch()
     {
-        //Temp hacks to make the AI behave
         if (!this.grounded)
             return;
         this.isCrouching = true;
         CrouchAnim();
     }
 
-    public void SetRecorder(DataRecorder dataRecorder, bool isOpponent)
+    public void EnterHitstun(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
+    {
+        //When you get hit, the data recorder should note that you were not successful in completing the last attempted action
+        if (dataRecorder != null)
+            dataRecorder.InterruptAction(this.isPlayer1);
+
+        this.ActionFsm.ChangeState(new HitState(this, hitlag, hitstun, knockback, knockdown, this.ActionFsm));
+    }
+
+    public void Tech()
+    {
+        this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));
+    }
+
+    public void SetRecorder(DataRecorder dataRecorder)
     {
         this.dataRecorder = dataRecorder;
-        this.isOpponent = isOpponent;
     }
 }

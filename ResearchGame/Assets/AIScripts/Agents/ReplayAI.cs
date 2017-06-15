@@ -39,7 +39,7 @@ public class ReplayAI : MonoBehaviour
 
             actionCount++;
             AIPlayer.transform.position = AIPosition;
-            AIPlayer.performAction(chosenAction);
+            AIPlayer.PerformAction(chosenAction);
         }
     }
 

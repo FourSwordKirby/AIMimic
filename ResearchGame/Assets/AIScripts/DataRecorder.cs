@@ -7,10 +7,8 @@ public class DataRecorder : MonoBehaviour {
     public bool enablePlaystyleLabeling;
     public bool currentlyLogging;
 
-    public Player opponentPlayer;
-    public Player recordedPlayer;
-
-    float previousTime = GameManager.currentFrame;
+    public Player player1;
+    public Player player2;
 
     public Session currentSession;
     List<Session> sessions;
@@ -20,11 +18,11 @@ public class DataRecorder : MonoBehaviour {
         sessions = new List<Session>(); 
         currentSession = new Session(playerProfileName);
 
-        opponentPlayer.SetRecorder(this, true);
-        recordedPlayer.SetRecorder(this, false);
+        player1.SetRecorder(this);
+        player2.SetRecorder(this);
 
         if (currentlyLogging)
-            recordedPlayer.sprite.color = Color.yellow;
+            player2.sprite.color = Color.yellow;
     }
 
     public void LogSession()
@@ -44,7 +42,7 @@ public class DataRecorder : MonoBehaviour {
         //Catchall for any incomplete session that we haven't logged
         LogSession();
 
-        int pClass = (GameManager.instance.p1 == this.recordedPlayer)? p1Class : p2Class;
+        int pClass = (GameManager.instance.p1 == this.player2)? p1Class : p2Class;
 
         string strClass = pClass == 1 ? "offense" : "defense";
         foreach (Session session in sessions)
@@ -57,25 +55,53 @@ public class DataRecorder : MonoBehaviour {
     }
 
 
-    public Action latestOpponentAction = Action.Idle;
-    public Action latestPlayerAction = Action.Idle;
-    public void RecordAction(Action actionTaken, bool isOpponent)
+    public Action player1Action = Action.Idle;
+    public Action player2Action = Action.Idle;
+    public float player1StartFrame = GameManager.currentFrame;
+    public float player2StartFrame = GameManager.currentFrame;
+
+    public void InterruptAction(bool isPlayer1)
     {
-        if (isOpponent)
-            latestOpponentAction = actionTaken;
-        else
-            latestPlayerAction = actionTaken;
-
-        int initIndex = isOpponent ? 0 : 1;
-
-        float delay = previousTime - GameManager.currentFrame;
-        GameSnapshot snapshot = new GameSnapshot(initIndex, opponentPlayer, recordedPlayer, delay,
-                                                GameManager.currentFrame, latestOpponentAction, latestPlayerAction);
-        currentSession.addSnapshot(snapshot);
-        previousTime = GameManager.currentFrame;
+        //Todo, make the recorder reset the action being recorded
     }
 
+    public void RecordAction(Action actionTaken, bool isPlayer1)
+    {
+        int initIndex = isPlayer1 ? 0 : 1;
 
+        float p1Duration = GameManager.currentFrame - player1StartFrame;
+        float p2Duration = GameManager.currentFrame - player2StartFrame;
+
+        GameSnapshot snapshot = new GameSnapshot(initIndex, GameManager.currentFrame,
+                                                player1, player2, 
+                                                p1Duration, p2Duration,
+                                                player1Action, player2Action);
+        currentSession.addSnapshot(snapshot);
+
+        if (!isPlayer1)
+            Debug.Log("Action Recorded:" + snapshot.p2Action + " " + snapshot.p2Duration);
+
+        if (isPlayer1)
+        {
+            player1Action = actionTaken;
+            player1StartFrame = GameManager.currentFrame;
+        }
+        else
+        {
+            player2Action = actionTaken;
+            player2StartFrame = GameManager.currentFrame;
+        }
+    }
+
+    //Basically used to determine if a state transition occured because of the player or from natural means
+    private bool isPlayerTransition(Action startingAction, Action newAction)
+    {
+        if(startingAction == Action.JumpLeft || startingAction == Action.JumpNeutral || startingAction == Action.JumpRight)
+        {
+
+        }
+        return true;
+    }
 
     /*Code that was used when we were trying to record the player's action by just observing it's state. Obsolete now.
     //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)

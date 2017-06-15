@@ -71,7 +71,7 @@ public class AttackState : State<Player>
         if(player.chainable)
         {
             if (Controls.attackInputDown(player))
-                player.performAction(Action.Attack);
+                player.PerformAction(Action.Attack);
         }
 
         frameCounter ++;

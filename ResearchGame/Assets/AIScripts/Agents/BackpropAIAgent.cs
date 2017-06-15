@@ -69,7 +69,7 @@ public class BackpropAIAgent : AIAgent{
 
     public override void PerformAction(Action action)
     {
-        bool actionSucceeded = AIPlayer.performAction(action);
+        bool actionSucceeded = AIPlayer.PerformAction(action);
 
         //If we successfully did the action, update the past action and past situation
         if (actionSucceeded)

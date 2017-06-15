@@ -27,45 +27,45 @@ public class IdleState : State<Player> {
         if (Controls.jumpInputDown(player))
         {
             if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
-                player.performAction(Action.JumpRight);
+                player.PerformAction(Action.JumpRight);
             else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
-                player.performAction(Action.JumpLeft);
+                player.PerformAction(Action.JumpLeft);
             else
-                player.performAction(Action.JumpNeutral);
+                player.PerformAction(Action.JumpNeutral);
             return;
         }
 
         if (Controls.attackInputDown(player))
         {
-            player.performAction(Action.Attack);
+            player.PerformAction(Action.Attack);
         }
 
         if (!player.AIControlled)
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.performAction(Action.Block);
+                player.PerformAction(Action.Block);
             }
 
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
                 if(!player.isCrouching)
-                    player.performAction(Action.Crouch);
+                    player.Crouch();
                 return;
             }
-            else
+            else if (dir == Parameters.InputDirection.None)
             {
                 if (player.isCrouching)
-                    player.performAction(Action.Stand);
+                    player.Stand();
             }
         }
 
         if (dir != Parameters.InputDirection.None)
         {
             if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.SE)
-                player.performAction(Action.WalkRight);
+                player.PerformAction(Action.WalkRight);
             else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.SW)
-                player.performAction(Action.WalkLeft);
+                player.PerformAction(Action.WalkLeft);
             return;
         }
     }

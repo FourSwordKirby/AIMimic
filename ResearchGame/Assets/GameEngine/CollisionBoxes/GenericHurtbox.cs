@@ -18,7 +18,7 @@ public class GenericHurtbox : Hurtbox {
         else
             GameManager.instance.playSound("PunchHit");
 
-        owner.ActionFsm.ChangeState(new HitState(owner, hitlag, hitstun, knockback, knockdown, owner.ActionFsm));
+        owner.EnterHitstun(hitlag, hitstun, knockback, knockdown);
     }
 
     override public void BlockHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)

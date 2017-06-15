@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoundMetadata : MonoBehaviour {
+public class RoundMetadata {
     public int p1Wins;
     public int p2Wins;
 

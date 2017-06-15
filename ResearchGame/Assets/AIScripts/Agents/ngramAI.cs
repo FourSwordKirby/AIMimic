@@ -67,7 +67,7 @@ public class ngramAI : MonoBehaviour
                 action = Action.Block;
             else
                 action = freqTable[Random.Range(0, freqTable.Count)];
-            AIPlayer.performAction(action);
+            AIPlayer.PerformAction(action);
         }
     }
 

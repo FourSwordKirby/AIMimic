@@ -34,23 +34,23 @@ public class MovementState : State<Player> {
         if (Controls.jumpInputHeld(player))
         {
             if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
-                player.performAction(Action.JumpRight);
+                player.PerformAction(Action.JumpRight);
             else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
-                player.performAction(Action.JumpLeft);
+                player.PerformAction(Action.JumpLeft);
             else
-                player.performAction(Action.JumpNeutral);
+                player.PerformAction(Action.JumpNeutral);
         }
 
         if (Controls.attackInputDown(player))
         {
-            player.performAction(Action.Attack);
+            player.PerformAction(Action.Attack);
         }
 
         if (!player.AIControlled)
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.performAction(Action.Block);
+                player.PerformAction(Action.Block);
                 return;
             }
         }
@@ -59,10 +59,10 @@ public class MovementState : State<Player> {
         {
             if (!player.AIControlled)
             {
-                //if (dir == Parameters.InputDirection.None)
-                    player.performAction(Action.Idle);
-                //else
-                //    player.performAction(Action.Crouch);
+                if (dir == Parameters.InputDirection.None)
+                    player.PerformAction(Action.Idle);
+                else
+                    player.PerformAction(Action.Crouch);
             }
         }
     }

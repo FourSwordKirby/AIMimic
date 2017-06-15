@@ -58,7 +58,7 @@ public class KthNearestAI : MonoBehaviour {
                 chosenAction = closestNeighbors[closestNeighbors.Count - 1].p2Action;
             }
 
-            AIPlayer.performAction(chosenAction);
+            AIPlayer.PerformAction(chosenAction);
 
             Debug.Log("Action: " + chosenAction + " was taken at time " + GameManager.timeRemaining);
         }

@@ -67,7 +67,7 @@ public class HitState : State<Player>
                     GameManager.EndCombo(player.opponent);
 
                     //We don't call preformAction because it's not voluntarily done on the part of the player
-                    player.ActionFsm.ChangeState(new TechState(player, player.ActionFsm));
+                    player.Tech();
                 }
             }
             else

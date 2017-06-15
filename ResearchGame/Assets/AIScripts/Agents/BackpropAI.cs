@@ -78,7 +78,7 @@ public class BackpropAI : MonoBehaviour
             AISituation currentSituation = new AISituation(currentState);
             
             Action action = actionSelector.GetAction(currentSituation);
-            bool actionSucceeded = AIPlayer.performAction(action);
+            bool actionSucceeded = AIPlayer.PerformAction(action);
 
             //If we successfully did the action, update the past action and past situation
             if (actionSucceeded)
