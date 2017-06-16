@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
 
-        PerformAction(Action.Idle);
+        PerformAction(Action.Stand);
     }
 
     public void Reset()
@@ -156,7 +156,7 @@ public class Player : MonoBehaviour {
     {
         if (!IsValidAction(action))
             return false;
-        
+
         if (dataRecorder != null)
             dataRecorder.RecordAction(action, this.isPlayer1);
 
@@ -164,7 +164,7 @@ public class Player : MonoBehaviour {
             print(action);
 
         switch (action) {
-            case Action.Idle:
+            case Action.Stand:
                 this.Stand();
                 break;
             case Action.Crouch:
@@ -216,7 +216,7 @@ public class Player : MonoBehaviour {
 
         switch (action)
         {
-            case Action.Idle:
+            case Action.Stand:
                 return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);
             case Action.Crouch:
                 return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);

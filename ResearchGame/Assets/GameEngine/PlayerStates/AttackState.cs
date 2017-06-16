@@ -98,7 +98,7 @@ public class AttackState : State<Player>
             meleeHitbox.transform.localPosition = Vector2.zero;
             //We don't call preformAction because it's not voluntarily done on the part of the player
             if (!player.isCrouching)
-                player.PerformAction(Action.Idle);
+                player.PerformAction(Action.Stand);
             else
                 player.PerformAction(Action.Crouch);
         }

@@ -65,12 +65,11 @@ public class JumpState : State<Player>
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             Parameters.InputDirection dir = Controls.getInputDirection(player);
-
-            //We don't call preformAction because it's not voluntarily done on the part of the player
+            
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
                 player.PerformAction(Action.Crouch);
             else
-                player.PerformAction(Action.Idle);
+                player.PerformAction(Action.Stand);
             return;
         }
     }

@@ -35,7 +35,7 @@ public class ngramAI : MonoBehaviour
 
         Debug.Log(priorSnapshots.Count);
 
-        Action[] currentHistory = new Action[2] { Action.Idle, Action.Idle }; //Dummy 2 gram model used
+        Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
         for(int i = 0; i < priorSnapshots.Count; i++)
         {
             GameSnapshot snapshot = priorSnapshots[i];
@@ -49,7 +49,7 @@ public class ngramAI : MonoBehaviour
     }
 
     int frameInterval = 5;
-    Action[] currentHistory = new Action[2] { Action.Idle, Action.Idle }; //Dummy 2 gram model used
+    Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
     void Update()
     {
         if (GameManager.currentFrame % frameInterval == 0)

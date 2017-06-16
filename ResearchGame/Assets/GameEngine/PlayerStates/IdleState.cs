@@ -40,6 +40,7 @@ public class IdleState : State<Player> {
                 player.PerformAction(Action.Attack);
             else
                 player.PerformAction(Action.LowAttack);
+            return;
         }
 
         if (!player.AIControlled)
@@ -62,7 +63,7 @@ public class IdleState : State<Player> {
             {
                 if (player.isCrouching)
                 {
-                    player.PerformAction(Action.Idle);
+                    player.PerformAction(Action.Stand);
                 }
             }
         }

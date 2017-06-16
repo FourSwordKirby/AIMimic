@@ -101,9 +101,12 @@ public class AirAttackState : State<Player>
         //Hitting the ground early
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
-            //We don't call preformAction because it's not voluntarily done on the part of the player
-            player.Stand();
+            Parameters.InputDirection dir = Controls.getInputDirection(player);
 
+            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+                player.PerformAction(Action.Crouch);
+            else
+                player.PerformAction(Action.Stand);
             return;
         }
     }

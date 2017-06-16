@@ -625,15 +625,6 @@ Prefab:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 2021633135}
-    - target: {fileID: 0}
-      propertyPath: opponentPlayer
-      value: 
-      objectReference: {fileID: 2021633135}
-    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
-        type: 2}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -3950,8 +3941,8 @@ MonoBehaviour:
   currentlyLogging: 1
   player1: {fileID: 2021633135}
   player2: {fileID: 173988561}
-  player1Action: 10
-  player2Action: 10
+  player1Action: 0
+  player2Action: 0
   player1StartFrame: 0
   player2StartFrame: 0
 --- !u!1 &1175821316

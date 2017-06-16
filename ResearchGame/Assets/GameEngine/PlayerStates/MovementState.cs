@@ -10,7 +10,7 @@ public class MovementState : State<Player> {
     public Vector3 movementVector;
 
     //TODO: INPUT BUFFER FOR NEXT MOVE
-    private Action nextAction = Action.Idle;
+    private Action nextAction = Action.Stand;
 
 
     public MovementState(Player playerInstance, StateMachine<Player> fsm, float dir)
@@ -60,7 +60,7 @@ public class MovementState : State<Player> {
             if (!player.AIControlled)
             {
                 if (dir == Parameters.InputDirection.None)
-                    player.PerformAction(Action.Idle);
+                    player.PerformAction(Action.Stand);
                 else
                     player.PerformAction(Action.Crouch);
             }

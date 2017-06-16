@@ -42,7 +42,7 @@ public class BlockState :  State<Player> {
                 if (player.isCrouching)
                     player.PerformAction(Action.Crouch);
                 else
-                    player.PerformAction(Action.Idle);
+                    player.PerformAction(Action.Stand);
                 return;
             }
         }

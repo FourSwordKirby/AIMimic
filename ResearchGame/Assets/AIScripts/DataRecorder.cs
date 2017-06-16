@@ -55,8 +55,8 @@ public class DataRecorder : MonoBehaviour {
     }
 
 
-    public Action player1Action = Action.Idle;
-    public Action player2Action = Action.Idle;
+    public Action player1Action = Action.Stand;
+    public Action player2Action = Action.Stand;
     public float player1StartFrame = GameManager.currentFrame;
     public float player2StartFrame = GameManager.currentFrame;
 
@@ -64,12 +64,12 @@ public class DataRecorder : MonoBehaviour {
     {
         if (isPlayer1)
         {
-            player1Action = Action.Idle;
+            player1Action = Action.Stand;
             player1StartFrame = GameManager.currentFrame;
         }
         else
         {
-            player2Action = Action.Idle;
+            player2Action = Action.Stand;
             player2StartFrame = GameManager.currentFrame;
         }
     }

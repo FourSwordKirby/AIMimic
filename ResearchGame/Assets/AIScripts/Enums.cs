@@ -3,7 +3,7 @@ using System.Collections;
 
 //Actions are things that a player voluntarily does
 public enum Action {
-    Idle,
+    Stand,
     Crouch,
     WalkLeft,
     WalkRight,
