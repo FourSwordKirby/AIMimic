@@ -276,7 +276,6 @@ public class GameManager : MonoBehaviour {
             instance.P2ComboText.SetText(player.comboCount);
     }
 
-    //TODO Eliminate this it really shouldn't be here
     public void playSound(string soundName, bool startingSound = false)
     {
         Vector3 position;

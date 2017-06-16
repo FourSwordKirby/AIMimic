@@ -64,7 +64,7 @@ public class ngramAI : MonoBehaviour
             List<Action> freqTable = ngramHistory[historyString];
             Action action;
             if (freqTable.Count == 0)
-                action = Action.Block;
+                action = Action.StandBlock;
             else
                 action = freqTable[Random.Range(0, freqTable.Count)];
             AIPlayer.PerformAction(action);

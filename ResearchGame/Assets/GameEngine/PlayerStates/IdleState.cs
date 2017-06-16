@@ -23,7 +23,6 @@ public class IdleState : State<Player> {
     {
         Parameters.InputDirection dir = Controls.getInputDirection(player);
 
-        //Change this to be a jump button
         if (Controls.jumpInputDown(player))
         {
             if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
@@ -37,26 +36,34 @@ public class IdleState : State<Player> {
 
         if (Controls.attackInputDown(player))
         {
-            player.PerformAction(Action.Attack);
+            if (!player.isCrouching)
+                player.PerformAction(Action.Attack);
+            else
+                player.PerformAction(Action.LowAttack);
         }
 
         if (!player.AIControlled)
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.PerformAction(Action.Block);
+                if (!player.isCrouching)
+                    player.PerformAction(Action.StandBlock);
+                else
+                    player.PerformAction(Action.CrouchBlock);
             }
 
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
                 if(!player.isCrouching)
-                    player.Crouch();
+                    player.PerformAction(Action.Crouch);
                 return;
             }
             else if (dir == Parameters.InputDirection.None)
             {
                 if (player.isCrouching)
-                    player.Stand();
+                {
+                    player.PerformAction(Action.Idle);
+                }
             }
         }
 

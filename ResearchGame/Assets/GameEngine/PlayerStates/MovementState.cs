@@ -10,7 +10,7 @@ public class MovementState : State<Player> {
     public Vector3 movementVector;
 
     //TODO: INPUT BUFFER FOR NEXT MOVE
-    private Action nextAction = Action.Stand;
+    private Action nextAction = Action.Idle;
 
 
     public MovementState(Player playerInstance, StateMachine<Player> fsm, float dir)
@@ -50,7 +50,7 @@ public class MovementState : State<Player> {
         {
             if (Controls.shieldInputHeld(player))
             {
-                player.PerformAction(Action.Block);
+                player.PerformAction(Action.StandBlock);
                 return;
             }
         }

@@ -3,7 +3,7 @@ using System.Collections;
 
 //Actions are things that a player voluntarily does
 public enum Action {
-    Stand,
+    Idle,
     Crouch,
     WalkLeft,
     WalkRight,
@@ -11,9 +11,10 @@ public enum Action {
     JumpLeft,
     JumpRight,
     Attack,
+    LowAttack,
     AirAttack,
-    Block,
-    Idle
+    StandBlock,
+    CrouchBlock
 }
 
 //The player status merely indicates what kind of state they are in

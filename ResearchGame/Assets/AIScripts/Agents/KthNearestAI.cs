@@ -52,7 +52,7 @@ public class KthNearestAI : MonoBehaviour {
                 }
             }
 
-            Action chosenAction = Action.Stand;
+            Action chosenAction = Action.Idle;
             if (closestDistance < distanceThreshold)
             {
                 chosenAction = closestNeighbors[closestNeighbors.Count - 1].p2Action;

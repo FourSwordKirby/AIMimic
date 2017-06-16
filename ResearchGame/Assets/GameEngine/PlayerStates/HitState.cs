@@ -78,7 +78,7 @@ public class HitState : State<Player>
                     player.stunned = false;            
                     
                     //We don't call preformAction because it's not voluntarily done on the part of the player
-                    player.Idle();
+                    player.Stand();
                 }
             }
         }

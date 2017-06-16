@@ -62,7 +62,16 @@ public class DataRecorder : MonoBehaviour {
 
     public void InterruptAction(bool isPlayer1)
     {
-        //Todo, make the recorder reset the action being recorded
+        if (isPlayer1)
+        {
+            player1Action = Action.Idle;
+            player1StartFrame = GameManager.currentFrame;
+        }
+        else
+        {
+            player2Action = Action.Idle;
+            player2StartFrame = GameManager.currentFrame;
+        }
     }
 
     public void RecordAction(Action actionTaken, bool isPlayer1)

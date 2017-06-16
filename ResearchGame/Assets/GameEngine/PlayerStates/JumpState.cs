@@ -21,7 +21,6 @@ public class JumpState : State<Player>
     override public void Enter()
     {
         GameManager.instance.playSound("Jump");
-        player.Stand();
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
         {
@@ -64,9 +63,14 @@ public class JumpState : State<Player>
     override public void FixedExecute()
     {
         if (player.grounded && player.selfBody.velocity.y <= 0)
-        {            
+        {
+            Parameters.InputDirection dir = Controls.getInputDirection(player);
+
             //We don't call preformAction because it's not voluntarily done on the part of the player
-            player.Idle();
+            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+                player.PerformAction(Action.Crouch);
+            else
+                player.PerformAction(Action.Idle);
             return;
         }
     }

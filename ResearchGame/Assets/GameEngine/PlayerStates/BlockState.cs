@@ -29,17 +29,20 @@ public class BlockState :  State<Player> {
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
                 if (!player.isCrouching)
-                    player.PerformAction(Action.Crouch);
+                    player.PerformAction(Action.CrouchBlock);
             }
             else
             {
                 if (player.isCrouching)
-                    player.PerformAction(Action.Stand);
+                    player.PerformAction(Action.StandBlock);
             }
 
             if (!Controls.shieldInputHeld(player))
             {
-                player.PerformAction(Action.Idle);
+                if (player.isCrouching)
+                    player.PerformAction(Action.Crouch);
+                else
+                    player.PerformAction(Action.Idle);
                 return;
             }
         }

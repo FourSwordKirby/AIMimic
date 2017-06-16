@@ -85,7 +85,7 @@ public class Player : MonoBehaviour {
 
         this.spriteContainer.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         this.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
-        this.Idle();
+        this.Stand();
 
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
@@ -151,35 +151,39 @@ public class Player : MonoBehaviour {
         this.sprite.transform.localPosition = 0.5f * Vector3.up;
     }
 
+    //Interface for doing actions in the game
     public bool PerformAction(Action action)
     {
         if (!IsValidAction(action))
             return false;
-
-        if (!this.isPlayer1)
-            print(action);
         
         if (dataRecorder != null)
             dataRecorder.RecordAction(action, this.isPlayer1);
 
-        switch(action) {
-            case Action.Stand:
+        if (!this.isPlayer1)
+            print(action);
+
+        switch (action) {
+            case Action.Idle:
                 this.Stand();
                 break;
             case Action.Crouch:
                 this.Crouch();
                 break;
             case Action.Attack:
-                this.Attack();
+                this.Attack(false);
+                break;
+            case Action.LowAttack:
+                this.Attack(true);
                 break;
             case Action.AirAttack:
                 this.AirAttack();
                 break;
-            case Action.Block:
-                this.Block();
+            case Action.StandBlock:
+                this.Block(false);
                 break;
-            case Action.Idle:
-                this.Idle();
+            case Action.CrouchBlock:
+                this.Block(true);
                 break;
             case Action.JumpNeutral:
                 this.Jump(Parameters.InputDirection.N);
@@ -197,7 +201,7 @@ public class Player : MonoBehaviour {
                 this.Walk(Parameters.InputDirection.E);
                 break;
             default:
-                this.Idle();
+                this.Stand();
                 break;
         }
         return true;
@@ -212,19 +216,22 @@ public class Player : MonoBehaviour {
 
         switch (action)
         {
-            case Action.Stand:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.Idle:
+                return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);
             case Action.Crouch:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);
             case Action.Attack:
                 //Temp hacks to make the AI behave
-                return this.grounded && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
-           case Action.AirAttack:
+                return this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+            case Action.LowAttack:
+                //Temp hacks to make the AI behave
+                return this.grounded && this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+            case Action.AirAttack:
                 return !this.grounded && (this.ActionFsm.CurrentState is JumpState);
-            case Action.Block:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
-            case Action.Idle:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.StandBlock:
+                return this.grounded && (!this.isCrouching || this.isBlocking) && !(this.ActionFsm.CurrentState is AttackState);
+            case Action.CrouchBlock:
+                return this.grounded && (this.isCrouching || this.isBlocking) && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpNeutral:
                 return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpLeft:
@@ -232,19 +239,20 @@ public class Player : MonoBehaviour {
             case Action.JumpRight:
                 return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.WalkLeft:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking && !this.isCrouching;
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
             case Action.WalkRight:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking && !this.isCrouching;
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
             default:
                 return false;
         }
     }
 
-    //Interface for doing actions in the game
     void Walk(Parameters.InputDirection dir)
     {
         if (!this.grounded)
             return;
+
+        this.Stand();
 
         //Vector2 originalPositon = this.transform.position; 
         Vector2 movementVector = Vector2.zero;
@@ -263,9 +271,9 @@ public class Player : MonoBehaviour {
         if (!this.grounded)
             return;
 
-        Vector2 movementVector = Vector2.zero;
-        this.Idle();
+        this.Stand();
 
+        Vector2 movementVector = Vector2.zero;       
         if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
             movementVector = Vector2.right * movementSpeed;
         else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
@@ -275,35 +283,45 @@ public class Player : MonoBehaviour {
         this.ActionFsm.ChangeState(new JumpState(this, this.ActionFsm, ((Vector2)(transform.position)+ 2 * movementVector.normalized)));
     }
 
-    void Attack()
+    void Attack(bool isCrouching)
     {
+        if (!this.grounded)
+            return;
+
+        if (isCrouching)
+            this.Crouch();
+        else
+            this.Stand();
         this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
     }
 
     void AirAttack()
     {
+        if (this.grounded)
+            return;
+
         this.ActionFsm.ChangeState(new AirAttackState(this, this.ActionFsm));
     }
 
-    void Block()
+    void Block(bool isCrouching)
     {
-        //Temp hacks to make the AI behave
         if (!this.grounded)
             return;
-        this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm));
-    }
 
-    public void Idle()
-    {
-        //Temp hacks to make the AI behave
-        if (this.grounded)
-            this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
+        if (isCrouching)
+            this.Crouch();
+        else
+            this.Stand();
+        this.ActionFsm.ChangeState(new BlockState(this, this.ActionFsm));
     }
 
     public void Stand()
     {
         if (!this.grounded)
             return;
+
+        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
+
         this.isCrouching = false;
         StandAnim();
     }
@@ -312,6 +330,9 @@ public class Player : MonoBehaviour {
     {
         if (!this.grounded)
             return;
+
+        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
+
         this.isCrouching = true;
         CrouchAnim();
     }
@@ -330,6 +351,7 @@ public class Player : MonoBehaviour {
         this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));
     }
 
+    //TODO: Implement forward and back techs
     public void SetRecorder(DataRecorder dataRecorder)
     {
         this.dataRecorder = dataRecorder;

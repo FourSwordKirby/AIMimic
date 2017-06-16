@@ -49,7 +49,7 @@ public class TechState : State<Player>
                 player.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
 
                 //We don't call preformAction because it's not voluntarily done on the part of the player
-                player.Idle();
+                player.Stand();
             }
         }
     }

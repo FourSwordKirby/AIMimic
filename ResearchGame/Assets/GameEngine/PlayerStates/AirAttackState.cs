@@ -102,7 +102,7 @@ public class AirAttackState : State<Player>
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             //We don't call preformAction because it's not voluntarily done on the part of the player
-            player.Idle();
+            player.Stand();
 
             return;
         }
