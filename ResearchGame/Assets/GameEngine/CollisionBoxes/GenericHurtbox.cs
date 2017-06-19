@@ -43,7 +43,6 @@ public class GenericHurtbox : Hurtbox {
                 hitbox.owner.chainable = true;
                 hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
 
-                Debug.Log("BLOCK");
                 TakeDamage(hitbox.chipDamage);
                 BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.0f * Vector2.right * hitbox.knockbackVector.x, false);
                 GameManager.SpawnBlockIndicator(hitLocation);

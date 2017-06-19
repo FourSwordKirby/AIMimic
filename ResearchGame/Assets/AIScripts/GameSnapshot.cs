@@ -21,6 +21,9 @@ public class GameSnapshot {
     public float p1Health;
     public float p2Health;
 
+    public bool p1Interrupt;
+    public bool p2Interrupt;
+
     public Vector3 p1Position;
     public Vector3 p2Position;
 
@@ -49,7 +52,8 @@ public class GameSnapshot {
     public GameSnapshot(int initiatedPlayer, float frameTaken,
                             Player p1, Player p2, 
                             float p1Duration, float p2Duration,
-                            Action p1Action, Action p2Action)
+                            Action p1Action, Action p2Action, 
+                            bool p1Interrupt = false, bool p2Interrupt = false)
     {
         this.initiatedPlayer = initiatedPlayer;
         this.frameTaken = frameTaken;
@@ -61,6 +65,9 @@ public class GameSnapshot {
 
         this.p1Status = StateToStatus(p1);
         this.p2Status = StateToStatus(p2);
+
+        this.p1Interrupt = p1Interrupt;
+        this.p2Interrupt = p2Interrupt;
 
         p1Health = p1.health;
         p2Health = p2.health;
@@ -76,7 +83,6 @@ public class GameSnapshot {
         p2CornerDistance = getCornerDistance(p2.effectivePosition.x);
 
         this.labels = new List<string>();
-        labels.Add("wtf");
     }
 
     override public string ToString()

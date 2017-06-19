@@ -62,6 +62,27 @@ public class DataRecorder : MonoBehaviour {
 
     public void InterruptAction(bool isPlayer1)
     {
+        int initIndex = isPlayer1 ? 0 : 1;
+
+        float p1Duration = GameManager.currentFrame - player1StartFrame;
+        float p2Duration = GameManager.currentFrame - player2StartFrame;
+
+        bool p1Interrupt = isPlayer1;
+        bool p2Interrupt = !isPlayer1;
+
+        GameSnapshot snapshot = new GameSnapshot(initIndex, GameManager.currentFrame,
+                                                player1, player2,
+                                                p1Duration, p2Duration,
+                                                player1Action, player2Action,
+                                                p1Interrupt, p2Interrupt);
+        currentSession.addSnapshot(snapshot);
+
+        if (!isPlayer1)
+            Debug.Log("Action Recorded:" + snapshot.p2Action + " " + snapshot.p2Duration);
+    }
+
+    public void ResumeRecording(bool isPlayer1)
+    {
         if (isPlayer1)
         {
             player1Action = Action.Stand;

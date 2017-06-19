@@ -346,6 +346,15 @@ public class Player : MonoBehaviour {
         this.ActionFsm.ChangeState(new HitState(this, hitlag, hitstun, knockback, knockdown, this.ActionFsm));
     }
 
+    public void ExitHitstun()
+    {
+        //Upon exiting hitstun, the recorder should start recording your actions once more
+        if (dataRecorder != null)
+            dataRecorder.ResumeRecording(this.isPlayer1);
+
+        this.Stand();
+    }
+
     public void Tech()
     {
         this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));

@@ -75,10 +75,10 @@ public class HitState : State<Player>
                 if (frameCounter >= hitlag + hitstun)
                 {
                     GameManager.EndCombo(player.opponent);
-                    player.stunned = false;            
-                    
+                    player.stunned = false;
+
                     //We don't call preformAction because it's not voluntarily done on the part of the player
-                    player.Stand();
+                    player.ExitHitstun();
                 }
             }
         }

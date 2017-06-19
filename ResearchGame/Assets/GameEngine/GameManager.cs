@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour {
     public bool roundOver { get; private set; }
     private bool firstBoot = true;
 
+    /// <summary>
+    /// Used mainly for coordinating how long the AI should do moves. This means that it counts up 
+    /// only when there is no hitstop
+    /// </summary>
     public static int currentFrame { get; private set; }
 
     void Awake()
@@ -97,7 +101,6 @@ public class GameManager : MonoBehaviour {
             }
             else 
             {
-                currentFrame++;
                 roundOver = false;
                 RoundText.text = "GO!";
                 p1.enabled = true;
@@ -106,13 +109,15 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        currentFrame++;
+        if(!(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
+            currentFrame++;
+
         if (!roundOver)
         {
             RoundText.text = "";
             if (timeRemaining > 0)
                 timeRemaining -= Time.deltaTime;
-            if (p1.health <= 0 || p2.health <= 0 || currentFrame >= SecondsToFrames(timeLimit))
+            if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
             {
                 Time.timeScale = 0.75f;
                 currentRound++;
@@ -239,11 +244,6 @@ public class GameManager : MonoBehaviour {
         p2.Reset();
         p1.transform.position = spawnPoint1.transform.position;
         p2.transform.position = spawnPoint2.transform.position;
-    }
-
-    private float SecondsToFrames(float timeLimit)
-    {
-        return timeLimit * Application.targetFrameRate;
     }
 
     public static void SpawnBlockIndicator(Vector3 position)
