@@ -81,17 +81,43 @@ public class DataRecorder : MonoBehaviour {
             Debug.Log("Action Recorded:" + snapshot.p2Action + " " + snapshot.p2Duration);
     }
 
-    public void ResumeRecording(bool isPlayer1)
+    public void ResumeRecording(bool isPlayer1, bool isCrouching, bool isBlocking)
     {
         if (isPlayer1)
         {
-            player1Action = Action.Stand;
             player1StartFrame = GameManager.currentFrame;
+            if (isBlocking)
+            {
+                if (!isCrouching)
+                    player1Action = Action.StandBlock;
+                else
+                    player1Action = Action.CrouchBlock;
+            }
+            else
+            {
+                if (!isCrouching)
+                    player1Action = Action.Stand;
+                else
+                    player1Action = Action.Crouch;
+            }
         }
         else
         {
-            player2Action = Action.Stand;
             player2StartFrame = GameManager.currentFrame;
+            if (isBlocking)
+            {
+                if (!isCrouching)
+                    player2Action = Action.StandBlock;
+                else
+                    player2Action = Action.CrouchBlock;
+            }
+            else
+            {
+                if (!isCrouching)
+                    player2Action = Action.Stand;
+                else
+                    player2Action = Action.Crouch;
+            }
         }
     }
 

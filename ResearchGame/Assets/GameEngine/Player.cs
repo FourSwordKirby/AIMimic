@@ -75,6 +75,7 @@ public class Player : MonoBehaviour {
     {
         health = maxHealth;
         meter = 0.0f;
+        comboCount = 0;
 
         ActionFsm.ClearStates();
         this.stunned = false;
@@ -348,11 +349,20 @@ public class Player : MonoBehaviour {
 
     public void ExitHitstun()
     {
-        //Upon exiting hitstun, the recorder should start recording your actions once more
-        if (dataRecorder != null)
-            dataRecorder.ResumeRecording(this.isPlayer1);
+        //Wakeup options for the player
+        Parameters.InputDirection dir = Controls.getInputDirection(this);
 
-        this.Stand();
+        if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+            this.Crouch();
+        else
+            this.Stand();
+
+        if (Controls.shieldInputHeld(this))
+            this.Block(isCrouching);
+
+        //Upon exiting hitstun, the recorder should start recording your actions once more (it notes what your wakeup option was)
+        if (dataRecorder != null)
+            dataRecorder.ResumeRecording(this.isPlayer1, isCrouching, isBlocking);
     }
 
     public void Tech()

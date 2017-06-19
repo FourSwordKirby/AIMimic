@@ -36,6 +36,9 @@ public class SuspendState : State<Player>
             player.selfBody.simulated = false;
         else
             player.selfBody.drag = 0.0f;
+
+        if (player.transform.position.y < 0)
+            player.transform.position = player.transform.position - Vector3.up * player.transform.position.y;
     }
 
     override public void Execute()
@@ -50,9 +53,6 @@ public class SuspendState : State<Player>
 
     override public void FixedExecute()
     {
-
-        float xNew = Mathf.Max(0.0f, Mathf.Abs(player.selfBody.velocity.x) - 0.1f);
-        player.selfBody.velocity = new Vector2(Mathf.Sign(player.selfBody.velocity.x) * xNew, player.selfBody.velocity.y);
     }
 
     override public void Exit()
