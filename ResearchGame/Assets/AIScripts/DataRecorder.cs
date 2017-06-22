@@ -35,6 +35,10 @@ public class DataRecorder : MonoBehaviour {
     public void ClearSession()
     {
         currentSession = new Session(playerProfileName);
+        player1Action = Action.Stand;
+        player2Action = Action.Stand;
+        player1StartFrame = 0;
+        player2StartFrame = 0;
     }
 
     public void WriteToLog(int p1Class, int p2Class)
@@ -133,9 +137,6 @@ public class DataRecorder : MonoBehaviour {
                                                 p1Duration, p2Duration,
                                                 player1Action, player2Action);
         currentSession.addSnapshot(snapshot);
-
-        if (!isPlayer1)
-            Debug.Log("Action Recorded:" + snapshot.p2Action + " " + snapshot.p2Duration);
 
         if (isPlayer1)
         {

@@ -29,3 +29,6 @@ def ParsePlayerLogs(player_name):
     if len(roundData) > 0:
         playerData.append(roundData)
     return playerData
+
+if __name__ == '__main__':
+    ParsePlayerLogs(sys.argv[1])

@@ -86,6 +86,12 @@ public class GameManager : MonoBehaviour {
             Quit();
         }
 
+        if(countDown < 1)
+        {
+            if (!(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
+                currentFrame++;
+        }
+
         if (countDown > 0)
         {
             countDown -= Time.deltaTime;
@@ -108,9 +114,6 @@ public class GameManager : MonoBehaviour {
             }
             return;
         }
-
-        if(!(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
-            currentFrame++;
 
         if (!roundOver)
         {

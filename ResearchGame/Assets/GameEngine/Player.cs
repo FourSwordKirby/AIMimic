@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
 
-        PerformAction(Action.Stand);
+        this.Stand();
     }
 
     public void Reset()
@@ -79,6 +79,10 @@ public class Player : MonoBehaviour {
 
         ActionFsm.ClearStates();
         this.stunned = false;
+        this.knockedDown = false;
+        this.grounded = true;
+        this.chainable = false;
+
         this.selfBody.gravityScale = 1.0f;
         this.selfBody.velocity = Vector3.zero;
         this.hitboxManager.deactivateAllHitboxes();
@@ -160,9 +164,6 @@ public class Player : MonoBehaviour {
 
         if (dataRecorder != null)
             dataRecorder.RecordAction(action, this.isPlayer1);
-
-        if (!this.isPlayer1)
-            print(action);
 
         switch (action) {
             case Action.Stand:
