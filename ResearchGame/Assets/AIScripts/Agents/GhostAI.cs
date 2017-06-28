@@ -67,7 +67,7 @@ public class GhostAI : MonoBehaviour
         if (GameManager.currentFrame % frameInterval == 0)
         {
             //Get the current game snapshot
-            GameSnapshot currentState = getGameState();
+            GameSnapshot currentState = GetGameState();
             if (currentState == null)
                 return;
 
@@ -117,7 +117,7 @@ public class GhostAI : MonoBehaviour
     }
 
     //Encapsulate the state of the opponent player, reduced to easily identifiable enums
-    GameSnapshot getGameState()
+    GameSnapshot GetGameState()
     {
         return dataRecorder.currentSession.snapshots.FindLast(x => true);
     }

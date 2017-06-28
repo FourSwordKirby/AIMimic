@@ -79,12 +79,15 @@ for idx in new_p2_y:
     p2_y.append(encoding)
 p2_y = np.array(p2_y)
 
-msk = np.random.rand(len(p2_snapshots)) < 0.8
+msk = np.array([True] * (len(p2_snapshots)-200) + [False] * 200) #np.random.rand(len(p2_snapshots)) < 0.8
 
 p2_train_x = p2_x[msk]#.as_matrix()
 p2_test_x = p2_x[~msk]#.as_matrix()
 p2_train_y = p2_y[msk]#.as_matrix()
 p2_test_y = p2_y[~msk]#.as_matrix()
+
+print(len(p2_train_x))
+print(len(p2_test_x))
 
 #Running the neural net
 import tensorflow as tf
@@ -95,12 +98,12 @@ def mean_huber_loss(y_true, y_pred, max_grad=1.):
     return tf.reduce_mean(tf.where(squared <= max_grad, squared, linear))
 
 model = Sequential()
-model.add(Dense(20, input_dim=(n * 21)))
-model.add(Activation('tanh'))
-model.add(Dense(14))
-model.add(Activation('tanh'))
+model.add(Dense(32, input_dim=(n * 21)))
+model.add(Activation('sigmoid'))
+# model.add(Dense(16))
+# model.add(Activation('sigmoid'))
 model.add(Dense(12))
-model.add(Activation('tanh'))
+model.add(Activation('sigmoid'))
 
 model.compile(loss='mean_squared_error',
               optimizer='sgd',
@@ -108,8 +111,12 @@ model.compile(loss='mean_squared_error',
 
 model.fit(p2_train_x, p2_train_y, nb_epoch=50, batch_size=32)
 model.train_on_batch(p2_train_x, p2_train_y)
+
 loss_and_metrics = model.evaluate(p2_test_x, p2_test_y, batch_size=128)
-print(loss_and_metrics)
+print("")
+print("test_stats", loss_and_metrics)
+loss_and_metrics = model.evaluate(p2_train_x, p2_train_y, batch_size=128)
+print("train_stats", loss_and_metrics)
 
 #Manual evaluation of accuracy
 x_tests = list(p2_test_x)
@@ -126,18 +133,29 @@ for i in range(len(x_tests)):
 
     actions = model.predict(snapshot).squeeze()
 
-    softmax = sum(actions)
-    #rng = random.uniform(0.0, softmax)
-    #threshold = 0.0
     max_score = -10000
     selected_action = 0
+
     for action in range(len(actions)):
         if(actions[action] > max_score):
             max_score = actions[action]
             selected_action = action
-        #threshold += actions[action]
-        #if rng < threshold:
-        #    selected_action = action
+
+    #print("actions", actions)
+    #print(snapshot)
+
+    # softmax = sum(map(lambda x: 40**x, actions))
+    # rng = random.uniform(0.0, softmax)
+    # threshold = 0.0
+    # selected_action = 0
+
+    # for idx in range(len(actions)):
+    #     action = actions[idx]
+    #     threshold += 40 ** action
+    #     if(rng < threshold):
+    #         selected_action = idx
+    #         break
+
 
     if(selected_action == target_action):
         successes += 1

@@ -12,6 +12,8 @@ public abstract class AIAgent : MonoBehaviour{
     public Player AIPlayer;
     public Text DebugText;
 
+    public int frameDelay;
+
     void Start()
     {
         Opponent = GameManager.instance.p1;
@@ -20,6 +22,13 @@ public abstract class AIAgent : MonoBehaviour{
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = AIColor;
+    }
+
+    public GameSnapshot GetGameState()
+    {
+        int sessionLength = dataRecorder.currentSession.snapshots.Count;
+        int snapshotIndex = Mathf.Max(0, sessionLength - frameDelay);
+        return dataRecorder.currentSession.snapshots[snapshotIndex];
     }
 
     /// <summary>

@@ -42,8 +42,8 @@ p2_snapshots = snapshots.loc[snapshots['initiatedPlayer'] == 1]
 #p2_snapshots = p2_snapshots.loc[snapshots['p2Interrupt'] == 0.0]
 
 
-p2_train = p2_snapshots.tail(-2000)
-p2_test = p2_snapshots.tail(2000)
+p2_train = p2_snapshots.tail(-200)
+p2_test = p2_snapshots.tail(200)
 
 #Ngram programming
 from collections import deque, Counter
