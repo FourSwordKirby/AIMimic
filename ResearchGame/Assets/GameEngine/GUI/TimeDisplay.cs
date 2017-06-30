@@ -8,7 +8,7 @@ public class TimeDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        int time = (int)(GameManager.timeRemaining);
+        int time = (int)(GameManager.instance.timeRemaining);
         if (time < 10)
             currentText.text = "0" + time.ToString();
         else

@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public abstract class AIAgent : MonoBehaviour{
     public string playerProfileName;
     public Color AIColor;
-    public DataRecorder dataRecorder;
 
-    public Player Opponent;
     public Player AIPlayer;
+    public Player Opponent;
+
+    public GameRecorder gameRecorder;
     public Text DebugText;
 
     public int frameDelay;
@@ -24,11 +25,21 @@ public abstract class AIAgent : MonoBehaviour{
         AIPlayer.sprite.color = AIColor;
     }
 
-    public GameSnapshot GetGameState()
+    public Snapshot GetGameState()
     {
-        int sessionLength = dataRecorder.currentSession.snapshots.Count;
-        int snapshotIndex = Mathf.Max(0, sessionLength - frameDelay);
-        return dataRecorder.currentSession.snapshots[snapshotIndex];
+        //float p1Duration = GameManager.currentFrame - dataRecorder.player1StartFrame;
+        //float p2Duration = GameManager.currentFrame - dataRecorder.player2StartFrame;
+
+
+        //GameSnapshot snapshot = new GameSnapshot(0, GameManager.currentFrame,
+        //                                        GameManager.instance.player1, player2,
+        //                                        p1Duration, p2Duration,
+        //                                        player1Action, player2Action,
+        //                                        p1Interrupt, p2Interrupt);
+
+        int sessionLength = gameRecorder.snapshots.Count;
+        int snapshotIndex = Mathf.Max(0, sessionLength - frameDelay - 1);
+        return gameRecorder.snapshots[snapshotIndex];
     }
 
     /// <summary>

@@ -9,6 +9,6 @@ public class FrameUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        frameRateUI.text = "Frame: " + GameManager.currentFrame.ToString();
+        frameRateUI.text = "Frame: " + GameManager.instance.currentFrame.ToString();
 	}
 }

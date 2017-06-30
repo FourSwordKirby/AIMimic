@@ -11,7 +11,7 @@ public class ReplayAI : MonoBehaviour
     //Player controlledPlayer;
     Player AIPlayer;
 
-    private List<GameSnapshot> priorSnapshots;
+    private List<GameEvent> priorSnapshots;
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class ReplayAI : MonoBehaviour
     int actionCount = 0;
     void Update()
     {
-        if (actionCount < priorSnapshots.Count && GameManager.currentFrame == priorSnapshots[actionCount].frameTaken)
+        if (actionCount < priorSnapshots.Count && GameManager.instance.currentFrame == priorSnapshots[actionCount].frameTaken)
         {
             Action chosenAction = priorSnapshots[actionCount].p2Action;
             Vector3 AIPosition = priorSnapshots[actionCount].p2Position;

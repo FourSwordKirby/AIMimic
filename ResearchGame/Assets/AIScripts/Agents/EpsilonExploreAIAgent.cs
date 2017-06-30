@@ -17,7 +17,7 @@ public class EpsilonExploreAIAgent : AIAgent
     public int backpropDepth = 3;
     private AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
 
-    private List<GameSnapshot> priorSnapshots;
+    private List<GameEvent> priorSnapshots;
     private Dictionary<AISituation, ActionLookupTable> frequencyTable
         = new Dictionary<AISituation, ActionLookupTable>();
 
@@ -25,9 +25,9 @@ public class EpsilonExploreAIAgent : AIAgent
 
     int frameInterval = 5;
 
-    GameSnapshot currentState = null;
+    Snapshot currentState = null;
     AISituation currentSituation = null;
-    GameSnapshot pastState = null;
+    Snapshot pastState = null;
     List<AISituation> pastSituations = new List<AISituation>();
     List<Action> pastActions = new List<Action>();
 
@@ -40,7 +40,7 @@ public class EpsilonExploreAIAgent : AIAgent
         if (!AIPlayer.enabled)
             return;
 
-        if (GameManager.currentFrame % frameInterval == 0)
+        if (GameManager.instance.currentFrame % frameInterval == 0)
         {
             ObserveState();
             Action action = GetAction();
@@ -117,14 +117,8 @@ public class EpsilonExploreAIAgent : AIAgent
     }
 
 
-    private float GetReward(GameSnapshot pastState, GameSnapshot currentState)
+    private float GetReward(Snapshot pastState, Snapshot currentState)
     {
         return (pastState.p1Health - currentState.p1Health) + (currentState.p2Health - pastState.p2Health);
-    }
-
-    //Encapsulate the state of the opponent player, reduced to easily identifiable enums
-    GameSnapshot GetGameState()
-    {
-        return dataRecorder.currentSession.snapshots.FindLast(x => true);
     }
 }

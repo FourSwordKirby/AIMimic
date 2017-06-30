@@ -13,7 +13,7 @@ public class ModelComparer : MonoBehaviour {
     Player controlledPlayer;
     Player opponentPlayer;
 
-    private List<List<GameSnapshot>> priorSessions;
+    private List<List<GameEvent>> priorSessions;
 
     void Start()
     {
@@ -26,12 +26,12 @@ public class ModelComparer : MonoBehaviour {
     void Update()
     {
         float distance = 0.0f;
-        foreach(List<GameSnapshot> session in priorSessions)
+        foreach(List<GameEvent> session in priorSessions)
         {
-            foreach (GameSnapshot snapshot in session)
+            foreach (GameEvent snapshot in session)
             {
-                if (GameManager.timeRemaining - snapshot.frameTaken < 1.0f)
-                    distance += snapshot.snapshotDistance(controlledPlayer, opponentPlayer, GameManager.timeRemaining);
+                if (GameManager.instance.timeRemaining - snapshot.frameTaken < 1.0f)
+                    distance += snapshot.snapshotDistance(controlledPlayer, opponentPlayer, GameManager.instance.timeRemaining);
             }
         }
 

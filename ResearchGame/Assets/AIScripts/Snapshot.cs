@@ -3,26 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// This merely records a snapshot of what is happening on the screen. Nothing about moves being initiated or being interrupted occurs here
+/// </summary>
+public class Snapshot {
 
-public class GameSnapshot {
-
-    public int initiatedPlayer; //-1 means not initiated by a player, 0 means p1 and 1 means p2
-
-    public Action p1Action;
-    public Action p2Action;
+    public float frameTaken;
 
     public PlayerStatus p1Status;
-    public PlayerStatus p2Status;
-
-    public float p1Duration;
-    public float p2Duration;
-    public float frameTaken;
+    public PlayerStatus p2Status;    
 
     public float p1Health;
     public float p2Health;
-
-    public bool p1Interrupt;
-    public bool p2Interrupt;
 
     public Vector3 p1Position;
     public Vector3 p2Position;
@@ -39,7 +31,7 @@ public class GameSnapshot {
     //Planned additional features
     //private float frameAdvantage;
 
-    public GameSnapshot()
+    public Snapshot()
     {
         //Exists just for the xml serializer
     }
@@ -49,25 +41,13 @@ public class GameSnapshot {
     //We want to know what the player is doing
     //Example, say the recorded player is moving right, we need the player to move right for every
     //action that the opponent is doing in that time
-    public GameSnapshot(int initiatedPlayer, float frameTaken,
-                            Player p1, Player p2, 
-                            float p1Duration, float p2Duration,
-                            Action p1Action, Action p2Action, 
-                            bool p1Interrupt = false, bool p2Interrupt = false)
+    public Snapshot(float frameTaken,
+                            Player p1, Player p2)
     {
-        this.initiatedPlayer = initiatedPlayer;
         this.frameTaken = frameTaken;
-
-        this.p1Duration = p1Duration;
-        this.p2Duration = p2Duration;
-        this.p1Action = p1Action;
-        this.p2Action = p2Action;
 
         this.p1Status = StateToStatus(p1);
         this.p2Status = StateToStatus(p2);
-
-        this.p1Interrupt = p1Interrupt;
-        this.p2Interrupt = p2Interrupt;
 
         p1Health = p1.health;
         p2Health = p2.health;
@@ -87,7 +67,7 @@ public class GameSnapshot {
 
     override public string ToString()
     {
-        return p2Action.ToString();
+        return "placeholder";
     }
 
     //Insert helper functions here for getting various atributes
@@ -149,7 +129,6 @@ public class GameSnapshot {
     //A way to compare attributes
     public float snapshotDistance(Player p1, Player p2, float timeRemaining)
     {
-     
         float deltaTime = this.frameTaken - timeRemaining;
      
         //float deltaP1Health = this.p1Health - p1.health;

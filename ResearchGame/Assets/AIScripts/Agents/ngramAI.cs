@@ -10,12 +10,12 @@ using System.Linq;
 public class ngramAI : MonoBehaviour
 {
     public string playerProfileName;
-    public DataRecorder dataRecorder;
+    public EventRecorder dataRecorder;
 
     Player AIPlayer;
     Player Opponent;
 
-    private List<GameSnapshot> priorSnapshots;
+    private List<GameEvent> priorSnapshots;
 
     //Currently using most basic kind of ngram, the kind where the player does a certain kind of move repeatedly
     //The key is the string version of an array of previous moves. The value is a the set of all actions that have been done with that history
@@ -38,7 +38,7 @@ public class ngramAI : MonoBehaviour
         Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
         for(int i = 0; i < priorSnapshots.Count; i++)
         {
-            GameSnapshot snapshot = priorSnapshots[i];
+            GameEvent snapshot = priorSnapshots[i];
             string historyString = currentHistory[0] + " " + currentHistory[1];
             if(!ngramHistory.ContainsKey(historyString))
                 ngramHistory.Add(historyString, new List<Action>());
@@ -52,9 +52,9 @@ public class ngramAI : MonoBehaviour
     Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
     void Update()
     {
-        if (GameManager.currentFrame % frameInterval == 0)
+        if (GameManager.instance.currentFrame % frameInterval == 0)
         {
-            GameSnapshot currentState = getGameState();
+            GameEvent currentState = getGameState();
             if (currentState == null)
                 return;
 
@@ -73,7 +73,7 @@ public class ngramAI : MonoBehaviour
 
 
     //Encapsulate the state of the opponent player, reduced to easily identifiable enums
-    GameSnapshot getGameState()
+    GameEvent getGameState()
     {
         return dataRecorder.currentSession.snapshots.FindLast(x => true);
     }

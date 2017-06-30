@@ -4,19 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-//The goal of this AI agent is to look at a previous set of playsessions between  the plaer Test and an unknown other player
-//The AI's behavior patterns should mimic Test using ngrams. That is, it should do the same moves that Test does in certain situations
-//given some history.
 
+//TODO: migrate over to the new format where the AI sees the player states at each frame.
 public class GhostAI : MonoBehaviour
 {
     public string playerProfileName;
-    public DataRecorder dataRecorder;
+    public EventRecorder dataRecorder;
 
     Player AIPlayer;
     Player Opponent;
 
-    private List<GameSnapshot> priorSnapshots;
+    private List<GameEvent> priorSnapshots;
 
     public Text DebugText;
 
@@ -44,7 +42,7 @@ public class GhostAI : MonoBehaviour
 
         for(int i = 0; i < priorSnapshots.Count; i++)
         {
-            GameSnapshot snapshot = priorSnapshots[i];
+            GameEvent snapshot = priorSnapshots[i];
             AISituation situation = new AISituation(snapshot);
 
             if (!frequencyTable.ContainsKey(situation))
@@ -55,7 +53,7 @@ public class GhostAI : MonoBehaviour
 
     int frameInterval = 5;
 
-    GameSnapshot pastState = null;
+    GameEvent pastState = null;
     AISituation pastSituation = null;
     Action pastAction;
     
@@ -64,10 +62,10 @@ public class GhostAI : MonoBehaviour
         if (!AIPlayer.enabled)
             return; 
 
-        if (GameManager.currentFrame % frameInterval == 0)
+        if (GameManager.instance.currentFrame % frameInterval == 0)
         {
             //Get the current game snapshot
-            GameSnapshot currentState = GetGameState();
+            GameEvent currentState = GetGameState();
             if (currentState == null)
                 return;
 
@@ -111,13 +109,13 @@ public class GhostAI : MonoBehaviour
         }
     }
 
-    private float GetReward(GameSnapshot pastState, GameSnapshot currentState)
+    private float GetReward(GameEvent pastState, GameEvent currentState)
     {
         return (pastState.p1Health - currentState.p1Health) + (currentState.p2Health - pastState.p2Health);
     }
 
     //Encapsulate the state of the opponent player, reduced to easily identifiable enums
-    GameSnapshot GetGameState()
+    GameEvent GetGameState()
     {
         return dataRecorder.currentSession.snapshots.FindLast(x => true);
     }

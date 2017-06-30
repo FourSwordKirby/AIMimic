@@ -13,7 +13,7 @@ public class KthNearestAI : MonoBehaviour {
     Player controlledPlayer;
     Player AIPlayer;
 
-    private List<GameSnapshot> priorSnapshots;
+    private List<GameEvent> priorSnapshots;
 
     void Start()
     {
@@ -38,12 +38,12 @@ public class KthNearestAI : MonoBehaviour {
         {
             counter = 0.0f;
 
-            List<GameSnapshot> closestNeighbors = new List<GameSnapshot>(k);
+            List<GameEvent> closestNeighbors = new List<GameEvent>(k);
             float closestDistance = float.MaxValue;
 
-            foreach (GameSnapshot snapshot in priorSnapshots)
+            foreach (GameEvent snapshot in priorSnapshots)
             {
-                float distance = snapshot.snapshotDistance(controlledPlayer, AIPlayer, GameManager.timeRemaining);
+                float distance = snapshot.snapshotDistance(controlledPlayer, AIPlayer, GameManager.instance.timeRemaining);
 
                 if(distance < closestDistance)
                 {
@@ -60,7 +60,7 @@ public class KthNearestAI : MonoBehaviour {
 
             AIPlayer.PerformAction(chosenAction);
 
-            Debug.Log("Action: " + chosenAction + " was taken at time " + GameManager.timeRemaining);
+            Debug.Log("Action: " + chosenAction + " was taken at time " + GameManager.instance.timeRemaining);
         }
     }
 

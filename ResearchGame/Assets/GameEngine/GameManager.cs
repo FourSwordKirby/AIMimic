@@ -8,10 +8,6 @@ using System;
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
-    public static bool recordData;
-    public static bool useAI;
-    public List<DataRecorder> recorders;
-
     public Player p1;
     public Player p2;
     public int p1Victories;
@@ -23,10 +19,9 @@ public class GameManager : MonoBehaviour {
     public static string p2Name;
 
     public CameraControls Camera;
-    public static GameObject[] hit_boxes;
 
     public float timeLimit;
-    public static float timeRemaining;
+    public float timeRemaining;
 
     public GameObject hitEffect;
     public GameObject blockEffect;
@@ -45,8 +40,8 @@ public class GameManager : MonoBehaviour {
     //Shouldn't be here but hacking
     public List<AudioClip> sfx;
 
-    private static float countDown;
-    private static float roundEndTimer;
+    private float countDown;
+    private float roundEndTimer;
     public bool roundOver { get; private set; }
     private bool firstBoot = true;
 
@@ -54,20 +49,13 @@ public class GameManager : MonoBehaviour {
     /// Used mainly for coordinating how long the AI should do moves. This means that it counts up 
     /// only when there is no hitstop
     /// </summary>
-    public static int currentFrame { get; private set; }
+    public int currentFrame { get; private set; }
 
     void Awake()
     {
         instance = this;
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
-        if (recordData)
-        {
-            recorders[0].playerProfileName = p1Name;
-            recorders[1].playerProfileName = p2Name;
-        }
-
-        hit_boxes = GameObject.FindObjectsOfType<GameObject>().Where(x => x.GetComponent<Collider2D>() != null).ToArray();
 
         timeRemaining = timeLimit;
     }
@@ -159,16 +147,6 @@ public class GameManager : MonoBehaviour {
                 P1RoundCount.SetStockCount(p1Victories);
                 P2RoundCount.SetStockCount(p2Victories);
 
-                //At the end of a round, we log that round in the data recorder
-                if (recordData || recorders[0].enabled || recorders[1].enabled)
-                {
-                    foreach (DataRecorder recorder in recorders)
-                    {
-                        if (recorder.currentlyLogging)
-                            recorder.LogSession();
-                    }
-                }
-
                 roundOver = true;
             }
             return;
@@ -202,15 +180,6 @@ public class GameManager : MonoBehaviour {
 
     public void Quit()
     {
-        if (recordData || recorders[0].enabled || recorders[1].enabled)
-        {
-            foreach (DataRecorder recorder in recorders)
-            {
-                if (recorder.enabled)
-                    recorder.WriteToLog(rematchUI.p1Class, rematchUI.p2Class);
-            }
-        }
-
         SceneManager.LoadScene(0);
     }
 

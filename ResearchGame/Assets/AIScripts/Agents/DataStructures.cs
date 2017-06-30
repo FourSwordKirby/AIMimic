@@ -4,11 +4,6 @@ using UnityEngine;
 using System.Linq;
 using System.IO;
 
-public class Datastructures
-{
-    //Lol this is empty
-}
-
 public class ActionLookupTable
 {
     List<AIAction> actionTable;
@@ -206,7 +201,7 @@ public class AISituation : System.IEquatable<AISituation>
 
     public PlayerStatus opponentStatus;
 
-    public AISituation(GameSnapshot snapshot)
+    public AISituation(Snapshot snapshot)
     {
         //xDistance
         if (snapshot.xDistance < 1)
@@ -226,6 +221,28 @@ public class AISituation : System.IEquatable<AISituation>
 
         //Status
         opponentStatus = snapshot.p1Status;
+    }
+
+    public AISituation(GameEvent gameEvent)
+    {
+        //xDistance
+        if (gameEvent.xDistance < 1)
+            deltaX = xDistance.Adjacent;
+        else if (gameEvent.xDistance < 3)
+            deltaX = xDistance.Near;
+        else
+            deltaX = xDistance.Far;
+
+        //yDistance
+        if (gameEvent.yDistance < 0.5f)
+            deltaY = yDistance.Level;
+        else if (gameEvent.yDistance < 1)
+            deltaY = yDistance.Near;
+        else
+            deltaY = yDistance.Far;
+
+        //Status
+        opponentStatus = gameEvent.p1Status;
     }
 
     public bool Equals(AISituation situation)

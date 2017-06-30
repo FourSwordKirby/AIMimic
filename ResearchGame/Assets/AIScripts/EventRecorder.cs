@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
-public class DataRecorder : MonoBehaviour {
-    public string playerProfileName;
+public class EventRecorder : MonoBehaviour {
+    public string recordingName;
     public bool enablePlaystyleLabeling;
     public bool currentlyLogging;
 
@@ -16,13 +17,30 @@ public class DataRecorder : MonoBehaviour {
     void Start()
     {
         sessions = new List<Session>(); 
-        currentSession = new Session(playerProfileName);
+        currentSession = new Session(recordingName);
 
         player1.SetRecorder(this);
         player2.SetRecorder(this);
 
         if (currentlyLogging)
+        {
             player2.sprite.color = Color.yellow;
+        }
+    }
+
+
+    bool roundInProgress;
+    private void Update()
+    {
+        if(roundInProgress && GameManager.instance.roundOver)
+        {
+            roundInProgress = false;
+            //At the end of a round, we log that round in the data recorder
+            if (currentlyLogging)
+                LogSession();
+        }
+        if (!GameManager.instance.roundOver)
+            roundInProgress = true;
     }
 
     public void LogSession()
@@ -34,11 +52,16 @@ public class DataRecorder : MonoBehaviour {
 
     public void ClearSession()
     {
-        currentSession = new Session(playerProfileName);
+        currentSession = new Session(recordingName);
         player1Action = Action.Stand;
         player2Action = Action.Stand;
         player1StartFrame = 0;
         player2StartFrame = 0;
+    }
+
+    void OnDestroy()
+    {
+        WriteToLog(GameManager.instance.rematchUI.p1Class, GameManager.instance.rematchUI.p2Class);
     }
 
     public void WriteToLog(int p1Class, int p2Class)
@@ -51,35 +74,35 @@ public class DataRecorder : MonoBehaviour {
         string strClass = pClass == 1 ? "offense" : "defense";
         foreach (Session session in sessions)
         {
-            foreach (GameSnapshot snapshot in session.snapshots)
+            foreach (GameEvent snapshot in session.snapshots)
                 snapshot.labels.Add(strClass);
             Debug.Log(session.snapshots.Count);
-            session.writeToLog();
+            session.WriteToLog();
         }
     }
 
 
     public Action player1Action = Action.Stand;
     public Action player2Action = Action.Stand;
-    public float player1StartFrame = GameManager.currentFrame;
-    public float player2StartFrame = GameManager.currentFrame;
+    public float player1StartFrame = 0;
+    public float player2StartFrame = 0;
 
     public void InterruptAction(bool isPlayer1)
     {
         int initIndex = isPlayer1 ? 0 : 1;
 
-        float p1Duration = GameManager.currentFrame - player1StartFrame;
-        float p2Duration = GameManager.currentFrame - player2StartFrame;
+        float p1Duration = GameManager.instance.currentFrame - player1StartFrame;
+        float p2Duration = GameManager.instance.currentFrame - player2StartFrame;
 
         bool p1Interrupt = isPlayer1;
         bool p2Interrupt = !isPlayer1;
 
-        GameSnapshot snapshot = new GameSnapshot(initIndex, GameManager.currentFrame,
+        GameEvent snapshot = new GameEvent(initIndex, GameManager.instance.currentFrame,
                                                 player1, player2,
                                                 p1Duration, p2Duration,
                                                 player1Action, player2Action,
                                                 p1Interrupt, p2Interrupt);
-        currentSession.addSnapshot(snapshot);
+        currentSession.AddSnapshot(snapshot);
 
         if (!isPlayer1)
             Debug.Log("Action Recorded:" + snapshot.p2Action + " " + snapshot.p2Duration);
@@ -89,7 +112,7 @@ public class DataRecorder : MonoBehaviour {
     {
         if (isPlayer1)
         {
-            player1StartFrame = GameManager.currentFrame;
+            player1StartFrame = GameManager.instance.currentFrame;
             if (isBlocking)
             {
                 if (!isCrouching)
@@ -107,7 +130,7 @@ public class DataRecorder : MonoBehaviour {
         }
         else
         {
-            player2StartFrame = GameManager.currentFrame;
+            player2StartFrame = GameManager.instance.currentFrame;
             if (isBlocking)
             {
                 if (!isCrouching)
@@ -129,24 +152,24 @@ public class DataRecorder : MonoBehaviour {
     {
         int initIndex = isPlayer1 ? 0 : 1;
 
-        float p1Duration = GameManager.currentFrame - player1StartFrame;
-        float p2Duration = GameManager.currentFrame - player2StartFrame;
+        float p1Duration = GameManager.instance.currentFrame - player1StartFrame;
+        float p2Duration = GameManager.instance.currentFrame - player2StartFrame;
 
-        GameSnapshot snapshot = new GameSnapshot(initIndex, GameManager.currentFrame,
+        GameEvent snapshot = new GameEvent(initIndex, GameManager.instance.currentFrame,
                                                 player1, player2, 
                                                 p1Duration, p2Duration,
                                                 player1Action, player2Action);
-        currentSession.addSnapshot(snapshot);
+        currentSession.AddSnapshot(snapshot);
 
         if (isPlayer1)
         {
             player1Action = actionTaken;
-            player1StartFrame = GameManager.currentFrame;
+            player1StartFrame = GameManager.instance.currentFrame;
         }
         else
         {
             player2Action = actionTaken;
-            player2StartFrame = GameManager.currentFrame;
+            player2StartFrame = GameManager.instance.currentFrame;
         }
     }
 

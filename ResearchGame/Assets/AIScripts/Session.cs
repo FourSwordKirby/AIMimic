@@ -8,7 +8,7 @@ using System;
 public class Session {
     //Future
     public RoundMetadata roundMetaData;
-    public List<GameSnapshot> snapshots;
+    public List<GameEvent> snapshots;
 
     private string playerProfileName;
     private string directoryPath;
@@ -19,7 +19,7 @@ public class Session {
     {
         this.playerProfileName = playerProfileName;
         roundMetaData = new RoundMetadata(0, 0);
-        snapshots = new List<GameSnapshot>();
+        snapshots = new List<GameEvent>();
 
         directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
         Directory.CreateDirectory(directoryPath);
@@ -27,12 +27,12 @@ public class Session {
         playerDir = new DirectoryInfo(directoryPath);
     }
 
-    public void addSnapshot(GameSnapshot snapshot)
+    public void AddSnapshot(GameEvent snapshot)
     {
         snapshots.Add(snapshot);
     }
 
-    public void writeToLog()
+    public void WriteToLog()
     {
         filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
 
@@ -48,14 +48,14 @@ public class Session {
         Debug.Log("wrote to log");
     }
 
-    public static List<List<GameSnapshot>> RetrievePlayerHistory(string playerProfileName)
+    public static List<List<GameEvent>> RetrievePlayerHistory(string playerProfileName)
     {
         string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/";
         Directory.CreateDirectory(directoryPath);
 
         DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
 
-        List<List<GameSnapshot>> playerHistory = new List<List<GameSnapshot>>();
+        List<List<GameEvent>> playerHistory = new List<List<GameEvent>>();
         int logCount = playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count();
         for (int i = 0; i < logCount; i++)
         {
@@ -65,7 +65,7 @@ public class Session {
     }
 
     //If sessionNumber is -1, we retrieve the latest recorded session
-    public static List<GameSnapshot> RetrievePlayerSession(string playerProfileName, int sessionNumber = -1)
+    public static List<GameEvent> RetrievePlayerSession(string playerProfileName, int sessionNumber = -1)
     {
         string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/";
         DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
@@ -77,10 +77,10 @@ public class Session {
         //deserialize
         string contents = File.ReadAllText(filePath);
         string[] serializeObjects = contents.Split(new string[]{"~~~~"} , StringSplitOptions.RemoveEmptyEntries);
-        List<GameSnapshot> mySnapshots = new List<GameSnapshot>();
+        List<GameEvent> mySnapshots = new List<GameEvent>();
         for (int i = 0; i < serializeObjects.Length; i++)
         {
-            mySnapshots.Add(JsonUtility.FromJson<GameSnapshot>(serializeObjects[i]));
+            mySnapshots.Add(JsonUtility.FromJson<GameEvent>(serializeObjects[i]));
         }
         return mySnapshots;
     }

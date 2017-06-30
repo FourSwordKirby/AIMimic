@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
     public CollisionboxManager hitboxManager { get; private set; }
 
     //Player keeps track of recording data bc it's impossible to record merely from observation tbh
-    private DataRecorder dataRecorder;
+    private EventRecorder eventRecorder;
 
     //Used for the initialization of internal, non-object variables
     void Awake()
@@ -162,8 +162,8 @@ public class Player : MonoBehaviour {
         if (!IsValidAction(action))
             return false;
 
-        if (dataRecorder != null)
-            dataRecorder.RecordAction(action, this.isPlayer1);
+        if (eventRecorder != null)
+            eventRecorder.RecordAction(action, this.isPlayer1);
 
         switch (action) {
             case Action.Stand:
@@ -342,8 +342,8 @@ public class Player : MonoBehaviour {
     public void EnterHitstun(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
         //When you get hit, the data recorder should note that you were not successful in completing the last attempted action
-        if (dataRecorder != null)
-            dataRecorder.InterruptAction(this.isPlayer1);
+        if (eventRecorder != null)
+            eventRecorder.InterruptAction(this.isPlayer1);
 
         this.ActionFsm.ChangeState(new HitState(this, hitlag, hitstun, knockback, knockdown, this.ActionFsm));
     }
@@ -362,18 +362,18 @@ public class Player : MonoBehaviour {
             this.Block(isCrouching);
 
         //Upon exiting hitstun, the recorder should start recording your actions once more (it notes what your wakeup option was)
-        if (dataRecorder != null)
-            dataRecorder.ResumeRecording(this.isPlayer1, isCrouching, isBlocking);
+        if (eventRecorder != null)
+            eventRecorder.ResumeRecording(this.isPlayer1, isCrouching, isBlocking);
     }
 
+    //TODO: Implement forward and back techs
     public void Tech()
     {
         this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));
     }
 
-    //TODO: Implement forward and back techs
-    public void SetRecorder(DataRecorder dataRecorder)
+    public void SetRecorder(EventRecorder eventRecorder)
     {
-        this.dataRecorder = dataRecorder;
+        this.eventRecorder = eventRecorder;
     }
 }

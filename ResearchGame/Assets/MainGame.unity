@@ -1840,6 +1840,54 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000010988993006, guid: a8736378989e78743956d16237878514,
     type: 2}
   m_PrefabInternal: {fileID: 2005460442}
+--- !u!1 &593143914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 593143915}
+  - component: {fileID: 593143916}
+  m_Layer: 0
+  m_Name: OptimalAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &593143915
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 593143914}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1539022178}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593143916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 593143914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55fa55dcce692348b68fdc50b05b9e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProfileName: Optimal
+  AIColor: {r: 1, g: 0.75, b: 0.91034484, a: 1}
+  AIPlayer: {fileID: 2021633135}
+  Opponent: {fileID: 173988561}
+  gameRecorder: {fileID: 0}
+  DebugText: {fileID: 0}
+  frameDelay: 0
+  backpropDepth: 3
 --- !u!1 &611197565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,10 +2066,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfileName: Test
   AIColor: {r: 0, g: 0, b: 0, a: 1}
-  dataRecorder: {fileID: 1138904622}
-  Opponent: {fileID: 2021633135}
   AIPlayer: {fileID: 173988561}
+  Opponent: {fileID: 2021633135}
+  gameRecorder: {fileID: 0}
   DebugText: {fileID: 1894823374}
+  frameDelay: 0
   epsilon: 0.05
   backpropDepth: 3
 --- !u!1 &676811753
@@ -3782,6 +3831,34 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1099847867}
+--- !u!1 &1103802155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1103802156}
+  m_Layer: 0
+  m_Name: GameRecorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1103802156
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1103802155}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.9999999, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1539022178}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1104291367
 GameObject:
   m_ObjectHideFlags: 0
@@ -3936,9 +4013,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddf7c73152ded6542b02e0def1bf6f0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerProfileName: Jotaro
+  recordingName: 
   enablePlaystyleLabeling: 0
-  currentlyLogging: 1
+  currentlyLogging: 0
   player1: {fileID: 2021633135}
   player2: {fileID: 173988561}
   player1Action: 0
@@ -4210,7 +4287,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1261004521}
-  - component: {fileID: 1261004523}
   - component: {fileID: 1261004522}
   m_Layer: 0
   m_Name: BackpropAI
@@ -4245,27 +4321,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfileName: Test
   AIColor: {r: 1, g: 0, b: 0, a: 1}
-  dataRecorder: {fileID: 1138904622}
-  Opponent: {fileID: 0}
-  AIPlayer: {fileID: 0}
-  DebugText: {fileID: 1894823374}
-  backpropDepth: 3
---- !u!114 &1261004523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1261004520}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f02f0366b81db6345bd1376ca1ea09f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerProfileName: Test
-  dataRecorder: {fileID: 1138904622}
   AIPlayer: {fileID: 0}
   Opponent: {fileID: 0}
+  gameRecorder: {fileID: 0}
   DebugText: {fileID: 1894823374}
+  frameDelay: 0
   backpropDepth: 3
 --- !u!1 &1266888947
 GameObject:
@@ -4427,7 +4487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1299767548
 Transform:
   m_ObjectHideFlags: 0
@@ -4465,7 +4525,7 @@ GameObject:
   - component: {fileID: 1325983225}
   - component: {fileID: 1138904622}
   m_Layer: 0
-  m_Name: PlayerRecorder
+  m_Name: EventRecorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4976,8 +5036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a13b35a2ed39394a9d6517df830360e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recorders:
-  - {fileID: 1138904622}
   p1: {fileID: 2021633135}
   p2: {fileID: 173988561}
   p1Victories: 0
@@ -4985,6 +5043,7 @@ MonoBehaviour:
   currentRound: 1
   Camera: {fileID: 856622474}
   timeLimit: 60
+  timeRemaining: 0
   hitEffect: {fileID: 1000011308625036, guid: a4b16d9229e94da4a93492dcc289419f, type: 2}
   blockEffect: {fileID: 1000011308625036, guid: f27f4741a6d03854781f4320fd0faad2,
     type: 2}
@@ -5023,6 +5082,8 @@ Transform:
   - {fileID: 1299767548}
   - {fileID: 1261004521}
   - {fileID: 649166560}
+  - {fileID: 593143915}
+  - {fileID: 1103802156}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5764,7 +5825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1894823373
 RectTransform:
   m_ObjectHideFlags: 0
