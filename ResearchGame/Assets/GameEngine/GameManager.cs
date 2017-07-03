@@ -76,6 +76,13 @@ public class GameManager : MonoBehaviour {
             Quit();
         }
 
+        //Managing timers
+        if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState) && !roundOver)
+        {
+            timeRemaining -= Time.deltaTime;
+            currentFrame++;
+        }
+
         if (countDown > 0)
         {
             countDown -= Time.deltaTime;
@@ -102,11 +109,6 @@ public class GameManager : MonoBehaviour {
         if (!roundOver)
         {
             RoundText.text = "";
-            if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
-            {
-                timeRemaining -= Time.deltaTime;
-                currentFrame++;
-            }
 
             if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
             {

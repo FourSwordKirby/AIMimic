@@ -16,9 +16,6 @@ public abstract class AIAgent : MonoBehaviour{
 
     void Start()
     {
-        Opponent = GameManager.instance.p1;
-
-        AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = AIColor;

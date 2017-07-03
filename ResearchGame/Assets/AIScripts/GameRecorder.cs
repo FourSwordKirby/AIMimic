@@ -13,7 +13,8 @@ public class GameRecorder : MonoBehaviour
     public List<Snapshot> snapshots = new List<Snapshot>();
 
     bool roundInProgress;
-    private void Update()
+
+    void Update()
     {
         if (!roundInProgress && !GameManager.instance.roundOver)
         {

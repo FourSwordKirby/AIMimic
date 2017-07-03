@@ -32,6 +32,9 @@ public class RematchUI : MonoBehaviour {
             return;
         }
 
+        //Autoload the next set lol
+        Deactivate();
+        GameManager.instance.LoadSet();
 
         if (!classifierEnabled)
         {
@@ -86,7 +89,7 @@ public class RematchUI : MonoBehaviour {
             RematchPanel.color = Color.white - Color.black * 0.4f;
             if (Controls.attackInputDown(GameManager.instance.p1) || Controls.attackInputDown(GameManager.instance.p2))
             {
-                this.gameObject.SetActive(false);
+                Deactivate();
                 GameManager.instance.LoadSet();
             }
             if (Controls.jumpInputDown(GameManager.instance.p1) || Controls.jumpInputDown(GameManager.instance.p2))
@@ -100,5 +103,10 @@ public class RematchUI : MonoBehaviour {
     {
         this.gameObject.SetActive(true);
         delay = 0.5f;
+    }
+
+    public void Deactivate()
+    {
+        this.gameObject.SetActive(false);
     }
 }

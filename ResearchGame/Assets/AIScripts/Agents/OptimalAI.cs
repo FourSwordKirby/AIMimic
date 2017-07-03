@@ -18,7 +18,7 @@ public class OptimalAI : AIAgent {
 
     public Text DebugText;
 
-    void Update()
+    void LateUpdate()
     {
         if (!freshReset && GameManager.instance.roundOver)
         {
@@ -31,10 +31,10 @@ public class OptimalAI : AIAgent {
             freshReset = GameManager.instance.roundOver;
         }
 
-        if (!AIPlayer.enabled)
+        if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
-        if (GameManager.instance.currentFrame % 1 == 0)
+        if (GameManager.instance.currentFrame % 3 == 1)
         {
             ObserveState();
             Action action = GetAction();
@@ -103,11 +103,11 @@ public class OptimalAI : AIAgent {
     private void Reset()
     {
         if(actionSelector != null)
-            actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+            actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/" + playerProfileName);
         else
             actionSelector = new AdaptiveActionSelector();
 
-        actionSelector.LoadTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+        actionSelector.LoadTable(Application.streamingAssetsPath + "/ActionTables/" + playerProfileName);
     }
 
     private float GetReward(Snapshot previousState, Snapshot currentState)
