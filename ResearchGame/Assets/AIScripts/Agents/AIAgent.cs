@@ -11,7 +11,6 @@ public abstract class AIAgent : MonoBehaviour{
     public Player Opponent;
 
     public GameRecorder gameRecorder;
-    public Text DebugText;
 
     public int frameDelay;
 

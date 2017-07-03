@@ -34,7 +34,7 @@ public class JumpState : State<Player>
         {   
             player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
         }
-        jumpVector = player.selfBody.velocity;
+        player.grounded = false;
     }
     public Vector2 getJumpVelocity(float height, float distance, float time)
     {

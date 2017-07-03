@@ -67,7 +67,7 @@ public class Snapshot {
 
     override public string ToString()
     {
-        return "placeholder";
+        return this.p1Status + " " + this.p2Status;
     }
 
     //Insert helper functions here for getting various atributes

@@ -10,7 +10,7 @@ public class GameRecorder : MonoBehaviour
     public Player player1;
     public Player player2;
 
-    public List<Snapshot> snapshots;
+    public List<Snapshot> snapshots = new List<Snapshot>();
 
     bool roundInProgress;
     private void Update()
@@ -18,12 +18,13 @@ public class GameRecorder : MonoBehaviour
         if (!roundInProgress && !GameManager.instance.roundOver)
         {
             roundInProgress = true;
-            //At the start of a round, we reset the snapshots;
-            if (currentlyLogging)
-                snapshots = new List<Snapshot>();
+            snapshots = new List<Snapshot>();
         }
         if (GameManager.instance.roundOver)
+        {
             roundInProgress = false;
+            return;
+        }
 
         Snapshot snapshot = new Snapshot(GameManager.instance.currentFrame, player1, player2);
         snapshots.Add(snapshot);

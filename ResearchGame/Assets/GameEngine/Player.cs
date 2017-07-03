@@ -219,9 +219,9 @@ public class Player : MonoBehaviour {
         switch (action)
         {
             case Action.Stand:
-                return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.Crouch:
-                return this.grounded;// && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.Attack:
                 //Temp hacks to make the AI behave
                 return this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);

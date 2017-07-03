@@ -56,7 +56,7 @@ public class BackpropAIAgent : AIAgent{
                 //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
                 //Should really make the AI have a handle on some kind of strategy for all situations
                 actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma, i) * reward);
-                DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
+                //DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
             }
         }
     }

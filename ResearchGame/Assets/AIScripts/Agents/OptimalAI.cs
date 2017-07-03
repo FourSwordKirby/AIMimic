@@ -19,23 +19,23 @@ public class OptimalAI : AIAgent {
     List<AISituation> pastSituations = new List<AISituation>();
     List<Action> pastActions = new List<Action>();
 
-    void Start()
-    {
-        //Reset();
-    }
-
     void Update()
     {
-        if (GameManager.instance.roundOver)
+        if (!freshReset && GameManager.instance.roundOver)
         {
-            //Reset();
-            //return;
+            Reset();
+            freshReset = true;
+            return;
+        }
+        else
+        {
+            freshReset = GameManager.instance.roundOver;
         }
 
-        if (Input.GetKeyDown(KeyCode.N))
-            actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+        if (!AIPlayer.enabled)
+            return;
 
-        if (GameManager.instance.currentFrame % 3 == 0)
+        if (GameManager.instance.currentFrame % 1 == 0)
         {
             ObserveState();
             Action action = GetAction();
@@ -43,44 +43,75 @@ public class OptimalAI : AIAgent {
         }
     }
 
+    public override void ObserveState()
+    {
+        previousState = currentState;
+        currentState = GetGameState();
+        currentSituation = new AISituation(currentState);
+
+        //apply rewards and what not if applicable
+        if (previousState != null && pastSituations.Count > 0)
+        {
+            float reward = GetReward(previousState, currentState);
+            float gamma = 0.9f;
+            for (int i = 0; i < pastSituations.Count; i++)
+            {
+                AISituation pastSituation = pastSituations[pastSituations.Count - 1 - i];
+                Action pastAction = pastActions[pastSituations.Count - 1 - i];
+
+                //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
+                //Should really make the AI have a handle on some kind of strategy for all situations
+                actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma, i) * reward);
+                //DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
+            }
+        }
+    }
+
     public override Action GetAction()
     {
         Action action = actionSelector.GetAction(currentSituation);
-        print(action);
         return action;
-    }
-
-    public override void ObserveState()
-    {
-        //Get the current game snapshot
-        currentState = GetGameState();
-        currentSituation = new AISituation(currentState);
-        if (currentState == null)
-            return;
     }
 
     public override void PerformAction(Action action)
     {
-        AIPlayer.PerformAction(action);
+        //Edge case which is not covered by the base system due to how we're tracking player actions
+        if(AIPlayer.ActionFsm.CurrentState is AttackState)
+        {
+            if (action == Action.Stand || action == Action.Crouch)
+                return;
+        }
+
+        bool actionSucceeded = AIPlayer.PerformAction(action);
 
         //If we successfully did the action, update the past action and past situation
-        //if (actionSucceeded)
-        //{
-        //    pastActions.Add(action);
-        //    pastSituations.Add(currentSituation);
+        if (actionSucceeded)
+        {
+            print(action);
 
-        //    if (pastActions.Count > backpropDepth && pastSituations.Count > backpropDepth)
-        //    {
-        //        pastActions.RemoveAt(0);
-        //        pastSituations.RemoveAt(0);
-        //    }
-        //}
-        //pastState = currentState;
+            pastActions.Add(action);
+            pastSituations.Add(currentSituation);
+
+            if (pastActions.Count > backpropDepth && pastSituations.Count > backpropDepth)
+            {
+                pastActions.RemoveAt(0);
+                pastSituations.RemoveAt(0);
+            }
+        }
     }
 
+    bool freshReset = false;
     private void Reset()
     {
-        actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+        if(actionSelector != null)
+            actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+        else
+            actionSelector = new AdaptiveActionSelector();
         actionSelector.LoadTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
+    }
+
+    private float GetReward(Snapshot previousState, Snapshot currentState)
+    {
+        return (previousState.p1Health - currentState.p1Health) + (currentState.p2Health - previousState.p2Health);
     }
 }

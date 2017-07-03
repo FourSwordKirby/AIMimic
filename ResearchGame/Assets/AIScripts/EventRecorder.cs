@@ -40,7 +40,10 @@ public class EventRecorder : MonoBehaviour {
                 LogSession();
         }
         if (!GameManager.instance.roundOver)
+        {
             roundInProgress = true;
+            return;
+        }
     }
 
     public void LogSession()

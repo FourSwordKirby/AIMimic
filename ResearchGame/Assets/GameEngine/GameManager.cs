@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
         QualitySettings.vSyncCount = 0;
 
         timeRemaining = timeLimit;
+        roundOver = true;
     }
 
     void Update()
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour {
         if (firstBoot)
         {
             firstBoot = false;
+            roundOver = true;
             LoadSet();
         }
 
@@ -72,12 +74,6 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.E))
         {
             Quit();
-        }
-
-        if(countDown < 1)
-        {
-            if (!(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
-                currentFrame++;
         }
 
         if (countDown > 0)
@@ -106,8 +102,12 @@ public class GameManager : MonoBehaviour {
         if (!roundOver)
         {
             RoundText.text = "";
-            if (timeRemaining > 0)
+            if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState))
+            {
                 timeRemaining -= Time.deltaTime;
+                currentFrame++;
+            }
+
             if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
             {
                 Time.timeScale = 0.75f;

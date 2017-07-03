@@ -85,7 +85,6 @@ public class AdaptiveActionSelector
     {
         if (!actionTable.ContainsKey(situation))
         {
-            Debug.Log("Novel situation");
             actionTable.Add(situation, new List<AIAction>());
             foreach (Action a in System.Enum.GetValues(typeof(Action)))
             {
@@ -101,7 +100,9 @@ public class AdaptiveActionSelector
         {
             runningSum += a.weight;
             if (runningSum > weightThreshold)
+            {
                 return a.action;
+            }
         }
         return actionTable[situation][0].action;
     }
@@ -140,7 +141,7 @@ public class AdaptiveActionSelector
     {
         actionTable = new Dictionary<AISituation, List<AIAction>>();
 
-        string contents = File.ReadAllText(filePath);
+        string contents = File.ReadAllText(filePath + ".txt");
         string[] situationStrings = contents.Split(new string[] { "~~~~" }, System.StringSplitOptions.RemoveEmptyEntries);
         for (int i = 0; i < situationStrings.Length; i++)
         {

@@ -625,6 +625,11 @@ Prefab:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 2021633135}
+    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -1758,6 +1763,11 @@ Prefab:
       propertyPath: isPlayer1
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -1867,7 +1877,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &593143916
 MonoBehaviour:
@@ -1884,9 +1894,8 @@ MonoBehaviour:
   AIColor: {r: 1, g: 0.75, b: 0.91034484, a: 1}
   AIPlayer: {fileID: 2021633135}
   Opponent: {fileID: 173988561}
-  gameRecorder: {fileID: 0}
-  DebugText: {fileID: 0}
-  frameDelay: 0
+  gameRecorder: {fileID: 1103802157}
+  frameDelay: 4
   backpropDepth: 3
 --- !u!1 &611197565
 GameObject:
@@ -2051,7 +2060,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &649166561
 MonoBehaviour:
@@ -2069,7 +2078,6 @@ MonoBehaviour:
   AIPlayer: {fileID: 173988561}
   Opponent: {fileID: 2021633135}
   gameRecorder: {fileID: 0}
-  DebugText: {fileID: 1894823374}
   frameDelay: 0
   epsilon: 0.05
   backpropDepth: 3
@@ -3839,13 +3847,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1103802156}
+  - component: {fileID: 1103802157}
   m_Layer: 0
   m_Name: GameRecorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1103802156
 Transform:
   m_ObjectHideFlags: 0
@@ -3857,8 +3866,23 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1103802157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1103802155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df88af4b13f47774f95d398c261679c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recordingName: 
+  currentlyLogging: 0
+  player1: {fileID: 2021633135}
+  player2: {fileID: 173988561}
 --- !u!1 &1104291367
 GameObject:
   m_ObjectHideFlags: 0
@@ -4306,7 +4330,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1261004522
 MonoBehaviour:
@@ -4324,7 +4348,6 @@ MonoBehaviour:
   AIPlayer: {fileID: 0}
   Opponent: {fileID: 0}
   gameRecorder: {fileID: 0}
-  DebugText: {fileID: 1894823374}
   frameDelay: 0
   backpropDepth: 3
 --- !u!1 &1266888947
@@ -4487,7 +4510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1299767548
 Transform:
   m_ObjectHideFlags: 0
@@ -4499,7 +4522,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1539022178}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1299767549
 MonoBehaviour:
@@ -4530,7 +4553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1325983225
 Transform:
   m_ObjectHideFlags: 0
@@ -5079,11 +5102,11 @@ Transform:
   - {fileID: 262404957}
   - {fileID: 53168940}
   - {fileID: 1325983225}
+  - {fileID: 593143915}
+  - {fileID: 1103802156}
   - {fileID: 1299767548}
   - {fileID: 1261004521}
   - {fileID: 649166560}
-  - {fileID: 593143915}
-  - {fileID: 1103802156}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
