@@ -36,6 +36,7 @@ public class JumpState : State<Player>
         }
         player.grounded = false;
     }
+
     public Vector2 getJumpVelocity(float height, float distance, float time)
     {
         float xVel = distance / time;

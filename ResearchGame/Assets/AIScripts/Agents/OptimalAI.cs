@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-//This agent will play the game optimally, that is, it will perform the actions which are most likely to let it
-//win the game
+//This agent will play the game optimally, that is, it will perform the actions which are most likely to let it win the game
 //This AI is basically a cleaned up version of the backprop AI
 public class OptimalAI : AIAgent {
 
     public int backpropDepth = 3;
 
-    private AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
-
+    private AdaptiveActionSelector actionSelector = null;
     Snapshot currentState = null;
     Snapshot previousState = null;
 
     AISituation currentSituation = null;
     List<AISituation> pastSituations = new List<AISituation>();
     List<Action> pastActions = new List<Action>();
+
+    public Text DebugText;
 
     void Update()
     {
@@ -62,7 +61,7 @@ public class OptimalAI : AIAgent {
                 //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
                 //Should really make the AI have a handle on some kind of strategy for all situations
                 actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma, i) * reward);
-                //DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
+                DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
             }
         }
     }
@@ -107,6 +106,7 @@ public class OptimalAI : AIAgent {
             actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
         else
             actionSelector = new AdaptiveActionSelector();
+
         actionSelector.LoadTable(Application.streamingAssetsPath + "/ActionTables/OptimalTable");
     }
 

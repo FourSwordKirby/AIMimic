@@ -142,7 +142,8 @@ public class AdaptiveActionSelector
         actionTable = new Dictionary<AISituation, List<AIAction>>();
 
         string contents = File.ReadAllText(filePath + ".txt");
-        string[] situationStrings = contents.Split(new string[] { "~~~~" }, System.StringSplitOptions.RemoveEmptyEntries);
+        string[] situationStrings = contents.Split(new string[] { "~~~\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+
         for (int i = 0; i < situationStrings.Length; i++)
         {
             string[] dataStrings =  situationStrings[i].Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -150,7 +151,7 @@ public class AdaptiveActionSelector
             AISituation situation = JsonUtility.FromJson<AISituation>(dataStrings[0]);
             actionTable.Add(situation, new List<AIAction>());
 
-            for (int j = 1; i < dataStrings.Length; i++)
+            for (int j = 1; j < dataStrings.Length; j++)
             {
                 AIAction action = JsonUtility.FromJson<AIAction>(dataStrings[j]);
                 actionTable[situation].Add(action);
