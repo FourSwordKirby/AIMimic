@@ -41,8 +41,7 @@ public class Snapshot {
     //We want to know what the player is doing
     //Example, say the recorded player is moving right, we need the player to move right for every
     //action that the opponent is doing in that time
-    public Snapshot(float frameTaken,
-                            Player p1, Player p2)
+    public Snapshot(float frameTaken, Player p1, Player p2)
     {
         this.frameTaken = frameTaken;
 
@@ -54,10 +53,10 @@ public class Snapshot {
 
         p1Position = p1.transform.position;
         p2Position = p2.transform.position;
-
-        //Remember, in this scenario we are player 2 reacting to the actions of player 1
-        xDistance = Mathf.Abs(p2.effectivePosition.x - p1.effectivePosition.x);
-        yDistance = p2.effectivePosition.y - p1.effectivePosition.y;
+        
+        //All distances are taken as p1 - p2
+        xDistance = p1.effectivePosition.x - p2.effectivePosition.x;
+        yDistance = p1.effectivePosition.y - p2.effectivePosition.y;
 
         p1CornerDistance = getCornerDistance(p1.effectivePosition.x);
         p2CornerDistance = getCornerDistance(p2.effectivePosition.x);

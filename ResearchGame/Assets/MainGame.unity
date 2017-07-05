@@ -1582,7 +1582,7 @@ GameObject:
   - component: {fileID: 508771638}
   - component: {fileID: 508771640}
   - component: {fileID: 508771639}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: New Sprite (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,7 +1597,7 @@ Transform:
   m_GameObject: {fileID: 508771637}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 4.569497, z: 1}
+  m_LocalScale: {x: 1, y: 7.6, z: 1}
   m_Children: []
   m_Father: {fileID: 1146545656}
   m_RootOrder: 1
@@ -1853,16 +1853,6 @@ Prefab:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 173988561}
-    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
-        type: 2}
-      propertyPath: isPlayer1
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -3219,7 +3209,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &963582436
 GameObject:
   m_ObjectHideFlags: 0
@@ -4233,7 +4223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1146545656
 Transform:
   m_ObjectHideFlags: 0
@@ -5676,7 +5666,7 @@ GameObject:
   - component: {fileID: 1784940548}
   - component: {fileID: 1784940550}
   - component: {fileID: 1784940549}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5691,7 +5681,7 @@ Transform:
   m_GameObject: {fileID: 1784940547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 4.569497, z: 1}
+  m_LocalScale: {x: 1, y: 7.6, z: 1}
   m_Children: []
   m_Father: {fileID: 1146545656}
   m_RootOrder: 0

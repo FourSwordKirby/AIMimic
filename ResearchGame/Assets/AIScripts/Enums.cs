@@ -33,18 +33,26 @@ public enum PlayerStatus
 
 
 //These enums are all extrapolated from the data by the AI
+public enum Side
+{
+    Left,
+    Right
+}
+
 public enum xDistance
 {
-    Far,
+    Adjacent,
     Near,
-    Adjacent
+    Far
 }
 
 public enum yDistance
 {
-    Far,
-    Near,
-    Level
+    FarBelow,
+    NearBelow,
+    Level,
+    NearAbove,
+    FarAbove
 }
 
 public enum Health

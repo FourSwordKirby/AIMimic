@@ -198,31 +198,98 @@ internal class AIAction
 /// </summary>
 public class AISituation : System.IEquatable<AISituation>
 {
+    public Side side;
     public xDistance deltaX;
     public yDistance deltaY;
 
+    public Health health;
+    public Health opponentHealth;
+
+    public Cornered cornered;
+    public Cornered opponentCornered;
+    public PlayerStatus status;
     public PlayerStatus opponentStatus;
 
-    public AISituation(Snapshot snapshot)
+    public AISituation(Snapshot snapshot, bool isPlayer1)
     {
+        float xDist;
+        float yDist;
+
+        if (isPlayer1)
+        {
+            xDist = snapshot.xDistance;
+            yDist = snapshot.yDistance;
+        }
+        else
+        {
+            xDist = -snapshot.xDistance;
+            yDist = -snapshot.yDistance;
+        }
+
+        //Side
+        if (xDist < 0)
+            side = Side.Left;
+        else
+            side = Side.Right;
+
         //xDistance
-        if (snapshot.xDistance < 1)
+        if (Mathf.Abs(xDist) < 1)
             deltaX = xDistance.Adjacent;
-        else if (snapshot.xDistance < 3)
+        else if (Mathf.Abs(xDist) < 3)
             deltaX = xDistance.Near;
         else
             deltaX = xDistance.Far;
 
         //yDistance
-        if (snapshot.yDistance < 0.5f)
+        if (yDist <= -1)
+            deltaY = yDistance.FarBelow;
+        else if (-1 < yDist && yDist <= -0.2)
+            deltaY = yDistance.NearBelow;
+        else if (-0.2 < yDist && yDist <= 0.2)
             deltaY = yDistance.Level;
-        else if (snapshot.yDistance < 1)
-            deltaY = yDistance.Near;
+        else if (0.2 < yDist && yDist <= 1)
+            deltaY = yDistance.NearAbove;
         else
-            deltaY = yDistance.Far;
+            deltaY = yDistance.FarAbove;
+
+        //Health
+        if (0 < snapshot.p1Health && snapshot.p1Health <= 30)
+            health = Health.Low;
+        else if (30 < snapshot.p1Health && snapshot.p1Health <= 70)
+            health = Health.Med;
+        else if (70 < snapshot.p1Health && snapshot.p1Health <= 100)
+            health = Health.High;
+
+        if (0 < snapshot.p2Health && snapshot.p2Health <= 30)
+            opponentHealth = Health.Low;
+        else if (30 < snapshot.p2Health && snapshot.p2Health <= 70)
+            opponentHealth = Health.Med;
+        else if (70 < snapshot.p2Health && snapshot.p2Health <= 100)
+            opponentHealth = Health.High;
+
+        //Cornered
+        if (isPlayer1)
+        {
+            cornered =  snapshot.p1CornerDistance < 1 ? Cornered.yes : Cornered.no;
+            opponentCornered = snapshot.p2CornerDistance < 1 ? Cornered.yes : Cornered.no;
+        }
+        else
+        {
+            cornered = snapshot.p1CornerDistance < 1 ? Cornered.yes : Cornered.no;
+            opponentCornered = snapshot.p2CornerDistance < 1 ? Cornered.yes : Cornered.no;
+        }
 
         //Status
-        opponentStatus = snapshot.p1Status;
+        if (isPlayer1)
+        {
+            status = snapshot.p1Status;
+            opponentStatus = snapshot.p2Status;
+        }
+        else
+        {
+            status = snapshot.p2Status;
+            opponentStatus = snapshot.p1Status;
+        }
     }
 
     public AISituation(GameEvent gameEvent)
@@ -236,21 +303,32 @@ public class AISituation : System.IEquatable<AISituation>
             deltaX = xDistance.Far;
 
         //yDistance
-        if (gameEvent.yDistance < 0.5f)
+        if (gameEvent.yDistance < 0.2f)
             deltaY = yDistance.Level;
         else if (gameEvent.yDistance < 1)
-            deltaY = yDistance.Near;
+            deltaY = yDistance.NearAbove;
         else
-            deltaY = yDistance.Far;
+            deltaY = yDistance.FarAbove;
 
         //Status
         opponentStatus = gameEvent.p1Status;
     }
 
+    //Filler to stop an angry compiler
+    public AISituation(Snapshot currentState)
+    {
+    }
+
     public bool Equals(AISituation situation)
     {
-        return deltaX == situation.deltaX &&
+        return side == situation.side &&
+                deltaX == situation.deltaX &&
                 deltaY == situation.deltaY &&
+                health == situation.health &&
+                opponentHealth == situation.opponentHealth &&
+                cornered == situation.cornered &&
+                opponentCornered == situation.opponentCornered &&
+                status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
 
@@ -262,6 +340,6 @@ public class AISituation : System.IEquatable<AISituation>
 
     public override string ToString()
     {
-        return deltaX + " " + deltaY + " " + opponentStatus;
+        return side + " " + deltaX + " " + deltaY + " " + opponentStatus;
     }
 }

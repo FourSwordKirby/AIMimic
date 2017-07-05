@@ -46,7 +46,7 @@ public class OptimalAI : AIAgent {
     {
         previousState = currentState;
         currentState = GetGameState();
-        currentSituation = new AISituation(currentState);
+        currentSituation = new AISituation(currentState, AIPlayer.isPlayer1);
 
         //apply rewards and what not if applicable
         if (previousState != null && pastSituations.Count > 0)
