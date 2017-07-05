@@ -12,10 +12,8 @@ public class JumpState : State<Player>
     public JumpState(Player playerInstance, StateMachine<Player> fsm, Vector3 targetLocation)
         : base(playerInstance, fsm)
     {
-        float displacement = targetLocation.x - playerInstance.transform.position.x;
-
         player = playerInstance;
-        this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, - 10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
+        this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, -10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
     }
 
     override public void Enter()

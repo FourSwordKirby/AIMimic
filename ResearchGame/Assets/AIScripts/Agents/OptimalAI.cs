@@ -57,11 +57,8 @@ public class OptimalAI : AIAgent {
             {
                 AISituation pastSituation = pastSituations[pastSituations.Count - 1 - i];
                 Action pastAction = pastActions[pastSituations.Count - 1 - i];
-
-                //Hacky fix to prevent the agent from crashing if it's in an unfamiliar situation
-                //Should really make the AI have a handle on some kind of strategy for all situations
+                
                 actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma, i) * reward);
-                DebugText.text = "Last action: " + pastAction + "\n" + "Current Weight: " + actionSelector.GetWeight(pastSituation, pastAction);
             }
         }
     }
@@ -75,6 +72,7 @@ public class OptimalAI : AIAgent {
     public override void PerformAction(Action action)
     {
         //Edge case which is not covered by the base system due to how we're tracking player actions
+        //Prevents the AI from standing or crouching once commiting itself to an attack
         if(AIPlayer.ActionFsm.CurrentState is AttackState)
         {
             if (action == Action.Stand || action == Action.Crouch)
@@ -86,7 +84,8 @@ public class OptimalAI : AIAgent {
         //If we successfully did the action, update the past action and past situation
         if (actionSucceeded)
         {
-            print(action);
+            //Debug to show how good the last performed action was
+            DebugText.text = "Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action);
 
             pastActions.Add(action);
             pastSituations.Add(currentSituation);
@@ -97,11 +96,19 @@ public class OptimalAI : AIAgent {
                 pastSituations.RemoveAt(0);
             }
         }
+        //If we didn't successfully complete the action, reduce its weight since the AI just failing to do anything
+        else
+        {
+            print("Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
+            actionSelector.IncreaseWeight(currentSituation, action, -1);
+            print("New Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
+        }
     }
 
     bool freshReset = false;
     private void Reset()
     {
+        print("Storing/Loading action tables");
         if(actionSelector != null)
             actionSelector.StoreTable(Application.streamingAssetsPath + "/ActionTables/" + playerProfileName);
         else
@@ -112,6 +119,9 @@ public class OptimalAI : AIAgent {
 
     private float GetReward(Snapshot previousState, Snapshot currentState)
     {
-        return (previousState.p1Health - currentState.p1Health) + (currentState.p2Health - previousState.p2Health);
+        if (AIPlayer.isPlayer1)
+            return (previousState.p2Health - currentState.p2Health);// + (currentState.p1Health - previousState.p1Health);
+        else
+            return (previousState.p1Health - currentState.p1Health);// + (currentState.p2Health - previousState.p2Health);
     }
 }

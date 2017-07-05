@@ -19,7 +19,6 @@ public class HitState : State<Player>
         : base(playerInstance, fsm)
     {
         player = playerInstance;
-        player.knockedDown = player.knockedDown || knockedDown;
 
         //probably need some means for denoting tumble etc.
 
@@ -36,6 +35,7 @@ public class HitState : State<Player>
         player.selfBody.mass = 1000;
 
         player.stunned = true;
+        player.knockedDown = player.knockedDown || knockedDown;
     }
 
     override public void Execute()

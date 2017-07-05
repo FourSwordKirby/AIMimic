@@ -73,12 +73,16 @@ public class AdaptiveActionSelector
         }
 
         actionTable[situation][(int)action].weight = actionTable[situation][(int)action].weight + reward;
-        rebalanceWeights(actionTable[situation]);
+        RebalanceWeights(actionTable[situation]);
     }
 
+    //Displays the weight in readable format
     public float GetWeight(AISituation situation, Action action)
     {
-        return actionTable[situation][(int)action].weight;
+        List<AIAction> actions = actionTable[situation];
+
+        float totalWeight = actions.Sum(x => x.weight);
+        return actions[(int)action].weight / totalWeight;
     }
 
     public Action GetAction(AISituation situation)
@@ -159,18 +163,18 @@ public class AdaptiveActionSelector
         }
     }
 
-    private void rebalanceWeights(List<AIAction> actions)
+    private void RebalanceWeights(List<AIAction> actions)
     {
         float minWeight = actions.Min(x => x.weight);
 
-        if(minWeight < 1)
+        if(minWeight < 0)
         {
-            //Nomalizes all of the action weights so that the min action has at least value 1
+            //Nomalizes all of the action weights so that the min action has at least value 0
             foreach (AIAction action in actions)
-                action.weight += (-minWeight + 1);
+                action.weight += (-minWeight);
         }
 
-        //This does have the problem of not giving us an idea of a "bad" situation, may need to reevaluate when designing an actual value function
+        //One problem with rebalancing is that truly negative states are not represented as such
     }
 }
 
@@ -324,8 +328,9 @@ public class AISituation : System.IEquatable<AISituation>
         return side == situation.side &&
                 deltaX == situation.deltaX &&
                 deltaY == situation.deltaY &&
-                health == situation.health &&
-                opponentHealth == situation.opponentHealth &&
+                //Don't account for health for now bc it isn't pertient towards making the AI navigate neutral effectively
+                //health == situation.health &&
+                //opponentHealth == situation.opponentHealth &&
                 cornered == situation.cornered &&
                 opponentCornered == situation.opponentCornered &&
                 status == situation.status &&

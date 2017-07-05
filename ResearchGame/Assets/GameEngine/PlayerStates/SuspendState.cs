@@ -48,6 +48,7 @@ public class SuspendState : State<Player>
         if (frameCounter > frameDuration)
         {
             player.ActionFsm.ResumeState();
+            Debug.Assert(player.ActionFsm.CurrentState == hiddenState);
         }
     }
 
