@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-//The goal of this AI agent is to look at a previous set of playsessions between  the plaer Test and an unknown other player
-//The AI's behavior patterns should mimic Test using ngrams. That is, it should do the same moves that Test does in certain situations
-//given some history.
-
-public class ngramAI : MonoBehaviour
+/// <summary>
+/// The goal of this AI agent is to look at a previous set of playsessions between  the plaer Test and an unknown other player
+/// The AI's behavior patterns should mimic Test using ngrams. That is, it should do the same moves that Test does in certain situations
+/// given some history.
+/// </summary>
+public class NgramAI : MonoBehaviour
 {
     public string playerProfileName;
     public EventRecorder dataRecorder;

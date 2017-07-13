@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour {
 
     //Shouldn't be here but hacking
     public List<AudioClip> sfx;
+    public float sfxVolume;
 
     private float countDown;
     private float roundEndTimer;
@@ -126,25 +127,44 @@ public class GameManager : MonoBehaviour {
                     {
                         p1Victories++;
                         RoundText.text += " P1 Win";
+                        EventManager.instance.RecordRoundWin(p1, p2, timeRemaining <= 0);
                     }
                     if (p2.health > p1.health)
                     {
                         p2Victories++;
                         RoundText.text += " P2 Win";
+                        EventManager.instance.RecordRoundWin(p2, p1, timeRemaining <= 0);
+                    }
+                    if(p1.health == p2.health)
+                    {
+                        p1Victories = Mathf.Min(p1Victories + 1, roundToWin-1);
+                        p2Victories = Mathf.Min(p1Victories + 1, roundToWin-1);
+                        RoundText.text += " Tie";
+                        EventManager.instance.RecordTie(timeRemaining <= 0);
                     }
                 }
-
+                else
+                {
+                    p1Victories = Mathf.Min(p1Victories + 1, roundToWin - 1);
+                    p2Victories = Mathf.Min(p1Victories + 1, roundToWin - 1);
+                    RoundText.text += " Tie";
+                    EventManager.instance.RecordTie(timeRemaining <= 0);
+                }
                 playSound("Success");
 
                 if (p1Victories >= roundToWin)
+                {
                     RoundText.text = "P1 WINS";
+                    EventManager.instance.RecordGameWin(p1, p2);
+                }
                 if (p2Victories >= roundToWin)
-                    RoundText.text = "P2 WINS";
+                {
+                    RoundText.text = "P1 WINS";
+                    EventManager.instance.RecordGameWin(p2, p1);
+                }
 
-                //if(p1.grounded && !p1.stunned)
-                    p1.enabled = false;
-                //if(p2.grounded && !p2.stunned)
-                    p2.enabled = false;
+                p1.enabled = false;
+                p2.enabled = false;
 
                 P1RoundCount.SetStockCount(p1Victories);
                 P2RoundCount.SetStockCount(p2Victories);
@@ -258,6 +278,6 @@ public class GameManager : MonoBehaviour {
         else
             position = Vector3.back * 10.0f;
         AudioClip sound = sfx.Find(x => x.name == soundName);
-        AudioSource.PlayClipAtPoint(sound, position);
+        AudioSource.PlayClipAtPoint(sound, position, sfxVolume);
     }
 }

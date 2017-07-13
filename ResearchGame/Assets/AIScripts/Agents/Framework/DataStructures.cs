@@ -54,53 +54,62 @@ public class ActionLookupTable
 
 public class AdaptiveActionSelector
 {
-    Dictionary<AISituation, List<AIAction>> actionTable;
+    Dictionary<AISituation, Dictionary<Action, AIAction>> actionTable;
+
+    public System.Func<AISituation, List<Action>> ConstrainActions;
+    public List<Action> DefaultConstrainActions(AISituation sit) { return System.Enum.GetValues(typeof(Action)).Cast<Action>().ToList(); }
 
     public AdaptiveActionSelector()
     {
-        actionTable = new Dictionary<AISituation, List<AIAction>>();
+        actionTable = new Dictionary<AISituation, Dictionary<Action, AIAction>>();
+        ConstrainActions = DefaultConstrainActions;
     }
 
     public void IncreaseWeight(AISituation situation, Action action, float reward)
     {
         if (!actionTable.ContainsKey(situation))
         {
-            actionTable.Add(situation, new List<AIAction>());
-            foreach (Action a in System.Enum.GetValues(typeof(Action)))
+            actionTable.Add(situation, new Dictionary<Action, AIAction>());
+            List<Action> availableActions = ConstrainActions(situation);
+
+            foreach (Action a in availableActions)
             {
-                actionTable[situation].Add(new AIAction(a));
+                actionTable[situation].Add(a, new AIAction(a));
             }
         }
 
-        actionTable[situation][(int)action].weight = actionTable[situation][(int)action].weight + reward;
-        RebalanceWeights(actionTable[situation]);
+        actionTable[situation][action].weight = actionTable[situation][action].weight + reward;
+        RebalanceWeights(actionTable[situation].Values.ToList());
     }
 
     //Displays the weight in readable format
     public float GetWeight(AISituation situation, Action action)
     {
-        List<AIAction> actions = actionTable[situation];
+        Dictionary<Action, AIAction> actions = actionTable[situation];
 
-        float totalWeight = actions.Sum(x => x.weight);
-        return actions[(int)action].weight / totalWeight;
+        float totalWeight = actions.Sum(x => x.Value.weight);
+        return actions[action].weight / totalWeight;
     }
 
     public Action GetAction(AISituation situation)
     {
+        //If we haven't seen this situation before, select a random action within our constraints
         if (!actionTable.ContainsKey(situation))
         {
-            actionTable.Add(situation, new List<AIAction>());
-            foreach (Action a in System.Enum.GetValues(typeof(Action)))
+            actionTable.Add(situation, new Dictionary<Action, AIAction>());
+            List<Action> availableActions = ConstrainActions(situation);
+
+            foreach (Action a in availableActions)
             {
-                actionTable[situation].Add(new AIAction(a));
+                actionTable[situation].Add(a, new AIAction(a));
             }
         }
 
-        float totalweight = actionTable[situation].Sum(x => x.weight);
+        float totalweight = actionTable[situation].Sum(x => x.Value.weight);
         float weightThreshold = Random.Range(0, totalweight);
 
         float runningSum = 0.0f;
-        foreach (AIAction a in actionTable[situation])
+        foreach (AIAction a in actionTable[situation].Values)
         {
             runningSum += a.weight;
             if (runningSum > weightThreshold)
@@ -111,6 +120,33 @@ public class AdaptiveActionSelector
         return actionTable[situation][0].action;
     }
 
+    public Action GetBestAction(AISituation situation)
+    {
+        //If we haven't seen this situation before, select a random action within our constraints
+        if (!actionTable.ContainsKey(situation))
+        {
+            actionTable.Add(situation, new Dictionary<Action, AIAction>());
+            List<Action> availableActions = ConstrainActions(situation);
+
+            foreach (Action a in availableActions)
+            {
+                actionTable[situation].Add(a, new AIAction(a));
+            }
+        }
+
+        float highestWeight = 0.0f;
+        Action chosenAction = Action.Stand;
+        foreach (Action a in actionTable[situation].Keys)
+        {
+            if(actionTable[situation][a].weight > highestWeight)
+            {
+                highestWeight = actionTable[situation][a].weight;
+                chosenAction = a;
+            }
+        }
+        return chosenAction;
+    }
+
     public void StoreTable(string filePath)
     {
         string datalog = "";//"Metadata";
@@ -118,7 +154,7 @@ public class AdaptiveActionSelector
         foreach(AISituation situation in actionTable.Keys)
         {
             datalog += JsonUtility.ToJson(situation) + "\n";
-            foreach (AIAction action in actionTable[situation])
+            foreach (AIAction action in actionTable[situation].Values)
             {
                 datalog += JsonUtility.ToJson(action) + "\n";
             }
@@ -132,18 +168,20 @@ public class AdaptiveActionSelector
         foreach (AISituation situation in actionTable.Keys)
         {
             datalog += situation + ": \n";
-            foreach (AIAction action in actionTable[situation])
+            foreach (AIAction action in actionTable[situation].Values)
             {
                 datalog += action + "\n";
             }
             datalog += "~~~\n";
         }
         File.WriteAllText(filePath + "_readable.txt", datalog);
+
+        Debug.Log(actionTable.Keys.Count());
     }
 
     public void LoadTable(string filePath)
     {
-        actionTable = new Dictionary<AISituation, List<AIAction>>();
+        actionTable = new Dictionary<AISituation, Dictionary<Action, AIAction>>();
 
         string contents = File.ReadAllText(filePath + ".txt");
         string[] situationStrings = contents.Split(new string[] { "~~~\n" }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -153,14 +191,20 @@ public class AdaptiveActionSelector
             string[] dataStrings =  situationStrings[i].Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
 
             AISituation situation = JsonUtility.FromJson<AISituation>(dataStrings[0]);
-            actionTable.Add(situation, new List<AIAction>());
-
-            for (int j = 1; j < dataStrings.Length; j++)
+            if (!actionTable.ContainsKey(situation))
             {
-                AIAction action = JsonUtility.FromJson<AIAction>(dataStrings[j]);
-                actionTable[situation].Add(action);
+                actionTable.Add(situation, new Dictionary<Action, AIAction>());
+
+                for (int j = 1; j < dataStrings.Length; j++)
+                {
+                    AIAction action = JsonUtility.FromJson<AIAction>(dataStrings[j]);
+                    actionTable[situation].Add(action.action, action);
+                }
             }
+            else
+                Debug.Log("Duplicate entry found! Check for data mishandling");
         }
+        Debug.Log("Loaded" + actionTable.Keys.Count());
     }
 
     private void RebalanceWeights(List<AIAction> actions)
@@ -331,9 +375,9 @@ public class AISituation : System.IEquatable<AISituation>
                 //Don't account for health for now bc it isn't pertient towards making the AI navigate neutral effectively
                 //health == situation.health &&
                 //opponentHealth == situation.opponentHealth &&
-                cornered == situation.cornered &&
-                opponentCornered == situation.opponentCornered &&
-                status == situation.status &&
+                //cornered == situation.cornered &&
+                //opponentCornered == situation.opponentCornered;// &&
+                //status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
 

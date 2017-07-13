@@ -14,13 +14,10 @@ public class EventRecorder : MonoBehaviour {
     public Session currentSession;
     List<Session> sessions;
 
-    void Start()
+    void Awake()
     {
         sessions = new List<Session>(); 
         currentSession = new Session(recordingName);
-
-        player1.SetRecorder(this);
-        player2.SetRecorder(this);
 
         if (currentlyLogging)
         {

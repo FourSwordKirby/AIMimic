@@ -55,11 +55,11 @@ public class Snapshot {
         p2Position = p2.transform.position;
         
         //All distances are taken as p1 - p2
-        xDistance = p1.effectivePosition.x - p2.effectivePosition.x;
-        yDistance = p1.effectivePosition.y - p2.effectivePosition.y;
+        xDistance = p1.transform.position.x - p2.transform.position.x;
+        yDistance = p1.transform.position.y - p2.transform.position.y;
 
-        p1CornerDistance = getCornerDistance(p1.effectivePosition.x);
-        p2CornerDistance = getCornerDistance(p2.effectivePosition.x);
+        p1CornerDistance = getCornerDistance(p1.transform.position.x);
+        p2CornerDistance = getCornerDistance(p2.transform.position.x);
 
         this.labels = new List<string>();
     }

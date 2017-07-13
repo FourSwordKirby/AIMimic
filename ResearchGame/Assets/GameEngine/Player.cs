@@ -47,9 +47,6 @@ public class Player : MonoBehaviour {
     public List<GameObject> projectilePrefabs;
     public CollisionboxManager hitboxManager { get; private set; }
 
-    //Player keeps track of recording data bc it's impossible to record merely from observation tbh
-    private EventRecorder eventRecorder;
-
     //Used for the initialization of internal, non-object variables
     void Awake()
     {
@@ -162,8 +159,7 @@ public class Player : MonoBehaviour {
         if (!IsValidAction(action))
             return false;
 
-        if (eventRecorder != null)
-            eventRecorder.RecordAction(action, this.isPlayer1);
+        EventManager.instance.RecordActionPerformed(action, this);
 
         switch (action) {
             case Action.Stand:
@@ -231,9 +227,9 @@ public class Player : MonoBehaviour {
             case Action.AirAttack:
                 return !this.grounded && (this.ActionFsm.CurrentState is JumpState);
             case Action.StandBlock:
-                return this.grounded && (!this.isCrouching || this.isBlocking) && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.CrouchBlock:
-                return this.grounded && (this.isCrouching || this.isBlocking) && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpNeutral:
                 return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpLeft:
@@ -341,15 +337,13 @@ public class Player : MonoBehaviour {
 
     public void EnterHitstun(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
-        //When you get hit, the data recorder should note that you were not successful in completing the last attempted action
-        if (eventRecorder != null)
-            eventRecorder.InterruptAction(this.isPlayer1);
-
         this.ActionFsm.ChangeState(new HitState(this, hitlag, hitstun, knockback, knockdown, this.ActionFsm));
     }
 
     public void ExitHitstun()
     {
+        this.stunned = false;
+
         //Wakeup options for the player
         Parameters.InputDirection dir = Controls.getInputDirection(this);
 
@@ -360,20 +354,12 @@ public class Player : MonoBehaviour {
 
         if (Controls.shieldInputHeld(this))
             this.Block(isCrouching);
-
-        //Upon exiting hitstun, the recorder should start recording your actions once more (it notes what your wakeup option was)
-        if (eventRecorder != null)
-            eventRecorder.ResumeRecording(this.isPlayer1, isCrouching, isBlocking);
     }
 
     //TODO: Implement forward and back techs
     public void Tech()
     {
         this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));
-    }
-
-    public void SetRecorder(EventRecorder eventRecorder)
-    {
-        this.eventRecorder = eventRecorder;
+        EventManager.instance.RecordRecovery(this);
     }
 }

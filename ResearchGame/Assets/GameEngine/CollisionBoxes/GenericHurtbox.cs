@@ -45,14 +45,15 @@ public class GenericHurtbox : Hurtbox {
 
                 TakeDamage(hitbox.chipDamage);
                 BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.0f * Vector2.right * hitbox.knockbackVector.x, false);
+
                 GameManager.SpawnBlockIndicator(hitLocation);
+                EventManager.instance.RecordBlock(hitbox.owner, owner, hitbox);
             }
             else
             {
                 hitbox.owner.selfBody.velocity -= 0.25f * hitbox.owner.facingDirection.x * Vector2.right;
                 hitbox.owner.chainable = true;
                 hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
-                GameManager.AddCombo(hitbox.owner);
                 
                 TakeDamage(hitbox.damage);
                 if(owner.grounded)
@@ -65,7 +66,10 @@ public class GenericHurtbox : Hurtbox {
                 else
                     TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector, true);
 
+                GameManager.AddCombo(hitbox.owner);
                 GameManager.SpawnHitIndicator(hitLocation);
+                EventManager.instance.RecordHit(hitbox.owner, owner, hitbox, hitbox.owner.comboCount);
+
             }
         }
     }

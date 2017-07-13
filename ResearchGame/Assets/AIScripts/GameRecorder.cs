@@ -19,7 +19,7 @@ public class GameRecorder : MonoBehaviour
         if (!roundInProgress && !GameManager.instance.roundOver)
         {
             roundInProgress = true;
-            snapshots = new List<Snapshot>();
+            ClearSession();
         }
         if (GameManager.instance.roundOver)
         {
@@ -39,6 +39,6 @@ public class GameRecorder : MonoBehaviour
 
     public void ClearSession()
     {
-
+        snapshots = new List<Snapshot>();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //This agent will play the game optimally, that is, it will perform the actions which are most likely to let it win the game
-//This AI is basically a cleaned up version of the backprop AI
+//This AI is basically a cleaned up version of the ReinforceAI
 public class OptimalAI : AIAgent {
 
     public int backpropDepth = 3;
@@ -96,13 +96,15 @@ public class OptimalAI : AIAgent {
                 pastSituations.RemoveAt(0);
             }
         }
-        //If we didn't successfully complete the action, reduce its weight since the AI just failing to do anything
-        else
-        {
-            print("Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
-            actionSelector.IncreaseWeight(currentSituation, action, -1);
-            print("New Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
-        }
+        //If we didn't successfully complete the action, reduce its weight since the AI just failing to do anythin
+        //This doesn't actually work because we don't store our state in the scenario lol
+        //This also gets messed up bc the player doesn't know what actions it can do during hitstun
+        //else
+        //{
+        //    print("Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
+        //    actionSelector.IncreaseWeight(currentSituation, action, -1);
+        //    print("New Last action: " + action + "\n" + "Current Weight: " + actionSelector.GetWeight(currentSituation, action));
+        //}
     }
 
     bool freshReset = false;
@@ -115,6 +117,7 @@ public class OptimalAI : AIAgent {
             actionSelector = new AdaptiveActionSelector();
 
         actionSelector.LoadTable(Application.streamingAssetsPath + "/ActionTables/" + playerProfileName);
+        print("Finished Loading action tables");
     }
 
     private float GetReward(Snapshot previousState, Snapshot currentState)

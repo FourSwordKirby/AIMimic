@@ -1,27 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
 
-//The goal of this AI agent is to look at a previous set of playsessions between  the plaer Test and an unknown other player
-//The AI's behavior patterns should mimic Test using ngrams. That is, it should do the same moves that Test does in certain situations
-//given some history.
-
-public class EpsilonExploreAIAgent : AIAgent
-{
-    public float epsilon;
-
-    //Implementation of the RL AI with epsilon-greedy exploration. The exploration is
-    //governed by the training data
+/// <summary>
+/// An AI agent which chooses moves based on reinforcement learning
+/// </summary>
+public class ReinforceAI : AIAgent{
     public int backpropDepth = 3;
+    private List<Snapshot> priorSnapshots;
+
+    //Implementation of a generic RL AI
     private AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
-
-    private List<GameEvent> priorSnapshots;
-    private Dictionary<AISituation, ActionLookupTable> frequencyTable
-        = new Dictionary<AISituation, ActionLookupTable>();
-
-
 
     int frameInterval = 5;
 
@@ -75,25 +65,8 @@ public class EpsilonExploreAIAgent : AIAgent
     }
 
     public override Action GetAction()
-    {
-        Action action;
-        if (Random.Range(0.0f, 1.0f) < epsilon)
-        {
-            if (frequencyTable.ContainsKey(currentSituation))
-            {
-                ActionLookupTable sampleActions = frequencyTable[currentSituation];
-                action = sampleActions.GetRandomAction();
-            }
-            else
-            {
-                Debug.Log("SUPER RANDOM");
-                action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-            }
-        }
-        else
-        {
-            action = actionSelector.GetAction(currentSituation);
-        }
+    { 
+        Action action = actionSelector.GetAction(currentSituation);
         return action;
     }
 

@@ -5,7 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-//TODO: migrate over to the new format where the AI sees the player states at each frame.
+//TODO: Migrate it ot he AIAgent framework
+/// <summary>
+/// Implementation of the ghost AI
+/// Basically, given the game's state, we look at what the player we're imitating did in that state
+/// It will then do the action appropriate to the situation
+/// That list of actions is essentially a frequency table.
+/// </summary>
+
 public class GhostAI : MonoBehaviour
 {
     public string playerProfileName;
@@ -18,10 +25,6 @@ public class GhostAI : MonoBehaviour
 
     public Text DebugText;
 
-    //Implementation of the ghost AI
-    //Basically, given the game's state, we look at what the player we're imitating did in that state
-    //It will then do the action appropriate to the situation
-    //That list of actions is essentially a frequency table.
     private Dictionary<AISituation, ActionLookupTable> frequencyTable
         = new Dictionary<AISituation, ActionLookupTable>();
 

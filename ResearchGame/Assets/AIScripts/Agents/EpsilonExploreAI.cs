@@ -1,14 +1,26 @@
-﻿using System;
-using System.Linq;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
-public class BackpropAIAgent : AIAgent{
+/// <summary>
+/// A combination of the ReinforceAI and the GhostAI. Essentially it takes the 
+/// optimal action based on the Reinforcement Learning, but with probability epsilon
+/// it will take a random action based on the training data of the 
+/// player that is to be mimiced (like with GhostAI)
+/// </summary>
+public class EpsilonExploreAI : AIAgent
+{
+    public float epsilon;
     public int backpropDepth = 3;
-    private List<Snapshot> priorSnapshots;
-
-    //Implementation of a generic RL AI
     private AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
+
+    private List<GameEvent> priorSnapshots;
+    private Dictionary<AISituation, ActionLookupTable> frequencyTable
+        = new Dictionary<AISituation, ActionLookupTable>();
+
+
 
     int frameInterval = 5;
 
@@ -62,8 +74,25 @@ public class BackpropAIAgent : AIAgent{
     }
 
     public override Action GetAction()
-    { 
-        Action action = actionSelector.GetAction(currentSituation);
+    {
+        Action action;
+        if (Random.Range(0.0f, 1.0f) < epsilon)
+        {
+            if (frequencyTable.ContainsKey(currentSituation))
+            {
+                ActionLookupTable sampleActions = frequencyTable[currentSituation];
+                action = sampleActions.GetRandomAction();
+            }
+            else
+            {
+                Debug.Log("SUPER RANDOM");
+                action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+            }
+        }
+        else
+        {
+            action = actionSelector.GetAction(currentSituation);
+        }
         return action;
     }
 

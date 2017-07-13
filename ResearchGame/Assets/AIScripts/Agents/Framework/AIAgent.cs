@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Base class for the AI agent
+/// </summary>
 public abstract class AIAgent : MonoBehaviour{
     public string playerProfileName;
     public Color AIColor;

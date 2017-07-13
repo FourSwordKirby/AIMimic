@@ -64,7 +64,6 @@ public class TechState : State<Player>
     override public void Exit()
     {
         player.knockedDown = false;
-        player.stunned = false;
         player.hitboxManager.activateHitBox("Hurtbox");
         player.selfBody.mass = 1;
     }

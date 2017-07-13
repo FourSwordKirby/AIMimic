@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-
+/// <summary>
+/// An AI which will replay the agent's moves from the latest set of player logs
+/// </summary>
 public class ReplayAI : MonoBehaviour
 {
     public string playerProfileName;

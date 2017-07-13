@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
+/// <summary>
+/// First attempt at creating an AI agent based on Kth nearest neighbors
+/// </summary>
 public class KthNearestAI : MonoBehaviour {
-    /// <summary>
-    /// Parameter for how many neighbors to look at
-    /// </summary>
     public int k;
     public string playerProfileName;
 
