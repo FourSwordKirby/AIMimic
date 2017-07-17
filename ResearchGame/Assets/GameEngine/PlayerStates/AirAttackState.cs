@@ -93,7 +93,6 @@ public class AirAttackState : State<Player>
             player.transform.rotation =
             Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 20)/ 20);
         }
-        //.selfBody.angularVelocity = -540.0f * player.facingDirection.x;
     }
 
     override public void FixedExecute()

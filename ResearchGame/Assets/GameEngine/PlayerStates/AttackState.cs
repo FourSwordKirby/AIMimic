@@ -62,6 +62,7 @@ public class AttackState : State<Player>
             meleeHitbox.GetComponent<Hitbox>().type = Hitbox.hitType.low;
         else
             meleeHitbox.GetComponent<Hitbox>().type = Hitbox.hitType.mid;
+
         meleeHitbox.transform.localPosition = startPosition;
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
     }
