@@ -48,9 +48,13 @@ public class StateMachine<CoreType> where CoreType : MonoBehaviour {
     /// </summary>
     public void ChangeState(State<CoreType> newState)
     {
+        State<CoreType> oldState = CurrentState;
+
         CurrentState.Exit();
         CurrentState = newState;
         CurrentState.Enter();
+
+        Debug.Log(oldState + ", " + newState);
     }
 
     /// <summary>
@@ -62,6 +66,16 @@ public class StateMachine<CoreType> where CoreType : MonoBehaviour {
         StateStack.Push(CurrentState);
         CurrentState = newState;
         CurrentState.Enter();
+    }
+
+    /// <summary>
+    /// Used for sudden transitions, such as a seemelss change from jumping to attacking. Basically, instances where we don't
+    /// actually want Enter() to be called
+    /// </summary>
+    public void SubstituteState(State<CoreType> newState)
+    {
+        StateStack.Push(CurrentState);
+        CurrentState = newState;
     }
 
     /// <summary>

@@ -23,7 +23,7 @@ public class ForwardSimulation : MonoBehaviour {
         p2Trackers = new List<GameObject>();
 
 
-        for (int i = 0; i < (predictionLength / frameLength) + 1; i++)
+        for (int i = 0; i < (predictionLength / frameLength); i++)
         {
             GameObject marker1 = Instantiate(positionTracker);
             GameObject marker2 = Instantiate(positionTracker);
@@ -35,32 +35,42 @@ public class ForwardSimulation : MonoBehaviour {
 
     void LateUpdate()
     {
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            if (Physics2D.autoSimulation)
-                predict(GameManager.instance.p1, GameManager.instance.p2, predictionLength);
-            else
-                Physics2D.autoSimulation = true;
-        }
+        //predict(GameManager.instance.p1, GameManager.instance.p2, predictionLength);
     }
     
     //This will take a single starting snapshot andd an action and return some estimates of the result of taking said action
     void predict(Player p1, Player p2, float time = 1)
     {
         //Copying and storing the physics
-        //TODO: Get this to work more consistently.
-        System.Reflection.FieldInfo[] fields = p1.selfBody.GetType().GetFields();
-        print(fields);
-        foreach (System.Reflection.FieldInfo field in fields)
-        {
-            print(field);
-            field.SetValue(p1Dummy, field.GetValue(p1.selfBody));
-        }
+        //Player1
         bool p1Simulated = p1.selfBody.simulated;
-        p1Dummy.simulated = false;
+        Vector2 p1Vel = p1.selfBody.velocity;
+        float p1GravScale = p1.selfBody.gravityScale;
+        float p1Drag = p1.selfBody.drag;
+        float p1Mass = p1.selfBody.mass;
+        bool p1Grounded = p1.grounded;
 
         Vector2 p1pos = p1.transform.position;
+        State<Player> p1State = p1.ActionFsm.CurrentState;
+        //TODO, make this copy function actually work
+        p1.ActionFsm.SubstituteState(p1State.Copy());
+
+        //Player2
+        bool p2Simulated = p2.selfBody.simulated;
+        Vector2 p2Vel = p2.selfBody.velocity;
+        float p2GravScale = p2.selfBody.gravityScale;
+        float p2Drag = p2.selfBody.drag;
+        float p2Mass = p2.selfBody.mass;
+        bool p2Grounded = p2.grounded;
+
         Vector2 p2pos = p2.transform.position;
+        State<Player> p2State = p2.ActionFsm.CurrentState;
+        //TODO, make this copy function actually work
+        p2.ActionFsm.SubstituteState(p2State.Copy());
+
+        //maintaining the camera physics
+        Vector3 cameraPos = GameManager.instance.Camera.transform.position;
+        Vector3 cameraVel = GameManager.instance.Camera.selfBody.velocity;
 
         Physics2D.autoSimulation = false;
         for(int i  = 0; i < time/frameLength; i++)
@@ -72,21 +82,34 @@ public class ForwardSimulation : MonoBehaviour {
             p2Trackers[i].transform.position = p2.transform.position;
         }
 
-        p1.transform.position = p1pos;
-        p2.transform.position = p2pos;
-
         //Reapplying stored physics
-        foreach (System.Reflection.FieldInfo field in fields)
-        {
-            field.SetValue(field.GetValue(p1.selfBody), p1Dummy);
-        }
+        //p1
         p1.selfBody.simulated = p1Simulated;
-        p1Dummy.transform.position = Vector3.zero;
+        p1.selfBody.velocity = p1Vel;
+        p1.selfBody.gravityScale = p1GravScale;
+        p1.selfBody.drag = p1Drag;
+        p1.selfBody.mass = p1Mass;
+        p1.grounded = p1Grounded;
+        
+        p1.transform.position = p1pos;
+        p1.ActionFsm.SubstituteState(p1State);
 
-        //p1.selfBody.velocity = p1vel;
-        //p2.selfBody.velocity = p2vel;
+        //p2
+        p2.selfBody.simulated = p2Simulated;
+        p2.selfBody.velocity = p2Vel;
+        p2.selfBody.gravityScale = p2GravScale;
+        p2.selfBody.drag = p2Drag;
+        p2.selfBody.mass = p2Mass;
+        p2.grounded = p2Grounded;
 
-        //Physics2D.autoSimulation = true;
+        p2.transform.position = p2pos;
+        p2.ActionFsm.SubstituteState(p2State);
+
+        //Reapplying camera physics
+        GameManager.instance.Camera.transform.position = cameraPos;
+        GameManager.instance.Camera.selfBody.velocity = cameraVel;
+
+        Physics2D.autoSimulation = true;
     }
 
     Vector3 SimulatePosition(Transform t)

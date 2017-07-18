@@ -35,4 +35,13 @@ public abstract class State<CoreType> where CoreType : MonoBehaviour {
     /// Any cleanup or last minute calls (to the GameManager?) should go here.
     /// </summary>
     public abstract void Exit();
+
+    /// <summary>
+    /// Used to create a functional copy of the current state for preservation
+    /// </summary>
+    /// <returns>A copy of the current state</returns>
+    public State<CoreType> Copy()
+    {
+        return this;
+    }
 }

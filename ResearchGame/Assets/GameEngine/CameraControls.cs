@@ -8,6 +8,7 @@ using System;
 public class CameraControls : MonoBehaviour {
     public BoxCollider2D CameraBounds;
     public FocalPoint focus;
+    public Rigidbody2D selfBody { get; private set; }
 
     private Camera cameraComponent;
     private float original_camera_size;
@@ -36,6 +37,7 @@ public class CameraControls : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         cameraComponent = GetComponent<Camera>();
+        selfBody = GetComponent<Rigidbody2D>();
 
         focus.addTargets(GameManager.instance.p1.gameObject);
         focus.addTargets(GameManager.instance.p2.gameObject);
@@ -58,11 +60,11 @@ public class CameraControls : MonoBehaviour {
         {
             float x = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).x;
             float y = ((focus.transform.position + new Vector3(0, 0, Z_OFFSET)) - transform.position).y;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(x * PAN_SPEED, y * PAN_SPEED);
+            selfBody.velocity = new Vector2(x * PAN_SPEED, y * PAN_SPEED);
         }
         else
         {
-            GetComponent<Rigidbody2D>().velocity.Set(0.0f, 0.0f);
+            selfBody.velocity.Set(0.0f, 0.0f);
         }
     
         //Keep the camera in bounds

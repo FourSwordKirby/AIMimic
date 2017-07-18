@@ -251,8 +251,7 @@ public class Player : MonoBehaviour {
             return;
 
         this.Stand();
-
-        //Vector2 originalPositon = this.transform.position; 
+        
         Vector2 movementVector = Vector2.zero;
         if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
             movementVector = Vector2.right;

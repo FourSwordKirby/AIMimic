@@ -28,9 +28,9 @@ public class AirAttackState : State<Player>
 
         attackDistance = 0.55f;
 
-        startup = 0.05f * Application.targetFrameRate;
-        duration = 0.05f * Application.targetFrameRate;
-        endlag = 1.2f * Application.targetFrameRate;
+        startup = 0.05f;// * Application.targetFrameRate;
+        duration = 0.05f;// * Application.targetFrameRate;
+        endlag = 1.2f;// * Application.targetFrameRate;
 
         frameCounter = 0;
     }
@@ -53,15 +53,19 @@ public class AirAttackState : State<Player>
 
     override public void Execute()
     {
+    }
+
+    override public void FixedExecute()
+    {
         //ANIMATE THE HITBOX MOVING
-        frameCounter ++;
+        frameCounter += Time.fixedDeltaTime;
         if (frameCounter < startup)
         {
             meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / startup);
         }
         else if (frameCounter < startup + duration)
         {
-            if(frameCounter - 1 < startup)
+            if (frameCounter - 1 < startup)
                 player.hitboxManager.activateHitBox("AirMeleeHitbox");
 
             meleeHitbox.transform.localPosition = endPosition;
@@ -83,20 +87,18 @@ public class AirAttackState : State<Player>
         }
 
         //Animate the player
-        if (frameCounter < 20)
+        if (frameCounter < 0.3333f)
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-direction * Vector3.forward * 179), frameCounter / 20);
+            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-direction * Vector3.forward * 179), frameCounter / 0.3333f);
         }
         else
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 20)/ 20);
+            Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 0.3333f) / 0.3333f);
         }
-    }
 
-    override public void FixedExecute()
-    {
+
         //Hitting the ground early
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
@@ -118,7 +120,7 @@ public class AirAttackState : State<Player>
         meleeHitbox.transform.localPosition = Vector2.zero;
         meleeHitbox.GetComponent<Hitbox>().knockdown = false;
 
-        player.selfBody.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         player.selfBody.angularVelocity = 0;
     }
 }
