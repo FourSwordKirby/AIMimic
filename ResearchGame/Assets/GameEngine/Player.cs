@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     public float meter { get; private set; }
     public const int DEFAULT_STOCK_COUNT = 4;
 
+    public bool suspended = false;
     public bool stunned = false;
     public bool knockedDown = false;
     public bool grounded = true;

@@ -11,6 +11,7 @@ public class AirAttackState : State<Player>
     public float startup;
     public float duration;
     public float endlag;
+    public float animDuration;
 
     private float frameCounter;
 
@@ -28,10 +29,11 @@ public class AirAttackState : State<Player>
 
         attackDistance = 0.55f;
 
-        startup = 0.05f;// * Application.targetFrameRate;
-        duration = 0.05f;// * Application.targetFrameRate;
-        endlag = 1.2f;// * Application.targetFrameRate;
+        startup = 0.05f * Application.targetFrameRate;
+        duration = 0.05f * Application.targetFrameRate;
+        endlag = 1.2f * Application.targetFrameRate;
 
+        animDuration = (int) (0.33333f * Application.targetFrameRate);
         frameCounter = 0;
     }
 
@@ -53,26 +55,22 @@ public class AirAttackState : State<Player>
 
     override public void Execute()
     {
-    }
-
-    override public void FixedExecute()
-    {
         //ANIMATE THE HITBOX MOVING
-        frameCounter += Time.fixedDeltaTime;
+        frameCounter++;
         if (frameCounter < startup)
         {
             meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / startup);
         }
         else if (frameCounter < startup + duration)
         {
-            if (frameCounter - 1 < startup)
+            if (frameCounter - Time.fixedDeltaTime < startup)
                 player.hitboxManager.activateHitBox("AirMeleeHitbox");
 
             meleeHitbox.transform.localPosition = endPosition;
         }
         else if (frameCounter < startup + duration + endlag)
         {
-            if (frameCounter - 1 < startup + duration)
+            if (frameCounter - Time.fixedDeltaTime < startup + duration)
             {
                 player.hitboxManager.deactivateHitBox("AirMeleeHitbox");
                 meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
@@ -86,18 +84,18 @@ public class AirAttackState : State<Player>
             meleeHitbox.transform.localPosition = Vector2.zero;
         }
 
+
         //Animate the player
-        if (frameCounter < 0.3333f)
+        if (frameCounter < animDuration)
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-direction * Vector3.forward * 179), frameCounter / 0.3333f);
+            Quaternion.Lerp(Quaternion.Euler(Vector3.zero), Quaternion.Euler(-direction * Vector3.forward * 179), frameCounter / animDuration);
         }
         else
         {
             player.transform.rotation =
-            Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - 0.3333f) / 0.3333f);
+            Quaternion.Lerp(Quaternion.Euler(-direction * Vector3.forward * 181), Quaternion.Euler(Vector3.zero), (frameCounter - animDuration) / animDuration);
         }
-
 
         //Hitting the ground early
         if (player.grounded && player.selfBody.velocity.y <= 0)
@@ -110,6 +108,10 @@ public class AirAttackState : State<Player>
                 player.PerformAction(Action.Stand);
             return;
         }
+    }
+
+    override public void FixedExecute()
+    {
     }
 
     override public void Exit()

@@ -32,6 +32,7 @@ public class SuspendState : State<Player>
 
     override public void Enter()
     {
+        player.suspended = true;
         if (!player.grounded)
             player.selfBody.simulated = false;
         else
@@ -58,7 +59,8 @@ public class SuspendState : State<Player>
 
     override public void Exit()
     {
-        if(!player.grounded)
+        player.suspended = false;
+        if (!player.grounded)
             player.selfBody.simulated = true;
         else
             player.selfBody.drag = 20.0f;

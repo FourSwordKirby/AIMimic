@@ -45,7 +45,7 @@ public class GenericHurtbox : Hurtbox {
 
                 TakeDamage(hitbox.chipDamage);
                 BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.0f * Vector2.right * hitbox.knockbackVector.x, false);
-
+                
                 GameManager.SpawnBlockIndicator(hitLocation);
                 EventManager.instance.RecordBlock(hitbox.owner, owner, hitbox);
             }
@@ -65,7 +65,7 @@ public class GenericHurtbox : Hurtbox {
                 }
                 else
                     TakeHit(hitbox.hitlag, hitbox.hitstun, hitbox.knockbackVector, true);
-
+                
                 GameManager.AddCombo(hitbox.owner);
                 GameManager.SpawnHitIndicator(hitLocation);
                 EventManager.instance.RecordHit(hitbox.owner, owner, hitbox, hitbox.owner.comboCount);

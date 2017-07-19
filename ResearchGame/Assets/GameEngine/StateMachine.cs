@@ -53,8 +53,6 @@ public class StateMachine<CoreType> where CoreType : MonoBehaviour {
         CurrentState.Exit();
         CurrentState = newState;
         CurrentState.Enter();
-
-        Debug.Log(oldState + ", " + newState);
     }
 
     /// <summary>

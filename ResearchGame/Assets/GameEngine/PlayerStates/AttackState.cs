@@ -26,9 +26,9 @@ public class AttackState : State<Player>
 
         attackDistance = 0.55f;
 
-        startup = 0.05f;// * Application.targetFrameRate;
-        duration = 0.05f;// * Application.targetFrameRate; ;
-        endlag = 0.25f;// * Application.targetFrameRate; ;
+        startup = 0.05f * Application.targetFrameRate;
+        duration = 0.05f * Application.targetFrameRate; ;
+        endlag = 0.25f * Application.targetFrameRate; ;
 
         frameCounter = 0;
     }
@@ -74,11 +74,8 @@ public class AttackState : State<Player>
             if (Controls.attackInputDown(player))
                 player.PerformAction(Action.Attack);
         }
-    }
 
-    override public void FixedExecute()
-    {
-        frameCounter+= Time.fixedDeltaTime;
+        frameCounter++;
         if (frameCounter < startup)
         {
             meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / startup);
@@ -90,7 +87,7 @@ public class AttackState : State<Player>
 
             meleeHitbox.transform.localPosition = endPosition;
         }
-        else if (frameCounter < startup + duration + endlag)
+        else if (frameCounter - 1 < startup + duration + endlag)
         {
             if (frameCounter - 1 < startup + duration)
                 player.hitboxManager.deactivateHitBox("MeleeHitbox");
@@ -105,6 +102,10 @@ public class AttackState : State<Player>
             else
                 player.PerformAction(Action.Crouch);
         }
+    }
+
+    override public void FixedExecute()
+    {
     }
 
     override public void Exit()

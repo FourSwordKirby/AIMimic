@@ -33,9 +33,27 @@ public class ForwardSimulation : MonoBehaviour {
         }
     }
 
+    bool makePrediction;
+    void ActionPerformed(Action a)
+    {
+        makePrediction = true;
+    }
+
     void LateUpdate()
     {
+        Player p1 = GameManager.instance.p1;
+        Player p2 = GameManager.instance.p2;
+
         //predict(GameManager.instance.p1, GameManager.instance.p2, predictionLength);
+        if (makePrediction)
+        {
+            if (!(p1.suspended || p1.stunned || !p1.enabled || p2.suspended || p2.stunned || !p2.enabled))
+            {
+                predict(GameManager.instance.p1, GameManager.instance.p2, predictionLength);
+                print("Forward Sim");
+            }
+            makePrediction = false;
+        }
     }
     
     //This will take a single starting snapshot andd an action and return some estimates of the result of taking said action
@@ -77,6 +95,8 @@ public class ForwardSimulation : MonoBehaviour {
         {
             Physics2D.Simulate(frameLength);
 
+            p1.ActionFsm.CurrentState.Execute();
+            p2.ActionFsm.CurrentState.Execute();
             //Spawn a tracker to see where the player ended up
             p1Trackers[i].transform.position = p1.transform.position;
             p2Trackers[i].transform.position = p2.transform.position;
