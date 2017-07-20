@@ -18,7 +18,7 @@ public class JumpState : State<Player>
 
     override public void Enter()
     {
-        GameManager.instance.playSound("Jump");
+        GameManager.instance.PlaySound("Jump");
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
         {

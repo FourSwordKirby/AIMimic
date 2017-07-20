@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour {
     private float roundEndTimer;
     public bool roundOver { get; private set; }
     private bool firstBoot = true;
+    public bool paused;
 
     /// <summary>
     /// Used mainly for coordinating how long the AI should do moves. This means that it counts up 
@@ -64,6 +65,19 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
+        if (paused)
+        {
+            if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
+                Resume();
+            return;
+        }
+        else
+        {
+            if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
+                Pause();
+        }
+
+
         if (firstBoot)
         {
             firstBoot = false;
@@ -78,7 +92,7 @@ public class GameManager : MonoBehaviour {
         }
 
         //Managing timers
-        if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is SuspendState || p2.ActionFsm.CurrentState is SuspendState) && !roundOver)
+        if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is HitlagState || p2.ActionFsm.CurrentState is HitlagState) && !roundOver)
         {
             timeRemaining -= Time.deltaTime;
             currentFrame++;
@@ -150,7 +164,7 @@ public class GameManager : MonoBehaviour {
                     RoundText.text += " Tie";
                     EventManager.instance.RecordTie(timeRemaining <= 0);
                 }
-                playSound("Success");
+                PlaySound("Success");
 
                 if (p1Victories >= roundToWin)
                 {
@@ -200,6 +214,20 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void Pause()
+    {
+        paused = true;
+        p1.Pause();
+        p2.Pause();
+    }
+
+    public void Resume()
+    {
+        paused = false;
+        p1.Resume();
+        p2.Resume();
+    }
+
     public void Quit()
     {
         SceneManager.LoadScene(0);
@@ -223,7 +251,7 @@ public class GameManager : MonoBehaviour {
 
     void LoadRound()
     {
-        playSound("Startup", true);
+        PlaySound("Startup", true);
 
         Time.timeScale = 1.0f;
         countDown = 4.0f;
@@ -270,7 +298,7 @@ public class GameManager : MonoBehaviour {
             instance.P2ComboText.SetText(player.comboCount);
     }
 
-    public void playSound(string soundName, bool startingSound = false)
+    public void PlaySound(string soundName, bool startingSound = false)
     {
         Vector3 position;
         if (!startingSound)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SuspendState : State<Player>
+public class HitlagState : State<Player>
 {
     private Player player;
 
@@ -16,7 +16,7 @@ public class SuspendState : State<Player>
     public Vector3 origVel;
     public float origAngleVel;
 
-    public SuspendState(Player playerInstance, StateMachine<Player> fsm, float duration, State<Player> state) : base(playerInstance, fsm)
+    public HitlagState(Player playerInstance, StateMachine<Player> fsm, float duration, State<Player> state) : base(playerInstance, fsm)
     {
         player = playerInstance;
 

@@ -106,7 +106,7 @@ public class GameEvent {
         if (p.ActionFsm.StateStack.Count == 0)
             state = p.ActionFsm.CurrentState;
         else
-            state = p.ActionFsm.StateStack.First(x => !(x is SuspendState));
+            state = p.ActionFsm.StateStack.First(x => !(x is HitlagState));
 
         if (state is IdleState)
         {

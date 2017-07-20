@@ -35,7 +35,7 @@ public class AttackState : State<Player>
 
     override public void Enter()
     {
-        GameManager.instance.playSound("PunchWiff");
+        GameManager.instance.PlaySound("PunchWiff");
 
         this.player.selfBody.drag = 20.0f;
         this.player.selfBody.velocity = Vector2.zero;
@@ -64,12 +64,12 @@ public class AttackState : State<Player>
             meleeHitbox.GetComponent<Hitbox>().type = Hitbox.hitType.mid;
 
         meleeHitbox.transform.localPosition = startPosition;
-        meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     override public void Execute()
     {
-        if(player.chainable)
+        meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
+        if (player.chainable)
         {
             if (Controls.attackInputDown(player))
                 player.PerformAction(Action.Attack);
@@ -116,5 +116,19 @@ public class AttackState : State<Player>
         meleeHitbox.GetComponent<Hitbox>().knockdown = false;
         player.hitboxManager.deactivateHitBox("MeleeHitbox");
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+    }
+
+    override public State<Player> Copy()
+    {
+        AttackState attackCopy = new AttackState(this.Owner, this.Owner.ActionFsm, player.comboCount);
+        attackCopy.frameCounter = frameCounter;
+        attackCopy.startPosition = this.startPosition;
+        attackCopy.endPosition = this.endPosition;
+
+        attackCopy.player.chainable = player.chainable;
+        attackCopy.meleeHitbox.GetComponent<Hitbox>().knockdown = meleeHitbox.GetComponent<Hitbox>().knockdown;
+        attackCopy.meleeHitbox.GetComponent<Hitbox>().type = meleeHitbox.GetComponent<Hitbox>().type;
+        attackCopy.meleeHitbox.transform.localPosition = meleeHitbox.transform.localPosition;
+        return attackCopy;
     }
 }

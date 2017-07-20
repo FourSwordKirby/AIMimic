@@ -22,15 +22,13 @@ public class AirAttackState : State<Player>
 
     public AirAttackState(Player playerInstance, StateMachine<Player> fsm) : base(playerInstance, fsm)
     {
-        GameManager.instance.playSound("AirSwipe");
-
         player = playerInstance;
         meleeHitbox = player.hitboxManager.getHitbox("AirMeleeHitbox").gameObject;
 
         attackDistance = 0.55f;
 
         startup = 0.05f * Application.targetFrameRate;
-        duration = 0.05f * Application.targetFrameRate;
+        duration = 1.05f * Application.targetFrameRate;
         endlag = 1.2f * Application.targetFrameRate;
 
         animDuration = (int) (0.33333f * Application.targetFrameRate);
@@ -39,7 +37,8 @@ public class AirAttackState : State<Player>
 
     override public void Enter()
     {
-        meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
+        GameManager.instance.PlaySound("AirSwipe");
+
         meleeHitbox.GetComponent<SpriteRenderer>().flipX = player.sprite.flipX;
 
         startPosition = Vector3.zero;
@@ -55,8 +54,16 @@ public class AirAttackState : State<Player>
 
     override public void Execute()
     {
-        //ANIMATE THE HITBOX MOVING
         frameCounter++;
+
+        //ANIMATIONS
+        //Color
+        if (frameCounter < startup + duration)
+            meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
+        else
+            meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+
+        //Spinning animation
         if (frameCounter < startup)
         {
             meleeHitbox.transform.localPosition = Vector3.Lerp(startPosition, endPosition, frameCounter / startup);
@@ -71,19 +78,13 @@ public class AirAttackState : State<Player>
         else if (frameCounter < startup + duration + endlag)
         {
             if (frameCounter - Time.fixedDeltaTime < startup + duration)
-            {
                 player.hitboxManager.deactivateHitBox("AirMeleeHitbox");
-                meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
-            }
 
             meleeHitbox.transform.localPosition = Vector3.Lerp(endPosition, startPosition, (frameCounter - startup - duration) / endlag);
         }
         else
-        {
-            meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
             meleeHitbox.transform.localPosition = Vector2.zero;
-        }
-
+        
 
         //Animate the player
         if (frameCounter < animDuration)
@@ -124,5 +125,17 @@ public class AirAttackState : State<Player>
 
         player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         player.selfBody.angularVelocity = 0;
+    }
+
+    override public State<Player> Copy()
+    {
+        AirAttackState attackCopy = new AirAttackState(this.Owner, this.Owner.ActionFsm);
+        attackCopy.frameCounter = frameCounter;
+
+        attackCopy.meleeHitbox.GetComponent<SpriteRenderer>().flipX = meleeHitbox.GetComponent<SpriteRenderer>().flipX;
+        attackCopy.startPosition = startPosition;
+        attackCopy.endPosition = endPosition;
+        attackCopy.direction = direction;
+        return attackCopy;
     }
 }

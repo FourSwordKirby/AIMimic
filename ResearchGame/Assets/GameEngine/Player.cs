@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Player : MonoBehaviour {
 
@@ -10,8 +11,8 @@ public class Player : MonoBehaviour {
     public float neutralJumpHeight;
     public float directionJumpHeight;
 
-    public float health { get; private set; }
-    public float meter { get; private set; }
+    public float health;
+    public float meter;
     public const int DEFAULT_STOCK_COUNT = 4;
 
     public bool suspended = false;
@@ -67,6 +68,16 @@ public class Player : MonoBehaviour {
         ActionFsm.InitialState(startState);
 
         this.Stand();
+    }
+
+    public void Pause()
+    {
+        this.ActionFsm.SuspendState(new PauseState(this, this.ActionFsm, this.ActionFsm.CurrentState));
+    }
+
+    public void Resume()
+    {
+        this.ActionFsm.ResumeState();
     }
 
     public void Reset()
@@ -210,7 +221,7 @@ public class Player : MonoBehaviour {
     bool IsValidAction(Action action)
     {
         //Temp hacks to make the AI behave
-        if (this.stunned || (this.ActionFsm.CurrentState is SuspendState))
+        if (this.stunned || (this.ActionFsm.CurrentState is HitlagState))
             return false;
 
         switch (action)

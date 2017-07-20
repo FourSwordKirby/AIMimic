@@ -14,18 +14,18 @@ public class GenericHurtbox : Hurtbox {
     override public void TakeHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
         if (knockdown)
-            GameManager.instance.playSound("ComboEnder");
+            GameManager.instance.PlaySound("ComboEnder");
         else
-            GameManager.instance.playSound("PunchHit");
+            GameManager.instance.PlaySound("PunchHit");
 
         owner.EnterHitstun(hitlag, hitstun, knockback, knockdown);
     }
 
     override public void BlockHit(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
     {
-        GameManager.instance.playSound("Block");
+        GameManager.instance.PlaySound("Block");
         owner.selfBody.velocity = -owner.facingDirection.x* knockback;
-        owner.ActionFsm.SuspendState(new SuspendState(owner, owner.ActionFsm, hitstun, owner.ActionFsm.CurrentState));
+        owner.ActionFsm.SuspendState(new HitlagState(owner, owner.ActionFsm, hitstun, owner.ActionFsm.CurrentState));
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -41,7 +41,7 @@ public class GenericHurtbox : Hurtbox {
             {
                 hitbox.owner.selfBody.velocity -= 1.5f * hitbox.owner.facingDirection.x * Vector2.right;
                 hitbox.owner.chainable = true;
-                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
+                hitbox.owner.ActionFsm.SuspendState(new HitlagState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
 
                 TakeDamage(hitbox.chipDamage);
                 BlockHit(hitbox.hitlag, hitbox.blockstun + hitbox.hitlag, 1.0f * Vector2.right * hitbox.knockbackVector.x, false);
@@ -53,7 +53,7 @@ public class GenericHurtbox : Hurtbox {
             {
                 hitbox.owner.selfBody.velocity -= 0.25f * hitbox.owner.facingDirection.x * Vector2.right;
                 hitbox.owner.chainable = true;
-                hitbox.owner.ActionFsm.SuspendState(new SuspendState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
+                hitbox.owner.ActionFsm.SuspendState(new HitlagState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
                 
                 TakeDamage(hitbox.damage);
                 if(owner.grounded)

@@ -40,7 +40,7 @@ public abstract class State<CoreType> where CoreType : MonoBehaviour {
     /// Used to create a functional copy of the current state for preservation
     /// </summary>
     /// <returns>A copy of the current state</returns>
-    public State<CoreType> Copy()
+    public virtual State<CoreType> Copy()
     {
         return this;
     }
