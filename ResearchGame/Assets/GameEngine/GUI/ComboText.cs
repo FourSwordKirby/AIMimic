@@ -20,8 +20,8 @@ public class ComboText : MonoBehaviour {
             SplashImage.transform.rotation = Quaternion.Lerp(Quaternion.AngleAxis(0, Vector3.forward), Quaternion.AngleAxis(180.0f, Vector3.forward), timer / 0.25f);
             return;
         }
-        SplashImage.color = new Color(1.0f, 1.0f, 1.0f, SplashImage.color.a - 0.01f);
-        selfText.color = new Color(1.0f, 1.0f, 1.0f, selfText.color.a - 0.01f);
+        SplashImage.color = new Color(1.0f, 1.0f, 1.0f, SplashImage.color.a - Time.deltaTime*0.75f);
+        selfText.color = new Color(1.0f, 1.0f, 1.0f, selfText.color.a - Time.deltaTime*0.75f);
     }
 
     public void SetText(int comboCount)

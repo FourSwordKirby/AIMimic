@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     public float meter;
     public const int DEFAULT_STOCK_COUNT = 4;
 
+    public new bool enabled;
     public bool suspended = false;
     public bool stunned = false;
     public bool knockedDown = false;
@@ -108,6 +109,8 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (!this.enabled)
+            return;
         this.ActionFsm.Execute();
         if (opponent.transform.position.x > this.transform.position.x)
         {

@@ -11,10 +11,14 @@ public class GameRecorder : MonoBehaviour
     public Player player2;
 
     public List<Snapshot> snapshots = new List<Snapshot>();
+    bool roundInProgress = false;
 
-    bool roundInProgress;
-
-    void Update()
+    private int lastCapturedFrame = -1;
+    /// <summary>
+    /// Call this to get a capture of what is currently on the screen
+    /// Changing this needs to be manually called by the AI because it's hard to maintain an explicit order of operations
+    /// </summary>
+    public void CaptureFrame()
     {
         if (!roundInProgress && !GameManager.instance.roundOver)
         {
@@ -26,6 +30,11 @@ public class GameRecorder : MonoBehaviour
             roundInProgress = false;
             return;
         }
+
+        //A check to make sure we only capture one snapshot per frame
+        if (lastCapturedFrame == GameManager.instance.currentFrame)
+            return;
+        lastCapturedFrame = GameManager.instance.currentFrame;
 
         Snapshot snapshot = new Snapshot(GameManager.instance.currentFrame, player1, player2);
         snapshots.Add(snapshot);

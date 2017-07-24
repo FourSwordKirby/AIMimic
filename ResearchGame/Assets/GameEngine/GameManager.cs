@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
     public float timeLimit;
     public float timeRemaining;
 
+    public Scenario currentScenario;
+
     public GameObject hitEffect;
     public GameObject blockEffect;
 
@@ -41,17 +43,17 @@ public class GameManager : MonoBehaviour {
     public List<AudioClip> sfx;
     public float sfxVolume;
 
-    private float countDown;
-    private float roundEndTimer;
+    public float countDown;
+    public float roundEndTimer;
     public bool roundOver { get; private set; }
-    private bool firstBoot = true;
+    public bool firstBoot = true;
     public bool paused;
 
     /// <summary>
     /// Used mainly for coordinating how long the AI should do moves. This means that it counts up 
     /// only when there is no hitstop
     /// </summary>
-    public int currentFrame { get; private set; }
+    public int currentFrame;
 
     void Awake()
     {
@@ -65,19 +67,6 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        if (paused)
-        {
-            if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
-                Resume();
-            return;
-        }
-        else
-        {
-            if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
-                Pause();
-        }
-
-
         if (firstBoot)
         {
             firstBoot = false;
@@ -91,40 +80,61 @@ public class GameManager : MonoBehaviour {
             Quit();
         }
 
-        //Managing timers
-        if (timeRemaining > 0 && !(p1.ActionFsm.CurrentState is HitlagState || p2.ActionFsm.CurrentState is HitlagState) && !roundOver)
-        {
-            timeRemaining -= Time.deltaTime;
-            currentFrame++;
-        }
-
+        //Round start countdown
         if (countDown > 0)
         {
             countDown -= Time.deltaTime;
-            if((countDown > 1))
+            if ((countDown > 1))
             {
-                if(currentRound == 1)
+                if (currentRound == 1)
                     RoundText.text = ((int)countDown).ToString();
                 else
                     RoundText.text = "Round " + currentRound;
 
                 p1.enabled = false;
                 p2.enabled = false;
+                return;
             }
-            else 
-            {
-                roundOver = false;
-                RoundText.text = "GO!";
-                p1.enabled = true;
-                p2.enabled = true;
-            }
+            if (countDown <= 0)
+                RoundText.text = "";
+        }
+        if(0 < countDown && countDown <= 1 && roundOver)
+        {
+            roundOver = false;
+            RoundText.text = "GO!";
+            p1.enabled = true;
+            p2.enabled = true;
             return;
         }
 
         if (!roundOver)
         {
-            RoundText.text = "";
+            //Can only pause while the round is in progress
+            if (paused)
+            {
+                if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
+                    Resume();
+                return;
+            }
+            else
+            {
+                if (Controls.pauseInputDown(p1) || Controls.pauseInputDown(p2))
+                {
+                    Pause();
+                    RoundText.text = "PAUSED";
+                    return;
+                }
+            }
 
+            //Managing the timer
+            if (!(p1.ActionFsm.CurrentState is HitlagState || p2.ActionFsm.CurrentState is HitlagState))
+            {
+                currentFrame++;
+                if(timeRemaining > 0 && timeLimit > 0)
+                    timeRemaining -= Time.deltaTime;
+            }
+
+            //Checks to see if the round or set is over
             if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
             {
                 Time.timeScale = 0.75f;
@@ -149,10 +159,10 @@ public class GameManager : MonoBehaviour {
                         RoundText.text += " P2 Win";
                         EventManager.instance.RecordRoundWin(p2, p1, timeRemaining <= 0);
                     }
-                    if(p1.health == p2.health)
+                    if (p1.health == p2.health)
                     {
-                        p1Victories = Mathf.Min(p1Victories + 1, roundToWin-1);
-                        p2Victories = Mathf.Min(p1Victories + 1, roundToWin-1);
+                        p1Victories = Mathf.Min(p1Victories + 1, roundToWin - 1);
+                        p2Victories = Mathf.Min(p1Victories + 1, roundToWin - 1);
                         RoundText.text += " Tie";
                         EventManager.instance.RecordTie(timeRemaining <= 0);
                     }
@@ -188,7 +198,8 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        if (!((p1Victories >= roundToWin)|| (p2Victories >= roundToWin)))
+        //Code to restart the round or set
+        if (!((p1Victories >= roundToWin) || (p2Victories >= roundToWin)) || roundToWin <= 0)
         {
             if (roundEndTimer > 0)
             {
@@ -196,7 +207,7 @@ public class GameManager : MonoBehaviour {
                 if (roundEndTimer < 0.5f)
                 {
                     if (roundEndTimer <= 0 || Controls.attackInputDown(p1) || Controls.attackInputDown(p2))
-                        LoadRound();
+                        LoadRound(currentScenario);
                 }
             }
         }
@@ -216,6 +227,7 @@ public class GameManager : MonoBehaviour {
 
     public void Pause()
     {
+        Time.timeScale = 0;
         paused = true;
         p1.Pause();
         p2.Pause();
@@ -223,6 +235,7 @@ public class GameManager : MonoBehaviour {
 
     public void Resume()
     {
+        Time.timeScale = 1;
         paused = false;
         p1.Resume();
         p2.Resume();
@@ -237,7 +250,8 @@ public class GameManager : MonoBehaviour {
     {
         P1NameText.text = p1Name;
         P2NameText.text = p2Name;
-
+        
+        LoadRound(currentScenario);
         p1Victories = 0;
         p2Victories = 0;
         P1RoundCount.SetStockCount(p1Victories);
@@ -246,29 +260,53 @@ public class GameManager : MonoBehaviour {
 
         P1RoundCount.roundLimit = roundToWin;
         P2RoundCount.roundLimit = roundToWin;
-        LoadRound();
     }
 
-    void LoadRound()
-    {
-        PlaySound("Startup", true);
+    public void LoadRound(Scenario scenario)
+    { 
+        if(!scenario.isTraining)
+        {
+            PlaySound("Startup", true);
+
+            roundToWin = scenario.roundToWin;
+
+            countDown = 4.0f;
+            roundEndTimer = 2.5f;
+        }
+        else
+        {
+            roundToWin = 0;
+
+            instance.p1Victories = 0;
+            instance.p2Victories = 0;
+            instance.P1RoundCount.SetStockCount(0);
+            instance.P2RoundCount.SetStockCount(0);
+            instance.currentRound = 1;
+
+            instance.P1RoundCount.roundLimit = 0;
+            instance.P2RoundCount.roundLimit = 0;
+
+            countDown = 0.1f;
+            roundEndTimer = 0.5f;
+        }
 
         Time.timeScale = 1.0f;
-        countDown = 4.0f;
-        roundEndTimer = 2.5f;
-
-        timeRemaining = timeLimit;
+        timeLimit = scenario.timeLimit;
+        timeRemaining = Mathf.Max(scenario.timeLimit, 1);
         currentFrame = 0;
 
         p1.enabled = false;
         p2.enabled = false;
         p1.Reset();
         p2.Reset();
-        p1.transform.position = spawnPoint1.transform.position;
-        p2.transform.position = spawnPoint2.transform.position;
+        p1.transform.position = scenario.spawnPoint1.transform.position;
+        p2.transform.position = scenario.spawnPoint2.transform.position;
+
+        p1.health = scenario.p1Health;
+        p2.health = scenario.p2Health;
     }
 
-    public static void SpawnBlockIndicator(Vector3 position)
+public static void SpawnBlockIndicator(Vector3 position)
     {
         GameObject blockEffect = Instantiate(instance.blockEffect);
         blockEffect.transform.position = position;
