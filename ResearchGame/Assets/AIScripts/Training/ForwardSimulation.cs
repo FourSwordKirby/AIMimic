@@ -33,10 +33,12 @@ public class ForwardSimulation : MonoBehaviour {
         }
     }
 
+    //TODO, scrap and move this class into its own module for mass testing of various scenarios
     bool makePrediction;
-    void ActionPerformed(Action a)
+    void ActionPerformed(KeyValuePair<Action, bool> pair)
     {
-        if(!makePrediction && a != Action.Stand)
+        Action a = pair.Key;
+        if (!makePrediction && a != Action.Stand)
             makePrediction = true;
     }
 

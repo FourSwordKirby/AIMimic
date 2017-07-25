@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
             if (countDown <= 0)
                 RoundText.text = "";
         }
-        if(0 < countDown && countDown <= 1 && roundOver)
+        if(0 < countDown && countDown <= 1)
         {
             roundOver = false;
             RoundText.text = "GO!";
@@ -306,7 +306,7 @@ public class GameManager : MonoBehaviour {
         p2.health = scenario.p2Health;
     }
 
-public static void SpawnBlockIndicator(Vector3 position)
+    public static void SpawnBlockIndicator(Vector3 position)
     {
         GameObject blockEffect = Instantiate(instance.blockEffect);
         blockEffect.transform.position = position;

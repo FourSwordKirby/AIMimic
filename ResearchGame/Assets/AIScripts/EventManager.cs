@@ -60,6 +60,6 @@ public class EventManager : MonoBehaviour {
     {
         if (eventRecorder != null && eventRecorder.gameObject.activeSelf)
             eventRecorder.RecordAction(action, player.isPlayer1);
-        BroadcastMessage("ActionPerformed", action, SendMessageOptions.DontRequireReceiver);
+        BroadcastMessage("ActionPerformed", new KeyValuePair<Action, bool>(action, player.isPlayer1), SendMessageOptions.DontRequireReceiver);
     }
 }

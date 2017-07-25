@@ -6,11 +6,10 @@ using UnityEngine.UI;
 /// An AI which is preprogrammed to do a certain series of moves in a certain order. 
 /// This will be used to generate training instances
 /// </summary>
-public class PatternAI : AIAgent {
+public class SequenceAI : AIAgent {
     Snapshot currentState;
     public Text DebugText;
-
-    public ActionSequence pattern = new ActionSequence();
+    public ActionSequence sequence = new ActionSequence();
 
     void Update()
     {
@@ -31,7 +30,8 @@ public class PatternAI : AIAgent {
 
     public override Action GetAction()
     {
-        Action action = pattern.GetAction((int)currentState.frameTaken);
+        Action action = sequence.GetAction((int)currentState.frameTaken);
+        print(action);
         return action;
     }
 

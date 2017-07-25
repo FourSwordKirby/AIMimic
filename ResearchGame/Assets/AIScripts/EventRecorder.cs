@@ -155,11 +155,11 @@ public class EventRecorder : MonoBehaviour {
         float p1Duration = GameManager.instance.currentFrame - player1StartFrame;
         float p2Duration = GameManager.instance.currentFrame - player2StartFrame;
 
-        GameEvent snapshot = new GameEvent(initIndex, GameManager.instance.currentFrame,
+        GameEvent gameEvent = new GameEvent(initIndex, GameManager.instance.currentFrame,
                                                 player1, player2, 
                                                 p1Duration, p2Duration,
                                                 player1Action, player2Action);
-        currentSession.AddSnapshot(snapshot);
+        currentSession.AddSnapshot(gameEvent);
 
         if (isPlayer1)
         {
@@ -174,14 +174,15 @@ public class EventRecorder : MonoBehaviour {
     }
 
     //Basically used to determine if a state transition occured because of the player or from natural means
-    private bool isPlayerTransition(Action startingAction, Action newAction)
-    {
-        if(startingAction == Action.JumpLeft || startingAction == Action.JumpNeutral || startingAction == Action.JumpRight)
-        {
+    //Also obsolete now
+    //private bool isPlayerTransition(Action startingAction, Action newAction)
+    //{
+    //    if(startingAction == Action.JumpLeft || startingAction == Action.JumpNeutral || startingAction == Action.JumpRight)
+    //    {
 
-        }
-        return true;
-    }
+    //    }
+    //    return true;
+    //}
 
     /*Code that was used when we were trying to record the player's action by just observing it's state. Obsolete now.
     //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)
