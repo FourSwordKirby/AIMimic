@@ -242,9 +242,9 @@ public class Player : MonoBehaviour {
             case Action.AirAttack:
                 return !this.grounded && (this.ActionFsm.CurrentState is JumpState);
             case Action.StandBlock:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded && !(this.isBlocking && !this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
             case Action.CrouchBlock:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                return this.grounded && !(this.isBlocking && this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpNeutral:
                 return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
             case Action.JumpLeft:

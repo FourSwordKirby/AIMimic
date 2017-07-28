@@ -18,6 +18,11 @@ public class OptimalAI : AIAgent {
 
     public Text DebugText;
 
+    private void Start()
+    {
+        Reset();
+    }
+
     void LateUpdate()
     {
         if (!freshReset && GameManager.instance.roundOver)
@@ -34,6 +39,7 @@ public class OptimalAI : AIAgent {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
+        GameRecorder.instance.CaptureFrame();
         if (GameManager.instance.currentFrame % 3 == 1)
         {
             ObserveState();
@@ -108,7 +114,7 @@ public class OptimalAI : AIAgent {
     }
 
     bool freshReset = false;
-    private void Reset()
+    override public void Reset()
     {
         print("Storing/Loading action tables");
         if(actionSelector != null)

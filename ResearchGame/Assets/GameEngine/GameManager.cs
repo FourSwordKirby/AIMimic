@@ -126,13 +126,7 @@ public class GameManager : MonoBehaviour {
                 }
             }
 
-            //Managing the timer
-            if (!(p1.ActionFsm.CurrentState is HitlagState || p2.ActionFsm.CurrentState is HitlagState))
-            {
-                currentFrame++;
-                if(timeRemaining > 0 && timeLimit > 0)
-                    timeRemaining -= Time.deltaTime;
-            }
+            AdvanceTime();
 
             //Checks to see if the round or set is over
             if (p1.health <= 0 || p2.health <= 0 || timeRemaining <= 0)
@@ -222,6 +216,19 @@ public class GameManager : MonoBehaviour {
                 }
                 return;
             }
+        }
+    }
+
+    /// <summary>
+    /// Used to advance the frame counter and the in game timer
+    /// </summary>
+   public void AdvanceTime()
+    {
+        if (!(p1.ActionFsm.CurrentState is HitlagState || p2.ActionFsm.CurrentState is HitlagState))
+        {
+            currentFrame++;
+            if (timeRemaining > 0 && timeLimit > 0)
+                timeRemaining -= Time.deltaTime;
         }
     }
 

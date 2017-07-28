@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class GameRecorder : MonoBehaviour
 {
+    public static GameRecorder instance;
+
     public string recordingName;
     public bool currentlyLogging;
 
@@ -14,6 +16,13 @@ public class GameRecorder : MonoBehaviour
     bool roundInProgress = false;
 
     private int lastCapturedFrame = -1;
+
+    private void Start()
+    {
+        if (instance != this)
+            instance = this;
+    }
+
     /// <summary>
     /// Call this to get a capture of what is currently on the screen
     /// Changing this needs to be manually called by the AI because it's hard to maintain an explicit order of operations

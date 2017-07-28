@@ -33,6 +33,7 @@ public class BlockAI : AIAgent {
         if (!AIPlayer.enabled || GameManager.instance.roundOver || AIPlayer.stunned)
             return;
 
+        GameRecorder.instance.CaptureFrame();
         if (GameManager.instance.currentFrame % 2 == 1)
         {
             ObserveState();

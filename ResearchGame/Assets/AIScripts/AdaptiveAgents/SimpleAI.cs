@@ -18,6 +18,7 @@ public class SimpleAI : AIAgent {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
+        GameRecorder.instance.CaptureFrame();
         if (GameManager.instance.currentFrame % 3 == 1)
         {
             ObserveState();

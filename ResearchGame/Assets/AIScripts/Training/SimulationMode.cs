@@ -4,76 +4,136 @@ using UnityEngine;
 
 public class SimulationMode : MonoBehaviour
 {
-    int simulationCount = 100;
-    int failures = 0;
+    public int simulationCount;
+    public float simulationLength;
 
     float frameLength;
-    float predictionLength;
-    
+
+    public AIAgent bot;
     public Scenario testScenario;
-    public string sequenceName;
-    ActionSequence testSequence = new ActionSequence();
+    public List<Result> simulationResults;
 
     private void Start()
     {
-        testSequence.LoadSequence(sequenceName);
         frameLength = 1.0f / Application.targetFrameRate;
-        predictionLength = 10.0f;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
-            MassSimulate(testScenario, testSequence);
+            MassSimulate(testScenario, bot);
     }
 
-    // Update is called once per frame
-    void MassSimulate(Scenario scenario, ActionSequence sequence)
+    //This should produce a list of results that occured after this simulation
+    List<Result> Simulate(Scenario scenario, AIAgent bot)
     {
-        for (int i = 0; i < simulationCount; i++)
-        {
-            Simulate(scenario, sequence);
-        }
-
-        Physics2D.autoSimulation = true;
-        GameManager.instance.p1.AIControlled = false;
-        GameManager.instance.p2.AIControlled = false;
-
-        print("Failures" + failures);
-    }
-
-    void Simulate(Scenario scenario, ActionSequence sequence)
-    {
-        testSequence.RestartSequence();
+        bot.Reset();
         GameManager.instance.LoadRound(testScenario);
 
         Player p1 = GameManager.instance.p1;
         Player p2 = GameManager.instance.p2;
-
-        int currentFrame = 0;
+        
         Physics2D.autoSimulation = false;
 
         p1.AIControlled = true;
         p2.AIControlled = true;
 
-        for (int i = 0; i < predictionLength / frameLength; i++)
+        for (int i = 0; i < simulationLength / frameLength; i++)
         {
             Physics2D.Simulate(frameLength);
-            currentFrame++;
+            GameManager.instance.AdvanceTime();
 
-            Action a = sequence.GetAction(currentFrame);
-            if(Random.Range(0.0f, 1.0f) > 0.5f)
-                p1.PerformAction(Action.StandBlock);
-            else
-                p1.PerformAction(Action.CrouchBlock);
-            p2.PerformAction(a);
+            GameRecorder.instance.CaptureFrame();
+            bot.ObserveState();
+            Action a = bot.GetAction();
+            bot.PerformAction(a);
 
             p1.ActionFsm.CurrentState.Execute();
             p2.ActionFsm.CurrentState.Execute();
         }
-        if (p1.health < 3)
+
+        return simulationResults;
+    }
+
+    public void Hit(Hitbox hitbox)
+    {
+        if(hitbox.owner.isPlayer1 == bot.AIPlayer.isPlayer1)
+            simulationResults.Add(Result.Hit);
+        else
+            simulationResults.Add(Result.Landed);
+        p1Attacked = false;
+        p2Attacked = false;
+    }
+
+    public void Block(Hitbox hitbox)
+    {
+        if (hitbox.owner.isPlayer1 == bot.AIPlayer.isPlayer1)
+            simulationResults.Add(Result.Block);
+        else
+            simulationResults.Add(Result.Blocked);
+        p1Attacked = false;
+        p2Attacked = false;
+    }
+
+    bool p1Attacked = false;
+    bool p2Attacked = false;
+
+    bool p1JustAttacked = false;
+    bool p2JustAttacked = false;
+    public void ActionPerformed(KeyValuePair<Action, bool> pair)
+    {
+        Action action = pair.Key;
+        bool isPlayer1 = pair.Value;
+        
+        if (isPlayer1)
         {
-            failures++;
+            if (action == Action.AirAttack || action == Action.LowAttack || action == Action.Attack)
+            {
+                p1Attacked = true;
+                p1JustAttacked = true;
+            }
+            else
+                p1JustAttacked = false;
         }
+        else
+        {
+            if (action == Action.AirAttack || action == Action.LowAttack || action == Action.Attack)
+            {
+                p2Attacked = true;
+                p2JustAttacked = true;
+            }
+            else
+                p2JustAttacked = false;
+        }
+
+        if (p1Attacked && !p1JustAttacked)
+        {
+            if(bot.AIPlayer.isPlayer1)
+                simulationResults.Add(Result.Dodged);
+            else
+                simulationResults.Add(Result.Whiffed);
+            p1Attacked = false;
+        }
+        if (p2Attacked && !p2JustAttacked)
+        {
+            if (bot.AIPlayer.isPlayer1)
+                simulationResults.Add(Result.Whiffed);
+            else
+                simulationResults.Add(Result.Dodged);
+            p2Attacked = false;
+        }
+    }
+
+    // Update is called once per frame
+    void MassSimulate(Scenario scenario, AIAgent bot)
+    {
+        for (int i = 0; i < simulationCount; i++)
+        {
+            Simulate(scenario, bot);
+        }
+
+        Physics2D.autoSimulation = true;
+        GameManager.instance.p1.AIControlled = false;
+        GameManager.instance.p2.AIControlled = false;
     }
 }

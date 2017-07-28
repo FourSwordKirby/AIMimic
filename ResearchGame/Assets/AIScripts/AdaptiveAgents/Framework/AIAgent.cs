@@ -42,6 +42,14 @@ public abstract class AIAgent : MonoBehaviour{
     }
 
     /// <summary>
+    /// Used to reset an AI to it's starting parameters. This may differ depending on the AI. For many simple AI's it does nothing
+    /// </summary>
+    virtual public void Reset()
+    {
+        ;
+    }
+
+    /// <summary>
     /// This should be callsed whenever the agent should be updated with whatever is going on in the game's state
     /// </summary>
     public abstract void ObserveState();

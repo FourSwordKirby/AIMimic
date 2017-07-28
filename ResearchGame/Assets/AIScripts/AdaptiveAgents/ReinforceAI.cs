@@ -30,6 +30,7 @@ public class ReinforceAI : AIAgent{
         if (!AIPlayer.enabled)
             return;
 
+        GameRecorder.instance.CaptureFrame();
         if (GameManager.instance.currentFrame % frameInterval == 0)
         {
             ObserveState();

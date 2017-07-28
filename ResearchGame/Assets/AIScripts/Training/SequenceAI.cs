@@ -9,7 +9,13 @@ using UnityEngine.UI;
 public class SequenceAI : AIAgent {
     Snapshot currentState;
     public Text DebugText;
+    public string sequenceName;
     public ActionSequence sequence = new ActionSequence();
+
+    private void Start()
+    {
+        sequence.LoadSequence(sequenceName);
+    }
 
     void Update()
     {
@@ -23,6 +29,11 @@ public class SequenceAI : AIAgent {
         PerformAction(action);
     }
 
+    override public void Reset()
+    {
+        sequence.RestartSequence();
+    }
+
     public override void ObserveState()
     {
         currentState = GetGameState();
@@ -31,7 +42,6 @@ public class SequenceAI : AIAgent {
     public override Action GetAction()
     {
         Action action = sequence.GetAction((int)currentState.frameTaken);
-        print(action);
         return action;
     }
 
