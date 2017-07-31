@@ -59,7 +59,6 @@ public class SimplePressureAI : AIAgent {
                                                             action == Action.WalkLeft ||
                                                             action == Action.WalkRight))
             action = Action.Stand;
-        print(action);
         return action;
     }
 

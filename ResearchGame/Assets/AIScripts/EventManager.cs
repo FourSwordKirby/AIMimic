@@ -58,7 +58,6 @@ public class EventManager : MonoBehaviour {
     //appropriate notification for that action
     public void RecordActionPerformed(Action action, Player player)
     {
-        print(action);
         if (eventRecorder != null && eventRecorder.gameObject.activeSelf)
             eventRecorder.RecordAction(action, player.isPlayer1);
         BroadcastMessage("ActionPerformed", new KeyValuePair<Action, bool>(action, player.isPlayer1), SendMessageOptions.DontRequireReceiver);

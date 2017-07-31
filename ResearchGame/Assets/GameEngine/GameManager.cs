@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
             if (countDown <= 0)
                 RoundText.text = "";
         }
-        if(0 < countDown && countDown <= 1)
+        if(0 < countDown + Time.deltaTime && countDown + Time.deltaTime <= 1)
         {
             roundOver = false;
             RoundText.text = "GO!";

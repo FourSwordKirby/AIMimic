@@ -6,9 +6,13 @@ using System.Linq;
 /// <summary>
 /// This merely records a snapshot of what is happening on the screen. Nothing about moves being initiated or being interrupted occurs here
 /// </summary>
+[System.Serializable]
 public class Snapshot {
 
     public float frameTaken;
+
+    public StateMachine<Player> p1ActionFsm;
+    public StateMachine<Player> p2ActionFsm;
 
     public PlayerStatus p1Status;
     public PlayerStatus p2Status;    
@@ -44,6 +48,9 @@ public class Snapshot {
     public Snapshot(float frameTaken, Player p1, Player p2)
     {
         this.frameTaken = frameTaken;
+
+        this.p1ActionFsm = p1.ActionFsm;
+        this.p2ActionFsm = p2.ActionFsm;
 
         this.p1Status = StateToStatus(p1);
         this.p2Status = StateToStatus(p2);

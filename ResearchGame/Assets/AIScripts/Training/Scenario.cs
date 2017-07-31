@@ -14,6 +14,9 @@ public class Scenario : MonoBehaviour {
 
     public bool isTraining;
 
+    public State<Player> p1State;
+    public State<Player> p2State;
+
     // Use this for initialization
     void Start () {
 		

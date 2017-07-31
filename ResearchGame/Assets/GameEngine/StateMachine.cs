@@ -4,14 +4,12 @@ using System.Collections.Generic;
 using System;
 
 public class StateMachine<CoreType> where CoreType : MonoBehaviour {
-
-    public CoreType owner { get; private set; }
+    
     public Stack<State<CoreType>> StateStack { get; private set; }
     public State<CoreType> CurrentState { get; private set; }
 
     public StateMachine(CoreType owner)
     {
-        this.owner = owner;
         StateStack = new Stack<State<CoreType>>();
         CurrentState = null;
     } 

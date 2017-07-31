@@ -9,6 +9,7 @@ public class SimulationMode : MonoBehaviour
 
     float frameLength;
 
+    public AdviceTrainer adviceTrainer;
     public AIAgent bot;
     public Scenario testScenario;
     public List<Result> simulationResults;
@@ -24,9 +25,12 @@ public class SimulationMode : MonoBehaviour
             MassSimulate(testScenario, bot);
     }
 
-    //This should produce a list of results that occured after this simulation
+    //This simulates the scenario. It returns a list of all events that occured in this simulation
     List<Result> Simulate(Scenario scenario, AIAgent bot)
     {
+        List<Result> completeResults = new List<Result>();
+
+        adviceTrainer.Retest();
         bot.Reset();
         GameManager.instance.LoadRound(testScenario);
 
@@ -37,11 +41,14 @@ public class SimulationMode : MonoBehaviour
 
         p1.AIControlled = true;
         p2.AIControlled = true;
-
+        
         for (int i = 0; i < simulationLength / frameLength; i++)
         {
             Physics2D.Simulate(frameLength);
             GameManager.instance.AdvanceTime();
+
+            Advice advice = adviceTrainer.RetrieveAdvice();
+            adviceTrainer.TestAdvice(advice);
 
             GameRecorder.instance.CaptureFrame();
             bot.ObserveState();
@@ -50,9 +57,36 @@ public class SimulationMode : MonoBehaviour
 
             p1.ActionFsm.CurrentState.Execute();
             p2.ActionFsm.CurrentState.Execute();
+
+            if(simulationResults.Count > 0)
+            {
+                adviceTrainer.EvaluateResults(advice, simulationResults);
+                adviceTrainer.Retest();
+
+                completeResults.AddRange(simulationResults);
+                simulationResults = new List<Result>();
+            }
+        }
+        return completeResults;
+    }
+
+    // Update is called once per frame
+    void MassSimulate(Scenario scenario, AIAgent bot)
+    {
+        for (int i = 0; i < simulationCount; i++)
+        {
+            Reset();
+            Simulate(scenario, bot);
         }
 
-        return simulationResults;
+        Physics2D.autoSimulation = true;
+        GameManager.instance.p1.AIControlled = false;
+        GameManager.instance.p2.AIControlled = false;
+    }
+
+    private void Reset()
+    {
+        simulationResults = new List<Result>();
     }
 
     public void Hit(Hitbox hitbox)
@@ -75,9 +109,9 @@ public class SimulationMode : MonoBehaviour
         p2Attacked = false;
     }
 
+
     bool p1Attacked = false;
     bool p2Attacked = false;
-
     bool p1JustAttacked = false;
     bool p2JustAttacked = false;
     public void ActionPerformed(KeyValuePair<Action, bool> pair)
@@ -122,18 +156,5 @@ public class SimulationMode : MonoBehaviour
                 simulationResults.Add(Result.Dodged);
             p2Attacked = false;
         }
-    }
-
-    // Update is called once per frame
-    void MassSimulate(Scenario scenario, AIAgent bot)
-    {
-        for (int i = 0; i < simulationCount; i++)
-        {
-            Simulate(scenario, bot);
-        }
-
-        Physics2D.autoSimulation = true;
-        GameManager.instance.p1.AIControlled = false;
-        GameManager.instance.p2.AIControlled = false;
     }
 }

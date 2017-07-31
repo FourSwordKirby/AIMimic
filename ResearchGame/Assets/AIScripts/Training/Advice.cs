@@ -9,8 +9,8 @@ using System.Text;
 /// </summary>
 public class Advice
 {
-    Action recommendedAction;
-    Result purportedResult;
+    public Action recommendedAction;
+    public Result purportedResult;
 
     public Advice(Action action, Result result)
     {

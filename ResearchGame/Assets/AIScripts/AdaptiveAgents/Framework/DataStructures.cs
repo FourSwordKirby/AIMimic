@@ -222,6 +222,69 @@ public class AdaptiveActionSelector
     }
 }
 
+public class AdviceLookupTable
+{
+    Dictionary<AISituation, Dictionary<Advice, Effectiveness>> adviceTable;
+    List<Advice> availableAdvice;
+
+    public AdviceLookupTable()
+    {
+        availableAdvice = new List<Advice>() { new Advice(Action.StandBlock, Result.Block), new Advice(Action.WalkLeft, Result.Whiffed) };
+        adviceTable = new Dictionary<AISituation, Dictionary<Advice, Effectiveness>>();
+    }
+
+    public void UpdateAdvice(AISituation situation, Advice advice, bool successful)
+    {
+        if (!adviceTable.ContainsKey(situation))
+        {
+            adviceTable.Add(situation, new Dictionary<Advice, Effectiveness>());
+            foreach (Advice a in availableAdvice)
+                adviceTable[situation].Add(a, new Effectiveness());
+        }
+
+        if(successful)
+            adviceTable[situation][advice].successes++;
+        else
+            adviceTable[situation][advice].failures++;
+    }
+
+    //Displays the success rate in readable format
+    public float GetWeight(AISituation situation, Advice advice)
+    {
+        return adviceTable[situation][advice].Rate();
+    }
+
+    /// <summary>
+    /// Picks a random advice from the set of advices in this situation
+    /// </summary>
+    /// <param name="situation"></param>
+    /// <returns></returns>
+    public Advice PickAdvice(AISituation situation)
+    {
+        //If we haven't seen this situation before, select a random action within our constraints
+        if (!adviceTable.ContainsKey(situation))
+        {
+            adviceTable.Add(situation, new Dictionary<Advice, Effectiveness>());
+            foreach (Advice a in availableAdvice)
+                adviceTable[situation].Add(a, new Effectiveness());
+        }
+
+
+        return adviceTable[situation].ElementAt(Random.Range(0, adviceTable[situation].Count)).Key;
+    }
+}
+
+internal class Effectiveness
+{
+    public float successes;
+    public float failures;
+    
+    public float Rate()
+    {
+        return successes / (successes + failures);
+    }
+}
+
 internal class AIAction
 {
     public Action action;
