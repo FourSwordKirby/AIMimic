@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour {
         }
         if(0 < countDown + Time.deltaTime && countDown + Time.deltaTime <= 1)
         {
+            countDown -= Time.deltaTime;
             roundOver = false;
             RoundText.text = "GO!";
             p1.enabled = true;

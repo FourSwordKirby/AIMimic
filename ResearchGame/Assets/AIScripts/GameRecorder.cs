@@ -27,7 +27,8 @@ public class GameRecorder : MonoBehaviour
     /// Call this to get a capture of what is currently on the screen
     /// Changing this needs to be manually called by the AI because it's hard to maintain an explicit order of operations
     /// </summary>
-    public void CaptureFrame()
+    ///<returns>Returns the latest frame that was captured</returns>
+    public Snapshot CaptureFrame()
     {
         if (!roundInProgress && !GameManager.instance.roundOver)
         {
@@ -37,16 +38,18 @@ public class GameRecorder : MonoBehaviour
         if (GameManager.instance.roundOver)
         {
             roundInProgress = false;
-            return;
+            return null;
         }
 
         //A check to make sure we only capture one snapshot per frame
         if (lastCapturedFrame == GameManager.instance.currentFrame)
-            return;
+            return snapshots[snapshots.Count-1];
         lastCapturedFrame = GameManager.instance.currentFrame;
 
         Snapshot snapshot = new Snapshot(GameManager.instance.currentFrame, player1, player2);
         snapshots.Add(snapshot);
+
+        return snapshot;
     }
 
     void OnDestroy()

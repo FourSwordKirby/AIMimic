@@ -274,6 +274,34 @@ public class AdviceLookupTable
     }
 }
 
+
+[System.Serializable]
+public class Transition
+{
+    public PerformedAction action;
+    public AISituation result;
+
+    public Transition(PerformedAction action, AISituation result)
+    {
+        this.action = action;
+        this.result = result;
+    }
+}
+
+[System.Serializable]
+public class PerformedAction
+{
+    public Action action;
+    public int duration; //Number of frames to do this action
+
+    public PerformedAction(Action action, int duration)
+    {
+        this.action = action;
+        this.duration = duration;
+    }
+}
+
+[System.Serializable]
 internal class Effectiveness
 {
     public float successes;
@@ -285,6 +313,7 @@ internal class Effectiveness
     }
 }
 
+[System.Serializable]
 internal class AIAction
 {
     public Action action;
@@ -307,6 +336,8 @@ internal class AIAction
 /// <summary>
 /// A simplified version of the game state used by the AI. Simplifies things by removing the continuous elements
 /// </summary>
+/// 
+[System.Serializable]
 public class AISituation : System.IEquatable<AISituation>
 {
     public Side side;

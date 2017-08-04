@@ -150,6 +150,9 @@ public class EventRecorder : MonoBehaviour {
 
     public void RecordAction(Action actionTaken, bool isPlayer1)
     {
+        if (GameManager.instance.roundOver)
+            return;
+
         int initIndex = isPlayer1 ? 0 : 1;
 
         float p1Duration = GameManager.instance.currentFrame - player1StartFrame;

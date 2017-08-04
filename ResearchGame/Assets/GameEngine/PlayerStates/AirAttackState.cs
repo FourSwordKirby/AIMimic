@@ -28,7 +28,7 @@ public class AirAttackState : State<Player>
         attackDistance = 0.55f;
 
         startup = 0.05f * Application.targetFrameRate;
-        duration = 1.05f * Application.targetFrameRate;
+        duration = 0.05f * Application.targetFrameRate;
         endlag = 1.2f * Application.targetFrameRate;
 
         animDuration = (int) (0.33333f * Application.targetFrameRate);

@@ -27,7 +27,7 @@ public class OptimalAI : AIAgent {
     {
         if (!freshReset && GameManager.instance.roundOver)
         {
-            Reset();
+            //Reset();
             freshReset = true;
             return;
         }
@@ -71,7 +71,16 @@ public class OptimalAI : AIAgent {
 
     public override Action GetAction()
     {
-        Action action = actionSelector.GetAction(currentSituation);
+        Action action = Action.Stand;
+        float epsilon = 0.005f;
+
+        //A bit of random exploration
+        if (Random.Range(0.0f, 1.0f) < epsilon)
+        {
+            action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+        }
+        else
+            action = actionSelector.GetAction(currentSituation);
         return action;
     }
 
