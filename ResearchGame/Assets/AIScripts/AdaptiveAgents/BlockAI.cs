@@ -28,12 +28,12 @@ public class BlockAI : AIAgent {
         actionSelector.ConstrainActions = ConstrainActions;
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (!AIPlayer.enabled || GameManager.instance.roundOver || AIPlayer.stunned)
             return;
 
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % 2 == 1)
         {
             ObserveState();

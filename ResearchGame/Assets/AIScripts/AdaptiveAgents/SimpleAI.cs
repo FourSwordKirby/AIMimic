@@ -13,12 +13,12 @@ public class SimpleAI : AIAgent {
     Snapshot currentState;
     public Text DebugText;
 
-    void LateUpdate()
+    void Update()
     {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % 3 == 1)
         {
             ObserveState();

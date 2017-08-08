@@ -174,8 +174,6 @@ public class Player : MonoBehaviour {
         if (!IsValidAction(action))
             return false;
 
-        EventManager.instance.RecordActionPerformed(action, this);
-
         switch (action) {
             case Action.Stand:
                 this.Stand();
@@ -217,6 +215,9 @@ public class Player : MonoBehaviour {
                 this.Stand();
                 break;
         }
+        
+        EventManager.instance.RecordActionPerformed(action, this);
+
         return true;
     }
 

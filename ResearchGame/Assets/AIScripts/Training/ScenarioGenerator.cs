@@ -8,7 +8,7 @@ public class ScenarioGenerator : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Tab))
         {
-            GameRecorder.instance.CaptureFrame();
+            GameRecorder.instance.LatestFrame();
             Snapshot snapshot = GameRecorder.instance.snapshots[0];
             print(JsonUtility.ToJson(snapshot));
         }

@@ -9,16 +9,13 @@ using System.Linq;
 public class ReplayAI : MonoBehaviour
 {
     public string playerProfileName;
-
-    //Player controlledPlayer;
-    Player AIPlayer;
+    
+    public Player AIPlayer;
 
     private List<GameEvent> priorSnapshots;
 
     void Start()
     {
-        //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.gray;
@@ -26,7 +23,7 @@ public class ReplayAI : MonoBehaviour
         priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
         priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
-        priorSnapshots = priorSnapshots.FindAll(x => x.initiatedPlayer == 1);
+        priorSnapshots = priorSnapshots.FindAll(x => AIPlayer.isPlayer1 ? (x.initiatedPlayer == 0) : (x.initiatedPlayer == 1));
 
         Debug.Log(priorSnapshots.Count);
     }
@@ -34,16 +31,48 @@ public class ReplayAI : MonoBehaviour
     int actionCount = 0;
     void Update()
     {
-        if (actionCount < priorSnapshots.Count && GameManager.instance.currentFrame == priorSnapshots[actionCount].frameTaken)
-        {
-            Action chosenAction = priorSnapshots[actionCount].p2Action;
-            Vector3 AIPosition = priorSnapshots[actionCount].p2Position;
+        if (priorSnapshots.Count == 0)
+            return;
 
-            actionCount++;
-            AIPlayer.transform.position = AIPosition;
-            AIPlayer.PerformAction(chosenAction);
+        if(AIPlayer.enabled)
+        {
+            Action chosenAction;
+            Vector3 AIPosition;
+
+            if (actionCount == 0)
+            {
+                if (AIPlayer.isPlayer1)
+                {
+                    chosenAction = priorSnapshots[actionCount].p1Action;
+                    AIPosition = priorSnapshots[actionCount].p1Position;
+                }
+                else
+                {
+                    chosenAction = priorSnapshots[actionCount].p2Action;
+                    AIPosition = priorSnapshots[actionCount].p2Position;
+                }
+
+                AIPlayer.transform.position = AIPosition;
+                AIPlayer.PerformAction(chosenAction);
+            }
+
+            if (actionCount < priorSnapshots.Count-1 && GameManager.instance.currentFrame == priorSnapshots[actionCount].frameTaken)
+            {
+                //Getting the correct position of the player
+                if (AIPlayer.isPlayer1)
+                    AIPosition = priorSnapshots[actionCount].p1Position;
+                else
+                    AIPosition = priorSnapshots[actionCount].p2Position;
+                AIPlayer.transform.position = AIPosition;
+
+                //Making the player do the right action
+                actionCount++;
+                if (AIPlayer.isPlayer1)
+                    chosenAction = priorSnapshots[actionCount].p1Action;
+                else
+                    chosenAction = priorSnapshots[actionCount].p2Action;
+                AIPlayer.PerformAction(chosenAction);
+            }
         }
     }
-
-    //Need to make the player actually do an action here.
 }

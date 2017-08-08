@@ -36,7 +36,7 @@ public class AdviceTrainer:MonoBehaviour {
 
     public void TestAdvice(Advice advice)
     {
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         currentState = GetGameState();
 
         if(!actionTaken)

@@ -15,7 +15,7 @@ public class SimplePressureAI : AIAgent {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
-        gameRecorder.CaptureFrame();
+        gameRecorder.LatestFrame();
 
         ObserveState();
         Action action = GetAction();

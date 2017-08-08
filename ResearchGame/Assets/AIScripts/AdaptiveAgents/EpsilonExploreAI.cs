@@ -39,7 +39,7 @@ public class EpsilonExploreAI : AIAgent
         if (!AIPlayer.enabled)
             return;
 
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % frameInterval == 0)
         {
             ObserveState();

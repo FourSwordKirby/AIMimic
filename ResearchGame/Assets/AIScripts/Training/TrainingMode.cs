@@ -21,7 +21,7 @@ public class TrainingMode : MonoBehaviour {
         GameManager.instance.currentScenario = testScenario;
     }
 
-    void LateUpdate ()
+    void Update ()
     {
         if(Input.GetKeyDown(KeyCode.R))
         {

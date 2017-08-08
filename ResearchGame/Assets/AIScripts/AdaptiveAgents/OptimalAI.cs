@@ -23,7 +23,7 @@ public class OptimalAI : AIAgent {
         Reset();
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (!freshReset && GameManager.instance.roundOver)
         {
@@ -39,7 +39,7 @@ public class OptimalAI : AIAgent {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
             return;
 
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % 3 == 1)
         {
             ObserveState();

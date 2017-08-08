@@ -8,35 +8,66 @@ public class TransitionSolver : MonoBehaviour
     public string playerName;
     public Player controlledPlayer;
 
-
+    Dictionary<AISituation, int> heuristics = new Dictionary<AISituation, int>();
     Dictionary<AISituation, List<Transition>> playerTransitions = new Dictionary<AISituation, List<Transition>>();
-    List<PerformedAction> desiredActions;
-    public AISituation targetSituation;
+    List<Transition> desiredTransitions;
 
     public void Start()
     {
         LoadTransitions();
     }
 
-    int actionTracker = 0;
-    int startFrame = -200;
+    int actionTracker = -1;
+    int startFrame = 0;
     public void Update()
     {
         controlledPlayer.AIControlled = true;
-        if(desiredActions == null)
-            desiredActions = FindTarget(playerTransitions, targetSituation);
-
-        if(actionTracker < desiredActions.Count)
+        if(desiredTransitions == null)
+            desiredTransitions = FindTarget(playerTransitions);
+        
+        if(actionTracker < desiredTransitions.Count-1)
         {
-            PerformedAction currentAction = desiredActions[actionTracker];
-            if (currentAction.duration < GameManager.instance.currentFrame - startFrame)
+            //Hackiness to take care of doing the 1st action flawlessly
+            if (actionTracker == -1)
             {
+                actionTracker = 0;
+                startFrame = GameManager.instance.currentFrame;
+
+                PerformedAction firstAction = desiredTransitions[actionTracker].action;
+
+                controlledPlayer.PerformAction(firstAction.action);
+                print(controlledPlayer.isPlayer1 + "Action: " + firstAction.action + ": " + firstAction.duration + ": " + GameManager.instance.currentFrame);
+            }
+
+            PerformedAction currentAction = desiredTransitions[actionTracker].action;
+            AISituation desiredSituation = desiredTransitions[actionTracker].result;
+
+            if (GameManager.instance.currentFrame - startFrame >= currentAction.duration)
+            {
+                //If the transition was to an unexpected place, replan
+                if(!(desiredSituation.Equals(new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1))))
+                {
+                    print("replanned");
+                    print(desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(),controlledPlayer.isPlayer1));
+                    actionTracker = -1;
+                    desiredTransitions = FindTarget(playerTransitions);
+                    return;
+                }
+
                 actionTracker++;
                 startFrame = GameManager.instance.currentFrame;
 
-                print("Action: " + currentAction.action + ": " + currentAction.duration);
+                currentAction = desiredTransitions[actionTracker].action;
+                controlledPlayer.PerformAction(currentAction.action);
+
+                print("Action: " + currentAction.action + ": " + currentAction.duration + ": " + GameManager.instance.currentFrame);
             }
-            controlledPlayer.PerformAction(currentAction.action);
+        }
+        //Restart the process once we've gone through all the actions
+        else
+        {
+            actionTracker = -1;
+            desiredTransitions = FindTarget(playerTransitions);
         }
     }
 
@@ -65,44 +96,75 @@ public class TransitionSolver : MonoBehaviour
         }
     }
 
-    public List<PerformedAction> FindTarget(Dictionary<AISituation, List<Transition>> transitions, AISituation targetSituation)
+    public void InitHeuristics()
     {
-        AISituation currentSituation = new AISituation(GameRecorder.instance.CaptureFrame(), controlledPlayer.isPlayer1);
+        foreach(AISituation situation in playerTransitions.Keys)
+        {
+            //Do some initialization of herustics here ;_;
+        }
+    }
 
-        Queue<KeyValuePair<AISituation, List<PerformedAction>>> pendingSituations = new Queue<KeyValuePair<AISituation, List<PerformedAction>>>();
-        Dictionary<AISituation, List<PerformedAction>> observedSituations = new Dictionary<AISituation, List<PerformedAction>>();
+    public List<Transition> FindTarget(Dictionary<AISituation, List<Transition>> transitions)
+    {
+        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
 
-        List<PerformedAction> currentActions = new List<PerformedAction>();
-        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<PerformedAction>>(currentSituation, currentActions));
+        
+        PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
+
+        Dictionary<AISituation, List<Transition>> observedSituations = new Dictionary<AISituation, List<Transition>>();
+
+        List<Transition> currentTransitions = new List<Transition>();
+        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions), currentTransitions.Count);
 
         while (pendingSituations.Count > 0)
         {
-            KeyValuePair<AISituation, List<PerformedAction>> pair = pendingSituations.Dequeue();
+            KeyValuePair<AISituation, List<Transition>> pair = pendingSituations.Dequeue();
             currentSituation = pair.Key;
-            currentActions = pair.Value;
+            currentTransitions = pair.Value;
 
-            if (currentSituation.Equals(targetSituation))
-                return currentActions;
-            
+            if (isTargetSituation(currentSituation))
+                return currentTransitions;
+
+            if (!transitions.ContainsKey(currentSituation))
+                continue;
+
             if (!observedSituations.ContainsKey(currentSituation))
             {
-                observedSituations.Add(currentSituation, currentActions);
+                observedSituations.Add(currentSituation, currentTransitions);
 
                 List<Transition> availableTransitions = transitions[currentSituation];
                 foreach (Transition transition in availableTransitions)
                 {
                     if (!observedSituations.ContainsKey(transition.result))
                     {
-                        List<PerformedAction> performedActions = new List<PerformedAction>();
-                        performedActions.AddRange(currentActions);
-                        performedActions.Add(transition.action);
+                        List<Transition> latestTransitions = new List<Transition>();
+                        latestTransitions.AddRange(currentTransitions);
+                        latestTransitions.Add(transition);
 
-                        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<PerformedAction>>(transition.result, performedActions));
+                        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions), latestTransitions.Count);
                     }
                 }
             }
         }
-        print("we didn't find the situation");
-        return null;
+        //print("we didn't find the situation");
+        //print(currentSituation);
+
+        //Do a random move
+        Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+        return new List<Transition>() { new Transition(new PerformedAction(randomAction, 1), currentSituation) };
+    }
+
+
+    public AISituation targetSituation;
+    //Used to show the proof of concept. That is, the agent can navigate to the desired state
+    //public bool isTargetSituation(AISituation situation)
+    //{
+    //    return situation.Equals(targetSituation);
+    //}
+
+    //We just want to get to a state where we hit the opponent
+    public bool isTargetSituation(AISituation situation)
+    {
+        return situation.opponentStatus == PlayerStatus.Hit;
     }
 }

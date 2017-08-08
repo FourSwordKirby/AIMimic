@@ -50,7 +50,7 @@ public class SimulationMode : MonoBehaviour
             Advice advice = adviceTrainer.RetrieveAdvice();
             adviceTrainer.TestAdvice(advice);
 
-            GameRecorder.instance.CaptureFrame();
+            GameRecorder.instance.LatestFrame();
             bot.ObserveState();
             Action a = bot.GetAction();
             bot.PerformAction(a);

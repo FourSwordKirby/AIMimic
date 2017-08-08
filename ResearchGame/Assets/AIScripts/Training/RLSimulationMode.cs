@@ -42,7 +42,7 @@ public class RLSimulationMode : MonoBehaviour
             Physics2D.Simulate(frameLength);
             GameManager.instance.AdvanceTime();
 
-            GameRecorder.instance.CaptureFrame();
+            GameRecorder.instance.LatestFrame();
             bot1.ObserveState();
             Action a1 = bot1.GetAction();
             bot1.PerformAction(a1);

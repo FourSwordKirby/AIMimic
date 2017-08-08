@@ -50,7 +50,7 @@ public class ForwardSimulation : MonoBehaviour {
         }
     }
 
-    void LateUpdate()
+    void Update()
     {
         Player p1 = GameManager.instance.p1;
         Player p2 = GameManager.instance.p2;

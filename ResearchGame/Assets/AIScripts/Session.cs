@@ -45,7 +45,6 @@ public class Session {
                 datalog += "\n~~~~\n";
         }
         File.WriteAllText(filePath, datalog);
-        Debug.Log("wrote to log");
     }
 
     public static List<List<GameEvent>> RetrievePlayerHistory(string playerProfileName)

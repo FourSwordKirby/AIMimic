@@ -65,7 +65,7 @@ public class GhostAI : MonoBehaviour
         if (!AIPlayer.enabled)
             return;
 
-        GameRecorder.instance.CaptureFrame();
+        GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % frameInterval == 0)
         {
             //Get the current game snapshot

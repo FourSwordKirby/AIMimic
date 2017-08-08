@@ -383,13 +383,13 @@ public class AISituation : System.IEquatable<AISituation>
             deltaX = xDistance.Far;
 
         //yDistance
-        if (yDist <= -1)
+        if (yDist <= -1.5)
             deltaY = yDistance.FarBelow;
-        else if (-1 < yDist && yDist <= -0.2)
+        else if (-1 < yDist && yDist <= -0.25)
             deltaY = yDistance.NearBelow;
-        else if (-0.2 < yDist && yDist <= 0.2)
+        else if (-0.25 < yDist && yDist <= 0.25)
             deltaY = yDistance.Level;
-        else if (0.2 < yDist && yDist <= 1)
+        else if (0.25 < yDist && yDist <= 1.5)
             deltaY = yDistance.NearAbove;
         else
             deltaY = yDistance.FarAbove;
@@ -471,18 +471,18 @@ public class AISituation : System.IEquatable<AISituation>
                 //opponentHealth == situation.opponentHealth &&
                 //cornered == situation.cornered &&
                 //opponentCornered == situation.opponentCornered;// &&
-                //status == situation.status &&
+                status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
 
 
     public override int GetHashCode()
     {
-        return ((int)deltaX + (int)deltaY + (int)opponentStatus);
+        return (int)Mathf.Sign((float)side-0.5f) * ((int)deltaX + (int)deltaY + (int)status + (int)opponentStatus);
     }
 
     public override string ToString()
     {
-        return side + " " + deltaX + " " + deltaY + " " + opponentStatus;
+        return side + " " + deltaX + " " + deltaY + " " + status + " " + opponentStatus;
     }
 }

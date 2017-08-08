@@ -29,10 +29,12 @@ public class EventRecorder : MonoBehaviour {
     bool roundInProgress;
     private void Update()
     {
-        if(roundInProgress && GameManager.instance.roundOver)
+        if (Input.GetKeyDown(KeyCode.N))
+            WriteToLog(0, 0);
+
+        if (roundInProgress && GameManager.instance.roundOver)
         {
             roundInProgress = false;
-            //At the end of a round, we log that round in the data recorder
             if (currentlyLogging)
                 LogSession();
         }
@@ -59,10 +61,10 @@ public class EventRecorder : MonoBehaviour {
         player2StartFrame = 0;
     }
 
-    void OnDestroy()
-    {
-        WriteToLog(GameManager.instance.rematchUI.p1Class, GameManager.instance.rematchUI.p2Class);
-    }
+    //void OnDestroy()
+    //{
+    //    WriteToLog(GameManager.instance.rematchUI.p1Class, GameManager.instance.rematchUI.p2Class);
+    //}
 
     public void WriteToLog(int p1Class, int p2Class)
     {
@@ -76,9 +78,9 @@ public class EventRecorder : MonoBehaviour {
         {
             foreach (GameEvent snapshot in session.snapshots)
                 snapshot.labels.Add(strClass);
-            Debug.Log(session.snapshots.Count);
             session.WriteToLog();
         }
+        Debug.Log("Log Written");
     }
 
 
@@ -176,19 +178,7 @@ public class EventRecorder : MonoBehaviour {
         }
     }
 
-    //Basically used to determine if a state transition occured because of the player or from natural means
-    //Also obsolete now
-    //private bool isPlayerTransition(Action startingAction, Action newAction)
-    //{
-    //    if(startingAction == Action.JumpLeft || startingAction == Action.JumpNeutral || startingAction == Action.JumpRight)
-    //    {
-
-    //    }
-    //    return true;
-    //}
-
     /*Code that was used when we were trying to record the player's action by just observing it's state. Obsolete now.
-    //TODO: Seperate generating a snapshot from storing it in the session. This helps with code reuse (like witht he Model comparer)
     private void RecordAction()
     {
         string currentState = recordedPlayer.ActionFsm.CurrentState.ToString();
