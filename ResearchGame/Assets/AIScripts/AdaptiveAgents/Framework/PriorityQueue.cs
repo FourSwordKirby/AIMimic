@@ -85,9 +85,9 @@ public class PriorityQueue <T>
         minHeap.Add(new Node() { Priority = priority, Value = element});
     }
 
-    public T Dequeue()
+    public Node Dequeue()
     {
-        return minHeap.RemoveMin().Value;
+        return minHeap.RemoveMin();
     }
 
     public Node Peek()

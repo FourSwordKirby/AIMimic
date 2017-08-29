@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class TransitionSolver : MonoBehaviour
@@ -10,6 +11,8 @@ public class TransitionSolver : MonoBehaviour
 
     Dictionary<AISituation, int> heuristics = new Dictionary<AISituation, int>();
     Dictionary<AISituation, List<Transition>> playerTransitions = new Dictionary<AISituation, List<Transition>>();
+    Dictionary<PerformedAction, List<SituationChange>> actionEffects = new Dictionary<PerformedAction, List<SituationChange>>();
+
     List<Transition> desiredTransitions;
 
     public void Start()
@@ -22,8 +25,9 @@ public class TransitionSolver : MonoBehaviour
     public void Update()
     {
         controlledPlayer.AIControlled = true;
-        if(desiredTransitions == null)
-            desiredTransitions = FindTarget(playerTransitions);
+        if (desiredTransitions == null)
+            desiredTransitions = FindTarget(actionEffects);
+            //desiredTransitions = FindTarget(playerTransitions);
         
         if(actionTracker < desiredTransitions.Count-1)
         {
@@ -50,7 +54,8 @@ public class TransitionSolver : MonoBehaviour
                     print("replanned");
                     print(desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(),controlledPlayer.isPlayer1));
                     actionTracker = -1;
-                    desiredTransitions = FindTarget(playerTransitions);
+                    desiredTransitions = FindTarget(actionEffects);
+                    //desiredTransitions = FindTarget(playerTransitions);
                     return;
                 }
 
@@ -67,48 +72,23 @@ public class TransitionSolver : MonoBehaviour
         else
         {
             actionTracker = -1;
+            desiredTransitions = FindTarget(actionEffects); 
             desiredTransitions = FindTarget(playerTransitions);
         }
     }
 
     public void LoadTransitions()
     {
-        string directoryPath = Application.streamingAssetsPath + "/TransitionTables/";
-        string filePath = directoryPath + playerName + ".txt";
+        TransitionProfile profile = TransitionProfile.LoadTransitions(playerName);
 
-        // deserialize
-        playerTransitions = new Dictionary<AISituation, List<Transition>>();
-
-        string contents = File.ReadAllText(filePath);
-        string[] serializeObjects = contents.Split(new string[] { "~~~~" }, System.StringSplitOptions.RemoveEmptyEntries);
-        for (int i = 0; i < serializeObjects.Length - 1; i++)
-        {
-            string situationContents = serializeObjects[i];
-            string[] objects = situationContents.Split(new string[] { "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
-            AISituation situation = JsonUtility.FromJson<AISituation>(objects[0]);
-            playerTransitions.Add(situation, new List<Transition>());
-
-            for (int j = 1; j < objects.Length; j++)
-            {
-                Transition transition = JsonUtility.FromJson<Transition>(objects[j]);
-                playerTransitions[situation].Add(transition);
-            }
-        }
-    }
-
-    public void InitHeuristics()
-    {
-        foreach(AISituation situation in playerTransitions.Keys)
-        {
-            //Do some initialization of herustics here ;_;
-        }
+        playerTransitions = profile.getPlayerTransitions();
+        actionEffects = profile.getActionEffects();
     }
 
     public List<Transition> FindTarget(Dictionary<AISituation, List<Transition>> transitions)
     {
         AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
 
-        
         PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
 
         Dictionary<AISituation, List<Transition>> observedSituations = new Dictionary<AISituation, List<Transition>>();
@@ -118,7 +98,7 @@ public class TransitionSolver : MonoBehaviour
 
         while (pendingSituations.Count > 0)
         {
-            KeyValuePair<AISituation, List<Transition>> pair = pendingSituations.Dequeue();
+            KeyValuePair<AISituation, List<Transition>> pair = pendingSituations.Dequeue().Value;
             currentSituation = pair.Key;
             currentTransitions = pair.Value;
 
@@ -147,12 +127,77 @@ public class TransitionSolver : MonoBehaviour
             }
         }
         //print("we didn't find the situation");
-        //print(currentSituation);
 
         //Do a random move
         Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-        return new List<Transition>() { new Transition(new PerformedAction(randomAction, 1), currentSituation) };
+        return new List<Transition>() { new Transition(currentSituation, new PerformedAction(randomAction, 1), currentSituation) };
     }
+
+    public List<Transition> FindTarget(Dictionary<PerformedAction, List<SituationChange>> actionEffects)
+    {
+        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+
+        PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
+
+        Dictionary<AISituation, List<Transition>> observedSituations = new Dictionary<AISituation, List<Transition>>();
+
+        List<Transition> currentTransitions = new List<Transition>();
+        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions), currentTransitions.Count);
+
+        while (pendingSituations.Count > 0)
+        {
+            PriorityQueue<KeyValuePair<AISituation, List<Transition>>>.Node node = pendingSituations.Dequeue();
+            float priority = node.Priority;
+            KeyValuePair<AISituation, List<Transition>> pair = node.Value;
+            currentSituation = pair.Key;
+            currentTransitions = pair.Value;
+
+            if(currentTransitions.Count > 0)
+                print("Evaluating" + currentTransitions.Last() + " " + priority);
+
+            if (isTargetSituation(currentSituation))
+                return currentTransitions;
+
+            if (!observedSituations.ContainsKey(currentSituation))
+            {
+                observedSituations.Add(currentSituation, currentTransitions);
+
+                foreach (PerformedAction action in actionEffects.Keys)
+                {
+                    List<SituationChange> situationChanges = actionEffects[action];
+                    float totalCount = situationChanges.Count();
+
+                    var changeDistribution = situationChanges.GroupBy(x => x);
+
+                    foreach (var grp in changeDistribution)
+                    {
+                        float count = (float)grp.Count();
+
+                        SituationChange change = grp.Key;
+                        AISituation newSituation = SituationChange.ApplyChange(currentSituation, change);
+                        Transition transition = new Transition(currentSituation, action, newSituation);
+                        
+                        List<Transition> latestTransitions = new List<Transition>();
+                        latestTransitions.AddRange(currentTransitions);
+                        latestTransitions.Add(transition);
+
+                        //Priority here for taking a new action is 
+                        //(1+success rate of action) * (1+similarity of other situation to current situation)
+                        float pendingPriority = priority + (2 - (count / totalCount)) * (2 - AISituation.Similarity(currentSituation, change.prior));
+
+                        pendingSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions), 
+                            pendingPriority);
+                    }
+                }
+            }
+        }
+        print("Time to implement probability of the transitions");
+
+        //Do a random move
+        Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
+        return new List<Transition>() { new Transition(currentSituation, new PerformedAction(randomAction, 1), currentSituation) };
+    }
+
 
 
     public AISituation targetSituation;

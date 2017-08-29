@@ -278,18 +278,110 @@ public class AdviceLookupTable
 [System.Serializable]
 public class Transition
 {
+    public AISituation prior;
     public PerformedAction action;
     public AISituation result;
 
-    public Transition(PerformedAction action, AISituation result)
+    public Transition(AISituation prior, PerformedAction action, AISituation result)
     {
+        this.prior = prior;
         this.action = action;
         this.result = result;
+    }
+
+    public override string ToString()
+    {
+        return this.prior + " " + this.action + " " + this.result;
     }
 }
 
 [System.Serializable]
-public class PerformedAction
+public class SituationChange : System.IEquatable<SituationChange>
+{
+    public AISituation prior;
+    public AISituation result;
+
+    public int sideChange;
+    public int deltaXChange;
+    public int deltaYChange;
+
+    public int healthChange;
+    public int opponentHealthChange;
+
+    public int corneredChange;
+    public int opponentCorneredChange;
+    public int statusChange;
+    public int opponentStatusChange;
+
+    public override int GetHashCode()
+    {
+        return (int)Mathf.Sign((float)sideChange - 0.5f) * ((int)deltaXChange + (int)deltaYChange + (int)statusChange + (int)opponentStatusChange);
+    }
+
+    public override string ToString()
+    {
+        return sideChange + " " + deltaXChange + " " + deltaYChange + " " + statusChange + " " + opponentStatusChange;
+    }
+
+    public bool Equals(SituationChange change)
+    {
+        return sideChange == change.sideChange &&
+                deltaXChange == change.deltaXChange &&
+                deltaYChange == change.deltaYChange &&
+                healthChange == change.healthChange &&
+                opponentHealthChange == change.opponentHealthChange &&
+                corneredChange == change.corneredChange &&
+                opponentCorneredChange == change.opponentCorneredChange &&
+                statusChange == change.statusChange &&
+                opponentStatusChange == change.opponentStatusChange;
+    }
+
+    public SituationChange(AISituation prior, AISituation result)
+    {
+        this.prior = prior;
+        this.result = result;
+
+        sideChange = (int)result.side - (int)prior.side;
+        deltaXChange = (int)result.deltaX - (int)prior.deltaX;
+        deltaYChange = (int)result.deltaY - (int)prior.deltaY;
+
+        healthChange = (int)result.health - (int)prior.health;
+        opponentHealthChange = (int)result.health - (int)prior.health;
+
+        corneredChange = (int)result.cornered - (int)prior.cornered;
+        opponentCorneredChange = (int)result.opponentCornered - (int)prior.opponentCornered;
+
+        statusChange = (int)result.status - (int)prior.status;
+        opponentStatusChange = (int)result.opponentStatus - (int)prior.opponentStatus;
+    }
+
+    public static AISituation ApplyChange(AISituation prior, SituationChange change)
+    {
+        AISituation newSituation = prior.Copy();
+
+        int sideMax = System.Enum.GetValues(typeof(Side)).Cast<int>().Max();
+        int xMax = System.Enum.GetValues(typeof(xDistance)).Cast<int>().Max();
+        int yMax = System.Enum.GetValues(typeof(yDistance)).Cast<int>().Max();
+        int healthMax = System.Enum.GetValues(typeof(Health)).Cast<int>().Max();
+        int corneredMax = System.Enum.GetValues(typeof(Cornered)).Cast<int>().Max();
+        int statusMax = System.Enum.GetValues(typeof(PlayerStatus)).Cast<int>().Max();
+
+        newSituation.side = (Side)Mathf.Clamp((int)prior.side + (int)change.sideChange, 0, sideMax);
+        newSituation.deltaX = (xDistance)Mathf.Clamp((int)prior.deltaX + (int)change.deltaXChange, 0, xMax);
+        newSituation.deltaY = (yDistance)Mathf.Clamp((int)prior.deltaY + (int)change.deltaYChange, 0, yMax);
+        newSituation.health = (Health)Mathf.Clamp((int)prior.health + (int)change.healthChange, 0, healthMax);
+        newSituation.opponentHealth = (Health)Mathf.Clamp((int)prior.opponentHealth + (int)change.opponentHealthChange, 0, healthMax);
+        newSituation.cornered = (Cornered)Mathf.Clamp((int)prior.cornered + (int)change.corneredChange, 0, corneredMax);
+        newSituation.opponentCornered = (Cornered)Mathf.Clamp((int)prior.opponentCornered + (int)change.opponentCorneredChange, 0, corneredMax);
+        newSituation.status = (PlayerStatus)Mathf.Clamp((int)prior.status + (int)change.statusChange, 0, statusMax);
+        newSituation.opponentStatus = (PlayerStatus)Mathf.Clamp((int)prior.opponentStatus + (int)change.opponentStatusChange, 0, statusMax);
+
+        return newSituation;
+    }
+}
+
+[System.Serializable]
+public class PerformedAction : System.IEquatable<PerformedAction>
 {
     public Action action;
     public int duration; //Number of frames to do this action
@@ -298,6 +390,22 @@ public class PerformedAction
     {
         this.action = action;
         this.duration = duration;
+    }
+
+    public override int GetHashCode()
+    {
+        return (int)action + (int)duration;
+    }
+
+    public override string ToString()
+    {
+        return action + " " + duration;
+    }
+
+    public bool Equals(PerformedAction performedAction)
+    {
+        return performedAction.action == this.action &&
+                performedAction.duration == this.duration;
     }
 }
 
@@ -314,7 +422,7 @@ internal class Effectiveness
 }
 
 [System.Serializable]
-internal class AIAction
+public class AIAction
 {
     public Action action;
     public int freq;
@@ -373,7 +481,6 @@ public class AISituation : System.IEquatable<AISituation>
             side = Side.Left;
         else
             side = Side.Right;
-
         //xDistance
         if (Mathf.Abs(xDist) < 1)
             deltaX = xDistance.Adjacent;
@@ -456,6 +563,12 @@ public class AISituation : System.IEquatable<AISituation>
         opponentStatus = gameEvent.p1Status;
     }
 
+    //Empty constructor used for copying an AISituation
+    private AISituation()
+    {
+
+    }
+
     //Filler to stop an angry compiler
     public AISituation(Snapshot currentState)
     {
@@ -475,7 +588,6 @@ public class AISituation : System.IEquatable<AISituation>
                 opponentStatus == situation.opponentStatus;
     }
 
-
     public override int GetHashCode()
     {
         return (int)Mathf.Sign((float)side-0.5f) * ((int)deltaX + (int)deltaY + (int)status + (int)opponentStatus);
@@ -484,5 +596,30 @@ public class AISituation : System.IEquatable<AISituation>
     public override string ToString()
     {
         return side + " " + deltaX + " " + deltaY + " " + status + " " + opponentStatus;
+    }
+
+    public AISituation Copy()
+    {
+        AISituation newSituation = new AISituation();
+        newSituation.side = side;
+        newSituation.deltaX = deltaX;
+        newSituation.deltaY = deltaY;
+        newSituation.health = health;
+        newSituation.opponentHealth = opponentHealth;
+        newSituation.cornered = cornered;
+        newSituation.opponentCornered = opponentCornered;
+        newSituation.status = status;
+        newSituation.opponentStatus = opponentStatus;
+        return newSituation;
+    }
+
+    internal static float Similarity(AISituation x, AISituation y)
+    {
+        SituationChange diff = new SituationChange(x, y);
+        return ((diff.sideChange == 0 ? 1 : 0)
+            + (diff.deltaXChange == 0 ? 1 : 0)
+            + (diff.deltaYChange == 0 ? 1 : 0)
+            + (diff.statusChange == 0 ? 1 : 0)
+            + (diff.opponentStatusChange == 0 ? 1 : 0))  / 5.0f;
     }
 }
