@@ -40,15 +40,15 @@ public class AttackState : State<Player>
         this.player.selfBody.drag = 20.0f;
         this.player.selfBody.velocity = Vector2.zero;
 
-        if (!player.isCrouching)
-        {
-            startPosition = Vector3.zero;
-            endPosition = player.facingDirection * 1.375f * attackDistance;
-        }
-        else
+        if (player.isCrouching)
         {
             startPosition = Vector3.down * 0.25f;
             endPosition = startPosition + player.facingDirection * attackDistance;
+        }
+        else
+        {
+            startPosition = Vector3.zero;
+            endPosition = player.facingDirection * 1.375f * attackDistance;
         }
 
 
@@ -72,7 +72,12 @@ public class AttackState : State<Player>
         if (player.chainable)
         {
             if (Controls.attackInputDown(player))
-                player.PerformAction(Action.Attack);
+            {
+                if (player.isCrouching)
+                    player.PerformAction(Action.LowAttack);
+                else
+                    player.PerformAction(Action.Attack);
+            }
         }
 
         frameCounter++;

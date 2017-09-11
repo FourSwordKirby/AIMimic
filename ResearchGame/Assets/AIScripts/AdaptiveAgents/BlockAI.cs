@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class BlockAI : AIAgent {
     int backpropDepth = 1;
 
-    AdaptiveActionSelector actionSelector;
+    AdaptiveActionSelector actionSelector = new AdaptiveActionSelector();
     List<Action> ConstrainActions(AISituation situation) { return new List<Action>() { Action.StandBlock, Action.CrouchBlock }; }
 
     Snapshot currentState = null;
@@ -24,7 +24,6 @@ public class BlockAI : AIAgent {
 
     private void Awake()
     {
-        actionSelector = new AdaptiveActionSelector();
         actionSelector.ConstrainActions = ConstrainActions;
     }
 
@@ -32,8 +31,7 @@ public class BlockAI : AIAgent {
     {
         if (!AIPlayer.enabled || GameManager.instance.roundOver || AIPlayer.stunned)
             return;
-
-        GameRecorder.instance.LatestFrame();
+        
         if (GameManager.instance.currentFrame % 2 == 1)
         {
             ObserveState();
@@ -46,6 +44,9 @@ public class BlockAI : AIAgent {
     {
         currentState = GetGameState();
         currentSituation = new AISituation(currentState, AIPlayer.isPlayer1);
+        
+        //This is done bc we don't really care about what we are doing at this moment
+        currentSituation.status = PlayerStatus.Stand;
     }
 
     public override Action GetAction()
@@ -97,7 +98,7 @@ public class BlockAI : AIAgent {
                 {
                     AISituation pastSituation = pastSituations[pastSituations.Count - 1 - i];
                     Action pastAction = pastActions[pastSituations.Count - 1 - i];
-
+                    
                     actionSelector.IncreaseWeight(pastSituation, pastAction, Mathf.Pow(gamma, i) * reward);
                 }
                 print("Penalty");

@@ -30,17 +30,18 @@ public class Player : MonoBehaviour {
     public Player opponent;
     public bool isPlayer1;
 
-
     //Hacky bullshit that should be cleaned and purged
     public Sprite normalSprite;
     public Sprite hitSprite;
-
-    public bool AIControlled;
 
     public Vector2 effectivePosition { get; private set; }
     public Vector3 facingDirection { get; private set; }
 
     public StateMachine<Player> ActionFsm { get; private set; }
+
+    //AI specific variables
+    public bool AIControlled;
+    public Action latestAction;
 
     //self references to various components
     public Rigidbody2D selfBody { get; private set; }
@@ -228,37 +229,52 @@ public class Player : MonoBehaviour {
         if (this.stunned || (this.ActionFsm.CurrentState is HitlagState))
             return false;
 
+        bool isValid = false;
         switch (action)
         {
             case Action.Stand:
-                return this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.Crouch:
-                return this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.Attack:
-                //Temp hacks to make the AI behave
-                return this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+                isValid = this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+                break;
             case Action.LowAttack:
-                //Temp hacks to make the AI behave
-                return this.grounded && this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+                isValid = this.grounded && this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+                break;
             case Action.AirAttack:
-                return !this.grounded && (this.ActionFsm.CurrentState is JumpState);
+                isValid = !this.grounded && (this.ActionFsm.CurrentState is JumpState);
+                break;
             case Action.StandBlock:
-                return this.grounded && !(this.isBlocking && !this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded && !(this.isBlocking && !this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.CrouchBlock:
-                return this.grounded && !(this.isBlocking && this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded && !(this.isBlocking && this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.JumpNeutral:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.JumpLeft:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.JumpRight:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                break;
             case Action.WalkLeft:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                break;
             case Action.WalkRight:
-                return this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                break;
             default:
-                return false;
+                isValid = false; break;
         }
+
+        if (isValid)
+            latestAction = action;
+        return isValid;
     }
 
     void Walk(Parameters.InputDirection dir)
