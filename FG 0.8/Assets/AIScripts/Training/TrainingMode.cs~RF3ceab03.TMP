@@ -1,0 +1,47 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TrainingMode : MonoBehaviour {
+
+    public Scenario testScenario;
+    public ActionSequence testSequence;
+
+    void Start()
+    {
+        GameManager.instance.currentScenario = testScenario;
+    }
+
+    bool recording = false;
+    int startFrame;
+    void LateUpdate ()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if (recording)
+                StopRecording();
+            else
+                StartRecording();
+        }
+	}
+
+    void ActionPreformed(Action a)
+    {
+        if (recording)
+        {
+            testSequence.AddAction(a, GameManager.instance.currentFrame - startFrame);
+        }
+    }
+
+    void StartRecording()
+    {
+        testSequence = new ActionSequence();
+        startFrame = GameManager.instance.currentFrame;
+        recording = true;
+    }
+
+    void StopRecording()
+    {
+        recording = false;
+    }
+}
