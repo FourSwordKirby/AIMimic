@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     public bool isCrouching;
     public bool isBlocking;
 
+    public int airdashCount;
     public int comboCount;
 
     //Meta stuff for the data recorder
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour {
     public SpriteRenderer sprite;
     public GameObject shield;
     public List<GameObject> projectilePrefabs;
+    public Collider2D ECB;
     public CollisionboxManager hitboxManager { get; private set; }
 
     //Used for the initialization of internal, non-object variables
@@ -212,9 +214,14 @@ public class Player : MonoBehaviour {
             case Action.WalkRight:
                 this.Walk(Parameters.InputDirection.E);
                 break;
-            default:
-                this.Stand();
+            case Action.DashLeft:
+                this.Dash(Parameters.InputDirection.W);
                 break;
+            case Action.DashRight:
+                this.Dash(Parameters.InputDirection.E);
+                break;
+            default:
+                throw new Exception("Not implemented yet");
         }
         
         EventManager.instance.RecordActionPerformed(action, this);
@@ -268,6 +275,12 @@ public class Player : MonoBehaviour {
             case Action.WalkRight:
                 isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
                 break;
+            case Action.DashLeft:
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                break;
+            case Action.DashRight:
+                isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
+                break;
             default:
                 isValid = false; break;
         }
@@ -292,6 +305,40 @@ public class Player : MonoBehaviour {
         else
             return;
         this.ActionFsm.ChangeState(new MovementState(this, this.ActionFsm, movementVector.x));
+    }
+
+    void Dash(Parameters.InputDirection dir)
+    {
+        if (!this.grounded)
+            return;
+
+        this.Stand();
+
+        Vector2 movementVector = Vector2.zero;
+        if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
+            movementVector = Vector2.right;
+        else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.NW)
+            movementVector = Vector2.left;
+        else
+            return;
+        this.ActionFsm.ChangeState(new DashState(this, this.ActionFsm, movementVector.x, false));
+    }
+
+    void Airdash(Parameters.InputDirection dir)
+    {
+        if (!this.grounded)
+            return;
+
+        this.Stand();
+
+        Vector2 movementVector = Vector2.zero;
+        if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
+            movementVector = Vector2.right;
+        else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.NW)
+            movementVector = Vector2.left;
+        else
+            return;
+        this.ActionFsm.ChangeState(new DashState(this, this.ActionFsm, movementVector.x, true));
     }
 
     //Invincible to lows. Forward hop goes 2 spaces. Will jump over 1 space close opponents
@@ -388,9 +435,11 @@ public class Player : MonoBehaviour {
     }
 
     //TODO: Implement forward and back techs
-    public void Tech()
+    public void Tech(float dir)
     {
-        this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm));
+        print("Record how long a player waits to tech as well as account for DPs etc.");
+        print("Also add visual cues");
+        this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm, dir));
         EventManager.instance.RecordRecovery(this);
     }
 }

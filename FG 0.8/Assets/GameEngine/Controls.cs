@@ -3,13 +3,6 @@ using System.Collections;
 using System;
 
 public class Controls {
-
-    /*These constants refer to specific thresholds for reading in inputs
-     * For example, the constant FALL_THROUGH_THRESHOLD denotes the threshold 
-     * between crouching on a platform and falling through the platform
-     */
-    public const float FALL_THROUGH_THRESHOLD = 0.5f;
-
     public static Vector2 getDirection(Player player)
     {
         float xAxis = 0;
@@ -85,12 +78,12 @@ public class Controls {
             return false;
     }
 
-    public static bool enhanceInputDown(Player player)
+    public static bool dashInputDown(Player player)
     {
         if (player == GameManager.instance.p1)
-            return Input.GetButtonDown("P1 Enhance");
+            return Input.GetButtonDown("P1 Dash");
         else if (player == GameManager.instance.p2)
-            return Input.GetButtonDown("P2 Enhance");
+            return Input.GetButtonDown("P2 Dash");
         else
             return false;
     }
@@ -151,12 +144,12 @@ public class Controls {
             return false;
     }
 
-    public static bool enhanceInputHeld(Player player)
+    public static bool dashInputHeld(Player player)
     {
         if (player == GameManager.instance.p1)
-            return Input.GetButton("P1 Enhance");
+            return Input.GetButton("P1 Dash");
         else if (player == GameManager.instance.p2)
-            return Input.GetButton("P2 Enhance");
+            return Input.GetButton("P2 Dash");
         else
             return false;
     }

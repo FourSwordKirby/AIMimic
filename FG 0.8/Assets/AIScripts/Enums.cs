@@ -11,10 +11,19 @@ public enum Action {
     JumpLeft,
     JumpRight,
     Attack,
+    Overhead,
     LowAttack,
     AirAttack,
     StandBlock,
-    CrouchBlock
+    CrouchBlock,
+    DashLeft,
+    DashRight,
+    AirLeft,
+    AirRight,
+    DP,
+    TechNeutral,
+    TechLeft,
+    TechRight
 }
 
 //The player status merely indicates what kind of state they are in

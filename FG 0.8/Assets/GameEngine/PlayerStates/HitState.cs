@@ -61,14 +61,6 @@ public class HitState : State<Player>
             {
                 player.StandAnim();
                 player.spriteContainer.transform.rotation = Quaternion.Lerp(Quaternion.AngleAxis(0, Vector3.forward), Quaternion.AngleAxis(90.0f * player.facingDirection.x, Vector3.forward), (frameCounter - hitlag) / knockdownAnimFrameTime);
-
-                if (frameCounter >= hitlag + hitstun)
-                {
-                    GameManager.EndCombo(player.opponent);
-
-                    //We don't call preformAction because it's not voluntarily done on the part of the player
-                    player.Tech();
-                }
             }
             else
             {
@@ -78,6 +70,23 @@ public class HitState : State<Player>
                     player.ExitHitstun();
                 }
             }
+            return;
+        }
+
+        if(player.knockedDown)
+        {
+            GameManager.EndCombo(player.opponent);
+
+            //Modify this to put the player in a teching state and to record how long they wait to tech etc.
+            //We need to record how long a player waits to tech etc.
+
+            Parameters.InputDirection dir = Controls.getInputDirection(player);
+            if(dir == Parameters.InputDirection.W)
+                player.Tech(-1.0f);
+            if (dir == Parameters.InputDirection.E)
+                player.Tech(1.0f);
+            if(dir == Parameters.InputDirection.N)
+                player.Tech(0.0f);
         }
     }
 

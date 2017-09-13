@@ -44,6 +44,15 @@ public class MovementState : State<Player> {
         if (Controls.attackInputDown(player))
         {
             player.PerformAction(Action.Attack);
+            return;
+        }
+
+        if(Controls.dashInputDown(player))
+        {
+            if (dir == Parameters.InputDirection.W)
+                player.PerformAction(Action.DashLeft);
+            else if (dir == Parameters.InputDirection.E)
+                player.PerformAction(Action.DashRight);
         }
 
         if (!player.AIControlled)
@@ -63,6 +72,7 @@ public class MovementState : State<Player> {
                     player.PerformAction(Action.Stand);
                 else
                     player.PerformAction(Action.Crouch);
+                return;
             }
         }
     }

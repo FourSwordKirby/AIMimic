@@ -3,16 +3,18 @@ using System.Collections;
 
 public class TechState : State<Player>
 {
-
     private Player player;
+
+    private Vector2 direction;
 
     private float timer = 0;
     private float animTime = 0.5f;
 
-    public TechState(Player playerInstance, StateMachine<Player> fsm)
+    public TechState(Player playerInstance, StateMachine<Player> fsm, float dir)
         : base(playerInstance, fsm)
     {
         player = playerInstance;
+        direction = Vector2.right * dir * 4.0f;
     }
 
     override public void Enter()
@@ -20,6 +22,8 @@ public class TechState : State<Player>
         player.hitboxManager.deactivateHitBox("Hurtbox");
         player.selfBody.mass = 20;
 
+        if(direction.magnitude != 0)
+            player.ECB.enabled = false;
     }
 
     private float techVel = 5.0f;
@@ -55,6 +59,7 @@ public class TechState : State<Player>
 
     override public void FixedExecute()
     {
+        player.selfBody.velocity = direction;
         if (player.grounded && timer >= animTime)
         {
             timer = 0.0f;
@@ -66,5 +71,10 @@ public class TechState : State<Player>
         player.knockedDown = false;
         player.hitboxManager.activateHitBox("Hurtbox");
         player.selfBody.mass = 1;
+
+        if (direction.magnitude != 0)
+        {
+            player.ECB.enabled = true;
+        }
     }
 }

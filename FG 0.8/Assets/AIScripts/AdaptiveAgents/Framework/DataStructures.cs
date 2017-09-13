@@ -583,7 +583,7 @@ public class AISituation : System.IEquatable<AISituation>
                 //health == situation.health &&
                 //opponentHealth == situation.opponentHealth &&
                 //cornered == situation.cornered &&
-                //opponentCornered == situation.opponentCornered;// &&
+                //opponentCornered == situation.opponentCornered &&
                 status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
