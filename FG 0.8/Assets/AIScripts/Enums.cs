@@ -18,12 +18,13 @@ public enum Action {
     CrouchBlock,
     DashLeft,
     DashRight,
-    AirLeft,
-    AirRight,
+    AirdashLeft,
+    AirdashRight,
     DP,
     TechNeutral,
     TechLeft,
-    TechRight
+    TechRight,
+    Throw
 }
 
 //The player status merely indicates what kind of state they are in

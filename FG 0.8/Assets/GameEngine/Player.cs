@@ -128,6 +128,7 @@ public class Player : MonoBehaviour {
 
         if(grounded && !stunned)
         {
+            airdashCount = 0;
             if (isCrouching)
             {
                 CrouchAnim();
@@ -220,6 +221,21 @@ public class Player : MonoBehaviour {
             case Action.DashRight:
                 this.Dash(Parameters.InputDirection.E);
                 break;
+            case Action.AirdashLeft:
+                this.Airdash(Parameters.InputDirection.W);
+                break;
+            case Action.AirdashRight:
+                this.Airdash(Parameters.InputDirection.E);
+                break;
+            case Action.TechLeft:
+                this.Tech(-1.0f);
+                break;
+            case Action.TechNeutral:
+                this.Tech(0.0f);
+                break;
+            case Action.TechRight:
+                this.Tech(1.0f);
+                break;
             default:
                 throw new Exception("Not implemented yet");
         }
@@ -232,9 +248,11 @@ public class Player : MonoBehaviour {
     //Temp hacks to make the AI behave
     bool IsValidAction(Action action)
     {
-        //Temp hacks to make the AI behave
-        if (this.stunned || (this.ActionFsm.CurrentState is HitlagState))
-            return false;
+        if(action != Action.TechLeft && action != Action.TechRight && action != Action.TechNeutral && action != Action.DP)
+        {
+            if (this.stunned || (this.ActionFsm.CurrentState is HitlagState))
+                return false;
+        }
 
         bool isValid = false;
         switch (action)
@@ -246,6 +264,9 @@ public class Player : MonoBehaviour {
                 isValid = this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
                 break;
             case Action.Attack:
+                isValid = this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
+                break;
+            case Action.Overhead:
                 isValid = this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
                 break;
             case Action.LowAttack:
@@ -281,8 +302,27 @@ public class Player : MonoBehaviour {
             case Action.DashRight:
                 isValid = this.grounded && !(this.ActionFsm.CurrentState is AttackState) && !this.isBlocking;// && !this.isCrouching;
                 break;
+            case Action.AirdashLeft:
+                isValid = !this.grounded && !(this.ActionFsm.CurrentState is AttackState) && airdashCount < 1;// && !this.isCrouching;
+                break;
+            case Action.AirdashRight:
+                isValid = !this.grounded && !(this.ActionFsm.CurrentState is AttackState) && airdashCount < 1;// && !this.isCrouching;
+                break;
+            case Action.TechNeutral:
+                isValid = this.grounded && this.knockedDown;
+                break;
+            case Action.TechLeft:
+                isValid = this.grounded && this.knockedDown;
+                break;
+            case Action.TechRight:
+                isValid = this.grounded && this.knockedDown;
+                break;
+
+            case Action.DP:
+                isValid = this.grounded && ((!(this.ActionFsm.CurrentState is AttackState) || this.chainable) || this.knockedDown);
+                break;
             default:
-                isValid = false; break;
+                throw new Exception("Not implemented yet");
         }
 
         if (isValid)
@@ -326,10 +366,8 @@ public class Player : MonoBehaviour {
 
     void Airdash(Parameters.InputDirection dir)
     {
-        if (!this.grounded)
+        if (this.grounded)
             return;
-
-        this.Stand();
 
         Vector2 movementVector = Vector2.zero;
         if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE || dir == Parameters.InputDirection.NE)
@@ -438,8 +476,48 @@ public class Player : MonoBehaviour {
     public void Tech(float dir)
     {
         print("Record how long a player waits to tech as well as account for DPs etc.");
-        print("Also add visual cues");
         this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm, dir));
         EventManager.instance.RecordRecovery(this);
+    }
+
+    public void StartInvuln()
+    {
+        invulnerable = true;
+        hitboxManager.deactivateHitBox("Hurtbox");
+        StartCoroutine(Flash());
+    }
+
+    public void EndInvuln()
+    {
+        invulnerable = false;
+        hitboxManager.activateHitBox("Hurtbox");
+    }
+
+    private bool invulnerable;
+    private float flashPeriod = 0.15f;
+
+    public IEnumerator Flash()
+    {
+        print("Also add visual cue as the player is teching so you can more easily follow the tech direction");
+        bool flashUp = true;
+        float timer = 0.0f;
+
+        Color originalColor = this.sprite.color;
+
+        while (invulnerable)
+        {
+            float scale = 10*Time.deltaTime;
+            this.sprite.color = flashUp ? Color.Lerp(originalColor, originalColor-Color.black * 0.5f, (timer) / flashPeriod)
+                                        : Color.Lerp(originalColor-Color.black * 0.5f, originalColor, (timer) / flashPeriod);
+            timer += Time.deltaTime;
+            if (timer > flashPeriod)
+            {
+                timer = 0.0f;
+                flashUp = !flashUp;
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
+        this.sprite.color = originalColor;
+        yield return null;
     }
 }

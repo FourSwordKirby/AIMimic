@@ -19,7 +19,7 @@ public class TechState : State<Player>
 
     override public void Enter()
     {
-        player.hitboxManager.deactivateHitBox("Hurtbox");
+        player.StartInvuln();
         player.selfBody.mass = 20;
 
         if(direction.magnitude != 0)
@@ -68,8 +68,9 @@ public class TechState : State<Player>
 
     override public void Exit()
     {
+        player.EndInvuln();
+
         player.knockedDown = false;
-        player.hitboxManager.activateHitBox("Hurtbox");
         player.selfBody.mass = 1;
 
         if (direction.magnitude != 0)

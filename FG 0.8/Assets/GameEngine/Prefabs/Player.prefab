@@ -103,15 +103,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4000012400566816}
-  - component: {fileID: 114000012741134476}
-  - component: {fileID: 61000013641300408}
-  m_Layer: 0
+  - component: {fileID: 58541966449973918}
+  m_Layer: 10
   m_Name: PlayerECB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000013948304696
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +322,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!58 &58541966449973918
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013058351930}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: cba556f4d0d3d9542b52e4b653b7578c, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.2}
+  serializedVersion: 2
+  m_Radius: 0.3
 --- !u!61 &61000010510310976
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -398,31 +412,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.72, y: 1.13}
   m_EdgeRadius: 0
---- !u!61 &61000013641300408
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013058351930}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.63}
-  m_EdgeRadius: 0
 --- !u!114 &114000011357730092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,7 +450,7 @@ MonoBehaviour:
   sprite: {fileID: 212000010195425386}
   shield: {fileID: 1000011225401050}
   projectilePrefabs: []
-  ECB: {fileID: 58000010018539540}
+  ECB: {fileID: 58541966449973918}
 --- !u!114 &114000012144575440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,18 +503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxName: Hurtbox
   owner: {fileID: 114000011357730092}
---- !u!114 &114000012741134476
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013058351930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2158c3dec0fea634fa59fbff45e88021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 114000011357730092}
 --- !u!114 &114000013087150574
 MonoBehaviour:
   m_ObjectHideFlags: 1

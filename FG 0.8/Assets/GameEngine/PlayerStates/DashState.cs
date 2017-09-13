@@ -8,7 +8,7 @@ public class DashState : State<Player>
     private bool airborne;
     private Vector2 direction;
 
-    private float speed = 20.0f;
+    private float speed = 10.0f;
 
     private float minimumActiveTime = 0.2f;
     private float maximumActiveTime = 0.3f;
@@ -19,6 +19,9 @@ public class DashState : State<Player>
         player = playerInstance;
         this.airborne = airborne;
         this.direction = Vector2.right * dir;
+
+        if (this.airborne)
+            player.airdashCount++;
     }
 
     override public void Enter()
@@ -32,8 +35,7 @@ public class DashState : State<Player>
         if (activeTimer > maximumActiveTime)
         {
             if(airborne)
-                //Create an airstate
-                player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
+                player.ActionFsm.ChangeState(new JumpState(player, player.ActionFsm, Vector3.zero));
             else
                 player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
         }
@@ -41,15 +43,20 @@ public class DashState : State<Player>
 
     override public void FixedExecute()
     {
-        if (activeTimer < minimumActiveTime)
+        if (airborne)
         {
-            if (airborne)
+            if (activeTimer < minimumActiveTime*2.0f)
                 player.selfBody.velocity = speed * direction;
-            else
-                player.selfBody.velocity = 0.5f * speed * direction;
+            else 
+                player.selfBody.velocity *= 0.9f;
         }
         else
-            player.selfBody.velocity *= 0.2f;
+        {
+            if (activeTimer < minimumActiveTime)
+                player.selfBody.velocity = speed * direction;
+            else
+                player.selfBody.velocity = speed * direction;
+        }
     }
 
     override public void Exit()

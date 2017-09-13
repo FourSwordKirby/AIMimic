@@ -16,8 +16,12 @@ public class JumpState : State<Player>
         this.targetLocation = new Vector3(Mathf.Clamp(targetLocation.x, -10, 10), Mathf.Clamp(targetLocation.y, 0, 10), 0);
     }
 
+    //Adjust the dash and airdash distances later ;_;
     override public void Enter()
     {
+        if (!player.grounded)
+            return;
+
         GameManager.instance.PlaySound("Jump");
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
@@ -56,6 +60,16 @@ public class JumpState : State<Player>
         if (Controls.attackInputDown(player))
         {
             player.PerformAction(Action.AirAttack);
+        }
+
+        if (Controls.dashInputDown(player))
+        {
+            Parameters.InputDirection dir = Controls.getInputDirection(player);
+
+            if (dir == Parameters.InputDirection.W)
+                player.PerformAction(Action.AirdashLeft);
+            else if (dir == Parameters.InputDirection.E)
+                player.PerformAction(Action.AirdashRight);
         }
     }
 

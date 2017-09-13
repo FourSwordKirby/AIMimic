@@ -81,12 +81,12 @@ public class HitState : State<Player>
             //We need to record how long a player waits to tech etc.
 
             Parameters.InputDirection dir = Controls.getInputDirection(player);
-            if(dir == Parameters.InputDirection.W)
-                player.Tech(-1.0f);
+            if (dir == Parameters.InputDirection.W)
+                player.PerformAction(Action.TechLeft);
             if (dir == Parameters.InputDirection.E)
-                player.Tech(1.0f);
-            if(dir == Parameters.InputDirection.N)
-                player.Tech(0.0f);
+                player.PerformAction(Action.TechRight);
+            if (dir == Parameters.InputDirection.N)
+                player.PerformAction(Action.TechNeutral);
         }
     }
 
