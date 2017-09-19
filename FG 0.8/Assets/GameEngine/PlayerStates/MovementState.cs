@@ -17,7 +17,7 @@ public class MovementState : State<Player> {
         : base(playerInstance, fsm)
     {
         player = playerInstance;
-        movementVector = Vector3.right * (int)dir * player.movementSpeed;
+        movementVector = Vector3.right * (int)dir * player.walkSpeed;
     }
 
     override public void Enter()
@@ -43,7 +43,13 @@ public class MovementState : State<Player> {
 
         if (Controls.attackInputDown(player))
         {
-            player.PerformAction(Action.Attack);
+            if (dir == Parameters.InputDirection.N || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.NW)
+                player.PerformAction(Action.DP);
+            else if ((player.facingDirection.x > 0 && dir == Parameters.InputDirection.W)
+                                || (player.facingDirection.x <= 0 && dir == Parameters.InputDirection.E))
+                player.PerformAction(Action.Overhead);
+            else
+                player.PerformAction(Action.Attack);
             return;
         }
 
@@ -64,11 +70,11 @@ public class MovementState : State<Player> {
             }
         }
 
-        if (!(dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E))
+        if (!(dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E))
         {
             if (!player.AIControlled)
             {
-                if (dir == Parameters.InputDirection.None)
+                if (dir == Parameters.InputDirection.None || dir == Parameters.InputDirection.N)
                     player.PerformAction(Action.Stand);
                 else
                     player.PerformAction(Action.Crouch);

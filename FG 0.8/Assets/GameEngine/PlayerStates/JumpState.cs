@@ -20,23 +20,29 @@ public class JumpState : State<Player>
     override public void Enter()
     {
         if (!player.grounded)
+        {
             return;
+        }
 
         GameManager.instance.PlaySound("Jump");
         float displacement = targetLocation.x - player.transform.position.x;
         if (displacement == 0)
         {
-            player.selfBody.velocity = getJumpVelocity(player.neutralJumpHeight, 0, 0.7f);
+            jumpVector = getJumpVelocity(player.neutralJumpHeight, 0, 0.65f);
         }
         else if (displacement > 0)
         {
-            player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
+            jumpVector = getJumpVelocity(player.directionJumpHeight, displacement, 0.65f);
         }
         else
-        {   
-            player.selfBody.velocity = getJumpVelocity(player.directionJumpHeight, displacement, 0.7f);
+        {
+            jumpVector = getJumpVelocity(player.directionJumpHeight, displacement, 0.65f);
         }
+
+        player.selfBody.velocity = jumpVector;
         player.grounded = false;
+
+        player.selfBody.drag = 1.0f;
     }
 
     public Vector2 getJumpVelocity(float height, float distance, float time)
@@ -52,8 +58,7 @@ public class JumpState : State<Player>
         //x = 1/2 vt
         return new Vector2(xVel, yVel);
     }
-
-    public float gravScale;
+    
     /*error with collision boxes puts player in air state when he actually isn't*/
     override public void Execute()
     {
@@ -70,11 +75,24 @@ public class JumpState : State<Player>
                 player.PerformAction(Action.AirdashLeft);
             else if (dir == Parameters.InputDirection.E)
                 player.PerformAction(Action.AirdashRight);
+            else
+            {
+                if(player.facingDirection.x > 0)
+                    player.PerformAction(Action.AirdashRight);
+                else
+                    player.PerformAction(Action.AirdashLeft);
+            }
         }
     }
 
     override public void FixedExecute()
     {
+        if (jumpVector == Vector3.zero)
+            return;
+
+        jumpVector += Time.fixedDeltaTime * player.selfBody.gravityScale * (Vector3)Physics2D.gravity;
+        player.selfBody.velocity = jumpVector;
+
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             Parameters.InputDirection dir = Controls.getInputDirection(player);

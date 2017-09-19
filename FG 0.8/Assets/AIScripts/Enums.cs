@@ -28,6 +28,7 @@ public enum Action {
 }
 
 //The player status merely indicates what kind of state they are in
+//Maybe make player status capture the last action that was taken by the player
 public enum PlayerStatus
 {
     Stand,

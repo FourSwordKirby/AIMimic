@@ -7,59 +7,104 @@ public class DashState : State<Player>
 
     private bool airborne;
     private Vector2 direction;
+    private float speed;
 
-    private float speed = 10.0f;
+    private float airActiveTime = 0.15f;
+    private float airCooldown = 0.15f;
 
-    private float minimumActiveTime = 0.2f;
-    private float maximumActiveTime = 0.3f;
+    private float activeTime = 0.15f;
+    private float cooldown = 0.15f;
     private float activeTimer = 0.0f;
+
+    private float orignalGravScale;
 
     public DashState(Player playerInstance, StateMachine<Player> fsm, float dir, bool airborne) : base(playerInstance, fsm)
     {
         player = playerInstance;
         this.airborne = airborne;
         this.direction = Vector2.right * dir;
-
-        if (this.airborne)
-            player.airdashCount++;
+        if(airborne)
+            this.speed = player.airDashSpeed;
+        else
+            this.speed = player.dashSpeed;
     }
 
     override public void Enter()
     {
         Debug.Log("I did a dash, add aethetics/balance this");
+        Debug.Log("Inputs are jank as heeeck");
+
+        if (airborne)
+        {
+            orignalGravScale = player.selfBody.gravityScale;
+            player.airdashCount++;
+            player.selfBody.gravityScale = 0.0f;
+        }
     }
 
     override public void Execute()
     {
         activeTimer += Time.deltaTime;
-        if (activeTimer > maximumActiveTime)
+        if(airborne)
         {
-            if(airborne)
-                player.ActionFsm.ChangeState(new JumpState(player, player.ActionFsm, Vector3.zero));
-            else
+            if (activeTimer > airActiveTime + airCooldown)
+            {
+                if (Controls.attackInputDown(player))
+                {
+                    player.PerformAction(Action.AirAttack);
+                }
+            }
+        }
+        else
+        {
+            if (activeTimer > activeTime + cooldown)
                 player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
         }
+
     }
 
     override public void FixedExecute()
     {
         if (airborne)
         {
-            if (activeTimer < minimumActiveTime*2.0f)
+            if (activeTimer < airActiveTime)
+                player.selfBody.velocity = player.dashSpeed * direction;
+            else if(activeTimer < airActiveTime + airCooldown)
+            {
+                speed -= 0.95f * Time.fixedDeltaTime/ cooldown;
                 player.selfBody.velocity = speed * direction;
-            else 
-                player.selfBody.velocity *= 0.9f;
+            }
+            else
+            {
+                player.selfBody.gravityScale = orignalGravScale;
+            }
+
+            //Controls transitioning back to the ground state
+            if (player.grounded && player.selfBody.velocity.y <= 0)
+            {
+                Parameters.InputDirection dir = Controls.getInputDirection(player);
+
+                if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+                    player.PerformAction(Action.Crouch);
+                else
+                    player.PerformAction(Action.Stand);
+                return;
+            }
         }
         else
         {
-            if (activeTimer < minimumActiveTime)
+            if (activeTimer < activeTime)
                 player.selfBody.velocity = speed * direction;
             else
+            {
+                speed *= 0.5f;
                 player.selfBody.velocity = speed * direction;
+            }
         }
     }
 
     override public void Exit()
     {
+        player.selfBody.gravityScale = orignalGravScale;
     }
 }

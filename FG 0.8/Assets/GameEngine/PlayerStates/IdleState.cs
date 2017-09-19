@@ -13,7 +13,7 @@ public class IdleState : State<Player> {
 
     override public void Enter()
     {
-        this.player.selfBody.drag = 20.0f;
+        this.player.selfBody.drag = 200.0f;
         this.player.selfBody.velocity = Vector3.zero;
         this.player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         this.player.selfBody.angularVelocity = 0;
@@ -37,7 +37,15 @@ public class IdleState : State<Player> {
         if (Controls.attackInputDown(player))
         {
             if (!player.isCrouching)
-                player.PerformAction(Action.Attack);
+            {
+                if (dir == Parameters.InputDirection.N || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.NW)
+                    player.PerformAction(Action.DP);
+                else if ((player.facingDirection.x > 0 && dir == Parameters.InputDirection.W)
+                    || (player.facingDirection.x <= 0 && dir == Parameters.InputDirection.E))
+                    player.PerformAction(Action.Overhead);
+                else
+                    player.PerformAction(Action.Attack);
+            }
             else
                 player.PerformAction(Action.LowAttack);
             return;

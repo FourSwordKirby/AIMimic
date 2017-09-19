@@ -13,7 +13,7 @@ public class BlockState :  State<Player> {
 
     override public void Enter()
     {
-        this.player.selfBody.drag = 20.0f;
+        this.player.selfBody.drag = 200.0f;
         player.isBlocking = true;
         player.shield.SetActive(true);
         //Draw a visual indicator for the player that they are blocking, the current shield sprite is eh

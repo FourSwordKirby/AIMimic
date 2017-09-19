@@ -7,7 +7,11 @@ public class Player : MonoBehaviour {
 
     public float maxHealth;
     public float maxMeter;
-    public float movementSpeed;
+    public float walkSpeed;
+    public float dashSpeed;
+    public float airDashSpeed;
+    public float backDashSpeed;
+    public float airBackDashSpeed;
     public float neutralJumpHeight;
     public float directionJumpHeight;
 
@@ -191,6 +195,9 @@ public class Player : MonoBehaviour {
             case Action.LowAttack:
                 this.Attack(true);
                 break;
+            case Action.Overhead:
+                this.Overhead();
+                break;
             case Action.AirAttack:
                 this.AirAttack();
                 break;
@@ -236,6 +243,9 @@ public class Player : MonoBehaviour {
             case Action.TechRight:
                 this.Tech(1.0f);
                 break;
+            case Action.DP:
+                this.DP();
+                break;
             default:
                 throw new Exception("Not implemented yet");
         }
@@ -273,7 +283,7 @@ public class Player : MonoBehaviour {
                 isValid = this.grounded && this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
                 break;
             case Action.AirAttack:
-                isValid = !this.grounded && (this.ActionFsm.CurrentState is JumpState);
+                isValid = !this.grounded && (this.ActionFsm.CurrentState is JumpState || this.ActionFsm.CurrentState is DashState);
                 break;
             case Action.StandBlock:
                 isValid = this.grounded && !(this.isBlocking && !this.isCrouching) && !(this.ActionFsm.CurrentState is AttackState);
@@ -317,7 +327,6 @@ public class Player : MonoBehaviour {
             case Action.TechRight:
                 isValid = this.grounded && this.knockedDown;
                 break;
-
             case Action.DP:
                 isValid = this.grounded && ((!(this.ActionFsm.CurrentState is AttackState) || this.chainable) || this.knockedDown);
                 break;
@@ -389,12 +398,12 @@ public class Player : MonoBehaviour {
 
         Vector2 movementVector = Vector2.zero;       
         if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
-            movementVector = Vector2.right * movementSpeed;
+            movementVector = Vector2.right * walkSpeed;
         else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
-            movementVector = Vector2.left * movementSpeed;
+            movementVector = Vector2.left * walkSpeed;
         else
             movementVector = Vector2.zero;
-        this.ActionFsm.ChangeState(new JumpState(this, this.ActionFsm, ((Vector2)(transform.position)+ 2 * movementVector.normalized)));
+        this.ActionFsm.ChangeState(new JumpState(this, this.ActionFsm, ((Vector2)(transform.position)+ 2.5f * movementVector.normalized)));
     }
 
     void Attack(bool isCrouching)
@@ -407,6 +416,14 @@ public class Player : MonoBehaviour {
         else
             this.Stand();
         this.ActionFsm.ChangeState(new AttackState(this, this.ActionFsm, this.comboCount));
+    }
+
+    void Overhead()
+    {
+        if (!this.grounded)
+            return;
+
+        this.ActionFsm.ChangeState(new OverheadState(this, this.ActionFsm, this.comboCount));
     }
 
     void AirAttack()
@@ -440,6 +457,14 @@ public class Player : MonoBehaviour {
         StandAnim();
     }
 
+    public void DP()
+    {
+        if (!this.grounded)
+            return;
+
+        this.ActionFsm.ChangeState(new DPState(this, this.ActionFsm));
+    }
+
     public void Crouch()
     {
         if (!this.grounded)
@@ -449,6 +474,15 @@ public class Player : MonoBehaviour {
 
         this.isCrouching = true;
         CrouchAnim();
+    }
+
+    public void Tech(float dir)
+    {
+        print("Record how long a player waits to tech as well as account for DPs etc.");
+        print("Also add visual cue as the player is teching so you can more easily follow the tech direction");
+
+        this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm, dir));
+        EventManager.instance.RecordRecovery(this);
     }
 
     public void EnterHitstun(float hitlag, float hitstun, Vector2 knockback, bool knockdown)
@@ -472,25 +506,24 @@ public class Player : MonoBehaviour {
             this.Block(isCrouching);
     }
 
-    //TODO: Implement forward and back techs
-    public void Tech(float dir)
-    {
-        print("Record how long a player waits to tech as well as account for DPs etc.");
-        this.ActionFsm.ChangeState(new TechState(this, this.ActionFsm, dir));
-        EventManager.instance.RecordRecovery(this);
-    }
 
     public void StartInvuln()
     {
-        invulnerable = true;
-        hitboxManager.deactivateHitBox("Hurtbox");
-        StartCoroutine(Flash());
+        if(!invulnerable)
+        {
+            invulnerable = true;
+            hitboxManager.deactivateHitBox("Hurtbox");
+            StartCoroutine(Flash());
+        }
     }
 
     public void EndInvuln()
     {
-        invulnerable = false;
-        hitboxManager.activateHitBox("Hurtbox");
+        if(invulnerable)
+        {
+            invulnerable = false;
+            hitboxManager.activateHitBox("Hurtbox");
+        }
     }
 
     private bool invulnerable;
@@ -498,7 +531,6 @@ public class Player : MonoBehaviour {
 
     public IEnumerator Flash()
     {
-        print("Also add visual cue as the player is teching so you can more easily follow the tech direction");
         bool flashUp = true;
         float timer = 0.0f;
 

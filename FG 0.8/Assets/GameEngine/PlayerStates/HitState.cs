@@ -54,6 +54,8 @@ public class HitState : State<Player>
             return;
         }
 
+        Debug.Log(player.selfBody.velocity);
+
         if (frameCounter < hitlag + hitstun)
         {
             frameCounter++;
@@ -80,23 +82,29 @@ public class HitState : State<Player>
             //Modify this to put the player in a teching state and to record how long they wait to tech etc.
             //We need to record how long a player waits to tech etc.
 
-            Parameters.InputDirection dir = Controls.getInputDirection(player);
-            if (dir == Parameters.InputDirection.W)
-                player.PerformAction(Action.TechLeft);
-            if (dir == Parameters.InputDirection.E)
-                player.PerformAction(Action.TechRight);
-            if (dir == Parameters.InputDirection.N)
-                player.PerformAction(Action.TechNeutral);
+            if(player.grounded)
+            {
+                if (Controls.attackInputDown(player))
+                {
+                    player.PerformAction(Action.DP);
+                    return;
+                }
+
+                Parameters.InputDirection dir = Controls.getInputDirection(player);
+                if (dir == Parameters.InputDirection.W)
+                    player.PerformAction(Action.TechLeft);
+                if (dir == Parameters.InputDirection.E)
+                    player.PerformAction(Action.TechRight);
+                if (dir == Parameters.InputDirection.N)
+                    player.PerformAction(Action.TechNeutral);
+            }
         }
     }
 
     override public void FixedExecute()
     {
-        if(player.grounded)
-        {
-            float xNew = Mathf.Max(0.0f, Mathf.Abs(player.selfBody.velocity.x) - 0.1f);
-            player.selfBody.velocity = new Vector2(Mathf.Sign(player.selfBody.velocity.x) * xNew, player.selfBody.velocity.y);
-        }
+        float xNew = Mathf.Max(0.0f, Mathf.Abs(player.selfBody.velocity.x) - 0.1f);
+        player.selfBody.velocity = new Vector2(Mathf.Sign(player.selfBody.velocity.x) * xNew, player.selfBody.velocity.y);
     }
 
     override public void Exit()

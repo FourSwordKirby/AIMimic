@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AttackState : State<Player>
+//Program this up
+public class OverheadState : State<Player>
 {
     private Player player;
     private GameObject meleeHitbox;
@@ -17,14 +18,14 @@ public class AttackState : State<Player>
     private Vector3 startPosition;
     private Vector3 endPosition;
 
-    public AttackState(Player playerInstance, StateMachine<Player> fsm, int comboCount = 0) : base(playerInstance, fsm)
+    public OverheadState(Player playerInstance, StateMachine<Player> fsm, int comboCount = 0) : base(playerInstance, fsm)
     {
         player = playerInstance;
         player.comboCount = comboCount;
 
         meleeHitbox = player.hitboxManager.getHitbox("MeleeHitbox").gameObject;
 
-        attackDistance = 0.4f;
+        attackDistance = 1.4f;
 
         startup = 0.05f * Application.targetFrameRate;
         duration = 0.05f * Application.targetFrameRate; ;
@@ -71,16 +72,17 @@ public class AttackState : State<Player>
     override public void Execute()
     {
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
-        if (player.chainable)
-        {
-            if (Controls.attackInputDown(player))
-            {
-                if (player.isCrouching)
-                    player.PerformAction(Action.LowAttack);
-                else
-                    player.PerformAction(Action.Attack);
-            }
-        }
+        //Can't combo off an overhead
+        //if (player.chainable)
+        //{
+        //    if (Controls.attackInputDown(player))
+        //    {
+        //        if (player.isCrouching)
+        //            player.PerformAction(Action.LowAttack);
+        //        else
+        //            player.PerformAction(Action.Attack);
+        //    }
+        //}
 
         frameCounter++;
         if (frameCounter < startup)
@@ -127,7 +129,7 @@ public class AttackState : State<Player>
 
     override public State<Player> Copy()
     {
-        AttackState attackCopy = new AttackState(this.Owner, this.Owner.ActionFsm, player.comboCount);
+        OverheadState attackCopy = new OverheadState(this.Owner, this.Owner.ActionFsm, player.comboCount);
         attackCopy.frameCounter = frameCounter;
         attackCopy.startPosition = this.startPosition;
         attackCopy.endPosition = this.endPosition;

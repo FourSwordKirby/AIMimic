@@ -63,7 +63,7 @@ public class HitlagState : State<Player>
         if (!player.grounded)
             player.selfBody.simulated = true;
         else
-            player.selfBody.drag = 20.0f;
+            player.selfBody.drag = 200.0f;
 
         player.selfBody.velocity = origVel;
         player.selfBody.angularVelocity = origAngleVel;
