@@ -36,6 +36,12 @@ public class HitState : State<Player>
 
         player.stunned = true;
         player.knockedDown = player.knockedDown || knockedDown;
+
+        //Keeping track of player status
+        if (!player.knockedDown)
+            player.status = PlayerStatus.Hit;
+        else
+            player.status = PlayerStatus.KnockdownHit;
     }
 
     override public void Execute()
@@ -53,8 +59,6 @@ public class HitState : State<Player>
             }
             return;
         }
-
-        Debug.Log(player.selfBody.velocity);
 
         if (frameCounter < hitlag + hitstun)
         {

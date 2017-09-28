@@ -17,7 +17,9 @@ public class TransitionRecorder : MonoBehaviour
     public string playerName;
 
     int startFrame = -1;
-    AISituation currentSituation;
+    private AISituation currentSituation;
+    public bool currentDuration;
+    public int lastCapturedFrame;
 
     public void Update()
     {
@@ -28,6 +30,14 @@ public class TransitionRecorder : MonoBehaviour
 
         if(!GameManager.instance.roundOver)
         {
+            //Edge case for game start
+            if(GameManager.instance.currentFrame == 0)
+            {
+                startFrame = 0;
+                lastAction = Action.Stand;
+                lastSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
+            }
+
             if(currentSituation == null)
                 currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
             AISituation newSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
@@ -69,17 +79,52 @@ public class TransitionRecorder : MonoBehaviour
         }
     }
 
+    //This needs to record the frame after the action ended
+    public void ActionEnded(KeyValuePair<Action, bool> pair)
+    {
+        //Action currentAction = pair.Key;
+        //bool isPlayer1 = pair.Value;
+
+        //if (isPlayer1 == recordedPlayer.isPlayer1)
+        //{
+        //    if (startFrame == -1 || lastSituation == null || currentAction != lastAction)
+        //    {
+        //        print("Something got messed up");
+        //        return;
+        //    }
+
+        //    int duration = GameManager.instance.currentFrame - startFrame;
+        //    if (duration != 0)
+        //    {
+        //        PerformedAction performedAction = new PerformedAction(lastAction, duration);
+        //        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), isPlayer1);
+        //        Transition transition = new Transition(lastSituation, performedAction, currentSituation);
+
+        //        if (lastCapturedFrame != GameManager.instance.currentFrame)
+        //            profile.LogTransition(lastSituation, transition);
+        //        lastCapturedFrame = GameManager.instance.currentFrame;
+        //    }
+        //}
+
+        //Debug.Break();
+
+        //startFrame = -1;
+        //lastSituation = null;
+    }
+
     public void ActionPerformed(KeyValuePair<Action, bool> pair)
     {
+        Action currentAction = pair.Key;
         bool isPlayer1 = pair.Value;
 
         if (isPlayer1 == recordedPlayer.isPlayer1)
         {
-            if(startFrame == -1)
+            if (startFrame == -1 || lastSituation == null)
             {
                 lastSituation = new AISituation(GameRecorder.instance.LatestFrame(), isPlayer1);
                 lastAction = pair.Key;
                 startFrame = GameManager.instance.currentFrame;
+
                 return;
             }
 
@@ -91,21 +136,27 @@ public class TransitionRecorder : MonoBehaviour
                 AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), isPlayer1);
                 Transition transition = new Transition(lastSituation, performedAction, currentSituation);
 
-                profile.LogTransition(lastSituation, transition);
+                if (lastCapturedFrame != GameManager.instance.currentFrame)
+                    profile.LogTransition(lastSituation, transition);
+                lastCapturedFrame = GameManager.instance.currentFrame;
             }
 
             lastSituation = currentSituation;
-            lastAction = pair.Key;
+            lastAction = currentAction;
             startFrame = GameManager.instance.currentFrame;
         }
     }
     
     public void StateChanged(AISituation newSituation)
     {
+        if (lastCapturedFrame == GameManager.instance.currentFrame)
+            return;
+
         int duration = GameManager.instance.currentFrame - startFrame;
         PerformedAction performedAction = new PerformedAction(lastAction, duration);
         Transition transition = new Transition(lastSituation, performedAction, newSituation);
 
         profile.LogTransition(lastSituation, transition);
+        lastCapturedFrame = GameManager.instance.currentFrame;
     }
 }

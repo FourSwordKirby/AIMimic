@@ -20,6 +20,7 @@ public class Player : MonoBehaviour {
     public const int DEFAULT_STOCK_COUNT = 4;
 
     public new bool enabled;
+    public bool locked; //Indicates that the player is locked into this action for a while
     public bool suspended = false;
     public bool stunned = false;
     public bool knockedDown = false;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour {
     public StateMachine<Player> ActionFsm { get; private set; }
 
     //AI specific variables
+    public PlayerStatus status;
     public bool AIControlled;
     public Action latestAction;
 
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour {
         State<Player> startState = new IdleState(this, this.ActionFsm);
         ActionFsm.InitialState(startState);
 
-        this.Stand();
+        Stand();
     }
 
     public void Pause()
@@ -116,8 +118,17 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //Maintaining consistency for data recording
+        if(actionPreformed)
+        {
+            actionPreformed = false;
+            EventManager.instance.RecordActionPerformed(latestAction, this);
+        }
+
+
         if (!this.enabled)
             return;
+
         this.ActionFsm.Execute();
         if (opponent.transform.position.x > this.transform.position.x)
         {
@@ -130,7 +141,7 @@ public class Player : MonoBehaviour {
             facingDirection = Vector3.left;
         }
 
-        if(grounded && !stunned)
+        if (grounded && !stunned && !locked)
         {
             airdashCount = 0;
             if (isCrouching)
@@ -176,10 +187,25 @@ public class Player : MonoBehaviour {
         this.sprite.transform.localPosition = 0.5f * Vector3.up;
     }
 
-    //Interface for doing actions in the game
-    public bool PerformAction(Action action)
+    //Used to indicate that an action has ended
+    //This is for things like standing, blocking and crouching. Actions which could continue 
+    //indefinitely but are interrupted by taking other actions
+    bool actionEnded = false;
+    public void EndAction()
     {
-        if (!IsValidAction(action))
+        actionEnded = true;
+        //EventManager.instance.RecordEndAction(latestAction, this);
+    }
+
+    //Interface for doing actions in the game
+    bool actionPreformed = true;
+    public bool PerformAction(Action action, bool isAI = false)
+    {
+        //Can only perform actions when enabled
+        if (!this.enabled)
+            return false;
+
+        if (!IsValidAction(action, isAI))
             return false;
 
         switch (action) {
@@ -249,15 +275,23 @@ public class Player : MonoBehaviour {
             default:
                 throw new Exception("Not implemented yet");
         }
-        
-        EventManager.instance.RecordActionPerformed(action, this);
+
+
+        latestAction = action;
+        if (actionEnded)
+            EventManager.instance.RecordActionPerformed(latestAction, this);
+        else
+            actionPreformed = true;
 
         return true;
     }
 
     //Temp hacks to make the AI behave
-    bool IsValidAction(Action action)
+    bool IsValidAction(Action action, bool isAI = false)
     {
+        if (this.locked)
+            return false;
+
         if(action != Action.TechLeft && action != Action.TechRight && action != Action.TechNeutral && action != Action.DP)
         {
             if (this.stunned || (this.ActionFsm.CurrentState is HitlagState))
@@ -268,10 +302,10 @@ public class Player : MonoBehaviour {
         switch (action)
         {
             case Action.Stand:
-                isValid = this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = !isAI ? this.grounded : this.grounded && (status == PlayerStatus.Stand || status == PlayerStatus.Crouch || status == PlayerStatus.Moving || status == PlayerStatus.Highblock);
                 break;
             case Action.Crouch:
-                isValid = this.grounded;// ? !this.AIControlled : this.grounded && !(this.ActionFsm.CurrentState is AttackState);
+                isValid = !isAI ? this.grounded : this.grounded && (status == PlayerStatus.Stand || status == PlayerStatus.Crouch || status == PlayerStatus.Moving || status == PlayerStatus.Lowblock);
                 break;
             case Action.Attack:
                 isValid = this.grounded && !this.isCrouching && (!(this.ActionFsm.CurrentState is AttackState) || this.chainable);
@@ -334,8 +368,6 @@ public class Player : MonoBehaviour {
                 throw new Exception("Not implemented yet");
         }
 
-        if (isValid)
-            latestAction = action;
         return isValid;
     }
 
@@ -451,11 +483,23 @@ public class Player : MonoBehaviour {
         if (!this.grounded)
             return;
 
-        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
-
         this.isCrouching = false;
         StandAnim();
+
+        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
     }
+
+    public void Crouch()
+    {
+        if (!this.grounded)
+            return;
+
+        this.isCrouching = true;
+        CrouchAnim();
+
+        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
+    }
+
 
     public void DP()
     {
@@ -465,16 +509,6 @@ public class Player : MonoBehaviour {
         this.ActionFsm.ChangeState(new DPState(this, this.ActionFsm));
     }
 
-    public void Crouch()
-    {
-        if (!this.grounded)
-            return;
-
-        this.ActionFsm.ChangeState(new IdleState(this, this.ActionFsm));
-
-        this.isCrouching = true;
-        CrouchAnim();
-    }
 
     public void Tech(float dir)
     {
@@ -498,12 +532,17 @@ public class Player : MonoBehaviour {
         Parameters.InputDirection dir = Controls.getInputDirection(this);
 
         if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
-            this.Crouch();
+            this.PerformAction(Action.Crouch);
         else
-            this.Stand();
+            this.PerformAction(Action.Stand);
 
         if (Controls.shieldInputHeld(this))
-            this.Block(isCrouching);
+        {
+            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
+                this.PerformAction(Action.CrouchBlock);
+            else
+                this.PerformAction(Action.StandBlock);
+        }
     }
 
 

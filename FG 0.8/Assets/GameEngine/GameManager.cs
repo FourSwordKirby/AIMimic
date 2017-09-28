@@ -83,29 +83,30 @@ public class GameManager : MonoBehaviour {
         //Round start countdown
         if (countDown > 0)
         {
-            countDown -= Time.deltaTime;
-            if ((countDown > 1))
-            {
-                if (currentRound == 1)
-                    RoundText.text = ((int)countDown).ToString();
-                else
-                    RoundText.text = "Round " + currentRound;
+            if (currentRound == 1)
+                RoundText.text = ((int)(countDown+1)).ToString();
+            else
+                RoundText.text = "Round " + currentRound;
+            p1.enabled = false;
+            p2.enabled = false;
 
-                p1.enabled = false;
-                p2.enabled = false;
+            countDown -= Time.deltaTime;
+            if(countDown > 0)
+                return;
+            else
+            {
+                RoundText.text = "GO!";
+                roundOver = false;
+                p1.enabled = true;
+                p2.enabled = true;
                 return;
             }
-            if (countDown <= 0)
-                RoundText.text = "";
         }
-        if(0 < countDown + Time.deltaTime && countDown + Time.deltaTime <= 1)
+        if(countDown > -1)
         {
             countDown -= Time.deltaTime;
-            roundOver = false;
-            RoundText.text = "GO!";
-            p1.enabled = true;
-            p2.enabled = true;
-            return;
+            if (countDown <= -1)
+                RoundText.text = "";
         }
 
         if (!roundOver)
@@ -278,7 +279,7 @@ public class GameManager : MonoBehaviour {
 
             roundToWin = scenario.roundToWin;
 
-            countDown = 4.0f;
+            countDown = 3.0f;
             roundEndTimer = 2.5f;
         }
         else

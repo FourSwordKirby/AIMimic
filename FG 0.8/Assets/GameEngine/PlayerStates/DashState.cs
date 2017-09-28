@@ -40,15 +40,37 @@ public class DashState : State<Player>
             player.airdashCount++;
             player.selfBody.gravityScale = 0.0f;
         }
+
+
+        //Keeping track of player status
+        if (airborne)
+            player.status = PlayerStatus.AirDashing;
+        else
+            player.status = PlayerStatus.Dashing;
+
+        player.locked = true;
     }
 
     override public void Execute()
     {
+        //Keeping track of player status
+        if (airborne)
+        {
+            if (activeTimer < airActiveTime)
+                player.status = PlayerStatus.AirDashing;
+            else
+                player.status = PlayerStatus.Air;
+        }
+        else
+            player.status = PlayerStatus.Dashing;
+
         activeTimer += Time.deltaTime;
-        if(airborne)
+
+        if (airborne)
         {
             if (activeTimer > airActiveTime + airCooldown)
             {
+                player.locked = false;
                 if (Controls.attackInputDown(player))
                 {
                     player.PerformAction(Action.AirAttack);
@@ -58,7 +80,14 @@ public class DashState : State<Player>
         else
         {
             if (activeTimer > activeTime + cooldown)
-                player.ActionFsm.ChangeState(new IdleState(player, player.ActionFsm));
+            {
+                player.locked = false;
+                if (!player.isCrouching)
+                    player.PerformAction(Action.Stand);
+                else
+                    player.PerformAction(Action.Crouch);
+                return;
+            }
         }
 
     }
@@ -83,7 +112,6 @@ public class DashState : State<Player>
             if (player.grounded && player.selfBody.velocity.y <= 0)
             {
                 Parameters.InputDirection dir = Controls.getInputDirection(player);
-
                 if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
                     player.PerformAction(Action.Crouch);
                 else
@@ -105,6 +133,7 @@ public class DashState : State<Player>
 
     override public void Exit()
     {
+        player.locked = false;
         player.selfBody.gravityScale = orignalGravScale;
     }
 }

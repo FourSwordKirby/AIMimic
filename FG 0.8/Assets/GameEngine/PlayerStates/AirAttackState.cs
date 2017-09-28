@@ -54,14 +54,20 @@ public class AirAttackState : State<Player>
         }
 
         //Dumb size animations
-        player.sprite.transform.localScale = new Vector3(player.sprite.transform.localScale.x,
-                                                            0.8f,
-                                                            player.sprite.transform.localScale.z);
+        player.spriteContainer.transform.localScale = new Vector3(1.0f,  0.8f, 1.0f);
 
+        //Keeping track of player status
+        player.status = PlayerStatus.AirAttack;
     }
 
     override public void Execute()
-    {
+    {   
+        //Keeping track of player status
+        if (frameCounter < startup + duration)
+            player.status = PlayerStatus.AirAttack;
+        else
+            player.status = PlayerStatus.Recovery;
+
         frameCounter++;
 
         //ANIMATIONS
@@ -122,7 +128,6 @@ public class AirAttackState : State<Player>
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             Parameters.InputDirection dir = Controls.getInputDirection(player);
-
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
                 player.PerformAction(Action.Crouch);
             else
@@ -147,9 +152,7 @@ public class AirAttackState : State<Player>
         player.selfBody.angularVelocity = 0;
 
         //Dumb size animations
-        player.sprite.transform.localScale = new Vector3(player.sprite.transform.localScale.x,
-                                                    1.0f,
-                                                    player.sprite.transform.localScale.z);
+        player.spriteContainer.transform.localScale = Vector3.one;
     }
 
     override public State<Player> Copy()

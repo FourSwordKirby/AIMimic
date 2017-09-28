@@ -17,14 +17,20 @@ public class IdleState : State<Player> {
         this.player.selfBody.velocity = Vector3.zero;
         this.player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         this.player.selfBody.angularVelocity = 0;
+
+        //Keeping track of player status
+        if (!player.isCrouching)
+            player.status = PlayerStatus.Stand;
+        else
+            player.status = PlayerStatus.Crouch;
     }
 
     override public void Execute()
     {
         Parameters.InputDirection dir = Controls.getInputDirection(player);
-
         if (Controls.jumpInputDown(player))
         {
+            player.EndAction();
             if (dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.SE)
                 player.PerformAction(Action.JumpRight);
             else if (dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.SW)
@@ -36,6 +42,7 @@ public class IdleState : State<Player> {
 
         if (Controls.attackInputDown(player))
         {
+            player.EndAction();
             if (!player.isCrouching)
             {
                 if (dir == Parameters.InputDirection.N || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.NW)
@@ -51,10 +58,26 @@ public class IdleState : State<Player> {
             return;
         }
 
+
+        if (Controls.dashInputDown(player))
+        {
+            if (dir == Parameters.InputDirection.W)
+            {
+                player.EndAction();
+                player.PerformAction(Action.DashLeft);
+            }
+            else if (dir == Parameters.InputDirection.E)
+            {
+                player.EndAction();
+                player.PerformAction(Action.DashRight);
+            }
+        }
+
         if (!player.AIControlled)
         {
             if (Controls.shieldInputHeld(player))
             {
+                player.EndAction();
                 if (!player.isCrouching)
                     player.PerformAction(Action.StandBlock);
                 else
@@ -64,13 +87,17 @@ public class IdleState : State<Player> {
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
             {
                 if(!player.isCrouching)
+                {
+                    player.EndAction();
                     player.PerformAction(Action.Crouch);
+                }
                 return;
             }
             else if (dir == Parameters.InputDirection.None)
             {
                 if (player.isCrouching)
                 {
+                    player.EndAction();
                     player.PerformAction(Action.Stand);
                 }
             }
@@ -79,9 +106,15 @@ public class IdleState : State<Player> {
         if (dir != Parameters.InputDirection.None)
         {
             if (dir == Parameters.InputDirection.E || dir == Parameters.InputDirection.NE || dir == Parameters.InputDirection.SE)
+            {
+                player.EndAction();
                 player.PerformAction(Action.WalkRight);
+            }
             else if (dir == Parameters.InputDirection.W || dir == Parameters.InputDirection.NW || dir == Parameters.InputDirection.SW)
+            {
+                player.EndAction();
                 player.PerformAction(Action.WalkLeft);
+            }
             return;
         }
     }

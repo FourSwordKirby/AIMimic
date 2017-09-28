@@ -675,6 +675,11 @@ Prefab:
       propertyPath: opponent
       value: 
       objectReference: {fileID: 2021633135}
+    - target: {fileID: 114000011357730092, guid: 2e62839c3daafcc42a1c727afca228a4,
+        type: 2}
+      propertyPath: isPlayer1
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e62839c3daafcc42a1c727afca228a4, type: 2}
   m_IsPrefabParent: 0
@@ -1482,7 +1487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &262404958
 MonoBehaviour:
@@ -2388,7 +2393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &633772766
 Transform:
   m_ObjectHideFlags: 0
@@ -2400,7 +2405,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &633772767
 MonoBehaviour:
@@ -2418,6 +2423,10 @@ MonoBehaviour:
     side: 0
     deltaX: 0
     deltaY: 0
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 0
@@ -2425,7 +2434,9 @@ MonoBehaviour:
     status: 0
     opponentStatus: 0
   lastAction: 0
-  playerName: Baseline
+  playerName: Debug
+  currentDuration: 0
+  lastCapturedFrame: 0
 --- !u!1 &649166559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,7 +3611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &974291934
 Transform:
   m_ObjectHideFlags: 0
@@ -3612,7 +3623,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &974291935
 MonoBehaviour:
@@ -3625,14 +3636,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8f5ecaa8da04d4288d335e1ecaa5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usingActionEffects: 0
+  usingActionEffects: 1
   searchSpecificTarget: 0
-  playerName: Test
+  playerName: Debug
   controlledPlayer: {fileID: 2021633135}
   targetSituation:
     side: 0
     deltaX: 2
     deltaY: 2
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 1
@@ -3797,7 +3812,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1035947498
 MonoBehaviour:
@@ -3815,6 +3830,10 @@ MonoBehaviour:
     side: 0
     deltaX: 0
     deltaY: 0
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 0
@@ -3823,6 +3842,8 @@ MonoBehaviour:
     opponentStatus: 0
   lastAction: 0
   playerName: Baseline2
+  currentDuration: 0
+  lastCapturedFrame: 0
 --- !u!1 &1036061639
 GameObject:
   m_ObjectHideFlags: 0
@@ -4490,7 +4511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1103802157
 MonoBehaviour:
@@ -4678,7 +4699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1138192090
 MonoBehaviour:
@@ -4696,6 +4717,10 @@ MonoBehaviour:
     side: 0
     deltaX: 0
     deltaY: 0
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 0
@@ -4704,6 +4729,8 @@ MonoBehaviour:
     opponentStatus: 0
   lastAction: 0
   playerName: Baseline1
+  currentDuration: 0
+  lastCapturedFrame: 0
 --- !u!114 &1138904622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4784,7 +4811,7 @@ Transform:
   - {fileID: 1960658653}
   - {fileID: 193905088}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1158073601
 MonoBehaviour:
@@ -5459,7 +5486,7 @@ Transform:
   m_Children:
   - {fileID: 2011563193}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1319998455
 MonoBehaviour:
@@ -5493,7 +5520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1325983225
 Transform:
   m_ObjectHideFlags: 0
@@ -5507,7 +5534,7 @@ Transform:
   - {fileID: 53168940}
   - {fileID: 1406991332}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406991331
 GameObject:
@@ -5648,7 +5675,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1416427207
 MonoBehaviour:
@@ -5669,6 +5696,10 @@ MonoBehaviour:
     side: 1
     deltaX: 2
     deltaY: 2
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 1
@@ -6246,7 +6277,7 @@ Transform:
   - {fileID: 2033169418}
   - {fileID: 385211600}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1538559160
 MonoBehaviour:
@@ -6324,6 +6355,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e733686f82dbdd44e860a5046bf7c5d5, type: 3}
   - {fileID: 8300000, guid: 92d4b38dcdd6a284ea0d5cbe4c762e13, type: 3}
   - {fileID: 8300000, guid: b2c7d4f85ee4861479cd135dc25f42a2, type: 3}
+  - {fileID: 8300000, guid: ef598e7b17c57cf4abdce93c95d1c0f1, type: 3}
   sfxVolume: 0.1
   countDown: 0
   roundEndTimer: 0
@@ -6343,7 +6375,7 @@ Transform:
   - {fileID: 1308152070}
   - {fileID: 173658956}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1539022180
 MonoBehaviour:
@@ -6405,7 +6437,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1541288104
 MonoBehaviour:
@@ -6426,6 +6458,10 @@ MonoBehaviour:
     side: 0
     deltaX: 2
     deltaY: 2
+    xVel: 0
+    yVel: 0
+    opponentXVel: 0
+    opponentYVel: 0
     health: 0
     opponentHealth: 0
     cornered: 1
@@ -6979,7 +7015,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1784940547}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 7.5, y: 0, z: 0}
+  m_LocalPosition: {x: 8, y: 0, z: 0}
   m_LocalScale: {x: 7.6, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1146545656}
@@ -7770,18 +7806,18 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1103802156}
+  - {fileID: 633772766}
+  - {fileID: 974291934}
   - {fileID: 1416427206}
   - {fileID: 1541288103}
-  - {fileID: 633772766}
   - {fileID: 1138192089}
   - {fileID: 1035947497}
-  - {fileID: 974291934}
   - {fileID: 1325983225}
   - {fileID: 1538559159}
   - {fileID: 1158073600}
   - {fileID: 1319998454}
   - {fileID: 262404957}
-  - {fileID: 1103802156}
   - {fileID: 593143915}
   - {fileID: 2110950456}
   - {fileID: 2040287762}
@@ -7790,7 +7826,7 @@ Transform:
   - {fileID: 649166560}
   - {fileID: 560209166}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1928753901 stripped
 BoxCollider2D:
@@ -7896,7 +7932,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1952231841}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -7.5, y: 0, z: 0}
+  m_LocalPosition: {x: -8, y: 0, z: 0}
   m_LocalScale: {x: 7.6000037, y: 1.0000005, z: 1}
   m_Children: []
   m_Father: {fileID: 1146545656}
@@ -8325,14 +8361,6 @@ Prefab:
     - target: {fileID: 4000012541190072, guid: a8736378989e78743956d16237878514, type: 2}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012025232208, guid: a8736378989e78743956d16237878514, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011905605844, guid: a8736378989e78743956d16237878514, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a8736378989e78743956d16237878514, type: 2}

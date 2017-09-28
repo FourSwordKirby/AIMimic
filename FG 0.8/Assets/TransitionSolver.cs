@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -23,20 +23,52 @@ public class TransitionSolver : MonoBehaviour
         LoadTransitions();
     }
 
+    public Dictionary<PlayerStatus, List<Action>> ValidMoveTable = 
+        new Dictionary<PlayerStatus, List<Action>>()
+        { {PlayerStatus.Stand, new List<Action>() { Action.Stand, Action.Crouch, Action.WalkLeft, Action.WalkRight, Action.JumpLeft, Action.JumpRight, Action.JumpNeutral, Action.Attack, Action.Overhead,  Action.StandBlock, Action.DashLeft, Action.DashRight, Action.DP} },
+            {PlayerStatus.Crouch, new List<Action>() {Action.Stand, Action.Crouch, Action.LowAttack, Action.JumpLeft, Action.JumpRight, Action.JumpNeutral, Action.CrouchBlock}  },
+            {PlayerStatus.Air, new List<Action>() {Action.Stand, Action.Crouch, Action.AirAttack, Action.AirdashLeft, Action.AirdashRight, Action.AirdashLeft }  },
+            {PlayerStatus.Highblock, new List<Action>() {Action.Stand, Action.StandBlock, Action.CrouchBlock, Action.JumpLeft, Action.JumpRight, Action.JumpNeutral }  },
+            {PlayerStatus.Lowblock, new List<Action>() { Action.Crouch, Action.StandBlock, Action.CrouchBlock, Action.JumpLeft, Action.JumpRight, Action.JumpNeutral }  },
+            {PlayerStatus.Hit, new List<Action>() {}  },
+            {PlayerStatus.KnockdownHit, new List<Action>() { Action.TechLeft, Action.TechNeutral, Action.TechRight, Action.DP}  },
+            {PlayerStatus.Tech, new List<Action>() {Action.Stand, Action.Crouch, Action.StandBlock, Action.CrouchBlock}  },
+            {PlayerStatus.Moving, new List<Action>() { Action.Stand, Action.Crouch, Action.StandBlock, Action.JumpLeft, Action.JumpNeutral, Action.JumpRight, Action.DashLeft, Action.DashRight, Action.Attack, Action.Overhead, Action.DP}  },
+            {PlayerStatus.Dashing, new List<Action>() { Action.Stand, Action.Crouch}  },
+            {PlayerStatus.AirDashing,new List<Action>() {Action.AirAttack }  },
+            {PlayerStatus.StandAttack, new List<Action>() {Action.Stand }  },
+            {PlayerStatus.LowAttack, new List<Action>() {Action.Crouch }  },
+            {PlayerStatus.OverheadAttack,new List<Action>() {Action.Stand }  },
+            {PlayerStatus.AirAttack, new List<Action>() {Action.Stand }  },
+            {PlayerStatus.DP, new List<Action>() {Action.Stand }  },
+            {PlayerStatus.Recovery, new List<Action>() {Action.Stand, Action.Crouch }  },
+        };
+
+
     int actionTracker = 0;
     int startFrame = 0;
     int attemptStartFrame = 0;
-    int attemptLimit = 50;
+    int attemptLimit = 150;
     bool actionCompleted = false;
+
+    int delay = 0;
     public void Update()
     {
+        //Minor delay in order to see what's actually going on
+        if(delay > 0)
+        {
+            UnityEngine.Debug.Break();
+            delay--;
+        }
+
+
         controlledPlayer.AIControlled = true;
         if (desiredTransitions == null)
         {
             desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
             //desiredTransitions = usingActionEffects ? FindTarget(actionEffects) : FindTarget(playerTransitions);
         }
-        
+
         if (actionTracker < desiredTransitions.Count)
         {
             PerformedAction currentAction = desiredTransitions[actionTracker].action;
@@ -45,7 +77,7 @@ public class TransitionSolver : MonoBehaviour
             if (!actionCompleted)
             {
                 startFrame = GameManager.instance.currentFrame;
-                actionCompleted = controlledPlayer.PerformAction(currentAction.action);
+                actionCompleted = controlledPlayer.PerformAction(currentAction.action, true);
                 if(actionCompleted)
                     attemptStartFrame = GameManager.instance.currentFrame;
             }
@@ -62,8 +94,6 @@ public class TransitionSolver : MonoBehaviour
 
             if (GameManager.instance.currentFrame - startFrame >= currentAction.duration)
             {
-                print("Completed Action: " + currentAction.action + ": " + currentAction.duration + ": " + GameManager.instance.currentFrame);
-
                 actionCompleted = false;
                 actionTracker++;
 
@@ -75,7 +105,7 @@ public class TransitionSolver : MonoBehaviour
                 //The key idea is to make it favor doing stand -> jump -> air attack over stand -> air attack
                 if (!(desiredSituation.Equals(new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1))))
                 {
-                    print("replanned " + desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(),controlledPlayer.isPlayer1));
+                    //print("action" + currentAction + "replanned " + desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(),controlledPlayer.isPlayer1));
                     actionTracker = 0;
 
                     desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
@@ -97,7 +127,7 @@ public class TransitionSolver : MonoBehaviour
         {
             actionTracker = 0;
             desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
-            desiredTransitions =  usingActionEffects ? FindTarget(actionEffects):FindTarget(playerTransitions);
+            //desiredTransitions =  usingActionEffects ? FindTarget(actionEffects):FindTarget(playerTransitions);
         }
     }
 
@@ -111,10 +141,10 @@ public class TransitionSolver : MonoBehaviour
 
     public List<Transition> FindTarget(Dictionary<AISituation, List<Transition>> transitions)
     {
-        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        AISituation originalSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        AISituation currentSituation = originalSituation;
 
         PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
-
         Dictionary<AISituation, List<Transition>> observedSituations = new Dictionary<AISituation, List<Transition>>();
 
         List<Transition> currentTransitions = new List<Transition>();
@@ -141,6 +171,9 @@ public class TransitionSolver : MonoBehaviour
                 {
                     if (!observedSituations.ContainsKey(transition.result))
                     {
+                        if (!ValidMoveTable[currentSituation.status].Contains(transition.action.action))
+                            print("Invalid action detected on table" + currentSituation.status + transition.action.action);
+
                         List<Transition> latestTransitions = new List<Transition>();
                         latestTransitions.AddRange(currentTransitions);
                         latestTransitions.Add(transition);
@@ -152,14 +185,16 @@ public class TransitionSolver : MonoBehaviour
         }
 
         //Do a random move
-        print("Random action");
-        Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-        return new List<Transition>() { new Transition(currentSituation, new PerformedAction(randomAction, 40), currentSituation) };
+        //If EVERYTHING else fails, do a random move
+        Action randomAction = ValidMoveTable[originalSituation.status][Random.Range(0, ValidMoveTable[originalSituation.status].Count)];
+        print("random move" + randomAction + originalSituation.status);
+        return new List<Transition>() { new Transition(originalSituation, new PerformedAction(randomAction, 1), originalSituation) };
     }
 
     public List<Transition> FindTarget(Dictionary<PerformedAction, List<SituationChange>> actionEffects)
     {
-        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        AISituation originalSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        AISituation currentSituation = originalSituation;
 
         PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
 
@@ -222,13 +257,19 @@ public class TransitionSolver : MonoBehaviour
         print("Time to implement probability of the transitions");
 
         //Do a random move
-        Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-        return new List<Transition>() { new Transition(currentSituation, new PerformedAction(randomAction, 1), currentSituation) };
+        //If EVERYTHING else fails, do a random move
+        Action randomAction = ValidMoveTable[originalSituation.status][Random.Range(0, ValidMoveTable[originalSituation.status].Count)];
+        return new List<Transition>() { new Transition(originalSituation, new PerformedAction(randomAction, 1), originalSituation) };
     }
 
     public List<Transition> FindTarget(Dictionary<AISituation, List<Transition>> transitions, Dictionary<PerformedAction, List<SituationChange>> actionEffects)
     {
-        AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        //Stuff to handle timing out
+        Stopwatch sw = Stopwatch.StartNew();
+        float timeout = 500;
+
+        AISituation originalSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
+        AISituation currentSituation = originalSituation;
 
         PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingKnownSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
         PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingUnknownSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
@@ -242,7 +283,7 @@ public class TransitionSolver : MonoBehaviour
         else
             pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions), currentTransitions.Count);
 
-        while (pendingKnownSituations.Count > 0 || pendingUnknownSituations.Count > 0)
+        while ((pendingKnownSituations.Count > 0 || pendingUnknownSituations.Count > 0) && sw.ElapsedMilliseconds < timeout)
         {
             float priority = 0;
             if (pendingKnownSituations.Count > 0)
@@ -263,7 +304,10 @@ public class TransitionSolver : MonoBehaviour
             }
 
             if (isTargetSituation(currentSituation) && currentTransitions.Count > 0)
+            {
+                print(sw.ElapsedMilliseconds);
                 return currentTransitions;
+            }
 
             if (transitions.ContainsKey(currentSituation))
             {
@@ -291,7 +335,7 @@ public class TransitionSolver : MonoBehaviour
             }
             else
             {
-                print("Looking at action effects");
+                //print("Looking at action effects");
                 if(!observedUnknownSituations.ContainsKey(currentSituation))
                 {
                     observedUnknownSituations.Add(currentSituation, currentTransitions);
@@ -300,6 +344,12 @@ public class TransitionSolver : MonoBehaviour
                     {
                         //TODO hack to deal with faulty data
                         if (action.duration > 200)
+                            continue;
+
+                        //Makes sure that the action is valid for our current state
+                        if (!ValidMoveTable.ContainsKey(currentSituation.status))
+                            print(currentSituation.status + "Debug this later!!");
+                        else if (!ValidMoveTable[currentSituation.status].Contains(action.action))
                             continue;
 
                         List<SituationChange> situationChanges = actionEffects[action];
@@ -341,9 +391,9 @@ public class TransitionSolver : MonoBehaviour
         }
 
         //If EVERYTHING else fails, do a random move
-        print("random move");
-        Action randomAction = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
-        return new List<Transition>() { new Transition(currentSituation, new PerformedAction(randomAction, 1), currentSituation) };
+        Action randomAction = ValidMoveTable[originalSituation.status][Random.Range(0, ValidMoveTable[originalSituation.status].Count)];
+        print("random move" + randomAction + originalSituation.status + "Search time " + sw.ElapsedMilliseconds);
+        return new List<Transition>() { new Transition(originalSituation, new PerformedAction(randomAction, 1), originalSituation) };
     }
 
     public AISituation targetSituation;

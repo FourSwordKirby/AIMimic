@@ -16,12 +16,22 @@ public class BlockState :  State<Player> {
         this.player.selfBody.drag = 200.0f;
         player.isBlocking = true;
         player.shield.SetActive(true);
-        //Draw a visual indicator for the player that they are blocking, the current shield sprite is eh
-        //The shield doesn't really do anything, it does faciliate effects though
+
+        //Keeping track of player status
+        if (!player.isCrouching)
+            player.status = PlayerStatus.Highblock;
+        else
+            player.status = PlayerStatus.Lowblock;
     }
 
     override public void Execute()
     {
+        //Keeping track of player status
+        if (!player.isCrouching)
+            player.status = PlayerStatus.Highblock;
+        else
+            player.status = PlayerStatus.Lowblock;
+
         Parameters.InputDirection dir = Controls.getInputDirection(player);
 
         if (!player.AIControlled)
@@ -39,10 +49,10 @@ public class BlockState :  State<Player> {
 
             if (!Controls.shieldInputHeld(player))
             {
-                if (player.isCrouching)
-                    player.PerformAction(Action.Crouch);
-                else
+                if (!player.isCrouching)
                     player.PerformAction(Action.Stand);
+                else
+                    player.PerformAction(Action.Crouch);
                 return;
             }
         }

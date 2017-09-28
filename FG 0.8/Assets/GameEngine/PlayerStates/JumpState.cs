@@ -21,6 +21,7 @@ public class JumpState : State<Player>
     {
         if (!player.grounded)
         {
+            Debug.Log("how did this happen?");
             return;
         }
 
@@ -43,6 +44,9 @@ public class JumpState : State<Player>
         player.grounded = false;
 
         player.selfBody.drag = 1.0f;
+
+        //Keeping track of player status
+        player.status = PlayerStatus.Air;        
     }
 
     public Vector2 getJumpVelocity(float height, float distance, float time)
@@ -95,12 +99,10 @@ public class JumpState : State<Player>
 
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
-            Parameters.InputDirection dir = Controls.getInputDirection(player);
-            
-            if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
-                player.PerformAction(Action.Crouch);
-            else
+            if (!player.isCrouching)
                 player.PerformAction(Action.Stand);
+            else
+                player.PerformAction(Action.Crouch);
             return;
         }
     }

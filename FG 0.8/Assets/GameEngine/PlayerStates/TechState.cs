@@ -14,7 +14,7 @@ public class TechState : State<Player>
         : base(playerInstance, fsm)
     {
         player = playerInstance;
-        direction = Vector2.right * dir * 4.0f;
+        direction = Vector2.right * dir * 4.5f;
     }
 
     override public void Enter()
@@ -24,12 +24,17 @@ public class TechState : State<Player>
 
         if(direction.magnitude != 0)
             player.ECB.enabled = false;
+
+        //Keeping track of player status
+        player.status = PlayerStatus.Tech;
+
+        player.locked = true;
     }
 
     private float techVel = 5.0f;
     private float techScale = 20.0f;
     override public void Execute()
-    {
+    {   
         if(timer < animTime)
         {
             timer += Time.deltaTime;
@@ -70,6 +75,7 @@ public class TechState : State<Player>
     {
         player.EndInvuln();
 
+        player.locked = false;
         player.knockedDown = false;
         player.selfBody.mass = 1;
 

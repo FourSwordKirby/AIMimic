@@ -23,6 +23,9 @@ public class Snapshot {
     public Vector3 p1Position;
     public Vector3 p2Position;
 
+    public Vector3 p1Vel;
+    public Vector3 p2Vel;
+
     public float xDistance;
     public float yDistance;
 
@@ -60,6 +63,9 @@ public class Snapshot {
 
         p1Position = p1.transform.position;
         p2Position = p2.transform.position;
+
+        p1Vel = p1.selfBody.velocity;
+        p2Vel = p2.selfBody.velocity;
         
         //All distances are taken as p1 - p2
         xDistance = p1.transform.position.x - p2.transform.position.x;
@@ -87,49 +93,51 @@ public class Snapshot {
 
     public PlayerStatus StateToStatus(Player p)
     {
-        State<Player> state = p.ActionFsm.CurrentState;
+        return p.status;
 
-        if (p.ActionFsm.StateStack.Count == 0)
-            state = p.ActionFsm.CurrentState;
-        else
-            state = p.ActionFsm.StateStack.First(x => !(x is HitlagState));
+        //State<Player> state = p.ActionFsm.CurrentState;
 
-        if (state is IdleState)
-        {
-            if (!p.isCrouching)
-                return PlayerStatus.Stand;
-            else
-                return PlayerStatus.Crouch;
-        }
-        if (state is BlockState)
-        {
-            if (!p.isCrouching)
-                return PlayerStatus.Highblock;
-            else
-                return PlayerStatus.Lowblock;
-        }
-        else if (state is MovementState)
-        {
-            return PlayerStatus.Stand;
-        }
-        else if (state is JumpState)
-        {
-            return PlayerStatus.Air;
-        }
-        else if (state is AttackState || state is AirAttackState)
-        {
-            return PlayerStatus.Attacking;
-        }
-        else if (state is HitState)
-        {
-            return PlayerStatus.Hit;
-        }
-        else if (state is TechState)
-        {
-            return PlayerStatus.Tech;
-        }
-        else
-            return PlayerStatus.Other;
+        //if (p.ActionFsm.StateStack.Count == 0)
+        //    state = p.ActionFsm.CurrentState;
+        //else
+        //    state = p.ActionFsm.StateStack.First(x => !(x is HitlagState));
+
+        //if (state is IdleState)
+        //{
+        //    if (!p.isCrouching)
+        //        return PlayerStatus.Stand;
+        //    else
+        //        return PlayerStatus.Crouch;
+        //}
+        //if (state is BlockState)
+        //{
+        //    if (!p.isCrouching)
+        //        return PlayerStatus.Highblock;
+        //    else
+        //        return PlayerStatus.Lowblock;
+        //}
+        //else if (state is MovementState)
+        //{
+        //    return PlayerStatus.Stand;
+        //}
+        //else if (state is JumpState)
+        //{
+        //    return PlayerStatus.Air;
+        //}
+        //else if (state is AttackState || state is AirAttackState)
+        //{
+        //    return PlayerStatus.Attacking;
+        //}
+        //else if (state is HitState)
+        //{
+        //    return PlayerStatus.Hit;
+        //}
+        //else if (state is TechState)
+        //{
+        //    return PlayerStatus.Tech;
+        //}
+        //else
+        //    return PlayerStatus.Other;
     }
 
     //A way to compare attributes

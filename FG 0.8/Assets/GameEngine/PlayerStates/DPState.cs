@@ -49,6 +49,11 @@ public class DPState : State<Player>
         meleeHitbox.transform.localScale = new Vector3(meleeHitbox.transform.localScale.x,
                                                         -direction * Mathf.Abs(meleeHitbox.transform.localScale.y),
                                                         meleeHitbox.transform.localScale.z);
+
+        //Keeping track of player status
+        player.status = PlayerStatus.DP;
+
+        player.locked = true;
     }
 
     public Vector2 getJumpVelocity(float height, float distance, float time)
@@ -67,6 +72,12 @@ public class DPState : State<Player>
 
     override public void Execute()
     {
+        //Keeping track of player status
+        if (frameCounter < startup + duration)
+            player.status = PlayerStatus.DP;
+        else
+            player.status = PlayerStatus.Recovery;
+
         frameCounter++;
 
         //ANIMATIONS
@@ -127,6 +138,7 @@ public class DPState : State<Player>
 
             if (frameCounter > startup + duration + endlag)
             {
+                player.locked = false;
                 //Handles doing a DP after a knockdown
                 if (player.knockedDown)
                 {

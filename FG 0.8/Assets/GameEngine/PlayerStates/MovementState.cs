@@ -22,13 +22,14 @@ public class MovementState : State<Player> {
 
     override public void Enter()
     {
-        //Vector2 movementVector = Vector2.right * moveDir * player.movementSpeed;
         player.selfBody.velocity = movementVector;
+
+        //Keeping track of player status
+        player.status = PlayerStatus.Moving;
     }
 
     override public void Execute()
     {
-        //player.transform.position += movementVector * 1 / Application.targetFrameRate;
 
         Parameters.InputDirection dir = Controls.getInputDirection(player);
         if (Controls.jumpInputHeld(player))

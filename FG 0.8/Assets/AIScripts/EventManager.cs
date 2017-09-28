@@ -54,6 +54,11 @@ public class EventManager : MonoBehaviour {
         print(winner.isPlayer1 + " Game Win");
     }
 
+    public void RecordEndAction(Action action, Player player)
+    {
+        BroadcastMessage("ActionEnded", new KeyValuePair<Action, bool>(action, player.isPlayer1), SendMessageOptions.DontRequireReceiver);
+    }
+
     //This will take in an action and then send out the 
     //appropriate notification for that action
     public void RecordActionPerformed(Action action, Player player)

@@ -27,8 +27,8 @@ public class AttackState : State<Player>
         attackDistance = 0.4f;
 
         startup = 0.05f * Application.targetFrameRate;
-        duration = 0.05f * Application.targetFrameRate; ;
-        endlag = 0.25f * Application.targetFrameRate; ;
+        duration = 0.05f * Application.targetFrameRate;
+        endlag = 0.25f * Application.targetFrameRate;
 
         frameCounter = 0;
     }
@@ -66,13 +66,34 @@ public class AttackState : State<Player>
             meleeHitbox.GetComponent<Hitbox>().type = Hitbox.hitType.mid;
 
         meleeHitbox.transform.localPosition = startPosition;
+
+        //Player state managing
+        player.locked = true;
+
+        //Keeping track of player status
+        if (!player.isCrouching)
+            player.status = PlayerStatus.StandAttack;
+        else
+            player.status = PlayerStatus.LowAttack;
     }
 
     override public void Execute()
     {
+        //Keeping track of player status
+        if (frameCounter < startup + duration)
+        {
+            if (!player.isCrouching)
+                player.status = PlayerStatus.StandAttack;
+            else
+                player.status = PlayerStatus.LowAttack;
+        }
+        else
+            player.status = PlayerStatus.Recovery;
+
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.white;
         if (player.chainable)
         {
+            player.locked = false;
             if (Controls.attackInputDown(player))
             {
                 if (player.isCrouching)
@@ -103,11 +124,13 @@ public class AttackState : State<Player>
         }
         else
         {
+            player.locked = false;
             meleeHitbox.transform.localPosition = Vector2.zero;
             if (!player.isCrouching)
                 player.PerformAction(Action.Stand);
             else
                 player.PerformAction(Action.Crouch);
+            return;
         }
     }
 
@@ -123,6 +146,9 @@ public class AttackState : State<Player>
         meleeHitbox.GetComponent<Hitbox>().knockdown = false;
         player.hitboxManager.deactivateHitBox("MeleeHitbox");
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
+
+        //Player state managing
+        player.locked = false;
     }
 
     override public State<Player> Copy()

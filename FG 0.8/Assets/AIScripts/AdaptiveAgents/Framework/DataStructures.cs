@@ -291,7 +291,7 @@ public class Transition
 
     public override string ToString()
     {
-        return this.prior + " " + this.action + " " + this.result;
+        return "(" + this.action + ") " + "[" + this.prior + "]" + this.result;
     }
 }
 
@@ -452,6 +452,12 @@ public class AISituation : System.IEquatable<AISituation>
     public xDistance deltaX;
     public yDistance deltaY;
 
+    public xMovement xVel;
+    public yMovement yVel;
+
+    public xMovement opponentXVel;
+    public yMovement opponentYVel;
+
     public Health health;
     public Health opponentHealth;
 
@@ -476,30 +482,162 @@ public class AISituation : System.IEquatable<AISituation>
             yDist = -snapshot.yDistance;
         }
 
+        //Velocity
+        if(isPlayer1)
+        {
+            if (snapshot.p1Status == PlayerStatus.Moving || snapshot.p1Status == PlayerStatus.Dashing || snapshot.p1Status == PlayerStatus.Tech)
+            {
+                if (snapshot.p1Vel.x < 0)
+                    xVel = xMovement.Left;
+                else if (snapshot.p1Vel.x > 0)
+                    xVel = xMovement.Right;
+                else
+                    xVel = xMovement.Neutral;
+                yVel = yMovement.Neutral;
+            }
+            else if (snapshot.p1Status == PlayerStatus.Air)
+            {
+                if (snapshot.p1Vel.x < 0)
+                    xVel = xMovement.Left;
+                else if (snapshot.p1Vel.x > 0)
+                    xVel = xMovement.Right;
+                else
+                    xVel = xMovement.Neutral;
+
+                if (snapshot.p1Vel.y < 0)
+                    yVel = yMovement.Down;
+                else if (snapshot.p1Vel.y > 0)
+                    yVel = yMovement.Up;
+                else
+                    yVel = yMovement.Neutral;
+            }
+            else
+            {
+                xVel = xMovement.Neutral;
+                yVel = yMovement.Neutral;
+            }
+
+            if (snapshot.p2Status == PlayerStatus.Moving || snapshot.p2Status == PlayerStatus.Dashing || snapshot.p2Status == PlayerStatus.Tech)
+            {
+                if (snapshot.p2Vel.x < 0)
+                    opponentXVel = xMovement.Left;
+                else if (snapshot.p2Vel.x > 0)
+                    opponentXVel = xMovement.Right;
+                else
+                    opponentXVel = xMovement.Neutral;
+                opponentYVel = yMovement.Neutral;
+            }
+            else if (snapshot.p2Status == PlayerStatus.Air)
+            {
+                if (snapshot.p2Vel.x < 0)
+                    opponentXVel = xMovement.Left;
+                else if (snapshot.p2Vel.x > 0)
+                    opponentXVel = xMovement.Right;
+                else
+                    opponentXVel = xMovement.Neutral;
+
+                if (snapshot.p2Vel.y < 0)
+                    opponentYVel = yMovement.Down;
+                else if (snapshot.p2Vel.y > 0)
+                    opponentYVel = yMovement.Up;
+                else
+                    opponentYVel = yMovement.Neutral;
+            }
+            else
+            {
+                opponentXVel = xMovement.Neutral;
+                opponentYVel = yMovement.Neutral;
+            }
+        }
+        else
+        {
+            if (snapshot.p2Status == PlayerStatus.Moving || snapshot.p2Status == PlayerStatus.Dashing || snapshot.p2Status == PlayerStatus.Tech)
+            {
+                if (snapshot.p2Vel.x < -0.25f)
+                    xVel = xMovement.Left;
+                else if (snapshot.p2Vel.x > 0.25f)
+                    xVel = xMovement.Right;
+                else
+                    xVel = xMovement.Neutral;
+                yVel = yMovement.Neutral;
+            }
+            else if (snapshot.p2Status == PlayerStatus.Air)
+            {
+                if (snapshot.p2Vel.x < -0.25f)
+                    xVel = xMovement.Left;
+                else if (snapshot.p2Vel.x > 0.25f)
+                    xVel = xMovement.Right;
+                else
+                    xVel = xMovement.Neutral;
+
+                if (snapshot.p2Vel.y < -0.25f)
+                    yVel = yMovement.Down;
+                else if (snapshot.p2Vel.y > 0.25f)
+                    yVel = yMovement.Up;
+                else
+                    yVel = yMovement.Neutral;
+            }
+            else
+            {
+                xVel = xMovement.Neutral;
+                yVel = yMovement.Neutral;
+            }
+
+            if (snapshot.p1Status == PlayerStatus.Moving || snapshot.p1Status == PlayerStatus.Dashing || snapshot.p1Status == PlayerStatus.Tech)
+            {
+                if (snapshot.p1Vel.x < -0.25f)
+                    opponentXVel = xMovement.Left;
+                else if (snapshot.p1Vel.x > 0.25f)
+                    opponentXVel = xMovement.Right;
+                else
+                    opponentXVel = xMovement.Neutral;
+                opponentYVel = yMovement.Neutral;
+            }
+            else if (snapshot.p1Status == PlayerStatus.Air)
+            {
+                if (snapshot.p1Vel.x < -0.25f)
+                    opponentXVel = xMovement.Left;
+                else if (snapshot.p1Vel.x > 0.25f)
+                    opponentXVel = xMovement.Right;
+                else
+                    opponentXVel = xMovement.Neutral;
+
+                if (snapshot.p1Vel.y < -0.25f)
+                    opponentYVel = yMovement.Down;
+                else if (snapshot.p1Vel.y > 0.25f)
+                    opponentYVel = yMovement.Up;
+                else
+                    opponentYVel = yMovement.Neutral;
+            }
+            else
+            {
+                opponentXVel = xMovement.Neutral;
+                opponentYVel = yMovement.Neutral;
+            }
+        }
+
+
         //Side
         if (xDist < 0)
             side = Side.Left;
         else
             side = Side.Right;
         //xDistance
-        if (Mathf.Abs(xDist) < 1)
+        if (Mathf.Abs(xDist) < 2)
             deltaX = xDistance.Adjacent;
-        else if (Mathf.Abs(xDist) < 3)
+        else if (Mathf.Abs(xDist) < 5)
             deltaX = xDistance.Near;
         else
             deltaX = xDistance.Far;
 
         //yDistance
-        if (yDist <= -1.5)
-            deltaY = yDistance.FarBelow;
-        else if (-1 < yDist && yDist <= -0.25)
-            deltaY = yDistance.NearBelow;
-        else if (-0.25 < yDist && yDist <= 0.25)
+        //TODO Fix dumb positioning values with respect to the player rotating while attacking :|
+        if (yDist <= -0.8f)
+            deltaY = yDistance.Below;
+        else if (-0.8f < yDist && yDist <= 0.8f)
             deltaY = yDistance.Level;
-        else if (0.25 < yDist && yDist <= 1.5)
-            deltaY = yDistance.NearAbove;
-        else
-            deltaY = yDistance.FarAbove;
+        else 
+            deltaY = yDistance.Above;
 
         //Health
         if (0 < snapshot.p1Health && snapshot.p1Health <= 30)
@@ -519,13 +657,13 @@ public class AISituation : System.IEquatable<AISituation>
         //Cornered
         if (isPlayer1)
         {
-            cornered =  snapshot.p1CornerDistance < 1 ? Cornered.yes : Cornered.no;
-            opponentCornered = snapshot.p2CornerDistance < 1 ? Cornered.yes : Cornered.no;
+            cornered =  snapshot.p1CornerDistance < 3 ? Cornered.yes : Cornered.no;
+            opponentCornered = snapshot.p2CornerDistance < 3 ? Cornered.yes : Cornered.no;
         }
         else
         {
-            cornered = snapshot.p1CornerDistance < 1 ? Cornered.yes : Cornered.no;
-            opponentCornered = snapshot.p2CornerDistance < 1 ? Cornered.yes : Cornered.no;
+            cornered = snapshot.p1CornerDistance < 3 ? Cornered.yes : Cornered.no;
+            opponentCornered = snapshot.p2CornerDistance < 3 ? Cornered.yes : Cornered.no;
         }
 
         //Status
@@ -541,32 +679,15 @@ public class AISituation : System.IEquatable<AISituation>
         }
     }
 
+
+    //Obsolete code used to not break other pieces of code
     public AISituation(GameEvent gameEvent)
     {
-        //xDistance
-        if (gameEvent.xDistance < 1)
-            deltaX = xDistance.Adjacent;
-        else if (gameEvent.xDistance < 3)
-            deltaX = xDistance.Near;
-        else
-            deltaX = xDistance.Far;
-
-        //yDistance
-        if (gameEvent.yDistance < 0.2f)
-            deltaY = yDistance.Level;
-        else if (gameEvent.yDistance < 1)
-            deltaY = yDistance.NearAbove;
-        else
-            deltaY = yDistance.FarAbove;
-
-        //Status
-        opponentStatus = gameEvent.p1Status;
     }
 
     //Empty constructor used for copying an AISituation
     private AISituation()
     {
-
     }
 
     //Filler to stop an angry compiler
@@ -582,8 +703,13 @@ public class AISituation : System.IEquatable<AISituation>
                 //Don't account for health for now bc it isn't pertient towards making the AI navigate neutral effectively
                 //health == situation.health &&
                 //opponentHealth == situation.opponentHealth &&
-                //cornered == situation.cornered &&
-                //opponentCornered == situation.opponentCornered &&
+
+                xVel == situation.xVel &&
+                yVel == situation.yVel &&
+                opponentXVel == situation.opponentXVel &&
+                opponentYVel == situation.opponentYVel &&
+                cornered == situation.cornered &&
+                opponentCornered == situation.opponentCornered &&
                 status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
@@ -595,7 +721,10 @@ public class AISituation : System.IEquatable<AISituation>
 
     public override string ToString()
     {
-        return side + " " + deltaX + " " + deltaY + " " + status + " " + opponentStatus;
+        return side + " " + 
+                deltaX + " " + deltaY + " " +
+                xVel + " " + yVel + " " + opponentXVel + " " + opponentYVel + " " +
+                status + " " + opponentStatus;
     }
 
     public AISituation Copy()
@@ -613,6 +742,7 @@ public class AISituation : System.IEquatable<AISituation>
         return newSituation;
     }
 
+    //Need to be adjusted with the new variablesa added
     internal static float Similarity(AISituation x, AISituation y)
     {
         SituationChange diff = new SituationChange(x, y);

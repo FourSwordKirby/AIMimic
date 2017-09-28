@@ -35,6 +35,23 @@ public class TransitionProfile
             datalog += "~~~~\n";
         }
         File.WriteAllText(filePath, datalog);
+
+        //Writes a readable version
+        datalog = "";
+        string readableFilePath = directoryPath + playerName + "Readable.txt";
+        foreach (AISituation situation in playerTransitions.Keys)
+        {
+            datalog += JsonUtility.ToJson(situation) + "\n";
+
+            for (int i = 0; i < playerTransitions[situation].Count; i++)
+            {
+                datalog += playerTransitions[situation][i].ToString() + "\n";
+            }
+
+            datalog += "~~~~\n";
+        }
+        File.WriteAllText(readableFilePath, datalog);
+
         Debug.Log("wrote to log");
     }
 
