@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -36,12 +37,12 @@ public class TransitionSolver : MonoBehaviour
             {PlayerStatus.Moving, new List<Action>() { Action.Stand, Action.Crouch, Action.StandBlock, Action.JumpLeft, Action.JumpNeutral, Action.JumpRight, Action.DashLeft, Action.DashRight, Action.Attack, Action.Overhead, Action.DP}  },
             {PlayerStatus.Dashing, new List<Action>() { Action.Stand, Action.Crouch}  },
             {PlayerStatus.AirDashing,new List<Action>() {Action.AirAttack }  },
-            {PlayerStatus.StandAttack, new List<Action>() {Action.Stand }  },
-            {PlayerStatus.LowAttack, new List<Action>() {Action.Crouch }  },
+            {PlayerStatus.StandAttack, new List<Action>() {Action.Stand, Action.Crouch, Action.Attack }  }, 
+            {PlayerStatus.LowAttack, new List<Action>() {Action.Stand, Action.Crouch, Action.LowAttack }  },
             {PlayerStatus.OverheadAttack,new List<Action>() {Action.Stand }  },
             {PlayerStatus.AirAttack, new List<Action>() {Action.Stand }  },
             {PlayerStatus.DP, new List<Action>() {Action.Stand }  },
-            {PlayerStatus.Recovery, new List<Action>() {Action.Stand, Action.Crouch }  },
+            {PlayerStatus.Recovery, new List<Action>() {Action.Stand, Action.Crouch, Action.Attack, Action.LowAttack }  },
         };
 
 
@@ -51,21 +52,27 @@ public class TransitionSolver : MonoBehaviour
     int attemptLimit = 150;
     bool actionCompleted = false;
 
-    int delay = 0;
+    public void WritePlan(List<Transition> plan)
+    {
+        string directoryPath = Application.streamingAssetsPath;
+        string filePath = directoryPath + "/InitialPlan" + ".txt";
+
+        // serialize
+        string datalog = "";
+        for (int i = 0; i < plan.Count; i++)
+        {
+            datalog += plan[i].action + "\n";
+        }
+        File.WriteAllText(filePath, datalog);
+    }
+
     public void Update()
     {
-        //Minor delay in order to see what's actually going on
-        if(delay > 0)
-        {
-            UnityEngine.Debug.Break();
-            delay--;
-        }
-
-
         controlledPlayer.AIControlled = true;
         if (desiredTransitions == null)
         {
             desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
+            WritePlan(desiredTransitions);
             //desiredTransitions = usingActionEffects ? FindTarget(actionEffects) : FindTarget(playerTransitions);
         }
 
@@ -115,7 +122,7 @@ public class TransitionSolver : MonoBehaviour
 
                 if (!(actionTracker < desiredTransitions.Count))
                 {
-                    print("we're done. Plan length: " + desiredTransitions.Count);
+                    print("Completed plan of length: " + desiredTransitions.Count);
                     return;
                 }
 
@@ -172,7 +179,10 @@ public class TransitionSolver : MonoBehaviour
                     if (!observedSituations.ContainsKey(transition.result))
                     {
                         if (!ValidMoveTable[currentSituation.status].Contains(transition.action.action))
+                        {
                             print("Invalid action detected on table" + currentSituation.status + transition.action.action);
+                            continue;
+                        }
 
                         List<Transition> latestTransitions = new List<Transition>();
                         latestTransitions.AddRange(currentTransitions);
@@ -266,7 +276,7 @@ public class TransitionSolver : MonoBehaviour
     {
         //Stuff to handle timing out
         Stopwatch sw = Stopwatch.StartNew();
-        float timeout = 500;
+        float timeout = 500000;
 
         AISituation originalSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
         AISituation currentSituation = originalSituation;
@@ -283,8 +293,14 @@ public class TransitionSolver : MonoBehaviour
         else
             pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions), currentTransitions.Count);
 
-        while ((pendingKnownSituations.Count > 0 || pendingUnknownSituations.Count > 0) && sw.ElapsedMilliseconds < timeout)
+        while ((pendingKnownSituations.Count > 0 || pendingUnknownSituations.Count > 0))
         {
+            if (sw.ElapsedMilliseconds >= timeout)
+            {
+                print("Timed out");
+                break;
+            }
+
             float priority = 0;
             if (pendingKnownSituations.Count > 0)
             {
@@ -303,9 +319,11 @@ public class TransitionSolver : MonoBehaviour
                 currentTransitions = pair.Value;
             }
 
+            print("currently looking at sit: " + currentSituation);
+
             if (isTargetSituation(currentSituation) && currentTransitions.Count > 0)
             {
-                print(sw.ElapsedMilliseconds);
+                print("Time elapsed to plan: " + sw.ElapsedMilliseconds);
                 return currentTransitions;
             }
 
@@ -322,11 +340,20 @@ public class TransitionSolver : MonoBehaviour
                         if (transition.action.duration > 200)
                             continue;
 
+                        if (!ValidMoveTable[currentSituation.status].Contains(transition.action.action))
+                        {
+                            print("Invalid action detected on table" + currentSituation.status + transition.action.action);
+                            continue;
+                        }
+
+                        if (observedKnownSituations.ContainsKey(transition.result) || observedUnknownSituations.ContainsKey(transition.result))
+                            break;
+
                         List<Transition> latestTransitions = new List<Transition>();
                         latestTransitions.AddRange(currentTransitions);
                         latestTransitions.Add(transition);
 
-                        if(transitions.ContainsKey(transition.result))
+                        if (transitions.ContainsKey(transition.result))
                             pendingKnownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions),   priority + 1.0f);
                         else
                             pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions), priority + 1.0f);
@@ -347,9 +374,7 @@ public class TransitionSolver : MonoBehaviour
                             continue;
 
                         //Makes sure that the action is valid for our current state
-                        if (!ValidMoveTable.ContainsKey(currentSituation.status))
-                            print(currentSituation.status + "Debug this later!!");
-                        else if (!ValidMoveTable[currentSituation.status].Contains(action.action))
+                        if (!ValidMoveTable[currentSituation.status].Contains(action.action))
                             continue;
 
                         List<SituationChange> situationChanges = actionEffects[action];
@@ -373,7 +398,7 @@ public class TransitionSolver : MonoBehaviour
                             //Priority here for taking a new action is 
                             //(1+success rate of action) * (1+similarity of other situation to current situation)
                             //Focusing primarily on the state similarity seems to kind of sort of work.
-                            float pendingPriority = priority + /*(2 - (count / totalCount)) **/ 10*(2 - AISituation.Similarity(currentSituation, change.prior));
+                            float pendingPriority = priority +  1.0f/AISituation.Similarity(currentSituation, change.prior);
 
                             //Right now we're not exploring the unknown transitions from this state, which could be bad?
                             //Hard to say if we'll get significantly more cases where we pick a random action
@@ -393,7 +418,19 @@ public class TransitionSolver : MonoBehaviour
         //If EVERYTHING else fails, do a random move
         Action randomAction = ValidMoveTable[originalSituation.status][Random.Range(0, ValidMoveTable[originalSituation.status].Count)];
         print("random move" + randomAction + originalSituation.status + "Search time " + sw.ElapsedMilliseconds);
-        return new List<Transition>() { new Transition(originalSituation, new PerformedAction(randomAction, 1), originalSituation) };
+        return new List<Transition>() { new Transition(originalSituation, new PerformedAction(randomAction, 4), originalSituation) };
+    }
+
+
+    int episodeModifier = 1;
+    public float GetPriority(AISituation s1, AISituation s2)
+    {
+        float u1 = ((s1.GetHashCode() * episodeModifier)% 1000) / 1000.0f;
+        float u2 = ((s1.GetHashCode() * episodeModifier)% 1000) / 1000.0f;
+
+        //Generates a normal distribution from the 2 above uniform distributions
+        float BoxMullerNormal = Mathf.Sqrt(-2 * Mathf.Log(u1)) * Mathf.Cos(2 * Mathf.PI * u2);
+        return BoxMullerNormal+5.0f;
     }
 
     public AISituation targetSituation;

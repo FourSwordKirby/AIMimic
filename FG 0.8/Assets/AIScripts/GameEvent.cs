@@ -132,7 +132,7 @@ public class GameEvent {
         }
         else if (state is AttackState || state is AirAttackState)
         {
-            return PlayerStatus.Attacking;
+            return PlayerStatus.StandAttack;
         }
         else if (state is HitState)
         {
@@ -143,7 +143,10 @@ public class GameEvent {
             return PlayerStatus.Tech;
         }
         else
-            return PlayerStatus.Other;
+        {
+            Debug.Log("Shouldn't have gotten here");
+            return PlayerStatus.Hit;
+        }
     }
 
     //A way to compare attributes

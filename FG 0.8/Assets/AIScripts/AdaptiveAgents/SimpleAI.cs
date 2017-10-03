@@ -49,7 +49,7 @@ public class SimpleAI : AIAgent {
                 else
                     action = Action.StandBlock;
             }
-            else if (currentState.p2Status == PlayerStatus.Attacking && xAbs < 3.0f && yAbs < 1.0f)
+            else if (xAbs < 3.0f && yAbs < 1.0f)
             {
                 if (currentState.p1Status == PlayerStatus.Stand)
                     action = Action.Crouch;
@@ -97,7 +97,7 @@ public class SimpleAI : AIAgent {
                 else
                     action = Action.StandBlock;
             }
-            else if (currentState.p1Status == PlayerStatus.Attacking && xAbs < 3.0f && yAbs < 1.0f)
+            else if (xAbs < 3.0f && yAbs < 1.0f)
             {
                 if (currentState.p2Status == PlayerStatus.Stand)
                     action = Action.Crouch;

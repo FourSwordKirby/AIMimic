@@ -53,7 +53,7 @@ public class SimplePressureAI : AIAgent {
             }
         }
 
-        if ((currentState.p1Status == PlayerStatus.Attacking || currentState.p1Status == PlayerStatus.Stand) && action == Action.LowAttack)
+        if ((currentState.p1Status == PlayerStatus.StandAttack || currentState.p1Status == PlayerStatus.Stand) && action == Action.LowAttack)
             action = Action.Crouch;
         if (currentState.p1Status == PlayerStatus.Crouch && (action == Action.Attack ||
                                                             action == Action.WalkLeft ||

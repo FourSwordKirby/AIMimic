@@ -54,6 +54,7 @@ public class TechState : State<Player>
 
             if (timer >= animTime)
             {
+                player.locked = false;
                 player.spriteContainer.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
                 player.spriteContainer.transform.localPosition = -0.25f * Vector3.up;
 
@@ -75,7 +76,6 @@ public class TechState : State<Player>
     {
         player.EndInvuln();
 
-        player.locked = false;
         player.knockedDown = false;
         player.selfBody.mass = 1;
 

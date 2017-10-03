@@ -3637,23 +3637,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usingActionEffects: 1
-  searchSpecificTarget: 0
+  searchSpecificTarget: 1
   playerName: Debug
   controlledPlayer: {fileID: 2021633135}
   targetSituation:
-    side: 0
+    side: 1
     deltaX: 2
-    deltaY: 2
-    xVel: 0
-    yVel: 0
-    opponentXVel: 0
-    opponentYVel: 0
+    deltaY: 1
+    xVel: 1
+    yVel: 1
+    opponentXVel: 1
+    opponentYVel: 1
     health: 0
     opponentHealth: 0
-    cornered: 1
+    cornered: 0
     opponentCornered: 1
     status: 0
-    opponentStatus: 0
+    opponentStatus: 6
 --- !u!1 &993143674
 GameObject:
   m_ObjectHideFlags: 0

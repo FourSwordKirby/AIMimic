@@ -40,8 +40,6 @@ public enum PlayerStatus
     Hit,
     KnockdownHit,
     Tech,
-    Attacking, //Left in for consistency for now
-    Other, //Left in for consistency for now
     //Include various kinds of attacking
     Moving,
     Dashing,
