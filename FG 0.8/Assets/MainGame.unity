@@ -1487,7 +1487,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &262404958
 MonoBehaviour:
@@ -2139,7 +2139,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &560209167
 MonoBehaviour:
@@ -2191,7 +2191,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &593143916
 MonoBehaviour:
@@ -2420,23 +2420,82 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedPlayer: {fileID: 2021633135}
   lastSituation:
-    side: 0
-    deltaX: 0
-    deltaY: 0
+    xPos: 0
+    yPos: 0
+    opponentXPos: 0
+    opponentYPos: 0
     xVel: 0
     yVel: 0
     opponentXVel: 0
     opponentYVel: 0
     health: 0
     opponentHealth: 0
-    cornered: 0
-    opponentCornered: 0
     status: 0
     opponentStatus: 0
   lastAction: 0
   playerName: Debug
   currentDuration: 0
   lastCapturedFrame: 0
+--- !u!1 &639342030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 639342031}
+  - component: {fileID: 639342032}
+  m_Layer: 0
+  m_Name: TransitionSolverStand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &639342031
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 639342030}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1920301663}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639342032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 639342030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8f5ecaa8da04d4288d335e1ecaa5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usingActionEffects: 1
+  searchSpecificTarget: 1
+  repeatedPlanning: 0
+  perceptionDelay: 0
+  perceptionLeeway: 10
+  playerName: Debug
+  controlledPlayer: {fileID: 2021633135}
+  targetSituation:
+    xPos: -1
+    yPos: 0
+    opponentXPos: 4
+    opponentYPos: 0
+    xVel: 1
+    yVel: 1
+    opponentXVel: 1
+    opponentYVel: 1
+    health: 0
+    opponentHealth: 0
+    status: 0
+    opponentStatus: 0
 --- !u!1 &649166559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2464,7 +2523,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 17
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &649166561
 MonoBehaviour:
@@ -3596,64 +3655,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 963582436}
---- !u!1 &974291933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 974291934}
-  - component: {fileID: 974291935}
-  m_Layer: 0
-  m_Name: TransitionSolver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &974291934
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 974291933}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1920301663}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &974291935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 974291933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b8f5ecaa8da04d4288d335e1ecaa5ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usingActionEffects: 1
-  searchSpecificTarget: 1
-  playerName: Debug
-  controlledPlayer: {fileID: 2021633135}
-  targetSituation:
-    side: 1
-    deltaX: 2
-    deltaY: 1
-    xVel: 1
-    yVel: 1
-    opponentXVel: 1
-    opponentYVel: 1
-    health: 0
-    opponentHealth: 0
-    cornered: 0
-    opponentCornered: 1
-    status: 0
-    opponentStatus: 6
 --- !u!1 &993143674
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,7 +3813,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1035947498
 MonoBehaviour:
@@ -3827,17 +3828,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedPlayer: {fileID: 173988561}
   lastSituation:
-    side: 0
-    deltaX: 0
-    deltaY: 0
+    xPos: 0
+    yPos: 0
+    opponentXPos: 0
+    opponentYPos: 0
     xVel: 0
     yVel: 0
     opponentXVel: 0
     opponentYVel: 0
     health: 0
     opponentHealth: 0
-    cornered: 0
-    opponentCornered: 0
     status: 0
     opponentStatus: 0
   lastAction: 0
@@ -4699,7 +4699,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1138192090
 MonoBehaviour:
@@ -4714,17 +4714,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recordedPlayer: {fileID: 2021633135}
   lastSituation:
-    side: 0
-    deltaX: 0
-    deltaY: 0
+    xPos: 0
+    yPos: 0
+    opponentXPos: 0
+    opponentYPos: 0
     xVel: 0
     yVel: 0
     opponentXVel: 0
     opponentYVel: 0
     health: 0
     opponentHealth: 0
-    cornered: 0
-    opponentCornered: 0
     status: 0
     opponentStatus: 0
   lastAction: 0
@@ -4811,7 +4810,7 @@ Transform:
   - {fileID: 1960658653}
   - {fileID: 193905088}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1158073601
 MonoBehaviour:
@@ -5115,7 +5114,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1261004522
 MonoBehaviour:
@@ -5403,7 +5402,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1299767549
 MonoBehaviour:
@@ -5486,7 +5485,7 @@ Transform:
   m_Children:
   - {fileID: 2011563193}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1319998455
 MonoBehaviour:
@@ -5534,7 +5533,7 @@ Transform:
   - {fileID: 53168940}
   - {fileID: 1406991332}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1406991331
 GameObject:
@@ -5675,7 +5674,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1416427207
 MonoBehaviour:
@@ -5690,20 +5689,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usingActionEffects: 1
   searchSpecificTarget: 0
+  repeatedPlanning: 0
+  perceptionDelay: 0
+  perceptionLeeway: 0
   playerName: Baseline
   controlledPlayer: {fileID: 2021633135}
   targetSituation:
-    side: 1
-    deltaX: 2
-    deltaY: 2
+    xPos: 0
+    yPos: 0
+    opponentXPos: 0
+    opponentYPos: 0
     xVel: 0
     yVel: 0
     opponentXVel: 0
     opponentYVel: 0
     health: 0
     opponentHealth: 0
-    cornered: 1
-    opponentCornered: 1
     status: 0
     opponentStatus: 0
 --- !u!114 &1417773607 stripped
@@ -6277,7 +6278,7 @@ Transform:
   - {fileID: 2033169418}
   - {fileID: 385211600}
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1538559160
 MonoBehaviour:
@@ -6437,7 +6438,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1541288104
 MonoBehaviour:
@@ -6452,20 +6453,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usingActionEffects: 0
   searchSpecificTarget: 0
+  repeatedPlanning: 0
+  perceptionDelay: 0
+  perceptionLeeway: 0
   playerName: ExperimentalTests2
   controlledPlayer: {fileID: 173988561}
   targetSituation:
-    side: 0
-    deltaX: 2
-    deltaY: 2
+    xPos: 0
+    yPos: 0
+    opponentXPos: 0
+    opponentYPos: 0
     xVel: 0
     yVel: 0
     opponentXVel: 0
     opponentYVel: 0
     health: 0
     opponentHealth: 0
-    cornered: 1
-    opponentCornered: 1
     status: 0
     opponentStatus: 0
 --- !u!1 &1591085297
@@ -6516,6 +6519,66 @@ MonoBehaviour:
   frameDelay: 0
   DebugText: {fileID: 1894823374}
   sequenceName: ForwardJump
+--- !u!1 &1598368638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1598368639}
+  - component: {fileID: 1598368640}
+  m_Layer: 0
+  m_Name: TransitionSolverAttac
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1598368639
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1598368638}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1920301663}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1598368640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1598368638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8f5ecaa8da04d4288d335e1ecaa5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usingActionEffects: 1
+  searchSpecificTarget: 1
+  repeatedPlanning: 0
+  perceptionDelay: 0
+  perceptionLeeway: 10
+  playerName: Debug
+  controlledPlayer: {fileID: 2021633135}
+  targetSituation:
+    xPos: 20
+    yPos: 0
+    opponentXPos: 4
+    opponentYPos: 0
+    xVel: 1
+    yVel: 1
+    opponentXVel: 1
+    opponentYVel: 1
+    health: 0
+    opponentHealth: 0
+    status: 0
+    opponentStatus: 0
 --- !u!1 &1605285919
 GameObject:
   m_ObjectHideFlags: 0
@@ -7808,7 +7871,9 @@ Transform:
   m_Children:
   - {fileID: 1103802156}
   - {fileID: 633772766}
-  - {fileID: 974291934}
+  - {fileID: 1598368639}
+  - {fileID: 2034187770}
+  - {fileID: 639342031}
   - {fileID: 1416427206}
   - {fileID: 1541288103}
   - {fileID: 1138192089}
@@ -8524,6 +8589,66 @@ MonoBehaviour:
   frameDelay: 4
   backpropDepth: 10
   DebugText: {fileID: 713381443}
+--- !u!1 &2034187769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 2034187770}
+  - component: {fileID: 2034187771}
+  m_Layer: 0
+  m_Name: TransitionSolverFar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2034187770
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2034187769}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1920301663}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2034187771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2034187769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b8f5ecaa8da04d4288d335e1ecaa5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usingActionEffects: 1
+  searchSpecificTarget: 1
+  repeatedPlanning: 0
+  perceptionDelay: 0
+  perceptionLeeway: 10
+  playerName: Debug
+  controlledPlayer: {fileID: 2021633135}
+  targetSituation:
+    xPos: 20
+    yPos: 0
+    opponentXPos: 4
+    opponentYPos: 0
+    xVel: 1
+    yVel: 1
+    opponentXVel: 1
+    opponentYVel: 1
+    health: 0
+    opponentHealth: 0
+    status: 0
+    opponentStatus: 0
 --- !u!1 &2040287761
 GameObject:
   m_ObjectHideFlags: 0
@@ -8551,7 +8676,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2040287764
 MonoBehaviour:
@@ -8782,7 +8907,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1920301663}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110950457
 MonoBehaviour:

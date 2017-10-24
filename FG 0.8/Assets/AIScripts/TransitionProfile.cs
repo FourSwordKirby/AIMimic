@@ -95,6 +95,31 @@ public class TransitionProfile
     {
         Dictionary<PerformedAction, List<SituationChange>> actionEffects = new Dictionary<PerformedAction, List<SituationChange>>();
 
+        //***********TODO: delete once we've gotten the player to move and stop next to the opponent.*******************
+        //PerformedAction action1 = new PerformedAction(Action.Stand, 1);
+
+        //AISituation prior = new AISituation(GameRecorder.instance.LatestFrame());
+        //prior.xPos = 7;
+        //prior.yPos = 0;
+        //prior.opponentXPos = 0;
+        //prior.opponentYPos = 4;
+        //prior.xVel = xMovement.Right;
+        //prior.yVel = yMovement.Neutral;
+        //prior.status = PlayerStatus.Moving;
+
+        //AISituation result = new AISituation(GameRecorder.instance.LatestFrame());
+        //result.xPos = 7;
+        //result.yPos = 0;
+        //result.opponentXPos = 0;
+        //result.opponentYPos = 4;
+        //result.xVel = xMovement.Neutral;
+        //result.yVel = yMovement.Neutral;
+        //result.status = PlayerStatus.Stand;
+
+        //actionEffects.Add(action1, new List<SituationChange>() { new SituationChange(prior, result) });
+        //return actionEffects;
+        //********Comment out the above once debugged*********/
+        
         foreach (AISituation situation in playerTransitions.Keys)
         {
             List<Transition> transitions = playerTransitions[situation];
