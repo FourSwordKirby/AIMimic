@@ -540,6 +540,7 @@ public class AISituation : System.IEquatable<AISituation>
 {
     public int xPos;
     public int yPos;
+    public int distance;
 
     public int opponentXPos;
     public int opponentYPos;
@@ -553,28 +554,33 @@ public class AISituation : System.IEquatable<AISituation>
     public Health health;
     public Health opponentHealth;
 
+    public bool grounded;
+    public bool opponentGrounded;
+
     public PlayerStatus status;
     public PlayerStatus opponentStatus;
+    
 
     public AISituation(Snapshot snapshot, bool isPlayer1)
     {
         if (isPlayer1)
         {
-            xPos = (int)(snapshot.p1Position.x * 2);
+            xPos = Mathf.RoundToInt(snapshot.p1Position.x * 2);
             yPos = (int)(snapshot.p1Position.y);
 
-            opponentXPos = (int)(snapshot.p2Position.x * 2);
+            opponentXPos = Mathf.RoundToInt(snapshot.p2Position.x * 2);
             opponentYPos = (int)(snapshot.p2Position.y);
         }
         else
         {
-
-            xPos = (int)(snapshot.p2Position.x * 2);
+            xPos = Mathf.RoundToInt(snapshot.p2Position.x * 2);
             yPos = (int)(snapshot.p2Position.y);
 
-            opponentXPos = (int)(snapshot.p1Position.x * 2);
+            opponentXPos = Mathf.RoundToInt(snapshot.p1Position.x * 2);
             opponentYPos = (int)(snapshot.p1Position.y);
         }
+
+        distance = Mathf.Abs(xPos - opponentXPos);
 
         //Velocity
         if (isPlayer1)
@@ -725,33 +731,37 @@ public class AISituation : System.IEquatable<AISituation>
         else if (70 < snapshot.p2Health && snapshot.p2Health <= 100)
             opponentHealth = Health.High;
 
-        //Status
+        //Status and groundedness
         if (isPlayer1)
         {
             status = snapshot.p1Status;
+            grounded = snapshot.p1Grounded;
+
             opponentStatus = snapshot.p2Status;
+            opponentGrounded = snapshot.p2Grounded;
         }
         else
         {
             status = snapshot.p2Status;
+            grounded = snapshot.p2Grounded;
+
             opponentStatus = snapshot.p1Status;
+            opponentGrounded = snapshot.p1Grounded;
         }
     }
 
+    //Empty Default Constructor
+    public AISituation() { }
 
     //Obsolete code used to not break other pieces of code
     public AISituation(GameEvent gameEvent)
     {
     }
 
-    //Empty constructor used for copying an AISituation
-    private AISituation()
-    {
-    }
-
     //Filler to stop an angry compiler
     public AISituation(Snapshot currentState)
     {
+        Debug.Log("this code shouldn't be called");
     }
 
     public bool Equals(AISituation situation)
@@ -763,11 +773,13 @@ public class AISituation : System.IEquatable<AISituation>
                 //Don't account for health for now bc it isn't pertient towards making the AI navigate neutral effectively
                 //health == situation.health &&
                 //opponentHealth == situation.opponentHealth &&
-
+           
                 xVel == situation.xVel &&
                 yVel == situation.yVel &&
                 opponentXVel == situation.opponentXVel &&
                 opponentYVel == situation.opponentYVel &&
+                grounded == situation.grounded &&
+                opponentGrounded == situation.opponentGrounded &&
                 status == situation.status &&
                 opponentStatus == situation.opponentStatus;
     }
@@ -788,6 +800,7 @@ public class AISituation : System.IEquatable<AISituation>
                 opponentXPos + " " + opponentYPos + " " +
                 xVel + " " + yVel + " " +
                 opponentXVel + " " + opponentYVel + " " +
+                grounded + " " + opponentGrounded + " " +
                 status + " " + opponentStatus;
     }
 
@@ -799,6 +812,8 @@ public class AISituation : System.IEquatable<AISituation>
         newSituation.yPos = yPos;
         newSituation.opponentXPos = opponentXPos;
         newSituation.opponentYPos = opponentYPos;
+        newSituation.distance = distance;
+
         newSituation.xVel = xVel;
         newSituation.yVel = yVel;
         newSituation.opponentXVel = opponentXVel;
@@ -807,27 +822,30 @@ public class AISituation : System.IEquatable<AISituation>
         newSituation.health = health;
         newSituation.opponentHealth = opponentHealth;
 
+        newSituation.grounded = grounded;
+        newSituation.opponentGrounded = opponentGrounded;
+
         newSituation.status = status;
         newSituation.opponentStatus = opponentStatus;
         return newSituation;
     }
 
-    //TODO: Need to be adjusted with the new variablesa added
-    //Specifically, add the xPos and yPos variables
     internal static float Similarity(AISituation x, AISituation y)
     {
         SituationChange diff = new SituationChange(x, y);
         return ((
-            (diff.xPosChange == 0 ? 1 : 0)
+            5.0f*((20.0f-diff.xPosChange)/ 20.0f)
             + (diff.yPosChange == 0 ? 1 : 0)
-            + (diff.opponentXPosChange == 0 ? 1 : 0)
+            + 5.0f * ((20.0f - diff.opponentXPosChange) / 20.0f)
             + (diff.opponentYPosChange == 0 ? 1 : 0)
             + (diff.xVelChange == 0 ? 1 : 0)
             + (diff.yVelChange == 0 ? 1 : 0)
             + (diff.opponentXVelChange == 0 ? 1 : 0)
             + (diff.opponentYVelChange == 0 ? 1 : 0)
+            + (x.grounded == y.grounded ? 1 : 0)
+            + (x.opponentGrounded == y.opponentGrounded ? 1 : 0)
             + (x.status == y.status ? 1 : 0)
-            + (x.opponentStatus == y.opponentStatus ? 1 : 0)) + 1.0f) / 11.0f; //The +1 is used to prevent divide by 0 errors
+            + (x.opponentStatus == y.opponentStatus ? 1 : 0)) + 1.0f) / 19.0f; //The +1 is used to prevent divide by 0 errors
     }
 
     //Gives the raw difference between the 2 states. Used as a lowerbound for the number of actions that needs to be done to 
@@ -845,6 +863,8 @@ public class AISituation : System.IEquatable<AISituation>
             + (diff.yVelChange == 0 ? 0 : 1)
             + (diff.opponentXVelChange == 0 ? 0 : 1)
             + (diff.opponentYVelChange == 0 ? 0 : 1)
+            + (x.grounded == y.grounded ? 1 : 0)
+            + (x.opponentGrounded == y.opponentGrounded ? 1 : 0)
             + (x.status == y.status ? 0 : 1)
             + (x.opponentStatus == y.opponentStatus ? 0 : 1));
     }
@@ -872,6 +892,9 @@ public class SituationChange : System.IEquatable<SituationChange>
 
     //public int corneredChange;
     //public int opponentCorneredChange;
+
+    public bool resultingGrounded;
+    public bool opponentResultingGrounded;
 
     public PlayerStatus resultingStatus;
     public PlayerStatus opponentResultingStatus;
@@ -901,8 +924,15 @@ public class SituationChange : System.IEquatable<SituationChange>
                 opponentXVelChange == change.opponentXVelChange &&
                 opponentYVelChange == change.opponentYVelChange &&
                 opponentHealthChange == change.opponentHealthChange &&
+                resultingGrounded == change.resultingGrounded &&
+                opponentResultingGrounded == change.opponentResultingGrounded && 
                 resultingStatus == change.resultingStatus &&
                 opponentResultingStatus == change.opponentResultingStatus;
+    }
+
+    public SituationChange()
+    {
+        //Default constructor where everything is set to 0
     }
 
     public SituationChange(AISituation prior, AISituation result)
@@ -924,6 +954,9 @@ public class SituationChange : System.IEquatable<SituationChange>
 
         healthChange = (int)result.health - (int)prior.health;
         opponentHealthChange = (int)result.health - (int)prior.health;
+
+        resultingGrounded = result.grounded;
+        opponentResultingGrounded = result.opponentGrounded;
 
         resultingStatus = result.status;
         opponentResultingStatus = result.opponentStatus;
@@ -952,6 +985,9 @@ public class SituationChange : System.IEquatable<SituationChange>
 
         newSituation.health = (Health)Mathf.Clamp((int)prior.health + (int)change.healthChange, 0, healthMax);
         newSituation.opponentHealth = (Health)Mathf.Clamp((int)prior.opponentHealth + (int)change.opponentHealthChange, 0, healthMax);
+
+        newSituation.grounded = change.resultingGrounded;
+        newSituation.opponentGrounded = change.opponentResultingGrounded;
 
         newSituation.status = change.resultingStatus;
         newSituation.opponentStatus = change.opponentResultingStatus;

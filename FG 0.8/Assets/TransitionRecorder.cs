@@ -69,13 +69,32 @@ public class TransitionRecorder : MonoBehaviour
                 int duration = GameManager.instance.currentFrame - startFrame;
 
                 PerformedAction performedAction = new PerformedAction(lastAction, duration);
-                AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame());
+                AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
+
+                //We need to denote that the player just got hit on this frame
+                currentSituation.status = PlayerStatus.FreshHit;
 
                 Transition transition = new Transition(lastSituation, performedAction, currentSituation);
-                profile.LogTransition(lastSituation, transition);
+                profile.ForceTransition(lastSituation, transition);
+                lastCapturedFrame = GameManager.instance.currentFrame;
             }
 
             startFrame = -1;
+        }
+        else
+        {
+            //Checking if the opponent was jsut hit by an attack
+            int duration = GameManager.instance.currentFrame - startFrame;
+
+            PerformedAction performedAction = new PerformedAction(lastAction, duration);
+            AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
+
+            //We need to denote that the player just got hit on this frame
+            currentSituation.opponentStatus = PlayerStatus.FreshHit;
+
+            Transition transition = new Transition(lastSituation, performedAction, currentSituation);
+            profile.ForceTransition(lastSituation, transition);
+            lastCapturedFrame = GameManager.instance.currentFrame;
         }
     }
 

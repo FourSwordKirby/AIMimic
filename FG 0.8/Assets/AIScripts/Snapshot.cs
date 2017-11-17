@@ -14,6 +14,9 @@ public class Snapshot {
     public StateMachine<Player> p1ActionFsm;
     public StateMachine<Player> p2ActionFsm;
 
+    public bool p1Grounded;
+    public bool p2Grounded;
+
     public PlayerStatus p1Status;
     public PlayerStatus p2Status;    
 
@@ -54,6 +57,9 @@ public class Snapshot {
 
         this.p1ActionFsm = p1.ActionFsm;
         this.p2ActionFsm = p2.ActionFsm;
+
+        this.p1Grounded = p1.grounded;
+        this.p2Grounded = p2.grounded;
 
         this.p1Status = StateToStatus(p1);
         this.p2Status = StateToStatus(p2);
