@@ -61,6 +61,7 @@ public class TransitionRecorder : MonoBehaviour
 
     public void Hit(Hitbox hitbox)
     {
+        print("freshly hit" + GameManager.instance.currentFrame);
         //The palyer we're recording has been hit and we need to end the last action they have done
         if (hitbox.owner.isPlayer1 != recordedPlayer.isPlayer1)
         {
@@ -168,14 +169,12 @@ public class TransitionRecorder : MonoBehaviour
     
     public void StateChanged(AISituation newSituation)
     {
-        if (lastCapturedFrame == GameManager.instance.currentFrame)
-            return;
-
         int duration = GameManager.instance.currentFrame - startFrame;
         PerformedAction performedAction = new PerformedAction(lastAction, duration);
         Transition transition = new Transition(lastSituation, performedAction, newSituation);
 
-        profile.LogTransition(lastSituation, transition);
+        if (lastCapturedFrame != GameManager.instance.currentFrame)
+            profile.LogTransition(lastSituation, transition);
         lastCapturedFrame = GameManager.instance.currentFrame;
     }
 }
