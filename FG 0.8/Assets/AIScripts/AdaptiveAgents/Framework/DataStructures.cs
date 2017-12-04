@@ -559,7 +559,9 @@ public class AISituation : System.IEquatable<AISituation>
 
     public PlayerStatus status;
     public PlayerStatus opponentStatus;
-    
+
+    public AISituation parentSituation;
+    public PerformedAction parentAction;
 
     public AISituation(Snapshot snapshot, bool isPlayer1)
     {

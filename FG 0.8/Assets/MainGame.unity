@@ -1441,6 +1441,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 1
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!1 &255502837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2503,6 +2506,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
   lastAction: 0
   playerName: Debug
   currentDuration: 0
@@ -2575,6 +2581,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!1 &649166559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3993,6 +4002,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
   lastAction: 0
   playerName: Baseline2
   currentDuration: 0
@@ -4882,6 +4894,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
   lastAction: 0
   playerName: Baseline1
   currentDuration: 0
@@ -5871,6 +5886,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!114 &1417773607 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114261457034683002, guid: 9eaeb9f7896c5a345a63cb4efd57b066,
@@ -6643,6 +6661,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!1 &1591085297
 GameObject:
   m_ObjectHideFlags: 0
@@ -6706,7 +6727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1598368639
 Transform:
   m_ObjectHideFlags: 0
@@ -6739,7 +6760,7 @@ MonoBehaviour:
   perceptionDelay: 0
   perceptionLeeway: 10
   timeout: 50
-  playerName: Debug
+  playerName: Experiment
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -6759,6 +6780,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!1 &1605285919
 GameObject:
   m_ObjectHideFlags: 0
@@ -8891,6 +8915,9 @@ MonoBehaviour:
     opponentGrounded: 0
     status: 0
     opponentStatus: 0
+    parentAction:
+      action: 0
+      duration: 0
 --- !u!1 &2040287761
 GameObject:
   m_ObjectHideFlags: 0
