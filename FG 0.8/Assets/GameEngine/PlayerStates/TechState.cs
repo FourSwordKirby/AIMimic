@@ -76,6 +76,7 @@ public class TechState : State<Player>
     {
         player.EndInvuln();
 
+        player.locked = false;
         player.knockedDown = false;
         player.selfBody.mass = 1;
 

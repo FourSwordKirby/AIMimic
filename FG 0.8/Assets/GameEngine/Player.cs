@@ -205,6 +205,9 @@ public class Player : MonoBehaviour {
         if (!this.enabled)
             return false;
 
+        if (action == Action.TechNeutral)
+            print("here");
+
         if (!IsValidAction(action, isAI))
             return false;
 
@@ -527,6 +530,7 @@ public class Player : MonoBehaviour {
     public void ExitHitstun()
     {
         this.stunned = false;
+        this.locked = false;
 
         //Wakeup options for the player
         Parameters.InputDirection dir = Controls.getInputDirection(this);

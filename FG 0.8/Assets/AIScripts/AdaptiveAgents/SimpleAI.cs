@@ -13,6 +13,8 @@ public class SimpleAI : AIAgent {
     Snapshot currentState;
     public Text DebugText;
 
+    private float delay = 0.0f;
+
     void Update()
     {
         if (!AIPlayer.enabled || GameManager.instance.roundOver)
@@ -21,6 +23,12 @@ public class SimpleAI : AIAgent {
         GameRecorder.instance.LatestFrame();
         if (GameManager.instance.currentFrame % 3 == 1)
         {
+            if (delay > 0)
+            {
+                delay -= Time.deltaTime;
+                return;
+            }
+
             ObserveState();
             Action action = GetAction();
             PerformAction(action);
@@ -88,50 +96,96 @@ public class SimpleAI : AIAgent {
         }
         else
         {
-            if (currentState.p1Status == PlayerStatus.Air && xAbs < 3.0f)
+            if(currentState.p2Grounded)
             {
-                if (currentState.p2Status == PlayerStatus.Lowblock)
-                    action = Action.Crouch;
-                else if (currentState.p2Status == PlayerStatus.Crouch)
-                    action = Action.Stand;
-                else
-                    action = Action.StandBlock;
-            }
-            else if (xAbs < 3.0f && yAbs < 1.0f)
-            {
-                if (currentState.p2Status == PlayerStatus.Stand)
-                    action = Action.Crouch;
-                else
-                    action = Action.CrouchBlock;
-            }
-            else if (1.5 <= xAbs && xAbs < 3.0)
-            {
-                if (currentState.p2Status == PlayerStatus.Crouch)
-                    action = Action.Stand;
-                else
-                    action = Action.Attack;
-
-            }
-            else if (xAbs < 1.5)
-            {
-                if (currentState.p2Status == PlayerStatus.Stand)
-                    action = Action.Crouch;
-                else
-                    action = Action.LowAttack;
-            }
-            else
-            {
-                if (currentState.p2Status == PlayerStatus.Crouch || currentState.p2Status == PlayerStatus.Highblock)
-                    action = Action.Stand;
-                else if (currentState.p2Status == PlayerStatus.Lowblock)
-                    action = Action.Crouch;
+                if (xAbs < 3.0f)
+                {
+                    if (currentState.p1Grounded == false)
+                    {
+                        if (currentState.p2Status == PlayerStatus.Lowblock)
+                            action = Action.Crouch;
+                        else if (currentState.p2Status == PlayerStatus.Crouch)
+                            action = Action.Stand;
+                        else
+                            action = Action.StandBlock;
+                    }
+                    else if (currentState.p1Status == PlayerStatus.Crouch)
+                    {
+                        if (currentState.xDistance > 0)
+                            action = Action.JumpRight;
+                        else
+                            action = Action.JumpLeft;
+                    }
+                    else if(!currentState.p2Grounded && currentState.yDistance < 2.0f)
+                    {
+                        action = Action.AirAttack;
+                    }
+                    else
+                    {
+                        float rng = Random.Range(0.0f, 1.0f);
+                        if (rng < 0.25f)
+                        {
+                            if (currentState.p2Status == PlayerStatus.Lowblock)
+                                action = Action.Crouch;
+                            else if (currentState.p2Status == PlayerStatus.Crouch || currentState.p2Status == PlayerStatus.Highblock)
+                                action = Action.Stand;
+                            else
+                                action = Action.Attack;
+                        }
+                        else if (rng < 0.5)
+                        {
+                            if (currentState.p2Status == PlayerStatus.Lowblock)
+                                action = Action.Crouch;
+                            else if (currentState.p2Status == PlayerStatus.Crouch || currentState.p2Status == PlayerStatus.Highblock)
+                                action = Action.Stand;
+                            else
+                            {
+                                action = Action.StandBlock;
+                                delay = 0.1f;
+                            }
+                        }
+                        else if (rng < 0.75f)
+                        {
+                            if (currentState.p2Status == PlayerStatus.Highblock)
+                                action = Action.Stand;
+                            if (currentState.p2Status == PlayerStatus.Stand || currentState.p2Status == PlayerStatus.Lowblock)
+                                action = Action.Crouch;
+                            else
+                                action = Action.LowAttack;
+                        }
+                        else
+                        {
+                            if (currentState.p2Status == PlayerStatus.Highblock)
+                                action = Action.Stand;
+                            if (currentState.p2Status == PlayerStatus.Stand || currentState.p2Status == PlayerStatus.Lowblock)
+                                action = Action.Crouch;
+                            else
+                            {
+                                action = Action.CrouchBlock;
+                                delay = 0.1f;
+                            }
+                        }
+                    }
+                }
                 else
                 {
-                    if (currentState.xDistance > 0)
-                        action = Action.WalkRight;
+
+                    if (currentState.p2Status == PlayerStatus.Crouch || currentState.p2Status == PlayerStatus.Highblock)
+                        action = Action.Stand;
+                    else if (currentState.p2Status == PlayerStatus.Lowblock)
+                        action = Action.Crouch;
                     else
-                        action = Action.WalkLeft;
+                    {
+                        if (currentState.xDistance > 0)
+                            action = Action.WalkRight;
+                        else
+                            action = Action.WalkLeft;
+                    }
                 }
+            }
+            if (currentState.p2Status == PlayerStatus.KnockdownHit)
+            {
+                action = Action.TechNeutral;
             }
         }
         return action;
