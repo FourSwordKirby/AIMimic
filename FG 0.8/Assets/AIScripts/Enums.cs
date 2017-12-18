@@ -38,6 +38,7 @@ public enum PlayerStatus
     Highblock,
     Lowblock,
     FreshHit,
+    FreshBlock,
     Hit,
     KnockdownHit,
     Tech,

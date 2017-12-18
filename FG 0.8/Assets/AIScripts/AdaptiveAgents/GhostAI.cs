@@ -16,11 +16,13 @@ using System.Linq;
 public class GhostAI : MonoBehaviour
 {
     public string playerProfileName;
+    public int logNumber;
     public EventRecorder dataRecorder;
 
-    Player AIPlayer;
-    Player Opponent;
+    public Player AIPlayer;
+    public Player Opponent;
 
+    //public TextAsset playerLog;
     private List<GameEvent> priorSnapshots;
 
     public Text DebugText;
@@ -28,20 +30,28 @@ public class GhostAI : MonoBehaviour
     private Dictionary<AISituation, ActionLookupTable> frequencyTable
         = new Dictionary<AISituation, ActionLookupTable>();
 
-    //private AdaptiveActionSelector actionSelector;
+
+    //List<GameEvent> GetSnapshots()
+    //{
+    //    string contents = playerLog.text;
+    //    string[] serializeObjects = contents.Split(new string[] { "~~~~" }, System.StringSplitOptions.RemoveEmptyEntries);
+    //    List<GameEvent> mySnapshots = new List<GameEvent>();
+    //    for (int i = 0; i < serializeObjects.Length; i++)
+    //    {
+    //        mySnapshots.Add(JsonUtility.FromJson<GameEvent>(serializeObjects[i]));
+    //    }
+    //    return mySnapshots;
+    //}
 
     void Start()
     {
-        //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.magenta;
 
-        priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
-        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
+        priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
 
-        Debug.Log(priorSnapshots.Count);
+        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
         for(int i = 0; i < priorSnapshots.Count; i++)
         {
@@ -50,7 +60,7 @@ public class GhostAI : MonoBehaviour
 
             if (!frequencyTable.ContainsKey(situation))
                 frequencyTable.Add(situation, new ActionLookupTable());
-            frequencyTable[situation].IncreaseFrequency(snapshot.p2Action);
+            frequencyTable[situation].IncreaseFrequency(snapshot.p1Action);
         }
     }
 
@@ -101,6 +111,11 @@ public class GhostAI : MonoBehaviour
                 action = (Action)Random.Range(0, System.Enum.GetValues(typeof(Action)).Length);
             }
 
+            if (action == Action.Stand || action == Action.Crouch || action == Action.WalkLeft || action == Action.WalkRight)
+            {
+                if (action == pastAction)
+                    return;
+            }
             bool actionSucceeded = AIPlayer.PerformAction(action);
 
             //If we successfully did the action, update the past action and past situation

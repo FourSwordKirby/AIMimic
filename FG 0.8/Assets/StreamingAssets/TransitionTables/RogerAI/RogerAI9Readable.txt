@@ -1,0 +1,307 @@
+{"xPos":-4,"yPos":0,"opponentXPos":4,"opponentYPos":0,"distance":-8,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Neutral Neutral Neutral Neutral False False Stand Stand
+(Stand 51) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand
+(Stand 1) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand
+~~~~
+{"xPos":-4,"yPos":0,"opponentXPos":4,"opponentYPos":0,"distance":-8,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(WalkRight 2) [-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand]-3 0 4 0 Right Neutral Neutral Neutral True True Moving Stand
+(WalkRight 4) [-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand]-3 0 4 0 Right Neutral Left Neutral True True Moving Moving
+(WalkRight 9) [-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand]-3 0 3 0 Right Neutral Left Neutral True True Moving Moving
+(WalkRight 11) [-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand]-2 0 3 0 Right Neutral Left Neutral True True Moving Moving
+(WalkRight 15) [-4 0 4 0 Right Neutral Neutral Neutral True True Moving Stand]-2 0 3 0 Right Up Neutral Neutral False True Air Highblock
+~~~~
+{"xPos":-2,"yPos":0,"opponentXPos":3,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(JumpRight 1) [-2 0 3 0 Right Up Neutral Neutral False True Air Highblock]-2 1 3 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 3) [-2 0 3 0 Right Up Neutral Neutral False True Air Highblock]-1 1 3 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 5) [-2 0 3 0 Right Up Neutral Neutral False True Air Highblock]-1 2 3 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 10) [-2 0 3 0 Right Up Neutral Neutral False True Air Highblock]0 3 3 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 11) [-2 0 3 0 Right Up Neutral Neutral False True Air Highblock]0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+~~~~
+{"xPos":0,"yPos":3,"opponentXPos":3,"opponentYPos":0,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":16,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(AirAttack 6) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+(AirAttack 9) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 2 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+(AirAttack 13) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 2 3 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(AirAttack 15) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]2 1 3 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(AirAttack 21) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 0 3 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(AirAttack 26) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 0 3 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 30) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]0 0 3 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 38) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-1 0 3 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 49) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-2 0 3 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 54) [0 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-2 0 3 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-2,"yPos":0,"opponentXPos":3,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 8) [-2 0 3 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-2 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-2,"yPos":0,"opponentXPos":3,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkRight 3) [-2 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock]-1 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 13) [-2 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock]0 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 18) [-2 0 3 0 Right Neutral Neutral Neutral True True Moving Lowblock]0 0 3 0 Left Up Neutral Neutral False True Air Lowblock
+~~~~
+{"xPos":0,"yPos":0,"opponentXPos":3,"opponentYPos":0,"distance":-3,"xVel":0,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(JumpLeft 1) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]0 1 3 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 3) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-1 1 3 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 4) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-1 2 3 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 10) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-2 3 3 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 12) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-2 3 3 0 Left Up Neutral Neutral False True Air Crouch
+(JumpLeft 17) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-2 3 3 0 Left Up Neutral Neutral False True Air Stand
+(JumpLeft 18) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-2 3 3 0 Left Down Neutral Neutral False True Air Stand
+(JumpLeft 19) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-3 3 3 0 Left Down Neutral Neutral False True Air Stand
+(JumpLeft 20) [0 0 3 0 Left Up Neutral Neutral False True Air Lowblock]-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand
+~~~~
+{"xPos":-3,"yPos":3,"opponentXPos":3,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":16,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(AirAttack 2) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-3 2 3 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+(AirAttack 7) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-4 2 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand
+(AirAttack 9) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-4 1 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand
+(AirAttack 12) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-4 1 3 0 Neutral Neutral Left Neutral False True AirAttack Moving
+(AirAttack 13) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-4 0 3 0 Neutral Neutral Left Neutral False True Recovery Moving
+(AirAttack 17) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-5 0 3 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 18) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-5 0 2 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 27) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-5 0 1 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 29) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-6 0 1 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 37) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-6 0 0 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 42) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-7 0 0 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 47) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-7 0 -1 0 Neutral Neutral Left Neutral True True Recovery Moving
+(AirAttack 54) [-3 3 3 0 Neutral Neutral Neutral Neutral False True AirAttack Stand]-7 0 -1 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Stand 2) [-7 0 -1 0 Neutral Neutral Left Neutral True True Stand Moving]-7 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 4) [-7 0 -1 0 Neutral Neutral Left Neutral True True Stand Moving]-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-6,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkRight 5) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock]-6 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 16) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock]-5 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 18) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Highblock]-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-4,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":15,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Overhead 26) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshBlock
+(Overhead 28) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 0 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 37) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 0 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Overhead 42) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 0 0 Neutral Neutral Left Neutral True True Recovery Moving
+(Overhead 43) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 -1 0 Neutral Neutral Left Neutral True True Recovery Moving
+(Overhead 49) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 64) [-5 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]-7 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 14) [-7 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-7 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 18) [-7 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-6,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkRight 2) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock]-6 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 12) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock]-5 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 20) [-7 0 -1 0 Right Neutral Neutral Neutral True True Moving Lowblock]-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-4,"xVel":2,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(JumpRight 1) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-4 1 -1 0 Right Up Neutral Neutral False True Air Lowblock
+(JumpRight 5) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-4 2 -1 0 Right Up Neutral Neutral False True Air Lowblock
+(JumpRight 6) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-4 2 -1 0 Right Up Neutral Neutral False True Air Crouch
+(JumpRight 10) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-3 2 -1 0 Right Up Neutral Neutral False True Air Crouch
+(JumpRight 11) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-3 3 -1 0 Right Up Neutral Neutral False True Air Stand
+(JumpRight 16) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-2 3 -1 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 17) [-5 0 -1 0 Right Up Neutral Neutral False True Air Lowblock]-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+~~~~
+{"xPos":-2,"yPos":3,"opponentXPos":-1,"opponentYPos":0,"distance":-1,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":16,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(AirAttack 3) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-2 2 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+(AirAttack 7) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-1 2 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock
+(AirAttack 10) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]-1 2 -1 0 Neutral Neutral Neutral Neutral False True AirAttack FreshBlock
+(AirAttack 14) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]0 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 15) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]1 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 23) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]2 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 31) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]3 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 39) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]4 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 51) [-2 3 -1 0 Neutral Neutral Neutral Neutral False True AirAttack Highblock]4 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":4,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 13) [4 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock
+~~~~
+{"xPos":4,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":15,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Overhead 7) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Stand
+(Overhead 12) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -2 0 Neutral Neutral Right Neutral True True OverheadAttack Moving
+(Overhead 18) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Right Neutral True True OverheadAttack Moving
+(Overhead 23) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock
+(Overhead 27) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshBlock
+(Overhead 28) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 29) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Overhead 34) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 -2 0 Neutral Neutral Right Neutral True True Recovery Moving
+(Overhead 38) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 -1 0 Neutral Neutral Right Neutral True True Recovery Moving
+(Overhead 47) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 0 0 Neutral Neutral Right Neutral True True Recovery Moving
+(Overhead 55) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 0 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 64) [4 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]6 0 0 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":6,"yPos":0,"opponentXPos":0,"opponentYPos":0,"distance":6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 14) [6 0 0 0 Neutral Neutral Neutral Neutral True True Stand Highblock]6 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":6,"yPos":0,"opponentXPos":0,"opponentYPos":0,"distance":6,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 5) [6 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock]5 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 16) [6 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock]4 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 26) [6 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock]3 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 33) [6 0 0 0 Left Neutral Neutral Neutral True True Moving Highblock]3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock
+~~~~
+{"xPos":3,"yPos":0,"opponentXPos":0,"opponentYPos":0,"distance":3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":15,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Overhead 26) [3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshBlock
+(Overhead 28) [3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 55) [3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Lowblock
+(Overhead 64) [3 0 0 0 Neutral Neutral Neutral Neutral True True OverheadAttack Highblock]4 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":4,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 10) [4 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":4,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":5,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 7) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]3 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 8) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]3 0 -1 0 Left Neutral Neutral Neutral True True Moving Crouch
+(WalkLeft 9) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]3 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 17) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]2 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 26) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]1 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 33) [4 0 -1 0 Left Neutral Neutral Neutral True True Moving Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock
+~~~~
+{"xPos":1,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":15,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Overhead 5) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Crouch
+(Overhead 9) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock
+(Overhead 24) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshHit
+(Overhead 25) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack KnockdownHit
+(Overhead 26) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Tech
+(Overhead 31) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(Overhead 55) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Overhead 62) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 67) [1 0 -1 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]1 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":1,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 2) [1 0 -1 0 Neutral Neutral Neutral Neutral True True Stand Highblock]1 0 -1 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":1,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":2,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 9) [1 0 -1 0 Left Neutral Neutral Neutral True True Moving Highblock]0 0 -2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 20) [1 0 -1 0 Left Neutral Neutral Neutral True True Moving Highblock]0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock
+~~~~
+{"xPos":0,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":17,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(DP 5) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 0 -3 0 Neutral Neutral Neutral Neutral True True DP FreshBlock
+(DP 7) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 1 -7 0 Neutral Neutral Neutral Neutral False True DP Stand
+(DP 9) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 2 -7 0 Neutral Neutral Neutral Neutral False True DP Stand
+(DP 10) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 2 -7 0 Neutral Neutral Neutral Neutral False True Recovery Stand
+(DP 12) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 2 -7 0 Neutral Neutral Right Neutral False True Recovery Moving
+(DP 17) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]0 2 -6 0 Neutral Neutral Right Neutral False True Recovery Moving
+(DP 24) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 2 -6 0 Neutral Neutral Right Neutral False True Recovery Moving
+(DP 26) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 2 -5 0 Neutral Neutral Right Neutral False True Recovery Moving
+(DP 32) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 2 -5 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(DP 33) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 1 -5 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(DP 38) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 0 -5 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(DP 42) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(DP 47) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Lowblock
+(DP 55) [0 0 -2 0 Neutral Neutral Neutral Neutral True True DP Highblock]1 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":1,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 17) [1 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":1,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":6,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 4) [1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock]0 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 15) [1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock]-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 24) [1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock]-2 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 26) [1 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock]-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock
+~~~~
+{"xPos":-2,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":15,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Overhead 26) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshHit
+(Overhead 27) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack KnockdownHit
+(Overhead 28) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Left Neutral True True OverheadAttack Tech
+(Overhead 29) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Tech
+(Overhead 31) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(Overhead 57) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Overhead 64) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Overhead 67) [-2 0 -5 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock]-1 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-1,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":4,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 2) [-1 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-1,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":4,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 2) [-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock]-2 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 13) [-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock]-3 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 26) [-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock]-3 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 27) [-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock]-4 0 -6 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 33) [-1 0 -5 0 Left Neutral Neutral Neutral True True Moving Highblock]-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock
+~~~~
+{"xPos":-4,"yPos":0,"opponentXPos":-6,"opponentYPos":0,"distance":2,"xVel":0,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(JumpLeft 2) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-4 1 -6 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 4) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-5 1 -6 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 5) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-5 2 -6 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 11) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-5 3 -6 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 12) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-6 3 -6 0 Left Up Neutral Neutral False True Air Lowblock
+(JumpLeft 18) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-6 3 -6 0 Left Down Neutral Neutral False True Air Lowblock
+(JumpLeft 19) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-7 3 -6 0 Left Down Neutral Neutral False True Air Lowblock
+(JumpLeft 20) [-4 0 -6 0 Left Up Neutral Neutral False True Air Lowblock]-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock
+~~~~
+{"xPos":-7,"yPos":2,"opponentXPos":-6,"opponentYPos":0,"distance":-1,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":16,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(AirAttack 1) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Crouch
+(AirAttack 5) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-8 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Crouch
+(AirAttack 6) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-8 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Stand
+(AirAttack 8) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-8 1 -6 0 Neutral Neutral Neutral Neutral False True AirAttack FreshHit
+(AirAttack 9) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-8 1 -6 0 Neutral Neutral Neutral Neutral False True AirAttack KnockdownHit
+(AirAttack 10) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-8 0 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Tech
+(AirAttack 13) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-9 0 -6 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(AirAttack 22) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-10 0 -6 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(AirAttack 33) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-11 0 -6 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(AirAttack 35) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-11 0 -6 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(AirAttack 45) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-12 0 -6 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 54) [-7 2 -6 0 Neutral Neutral Neutral Neutral False True AirAttack Lowblock]-12 0 -6 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-6,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 2) [-12 0 -6 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-6,"opponentYPos":0,"distance":-6,"xVel":2,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(JumpRight 1) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-12 1 -6 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 2) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-11 1 -6 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 4) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-11 2 -6 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 10) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-10 3 -6 0 Right Up Neutral Neutral False True Air Highblock
+(JumpRight 18) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-9 3 -6 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 23) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-9 2 -6 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 26) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-8 2 -6 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 28) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-8 1 -6 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 32) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-8 0 -6 0 Right Down Neutral Neutral False True Air Highblock
+(JumpRight 33) [-12 0 -6 0 Right Up Neutral Neutral False True Air Highblock]-8 0 -6 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock
+~~~~
+{"xPos":-8,"yPos":0,"opponentXPos":-6,"opponentYPos":0,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":16,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(AirAttack 3) [-8 0 -6 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock]-8 0 -5 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock
+(AirAttack 8) [-8 0 -6 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock]-8 0 -5 0 Neutral Neutral Neutral Neutral True True AirAttack FreshBlock
+(AirAttack 10) [-8 0 -6 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock]-9 0 -4 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(AirAttack 51) [-8 0 -6 0 Neutral Neutral Neutral Neutral True True AirAttack Highblock]-9 0 -4 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-9,"yPos":0,"opponentXPos":-4,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 30) [-9 0 -4 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-9 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-9,"yPos":0,"opponentXPos":-4,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkRight 5) [-9 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock]-8 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 15) [-9 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock]-7 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 17) [-9 0 -4 0 Right Neutral Neutral Neutral True True Moving Highblock]-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":-4,"opponentYPos":0,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":17,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(DP 5) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP FreshBlock
+(DP 7) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 1 0 0 Neutral Neutral Neutral Neutral False True DP Stand
+(DP 9) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 2 0 0 Neutral Neutral Neutral Neutral False True DP Stand
+(DP 10) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 2 0 0 Neutral Neutral Neutral Neutral False True Recovery Stand
+(DP 12) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 2 0 0 Neutral Neutral Left Neutral False True Recovery Moving
+(DP 21) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-7 2 -1 0 Neutral Neutral Left Neutral False True Recovery Moving
+(DP 29) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 2 -1 0 Neutral Neutral Left Neutral False True Recovery Moving
+(DP 30) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 2 -2 0 Neutral Neutral Left Neutral False True Recovery Moving
+(DP 32) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 1 -2 0 Neutral Neutral Left Neutral False True Recovery Moving
+(DP 35) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 1 -2 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(DP 38) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 0 -2 0 Neutral Neutral Neutral Neutral False True Recovery Highblock
+(DP 41) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(DP 46) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Lowblock
+(DP 55) [-7 0 -4 0 Neutral Neutral Neutral Neutral True True DP Highblock]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-8,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 16) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock
+~~~~
+{"xPos":-8,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":-6,"xVel":2,"yVel":0,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":true,"status":2,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(JumpRight 2) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-8 1 -2 0 Right Up Left Up False False Air Air
+(JumpRight 3) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-7 1 -2 1 Right Up Left Up False False Air Air
+(JumpRight 5) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-7 2 -3 1 Right Up Left Up False False Air Air
+(JumpRight 6) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-7 2 -3 2 Right Up Left Up False False Air Air
+(JumpRight 10) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-6 2 -3 2 Right Up Left Up False False Air Air
+(JumpRight 11) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-6 3 -3 2 Right Up Left Up False False Air Air
+(JumpRight 12) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-6 3 -4 3 Right Up Left Up False False Air Air
+(JumpRight 13) [-8 0 -2 0 Right Up Neutral Neutral False True Air Lowblock]-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air
+~~~~
+{"xPos":-6,"yPos":3,"opponentXPos":-4,"opponentYPos":3,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":false,"opponentGrounded":false,"status":16,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(AirAttack 4) [-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air]-6 3 -4 3 Neutral Neutral Left Down False False AirAttack Air
+(AirAttack 7) [-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air]-6 2 -4 3 Neutral Neutral Left Down False False AirAttack Air
+(AirAttack 8) [-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air]-6 2 -4 3 Neutral Neutral Left Down False False AirAttack FreshHit
+(AirAttack 13) [-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air]-7 2 -4 2 Neutral Neutral Neutral Neutral False False Recovery KnockdownHit
+(AirAttack 14) [-6 3 -4 3 Neutral Neutral Left Up False False AirAttack Air]-7 1 -4 2 Neutral Neutral Neutral Neutral False False Recovery KnockdownHit
+~~~~

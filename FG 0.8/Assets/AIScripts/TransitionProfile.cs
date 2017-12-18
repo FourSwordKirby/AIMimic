@@ -30,10 +30,12 @@ public class TransitionProfile
         playerTransitions[prior].Add(transition);
     }
 
-    public void SaveTransitions(string playerName)
+    public void SaveTransitions(string playerName, int logNumber = 0)
     {
-        string directoryPath = Application.streamingAssetsPath + "/TransitionTables/";
-        string filePath = directoryPath + playerName + ".txt";
+        string directoryPath = Application.streamingAssetsPath + "/TransitionTables/" + playerName + "/";
+        Directory.CreateDirectory(directoryPath);
+
+        string filePath = directoryPath + playerName + logNumber + ".txt";
 
         // serialize
         string datalog = "";
@@ -52,7 +54,7 @@ public class TransitionProfile
 
         //Writes a readable version
         datalog = "";
-        string readableFilePath = directoryPath + playerName + "Readable.txt";
+        string readableFilePath = directoryPath + playerName + logNumber + "Readable.txt";
         foreach (AISituation situation in playerTransitions.Keys)
         {
             datalog += JsonUtility.ToJson(situation) + "\n";
@@ -66,13 +68,13 @@ public class TransitionProfile
         }
         File.WriteAllText(readableFilePath, datalog);
 
-        Debug.Log("wrote to log");
+        Debug.Log("Transition Profile Written");
     }
 
-    public static TransitionProfile LoadTransitions(string playerName)
+    public static TransitionProfile LoadTransitions(string playerName, int logNumber)
     {
         string directoryPath = Application.streamingAssetsPath + "/TransitionTables/";
-        string filePath = directoryPath + playerName + ".txt";
+        string filePath = directoryPath + "/" + playerName + "/" + playerName + logNumber + ".txt";
 
         // deserialize
         Dictionary<AISituation, List<Transition>> playerTransitions = new Dictionary<AISituation, List<Transition>>();
@@ -104,18 +106,22 @@ public class TransitionProfile
     public delegate bool IsGoal(AISituation x);
     public List<AISituation> getGoalSituations(IsGoal isGoal)
     {
-        List<AISituation> goalStituations = new List<AISituation>();
+        List<AISituation> goalSituations = new List<AISituation>();
         foreach (AISituation situation in playerTransitions.Keys)
         {
             List<Transition> transitions = playerTransitions[situation];
             foreach (Transition transition in transitions)
             {
+                if (goalSituations.Find(x => x.nominallyEquals(transition.result)) != null)
+                    continue;
+
                 //Quick hacky check to ensure its the 1st time the opponent gets hit
-                if (isGoal(transition.result) && !isGoal(transition.prior) && transition.result.status != PlayerStatus.Recovery)
-                    goalStituations.Add(transition.result);
+                if (isGoal(transition.result) && !isGoal(transition.prior) && transition.prior.opponentStatus != PlayerStatus.Hit
+                    && transition.result.status != PlayerStatus.Recovery)
+                    goalSituations.Add(transition.result);
             }
         }
-        return goalStituations;
+        return goalSituations;
     }
 
 
@@ -243,7 +249,17 @@ public class TransitionProfile
         float yVelAvg = situationChanges.Select(x => (float)x.yVelChange * SimilarityWeight(x.prior, currentSituation) / situationWeightTotal).Sum();
         //float yVelStd = Mathf.Sqrt(situationChanges.Select(x => x.yVelChange).Average(v => Mathf.Pow(v - yVelAvg, 2)));
 
-        bool bestGrounded = situationChanges.Select(x => (x.resultingGrounded ? 1.0f : 0.0f) * SimilarityWeight(x.prior, currentSituation) / situationWeightTotal).Average() > 0.5f;
+        //Implement this by taking the status with the highest weight
+        float isGrounded = 0.0f;
+        float notGrounded = 0.0f;
+        foreach (SituationChange change in situationChanges)
+        {
+            if (change.resultingGrounded)
+                isGrounded += SimilarityWeight(change.prior, currentSituation);
+            else
+                notGrounded += SimilarityWeight(change.prior, currentSituation);
+        }
+        bool bestGrounded = isGrounded > notGrounded;
 
         //Implement this by taking the status with the highest weight
         Dictionary<PlayerStatus, float> statusWeights = new Dictionary<PlayerStatus, float>();
@@ -281,7 +297,17 @@ public class TransitionProfile
         float oppYVelAvg = situationChanges.Select(x => (float)x.opponentYVelChange * SimilarityWeight(x.prior, currentSituation) / situationWeightTotal).Sum();
         //float oppYVelStd = Mathf.Sqrt(situationChanges.Select(x => x.opponentYVelChange).Average(v => Mathf.Pow(v - oppYVelAvg, 2)));
 
-        bool oppBestGrounded = situationChanges.Select(x => (x.opponentResultingGrounded ? 1.0f : 0.0f) * SimilarityWeight(x.prior, currentSituation) / situationWeightTotal).Average() > 0.5f;
+        //Implement this by taking the status with the highest weight
+        isGrounded = 0.0f;
+        notGrounded = 0.0f;
+        foreach (SituationChange change in situationChanges)
+        {
+            if (change.opponentResultingGrounded)
+                isGrounded += SimilarityWeight(change.prior, currentSituation);
+            else
+                notGrounded += SimilarityWeight(change.prior, currentSituation);
+        }
+        bool oppBestGrounded = isGrounded > notGrounded;
 
         Dictionary<PlayerStatus, float> oppStatusWeights = new Dictionary<PlayerStatus, float>();
         foreach (SituationChange change in situationChanges)
@@ -337,7 +363,8 @@ public class TransitionProfile
 
 
         AISituation newSituation = SituationChange.ApplyChange(currentSituation, predictedChange);
-        float confidence = 1.0f; //?????TODO: not sure how to assign a confidence to our prediction
+
+        float confidence = situationChanges.Select(x => AISituation.Similarity(x.prior, currentSituation)).Aggregate((x, y) => Mathf.Max(x, y));
 
         KeyValuePair<AISituation, float> pair = new KeyValuePair<AISituation, float>(newSituation, confidence);
         return pair;

@@ -126,13 +126,36 @@ public class GameEvent {
         {
             return PlayerStatus.Stand;
         }
+        else if (state is DashState)
+        {
+            if (!p.grounded)
+                return PlayerStatus.AirDashing;
+            else
+                return PlayerStatus.Dashing;
+        }
         else if (state is JumpState)
         {
             return PlayerStatus.Air;
         }
-        else if (state is AttackState || state is AirAttackState)
+        else if (state is AttackState)
         {
-            return PlayerStatus.StandAttack;
+            if (!p.isCrouching)
+                return PlayerStatus.StandAttack;
+            else
+                return PlayerStatus.LowAttack;
+        }
+        else if (state is AirAttackState)
+        {
+            return PlayerStatus.AirAttack;
+        }
+        else if (state is OverheadState)
+        {
+            return PlayerStatus.OverheadAttack;
+        }
+        else if (state is DPState)
+        {
+            //Debug.Break();
+            return PlayerStatus.DP;
         }
         else if (state is HitState)
         {

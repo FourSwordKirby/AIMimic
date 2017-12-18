@@ -1,4 +1,4 @@
-\chapter{Motivation for Planning-based Approach}
+\chapter{Planning-based Approach Overview}
 
 \label{Chapter3} % For referencing the chapter elsewhere, use \ref{Chapter1} 
 
@@ -9,13 +9,13 @@ A commonality of all of the previous algorithms is that they all use some degree
 	\begin{subfigure}[h]{0.4\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{Figures/LearningExample1.png}
-		\caption{A predictable AI is not very human-like}
+		\caption{Always doing the same action is too predictable}
 		\label{Learning1}
 	\end{subfigure}
 	\begin{subfigure}[h]{0.4\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{Figures/LearningExample2.png}
-		\caption{One unreasonable action can break immersion}
+		\caption{Some actions don't make sense in the given context}
 		\label{Learning2}
 	\end{subfigure}
 \end{figure}
@@ -26,7 +26,7 @@ A commonality of all of the previous algorithms is that they all use some degree
 
 \section{Why Use Search?}
 
-Because human-play is heavily predicated on the usage of different kinds of strategies, dynamically creating and executing the same strategies as a target player should mimic their playstyle quite well. Since strategies are essentially a sequence of actions that a player takes in order to arrive at a desired goal, the formulation of strategies can naturally be represented as a search problem over the state space. The target player's demonstrations can be used to inform the AI of the goals to target and the actions to use, and custom heuristics can bias the search towards actions that closely mimic the player. In addition, the demonstrations can be used to create a model of the game state's dynamics, which would allow the AI to form cohesive plans even in unfamiliar starting states. 
+Because human-play is heavily predicated on the usage of different kinds of strategies, dynamically creating and executing the same strategies as the target player should mimic their playstyle quite well. Since strategies are essentially a sequence of actions that a player takes in order to arrive at a desired goal, the formulation of strategies can naturally be represented as a search problem over the state space. The target player's demonstrations can be used to inform the AI of the goals to target and the actions to use, and custom heuristics can bias the search towards actions that closely mimic the player. In addition, the demonstrations can be used to create a model of the game state's dynamics, which would allow the AI to form cohesive plans even in unfamiliar starting states. 
 
 To understand how an AI might effectively use search, consider the following situation:
 
@@ -43,9 +43,13 @@ In the demonstration, player 1 tends to try to stay within a certain range of th
 
 When the AI plans, it first determines what goal state to target. It then uses the actions pulled from the target player's demonstration and uses them to search the state space to reach the goal. For example, to reach the goal where the opponent is hit with a low attack, the search would return a plan where it walks forward to get close to the opponent, crouches, and then uses the low attack. If the opponent moves during that time, the AI replans picks a walking action that would put it in the correct range for hitting the opponent. With a single demonstration, search is able to formulate a plan that approximately resembles the strategy executed by the target player.
 
+\section{Agent Framework}
+
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{Figures/Placeholder.png}
-	\caption{An example of a planning AI's approach}
+	\includegraphics[width=\textwidth]{Figures/SearchFlowChart.png}
+	\caption{High level algorithm overview}
 	\label{transitions}
 \end{figure}
+
+The agent will work as follows. After taking in the game state, the agent forms a plan to reach that will let it reach a predefined goal state. The goal states are generated from the demonstration data, and the plan that the agent forms uses actions found in from the demonstration data. After producing the best available plan in the allotted amount of time, the agent then tries to execute that plan. After executing an action, it evaluates the game state. If the action brought the agent to the expected game state, it then 

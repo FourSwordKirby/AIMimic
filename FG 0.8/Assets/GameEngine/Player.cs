@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
     public float health;
     public float meter;
     public const int DEFAULT_STOCK_COUNT = 4;
+    public const int COMBO_LIMIT = 0;
 
     public new bool enabled;
     public bool locked; //Indicates that the player is locked into this action for a while
@@ -205,9 +206,6 @@ public class Player : MonoBehaviour {
         if (!this.enabled)
             return false;
 
-        if (action == Action.TechNeutral)
-            print("here");
-
         if (!IsValidAction(action, isAI))
             return false;
 
@@ -278,8 +276,7 @@ public class Player : MonoBehaviour {
             default:
                 throw new Exception("Not implemented yet");
         }
-
-
+        
         latestAction = action;
         if (actionEnded)
             EventManager.instance.RecordActionPerformed(latestAction, this);
@@ -529,6 +526,8 @@ public class Player : MonoBehaviour {
 
     public void ExitHitstun()
     {
+        GameManager.EndCombo(this.opponent);
+
         this.stunned = false;
         this.locked = false;
 

@@ -17,7 +17,7 @@ public class EventManager : MonoBehaviour {
         instance = this;
     }
 
-    //This is called when someone gets hid
+    //This is called when someone gets hit
     public void RecordHit(Player aggressor, Player victim, Hitbox hitbox, int comboCount = 1)
     {
         //When you get hit, the data recorder should note that you were not successful in completing the last attempted action

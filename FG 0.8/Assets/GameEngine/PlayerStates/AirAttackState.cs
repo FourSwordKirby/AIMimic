@@ -29,7 +29,7 @@ public class AirAttackState : State<Player>
 
         startup = 0.15f * Application.targetFrameRate;
         duration = 0.05f * Application.targetFrameRate;
-        endlag = 1.1f * Application.targetFrameRate;
+        endlag = 0.7f * Application.targetFrameRate; //COMMENTED OUT FOR RESEARCH 1.1f * Application.targetFrameRate;
 
         animDuration = (int) (0.15f * Application.targetFrameRate);
         frameCounter = 0;
@@ -128,6 +128,11 @@ public class AirAttackState : State<Player>
         if (player.grounded && player.selfBody.velocity.y <= 0)
         {
             Parameters.InputDirection dir = Controls.getInputDirection(player);
+
+            //ADDED FOR RESEARCH
+            if (frameCounter < startup + duration + endlag)
+                return;
+
             if (dir == Parameters.InputDirection.S || dir == Parameters.InputDirection.SW || dir == Parameters.InputDirection.SE)
                 player.PerformAction(Action.Crouch);
             else
@@ -146,7 +151,7 @@ public class AirAttackState : State<Player>
 
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
         meleeHitbox.transform.localPosition = Vector2.zero;
-        meleeHitbox.GetComponent<Hitbox>().knockdown = false;
+        //COMMENTED OUT FOR RESEARCH meleeHitbox.GetComponent<Hitbox>().knockdown = false;
 
         player.transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
         player.selfBody.angularVelocity = 0;

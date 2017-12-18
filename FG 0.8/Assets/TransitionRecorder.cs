@@ -21,6 +21,13 @@ public class TransitionRecorder : MonoBehaviour
     public bool currentDuration;
     public int lastCapturedFrame;
 
+    public static TransitionRecorder instance;
+
+    public void Start()
+    {
+        instance = this;
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
@@ -49,14 +56,19 @@ public class TransitionRecorder : MonoBehaviour
         }
     }
 
-    public void SaveTransitions()
+    public void SaveTransitions(string inputName = "", int counter = 0)
     {
-        profile.SaveTransitions(playerName);
+        print("Transitions Recorded");
+        if(inputName == "")
+            profile.SaveTransitions(playerName);
+        else
+            profile.SaveTransitions(inputName, counter);
+
     }
 
     public void LoadTransitions()
     {
-        profile = TransitionProfile.LoadTransitions(playerName);
+        profile = TransitionProfile.LoadTransitions(playerName, 1);
     }
 
     public void Hit(Hitbox hitbox)
@@ -92,6 +104,46 @@ public class TransitionRecorder : MonoBehaviour
 
             //We need to denote that the player just got hit on this frame
             currentSituation.opponentStatus = PlayerStatus.FreshHit;
+
+            Transition transition = new Transition(lastSituation, performedAction, currentSituation);
+            profile.ForceTransition(lastSituation, transition);
+            lastCapturedFrame = GameManager.instance.currentFrame;
+        }
+    }
+
+    public void Block(Hitbox hitbox)
+    {
+        print("freshly blocked" + GameManager.instance.currentFrame);
+        //The palyer we're recording has been hit and we need to end the last action they have done
+        if (hitbox.owner.isPlayer1 != recordedPlayer.isPlayer1)
+        {
+            if (!recordedPlayer.stunned)
+            {
+                int duration = GameManager.instance.currentFrame - startFrame;
+
+                PerformedAction performedAction = new PerformedAction(lastAction, duration);
+                AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
+
+                //We need to denote that the player just got hit on this frame
+                currentSituation.status = PlayerStatus.FreshBlock;
+
+                Transition transition = new Transition(lastSituation, performedAction, currentSituation);
+                profile.ForceTransition(lastSituation, transition);
+                lastCapturedFrame = GameManager.instance.currentFrame;
+            }
+
+            startFrame = -1;
+        }
+        else
+        {
+            //Checking if the opponent was jsut hit by an attack
+            int duration = GameManager.instance.currentFrame - startFrame;
+
+            PerformedAction performedAction = new PerformedAction(lastAction, duration);
+            AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), recordedPlayer.isPlayer1);
+
+            //We need to denote that the player just got hit on this frame
+            currentSituation.opponentStatus = PlayerStatus.FreshBlock;
 
             Transition transition = new Transition(lastSituation, performedAction, currentSituation);
             profile.ForceTransition(lastSituation, transition);

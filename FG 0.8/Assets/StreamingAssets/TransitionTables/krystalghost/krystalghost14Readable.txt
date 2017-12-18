@@ -1,0 +1,430 @@
+{"xPos":-4,"yPos":0,"opponentXPos":4,"opponentYPos":0,"distance":-8,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Neutral Neutral Neutral Neutral False False Stand Stand
+(Stand 51) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand
+(Stand 5) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 4 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 10) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 3 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 19) [-4 0 4 0 Neutral Neutral Neutral Neutral True True Stand Stand]-4 0 2 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-4,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-4 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-4 0 2 0 Right Neutral Left Neutral True True Moving Moving
+(WalkRight 6) [-4 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-3 0 2 0 Right Neutral Left Neutral True True Moving Moving
+(WalkRight 8) [-4 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-3 0 2 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 10) [-4 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-3 0 2 0 Right Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-3,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-3 0 2 0 Right Neutral Neutral Neutral True True Moving Highblock]-3 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-3 0 2 0 Right Neutral Neutral Neutral True True Moving Highblock]-3 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-3,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-3 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-3 0 2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 4) [-3 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-4 0 2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 15) [-3 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-5 0 2 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-7,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-5 0 2 0 Left Neutral Neutral Neutral True True Moving Highblock]-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-5 0 2 0 Left Neutral Neutral Neutral True True Moving Highblock]-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-5 0 2 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 4) [-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-5 0 2 0 Neutral Neutral Neutral Neutral True True Stand Stand
+(Stand 9) [-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 10) [-5 0 2 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":2,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Attack 1) [-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-5 0 2 0 Neutral Neutral Left Neutral True True StandAttack Moving
+(Attack 2) [-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-5 0 1 0 Neutral Neutral Left Neutral True True StandAttack Moving
+(Attack 7) [-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-5 0 1 0 Neutral Neutral Left Neutral True True Recovery Moving
+(Attack 8) [-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-5 0 1 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(Attack 37) [-5 0 2 0 Neutral Neutral Left Neutral True True Stand Moving]-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":1,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 2) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 3) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":1,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(WalkLeft 1) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-5 0 1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 9) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-6 0 1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 10) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-6 0 1 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-5,"yPos":0,"opponentXPos":1,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 10) [-5 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-5 0 1 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":-6,"yPos":0,"opponentXPos":1,"opponentYPos":0,"distance":-7,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-6 0 1 0 Left Neutral Neutral Neutral True True Moving Lowblock]-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-6 0 1 0 Left Neutral Neutral Neutral True True Moving Lowblock]-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch
+~~~~
+{"xPos":-6,"yPos":0,"opponentXPos":1,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":1,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-6 0 1 0 Left Neutral Neutral Neutral True True Moving Crouch
+(WalkLeft 5) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-6 0 1 0 Left Neutral Neutral Neutral True True Moving Stand
+(WalkLeft 8) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-7 0 1 0 Left Neutral Neutral Neutral True True Moving Stand
+(WalkLeft 10) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-7 0 1 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 14) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-7 0 0 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 15) [-6 0 1 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-7 0 0 0 Left Neutral Left Neutral True True Moving Moving
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":0,"opponentYPos":0,"distance":-7,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-7 0 0 0 Left Neutral Left Neutral True True Moving Moving]-7 0 0 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 5) [-7 0 0 0 Left Neutral Left Neutral True True Moving Moving]-7 0 0 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-7,"yPos":0,"opponentXPos":0,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-7 0 0 0 Neutral Neutral Left Neutral True True Stand Moving]-7 0 0 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 4) [-7 0 0 0 Neutral Neutral Left Neutral True True Stand Moving]-7 0 -1 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 5) [-7 0 0 0 Neutral Neutral Left Neutral True True Stand Moving]-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving
+~~~~
+{"xPos":-8,"yPos":0,"opponentXPos":-1,"opponentYPos":0,"distance":-7,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Overhead 1) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -1 0 Neutral Neutral Left Neutral True True OverheadAttack Moving
+(Overhead 8) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Left Neutral True True OverheadAttack Moving
+(Overhead 14) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Lowblock
+(Overhead 27) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack FreshHit
+(Overhead 28) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack KnockdownHit
+(Overhead 29) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True OverheadAttack Tech
+(Overhead 31) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(Overhead 57) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Overhead 64) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Recovery Crouch
+(Overhead 67) [-8 0 -1 0 Left Neutral Left Neutral True True Moving Moving]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-8,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 8) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(WalkLeft 1) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-8 0 -2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 8) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-9 0 -2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 17) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-10 0 -2 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 23) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-10 0 -2 0 Left Neutral Neutral Neutral True True Moving Stand
+(WalkLeft 28) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-11 0 -2 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 30) [-8 0 -2 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-11 0 -2 0 Left Neutral Left Neutral True True Moving Moving
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-2,"opponentYPos":0,"distance":-9,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-11 0 -2 0 Left Neutral Left Neutral True True Moving Moving]-11 0 -2 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 2) [-11 0 -2 0 Left Neutral Left Neutral True True Moving Moving]-11 0 -3 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 5) [-11 0 -2 0 Left Neutral Left Neutral True True Moving Moving]-11 0 -3 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-3,"opponentYPos":0,"distance":-8,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-11 0 -3 0 Neutral Neutral Left Neutral True True Stand Moving]-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving
+(Crouch 5) [-11 0 -3 0 Neutral Neutral Left Neutral True True Stand Moving]-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-3,"opponentYPos":0,"distance":-8,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(LowAttack 1) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -3 0 Neutral Neutral Left Neutral True True LowAttack Moving
+(LowAttack 3) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -4 0 Neutral Neutral Left Neutral True True LowAttack Moving
+(LowAttack 7) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -4 0 Neutral Neutral Left Neutral True True Recovery Moving
+(LowAttack 13) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Left Neutral True True Recovery Moving
+(LowAttack 21) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Highblock
+(LowAttack 37) [-11 0 -3 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 3) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Stand 1) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-11 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 4) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 5) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-10,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 3) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 35) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Crouch
+(Stand 36) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 60) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Highblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":-10,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 5) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(Crouch 1) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-10,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 5) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Crouch 1) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-10,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(LowAttack 1) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True LowAttack Lowblock
+(LowAttack 3) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True LowAttack FreshBlock
+(LowAttack 5) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -3 0 Neutral Neutral Neutral Neutral True True Recovery Crouch
+(LowAttack 10) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -3 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(LowAttack 15) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -3 0 Neutral Neutral Left Neutral True True Recovery Moving
+(LowAttack 16) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -4 0 Neutral Neutral Left Neutral True True Recovery Moving
+(LowAttack 25) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -5 0 Neutral Neutral Left Neutral True True Crouch Moving
+(LowAttack 1) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True LowAttack Lowblock
+(LowAttack 7) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Lowblock
+(LowAttack 37) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 3) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(WalkLeft 1) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 2) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Left Neutral Left Up True False Moving Air
+(WalkLeft 3) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 1 Left Neutral Left Up True False Moving Air
+(WalkLeft 5) [-10 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -6 1 Left Neutral Left Up True False Moving Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(LowAttack 1) [-11 0 -5 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Left Neutral True True LowAttack Moving
+(LowAttack 6) [-11 0 -5 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Neutral Neutral True True LowAttack Lowblock
+(LowAttack 7) [-11 0 -5 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Recovery Lowblock
+(LowAttack 37) [-11 0 -5 0 Neutral Neutral Left Neutral True True Crouch Moving]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-5,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 3) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 10) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(WalkRight 1) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 5) [-11 0 -5 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-10 0 -5 0 Right Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-6,"opponentYPos":1,"distance":-5,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":10,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-11 0 -6 1 Left Neutral Left Up True False Moving Air]-11 0 -6 2 Neutral Neutral Left Up True False Stand Air
+(Stand 5) [-11 0 -6 1 Left Neutral Left Up True False Moving Air]-11 0 -6 2 Neutral Neutral Left Up True False Stand Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-6,"opponentYPos":2,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":0,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-11 0 -6 2 Neutral Neutral Left Up True False Stand Air]-11 0 -6 2 Neutral Neutral Left Up True False Crouch Air
+(Crouch 2) [-11 0 -6 2 Neutral Neutral Left Up True False Stand Air]-11 0 -7 3 Neutral Neutral Left Up True False Crouch Air
+(Crouch 5) [-11 0 -6 2 Neutral Neutral Left Up True False Stand Air]-11 0 -7 3 Neutral Neutral Left Up True False Crouch Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-7,"opponentYPos":3,"distance":-4,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":1,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-11 0 -7 3 Neutral Neutral Left Up True False Crouch Air]-11 0 -7 3 Left Neutral Left Up True False Moving Air
+(WalkLeft 4) [-11 0 -7 3 Neutral Neutral Left Up True False Crouch Air]-11 0 -7 3 Left Neutral Left Down True False Moving Air
+(WalkLeft 5) [-11 0 -7 3 Neutral Neutral Left Up True False Crouch Air]-11 0 -7 3 Left Neutral Left Down True False Moving Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-7,"opponentYPos":3,"distance":-4,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":10,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-11 0 -7 3 Left Neutral Left Down True False Moving Air]-11 0 -8 3 Neutral Neutral Left Down True False Stand Air
+(Stand 4) [-11 0 -7 3 Left Neutral Left Down True False Moving Air]-11 0 -8 2 Neutral Neutral Left Down True False Stand Air
+(Stand 5) [-11 0 -7 3 Left Neutral Left Down True False Moving Air]-11 0 -8 2 Neutral Neutral Left Down True False Stand Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-8,"opponentYPos":2,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":0,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-11 0 -8 2 Neutral Neutral Left Down True False Stand Air]-11 0 -8 2 Neutral Neutral Left Down True False Crouch Air
+(Crouch 4) [-11 0 -8 2 Neutral Neutral Left Down True False Stand Air]-11 0 -9 2 Neutral Neutral Left Down True False Crouch Air
+(Crouch 5) [-11 0 -8 2 Neutral Neutral Left Down True False Stand Air]-11 0 -9 1 Neutral Neutral Left Down True False Crouch Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-9,"opponentYPos":1,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":1,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-11 0 -9 1 Neutral Neutral Left Down True False Crouch Air]-11 0 -9 1 Neutral Neutral Left Down True False Stand Air
+(Stand 5) [-11 0 -9 1 Neutral Neutral Left Down True False Crouch Air]-11 0 -9 0 Neutral Neutral Left Down True False Stand Air
+~~~~
+{"xPos":-11,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":0,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-11 0 -9 0 Left Neutral Left Down True False Moving Air
+(WalkLeft 3) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-11 0 -10 0 Left Neutral Left Up True True Moving Air
+(WalkLeft 4) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-12 0 -10 0 Left Neutral Neutral Neutral False True Moving Stand
+(WalkLeft 6) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Stand
+(WalkLeft 8) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 10) [-11 0 -9 0 Neutral Neutral Left Down True False Stand Air]-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-2,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock]-12 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock]-12 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-12 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-12 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-12 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-12 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-2,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-12 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-12 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 3) [-12 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 10) [-12 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-3,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-13 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-13 0 -10 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(LowAttack 1) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -10 0 Neutral Neutral Neutral Neutral True True LowAttack Highblock
+(LowAttack 2) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -10 0 Neutral Neutral Neutral Neutral True True LowAttack FreshHit
+(LowAttack 7) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True False Recovery KnockdownHit
+(LowAttack 8) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 1 Neutral Neutral Neutral Neutral True False Recovery KnockdownHit
+(LowAttack 23) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True False Recovery KnockdownHit
+(LowAttack 30) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Recovery KnockdownHit
+(LowAttack 31) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Recovery Tech
+(LowAttack 37) [-13 0 -10 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-4,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":9,"parentAction":{"action":0,"duration":0}}
+(Crouch 3) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech
+(Crouch 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech
+(WalkRight 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-13 0 -9 0 Right Neutral Neutral Neutral True True Moving Tech
+(WalkRight 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-13 0 -9 0 Right Neutral Neutral Neutral True True Moving Tech
+(WalkRight 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-13 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand
+(WalkRight 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech]-12 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-4,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":9,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-13 0 -9 0 Right Neutral Neutral Neutral True True Moving Tech]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech
+(Crouch 10) [-13 0 -9 0 Right Neutral Neutral Neutral True True Moving Tech]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Tech
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-3,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-12 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Stand
+(Crouch 3) [-12 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch
+(Crouch 4) [-12 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-12 0 -9 0 Right Neutral Neutral Neutral True True Moving Stand]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-12 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-12 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-12,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-12 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 5) [-12 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-4,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Stand 1) [-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 10) [-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-4,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 10) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(WalkLeft 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 2) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 10) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-13,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-4,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(WalkLeft 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(Crouch 1) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-13 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-13 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-14,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-5,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-14 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-14 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-14,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-14 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 2) [-14 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 5) [-14 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+(Crouch 5) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+(Stand 5) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Highblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-15 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 3) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-14 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock
+(WalkRight 5) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Highblock]-14 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock
+~~~~
+{"xPos":-14,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":3,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-14 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock]-14 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 4) [-14 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Highblock
+(WalkLeft 5) [-14 0 -9 0 Right Neutral Neutral Neutral True True Moving Highblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 5) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Crouch 1) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 10) [-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 5) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 1) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-15 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 3) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-16 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+(WalkLeft 5) [-15 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-16 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-7,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-16 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 2) [-16 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch
+(Crouch 5) [-16 0 -9 0 Left Neutral Neutral Neutral True True Moving Lowblock]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":1,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Crouch
+(Stand 2) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Stand
+(Stand 5) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Crouch]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Stand
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":0,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Stand]-16 0 -9 0 Neutral Neutral Neutral Neutral True True Crouch Stand
+(Crouch 2) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Stand]-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving
+(Crouch 5) [-16 0 -9 0 Neutral Neutral Neutral Neutral True True Stand Stand]-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-9,"opponentYPos":0,"distance":-7,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving]-16 0 -9 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 5) [-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving]-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving
+(Stand 12) [-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving]-16 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 15) [-16 0 -9 0 Neutral Neutral Left Neutral True True Crouch Moving]-16 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-16 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -10 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 3) [-16 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -10 0 Right Neutral Neutral Neutral True True Moving Lowblock
+(WalkRight 5) [-16 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -10 0 Right Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-5,"xVel":2,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-15 0 -10 0 Right Neutral Neutral Neutral True True Moving Lowblock]-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 5) [-15 0 -10 0 Right Neutral Neutral Neutral True True Moving Lowblock]-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+~~~~
+{"xPos":-15,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Attack 1) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -10 0 Neutral Neutral Neutral Neutral True True StandAttack Lowblock
+(Attack 2) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-15 0 -10 0 Neutral Neutral Neutral Neutral True True StandAttack FreshBlock
+(Attack 4) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -8 0 Neutral Neutral Neutral Neutral True True Recovery Crouch
+(Attack 9) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -8 0 Neutral Neutral Neutral Neutral True True Recovery Stand
+(Attack 14) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -8 0 Neutral Neutral Left Neutral True True Recovery Moving
+(Attack 15) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -9 0 Neutral Neutral Left Neutral True True Recovery Moving
+(Attack 25) [-15 0 -10 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-10,"opponentYPos":0,"distance":-6,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":10,"parentAction":{"action":0,"duration":0}}
+(Stand 5) [-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving]-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving
+(WalkLeft 1) [-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving]-16 0 -10 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 4) [-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving]-16 0 -11 0 Left Neutral Left Neutral True True Moving Moving
+(WalkLeft 5) [-16 0 -10 0 Neutral Neutral Left Neutral True True Stand Moving]-16 0 -11 0 Left Neutral Neutral Neutral True True Moving Lowblock
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-11,"opponentYPos":0,"distance":-5,"xVel":0,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":10,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-16 0 -11 0 Left Neutral Neutral Neutral True True Moving Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-16 0 -11 0 Left Neutral Neutral Neutral True True Moving Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-11,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":1,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(Stand 20) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Stand Lowblock
+(WalkLeft 1) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-16 0 -11 0 Left Neutral Left Up True False Moving Air
+(WalkLeft 2) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-17 0 -11 0 Left Neutral Left Up True False Moving Air
+(WalkLeft 3) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-17 0 -11 1 Left Neutral Left Up True False Moving Air
+(WalkLeft 5) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock]-17 0 -11 1 Left Neutral Left Up True False Moving Air
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-11,"opponentYPos":0,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":1,"opponentYVel":1,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":true,"status":0,"opponentStatus":4,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+(Crouch 5) [-16 0 -11 0 Neutral Neutral Neutral Neutral True True Stand Lowblock]-16 0 -11 0 Neutral Neutral Neutral Neutral True True Crouch Lowblock
+~~~~
+{"xPos":-17,"yPos":0,"opponentXPos":-11,"opponentYPos":1,"distance":-6,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":10,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-17 0 -11 1 Left Neutral Left Up True False Moving Air]-17 0 -11 2 Neutral Neutral Left Up True False Crouch Air
+(Crouch 4) [-17 0 -11 1 Left Neutral Left Up True False Moving Air]-17 0 -12 2 Neutral Neutral Left Up True False Crouch Air
+(Crouch 7) [-17 0 -11 1 Left Neutral Left Up True False Moving Air]-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air
+(Crouch 10) [-17 0 -11 1 Left Neutral Left Up True False Moving Air]-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air
+~~~~
+{"xPos":-17,"yPos":0,"opponentXPos":-12,"opponentYPos":3,"distance":-5,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":0,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":1,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Stand 1) [-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air]-17 0 -12 3 Neutral Neutral Left Up True False Stand Air
+(Stand 2) [-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air]-17 0 -13 3 Neutral Neutral Left Up True False Stand Air
+(Stand 4) [-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air]-17 0 -13 3 Neutral Neutral Left Down True False Stand Air
+(Stand 9) [-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air]-17 0 -14 2 Neutral Neutral Left Down True False Stand Air
+(Stand 10) [-17 0 -12 3 Neutral Neutral Left Up True False Crouch Air]-17 0 -14 2 Neutral Neutral Left Down True False Stand Air
+~~~~
+{"xPos":-17,"yPos":0,"opponentXPos":-14,"opponentYPos":2,"distance":-3,"xVel":1,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":0,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(WalkRight 1) [-17 0 -14 2 Neutral Neutral Left Down True False Stand Air]-17 0 -14 2 Right Neutral Left Down True False Moving Air
+(WalkRight 5) [-17 0 -14 2 Neutral Neutral Left Down True False Stand Air]-16 0 -14 1 Right Neutral Left Down True False Moving Air
+~~~~
+{"xPos":-16,"yPos":0,"opponentXPos":-14,"opponentYPos":1,"distance":-2,"xVel":2,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":10,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(WalkLeft 1) [-16 0 -14 1 Right Neutral Left Down True False Moving Air]-17 0 -14 1 Left Neutral Left Down True False Moving Air
+(WalkLeft 2) [-16 0 -14 1 Right Neutral Left Down True False Moving Air]-17 0 -15 1 Left Neutral Left Down True False Moving Air
+(WalkLeft 5) [-16 0 -14 1 Right Neutral Left Down True False Moving Air]-17 0 -15 0 Left Neutral Left Down True False Moving Air
+~~~~
+{"xPos":-17,"yPos":0,"opponentXPos":-15,"opponentYPos":0,"distance":-2,"xVel":0,"yVel":1,"opponentXVel":0,"opponentYVel":2,"health":0,"opponentHealth":0,"grounded":true,"opponentGrounded":false,"status":10,"opponentStatus":2,"parentAction":{"action":0,"duration":0}}
+(Crouch 1) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -15 0 Neutral Neutral Left Down True False Crouch Air
+(Crouch 2) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -15 0 Neutral Neutral Left Up True True Crouch Air
+(Crouch 3) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -15 0 Neutral Neutral Neutral Neutral False True Crouch Stand
+(Crouch 7) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -15 0 Neutral Neutral Left Up False False Crouch Air
+(Crouch 9) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -15 1 Neutral Neutral Left Up False False Crouch Air
+(Crouch 11) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -16 1 Neutral Neutral Left Up False False Crouch Air
+(Crouch 12) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -16 2 Neutral Neutral Left Up False False Crouch Air
+(Crouch 19) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -16 3 Neutral Neutral Left Up False False Crouch Air
+(Crouch 20) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -17 3 Neutral Neutral Left Up False False Crouch Air
+(Crouch 26) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -17 3 Neutral Neutral Left Down False False Crouch Air
+(Crouch 27) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -18 3 Neutral Neutral Left Down False False Crouch Air
+(Crouch 30) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -18 2 Neutral Neutral Left Down False False Crouch Air
+(Crouch 35) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -19 2 Neutral Neutral Left Down False False Crouch Air
+(Crouch 36) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -19 1 Neutral Neutral Left Down False False Crouch Air
+(Crouch 41) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -19 0 Neutral Neutral Left Down False False Crouch Air
+(Crouch 44) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -20 0 Neutral Neutral Left Neutral False True Crouch Air
+(Crouch 45) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -20 0 Neutral Neutral Neutral Neutral False True Crouch Stand
+(Crouch 49) [-17 0 -15 0 Left Neutral Left Down True False Moving Air]-17 0 -20 0 Neutral Neutral Neutral Neutral False True Crouch Highblock
+~~~~

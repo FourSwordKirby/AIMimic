@@ -1,0 +1,14 @@
+
+\chapter{Conclusion}
+
+\label{Chapter6} % For referencing the chapter elsewhere, use \ref{Chapter1} 
+
+Among competitive multiplayer games, fighting games are among the most expressive of the player's playstyle. The tight dynamics of the game combined with the fast-paced close-quarters combat means that it's vital for a player to understand the opponents behavior in order to secure an advantage. Replicating human behavior is a difficult task for AI, as it has to generalize the actions of a player across uncountably many different game states. Any illogical movement can break the players suspension of disbelief, and if it plays it too safe it's behavior patterns will be quickly figured out and exploited by human players.
+
+In this paper we explored a new technique to create human-like behavior for fighting games. By using search, we have enable the AI to plan and execute long strategies to reach its goal. By using action-$\delta$'s, we enable the AI to learn the results of actions and to understand how to use them in any context. These tools helped give our AI the capability of expressing the attributes of a human fighting-game player.
+
+We then compared our approach to repeat human demonstrations and other common implementations of fighting game AI in this field. The technique showed to be effective at emulating certain aspects of human behavior. Specifically, it did a good job in replicating the qualitative feel of a human player and did a better job at mimicking a player than Ghost AI, a popular technique used for this problem. However, it was not able to behave more similarly than a very simple N-gram AI.
+
+Moving forward, there are a few additional avenues that this work could go down. One is augmenting it with a better predictor function $\phi(s,a)$, as this would allow it to better understand how actions affect the state around it. This sort of project would be an entire undertaking in of itself, as it would require more advanced Machine Learning techniques to be successful. In addition, improving the adaptability of the predictor would improve the human-likeness of the AI, as it would capture a player's ability to alter their strategy in response to different circumstances. 
+
+Another problem that should be tackled is the collection and usage of useful player data. As is, data collection is time-consuming and expensive because of the time that subjects would have to spend testing. In addition, the AI is not able to use large data-sets well due to looking through the action-$\delta$s of all of the demonstrated actions. Devising some way to compactly obtain more useful information from small data sets could drastically improve the AI's expressive capabilities.

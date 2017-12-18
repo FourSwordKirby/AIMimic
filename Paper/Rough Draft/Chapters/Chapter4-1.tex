@@ -1,0 +1,137 @@
+
+\chapter{Additional Details}
+
+\begin{table}[h]
+	\centering
+	\caption{AI Situation description}
+	\begin{tabular}{| c | c |}
+		\hline
+		Field Name & Description \\
+		\hline
+		x Position        & x position of the target player. Descrtized by 0.5 unit increments	\\
+		\hline
+		y Position        & y position of the target player. Descrtized by 1.0 unit increments 	\\
+		\hline
+		x Velocity        & The sign of the x velocity of the target player.	\\
+		\hline
+		y Velocity        & The sign of the y velocity of the target player.	\\
+		\hline
+		opponents x Position        & x position of the opponent. Descrtized by 0.5 unit increments 	\\
+		\hline
+		opponents y Position        & y position of the opponent. Descrtized by 1.0 unit increments  	\\
+		\hline
+		opponents x Velocity        & The sign of the x velocity of the opponent player 	\\
+		\hline
+		opponents y Velocity        & The sign of the x velocity of the opponent player	\\
+		\hline
+		grounded        & Whether or not the target player is on the ground 	\\
+		\hline
+		opponent grounded       & Whether or not the opponent is on the ground  	\\
+		\hline
+		status        & The target player's current status 	\\
+		\hline
+		opponents status        & The opponent's current status 	\\
+		\hline
+	\end{tabular}
+	\label{gamestate}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\caption{Player Status descriptions}
+	\begin{tabular}{| c | c |}
+		\hline
+		Status & Description \\
+		\hline
+		Stand & When the player stands still \\
+		\hline
+		Crouch & When the player is crouching \\
+		\hline
+		Air & When the player is airborne \\
+		\hline
+		Highblock & When the player is blocking high \\
+		\hline
+		Lowblock &  When the player is blocking low \\
+		\hline
+		FirstHit & When the player was initially hit by an attack \\
+		\hline
+		Hit & When the player is in hitstun after being hit \\
+		\hline
+		KnockdownHit & When the player has been knocked down after being hit multiple times \\
+		\hline
+		Tech & When the player is getting up after being knocked down \\
+		\hline
+		Moving & When the player is walking on the ground \\
+		\hline
+		Dashing & When the player is performing a dash on the ground \\
+		\hline
+		AirDashing & When the player is performing a dash in the air \\
+		\hline
+		StandAttack & When the player has the stand hitbox out\\
+		\hline 
+		LowAttack & When the player has the low hitbox out\\
+		\hline 
+		OverheadAttack & When the player has the overhead hitbox out\\
+		\hline 
+		AirAttack & When the player has the AirAttack hitbox out\\
+		\hline
+		DP& When the player has the Dp hitbox out\\
+		\hline 
+		Recovery & The recovery period after an attack\\
+		\hline
+	\end{tabular}
+	\label{playerstatus}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\caption{Player Action descriptions}
+	\begin{tabular}{| c | c |}
+		\hline
+		Action & Description \\
+		\hline
+		Stand & The player is standing still \\ 
+		\hline
+		Crouch & The player is crouching \\ 
+		\hline
+		WalkLeft & The player is walking left \\ 
+		\hline
+		WalkRight & The player is walking right \\
+		\hline
+		JumpNeutral & The player jumped in place \\
+		\hline
+		JumpLeft & The player jumped to the left\\
+		\hline
+		JumpRight & The player jumped to the right \\
+		\hline
+		Attack & The player did a standing attack. Can be blocked high or low \\
+		\hline
+		Overhead & The player does a standing overhead attack. Can only be blocked high \\ 
+		\hline
+		LowAttack & The player does a crouching low attack. Can only be blocked low \\ 
+		\hline
+		AirAttack & The player does an attack in the air. Can only be blocked high \\ 
+		\hline
+		StandBlock & The player is actively blocking high. \\ 
+		\hline
+		CrouchBlock & The player is actively blocking high. \\ 
+		\hline
+		DashLeft & The player does a single quick dash to the left \\ 
+		\hline
+		DashRight & The player does a single quick dash to the right \\ 
+		\hline
+		AirdashLeft & The player does a single quick dash to the left in the air \\ 
+		\hline
+		AirdashRight & The player does a single quick dash to the right \\ 
+		\hline
+		DP & The player does a quick invulnerable strike. Has long recovery \\
+		\hline
+		TechNeutral & The player gets up from being knocked down \\ 
+		\hline
+		TechLeft & The player rolls to the left and gets up from being knocked down. \\ 
+		\hline
+		TechRight & The player rolls to the right and gets up from being knocked down. \\ 
+		\hline
+	\end{tabular}
+	\label{actions}
+\end{table}

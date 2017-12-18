@@ -150,7 +150,7 @@ public class OverheadState : State<Player>
         this.player.selfBody.drag = 0.0f;
         player.chainable = false;
 
-        meleeHitbox.GetComponent<Hitbox>().knockdown = false;
+        //COMMENTED OUT FOR RESEARCH meleeHitbox.GetComponent<Hitbox>().knockdown = false;
         player.hitboxManager.deactivateHitBox("MeleeHitbox");
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
 

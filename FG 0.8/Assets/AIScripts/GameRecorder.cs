@@ -54,12 +54,18 @@ public class GameRecorder : MonoBehaviour
 
         Snapshot snapshot = new Snapshot(GameManager.instance.currentFrame, player1, player2);
         snapshots.Add(snapshot);
+
+        //Pruning very old states, used for saving memory
+        if (snapshots.Count > 100)
+            snapshots.RemoveRange(0, 50);
+
     }
 
-    public Snapshot LatestFrame()
+    public Snapshot LatestFrame(int offset = 0)
     {
+        int targetIdx = Mathf.Max(0, snapshots.Count - offset - 1);
         if (snapshots.Count > 0)
-            return snapshots[snapshots.Count - 1];
+            return snapshots[targetIdx];
         else
             return null;
     }

@@ -11,10 +11,11 @@ using System.Linq;
 public class NgramAI : MonoBehaviour
 {
     public string playerProfileName;
+    public int logNumber;
     public EventRecorder dataRecorder;
 
-    Player AIPlayer;
-    Player Opponent;
+    public Player AIPlayer;
+    public Player Opponent;
 
     private List<GameEvent> priorSnapshots;
 
@@ -22,16 +23,14 @@ public class NgramAI : MonoBehaviour
     //The key is the string version of an array of previous moves. The value is a the set of all actions that have been done with that history
     //That list of actions is essentially a frequency table.
     private Dictionary<string, List<Action>> ngramHistory = new Dictionary<string, List<Action>>();
-
+    
     void Start()
     {
-        //controlledPlayer = GameManager.Players[0];
-        AIPlayer = GameManager.instance.p2;
         AIPlayer.AIControlled = true;
 
         AIPlayer.sprite.color = Color.green;
 
-        priorSnapshots = Session.RetrievePlayerSession(playerProfileName);
+        priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
         priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
         Debug.Log(priorSnapshots.Count);
@@ -43,14 +42,16 @@ public class NgramAI : MonoBehaviour
             string historyString = currentHistory[0] + " " + currentHistory[1];
             if(!ngramHistory.ContainsKey(historyString))
                 ngramHistory.Add(historyString, new List<Action>());
-            ngramHistory[historyString].Add(snapshot.p2Action);
+            ngramHistory[historyString].Add(snapshot.p1Action);
             currentHistory[0] = currentHistory[1];
-            currentHistory[1] = snapshot.p2Action;
+            currentHistory[1] = snapshot.p1Action;
         }
     }
 
     int frameInterval = 5;
     Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
+
+    public Action lastAction;
     void Update()
     {
         if (GameManager.instance.currentFrame % frameInterval == 0)
@@ -60,15 +61,24 @@ public class NgramAI : MonoBehaviour
                 return;
 
             currentHistory[0] = currentHistory[1];
-            currentHistory[1] = currentState.p2Action;
+            currentHistory[1] = currentState.p1Action;
             string historyString = currentHistory[0] + " " + currentHistory[1];
+            if (!ngramHistory.ContainsKey(historyString))
+                return;
+
             List<Action> freqTable = ngramHistory[historyString];
             Action action;
             if (freqTable.Count == 0)
                 action = Action.StandBlock;
             else
                 action = freqTable[Random.Range(0, freqTable.Count)];
-            AIPlayer.PerformAction(action);
+
+            if(action == Action.Stand || action == Action.Crouch || action == Action.WalkLeft || action == Action.WalkRight)
+            {
+                if (action == lastAction)
+                    return;
+            }
+            PerformAction(action);
         }
     }
 
@@ -77,5 +87,20 @@ public class NgramAI : MonoBehaviour
     GameEvent getGameState()
     {
         return dataRecorder.currentSession.snapshots.FindLast(x => true);
+    }
+
+    public void PerformAction(Action action)
+    {
+        //Edge case which is not covered by the base system due to how we're tracking player actions
+        //Prevents the AI from standing or crouching once commiting itself to an attack
+        if (AIPlayer.ActionFsm.CurrentState is AttackState)
+        {
+            if (action == Action.Stand || action == Action.Crouch)
+                return;
+        }
+
+        bool actionSucceeded = AIPlayer.PerformAction(action);
+        if (actionSucceeded)
+            lastAction = action;
     }
 }

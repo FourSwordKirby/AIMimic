@@ -52,6 +52,13 @@ headsepline, % Uncomment to get a line under the header
 
 \usepackage{subcaption}
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
@@ -74,7 +81,7 @@ headsepline, % Uncomment to get a line under the header
 \supervisor{Dr. Maxim \textsc{Smith}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{John \textsc{Smith}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\author{Roger \textsc{Liu}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
@@ -140,6 +147,7 @@ Copyright © 2017 Roger Liu\\[2cm] % Research group name and department name
 
 %----------------------------------------------------------------------------------------
 %	QUOTATION PAGE
+(>'\_')>
 %----------------------------------------------------------------------------------------
 
 %\vspace*{0.2\textheight}
@@ -198,7 +206,9 @@ The acknowledgments and the people to thank go here, don't forget to include you
 \include{Chapters/Chapter2} 
 \include{Chapters/Chapter3}
 \include{Chapters/Chapter4} 
-%\include{Chapters/Chapter5} 
+\include{Chapters/Chapter4-1} 
+\include{Chapters/Chapter5} 
+\include{Chapters/Chapter6} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -209,7 +219,6 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % Include the appendices of the thesis as separate files from the Appendices folder
 % Uncomment the lines as you write the Appendices
 
-\include{Appendices/AppendixA}
 %\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 

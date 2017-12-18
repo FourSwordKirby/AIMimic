@@ -37,8 +37,7 @@ public abstract class AIAgent : MonoBehaviour{
         //                                        p1Interrupt, p2Interrupt);
 
         int sessionLength = gameRecorder.snapshots.Count;
-        int snapshotIndex = Mathf.Max(0, sessionLength - frameDelay - 1);
-        return gameRecorder.snapshots[snapshotIndex];
+        return gameRecorder.LatestFrame(frameDelay);
     }
 
     /// <summary>

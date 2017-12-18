@@ -8,7 +8,9 @@ public class TransitionSolver : MonoBehaviour
 {
     public bool usingActionEffects;
     public bool searchSpecificTarget;
-    public bool randomPredecessor;
+    public bool randomGoal;
+    public bool informedGoal;
+    public bool stableGoal;
     public bool repeatedPlanning;
     public bool debugLogging;
 
@@ -21,6 +23,7 @@ public class TransitionSolver : MonoBehaviour
     private List<AISituation> perceptionBuffer;
 
     public string playerName;
+    public int logNumber;
     public Player controlledPlayer;
 
     TransitionProfile profile;
@@ -29,6 +32,8 @@ public class TransitionSolver : MonoBehaviour
     public List<AISituation> goalSituations = new List<AISituation>();
 
     public List<Transition> desiredTransitions;
+
+    private bool firstPlan = false;
 
     public void Awake()
     {
@@ -40,11 +45,11 @@ public class TransitionSolver : MonoBehaviour
 
     public void LoadTransitions()
     {
-        profile = TransitionProfile.LoadTransitions(playerName);
+        profile = TransitionProfile.LoadTransitions(playerName, logNumber);
 
         playerTransitions = profile.getPlayerTransitions();
         actionEffects = profile.getActionEffects();
-        goalSituations = profile.getGoalSituations(isPrimaryGoal);
+        goalSituations = profile.getGoalSituations(meetsGoalConditions);
     }
 
     public Dictionary<PlayerStatus, List<Action>> ValidMoveTable = 
@@ -103,6 +108,7 @@ public class TransitionSolver : MonoBehaviour
         File.WriteAllText(filePath, datalog);
     }
 
+    private Action lastAction = Action.Stand;
     public void Update()
     {
         perceptionBuffer.Add(new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1));
@@ -113,9 +119,12 @@ public class TransitionSolver : MonoBehaviour
             return;
 
         controlledPlayer.AIControlled = true;
-        if (desiredTransitions == null)
+        if (!firstPlan)
         {
             desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
+            firstPlan = true;
+            startFrame = GameManager.instance.currentFrame;
+            attemptStartFrame = GameManager.instance.currentFrame;
         }
 
         if (actionTracker >= desiredTransitions.Count && repeatedPlanning)
@@ -131,15 +140,24 @@ public class TransitionSolver : MonoBehaviour
 
         if (actionTracker < desiredTransitions.Count)
         {
+            AISituation originalSituation = desiredTransitions[actionTracker].prior;
             PerformedAction currentAction = desiredTransitions[actionTracker].action;
             AISituation desiredSituation = desiredTransitions[actionTracker].result;
 
             if (!actionCompleted)
             {
-                actionCompleted = controlledPlayer.PerformAction(currentAction.action, true);
-                if(actionCompleted)
+                //Used to prevent double walking/double standing etc
+                if ((currentAction.action == Action.Stand || currentAction.action == Action.Crouch ||
+                    currentAction.action == Action.WalkLeft || currentAction.action == Action.WalkRight) &&
+                    (lastAction == currentAction.action))
+                    actionCompleted = true;
+                else
+                    actionCompleted = controlledPlayer.PerformAction(currentAction.action, true);
+
+                if (actionCompleted)
                 {
-                    print(GameManager.instance.currentFrame + " Completed " + currentAction.action + new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1));
+                    lastAction = currentAction.action;
+                    //print(GameManager.instance.currentFrame + " Completed " + currentAction.action + new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1));
                     startFrame = GameManager.instance.currentFrame;
                 }
 
@@ -147,7 +165,6 @@ public class TransitionSolver : MonoBehaviour
                 {
                     print(GameManager.instance.currentFrame + " attempt failed " + currentAction + ", replanned" + 
                             new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1));
-
                     desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
                     actionTracker = 0;
 
@@ -167,15 +184,27 @@ public class TransitionSolver : MonoBehaviour
                 //The key idea is to make it favor doing stand -> jump -> air attack over stand -> air attack
 
                 //Adding a buffer window so that we say that our state must have been within the last x frames we've seen
-                if (!perceptionBuffer.Contains(desiredSituation))
+                if (!perceptionBuffer.Contains(desiredSituation) && repeatedPlanning)
                 {
                     //If we haven't seen the desired situation, provide some leeway to see if the desired situation ends up developing
                     if (GameManager.instance.currentFrame - startFrame < currentAction.duration + perceptionLeeway)
                         return;
 
                     //If after waiting we still have't seen the situation, then replan
-                    print("action" + currentAction + "replanned " + desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(),controlledPlayer.isPlayer1));
+                    AISituation currentSituation = new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1);
 
+                    print("action " + currentAction + " replanned " + desiredSituation + " : " + currentSituation);
+
+                    //Add the failed action attempt to our database of transitions and action effects
+                    if (!playerTransitions.ContainsKey(originalSituation))
+                        playerTransitions[originalSituation] = new List<Transition>();
+                    playerTransitions[originalSituation].Add(new Transition(originalSituation, currentAction, currentSituation));
+
+                    if (!actionEffects.ContainsKey(currentAction))
+                        actionEffects[currentAction] = new List<SituationChange>();
+                    actionEffects[currentAction].Add(new SituationChange(originalSituation, currentSituation));
+
+                    //Replanning
                     desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
                     actionTracker = 0;
 
@@ -196,6 +225,26 @@ public class TransitionSolver : MonoBehaviour
                         return;
                     }
                     currentAction = desiredTransitions[actionTracker].action;
+                }
+            }
+            else
+            {
+                if(repeatedPlanning)
+                {
+                    //If the opponent has behaved in a way that we don't expect, replan
+                    if (perceptionBuffer.Find(x => x.opponentEquals(originalSituation) || x.opponentEquals(targetSituation)) == null)
+                    {
+                        print("action" + currentAction + "replanned " + desiredSituation + " : " + new AISituation(GameRecorder.instance.LatestFrame(), controlledPlayer.isPlayer1));
+
+                        desiredTransitions = usingActionEffects ? FindTarget(playerTransitions, actionEffects) : FindTarget(playerTransitions);
+                        actionTracker = 0;
+
+                        actionCompleted = false;
+                        startFrame = GameManager.instance.currentFrame;
+                        attemptStartFrame = GameManager.instance.currentFrame;
+
+                        return;
+                    }
                 }
             }
         }
@@ -351,13 +400,12 @@ public class TransitionSolver : MonoBehaviour
         AISituation currentSituation = originalSituation;
         
         //Set the predecessor target if we're in that mode
-        if (randomPredecessor)
-        {
-            targetSituation = PickTarget(goalSituations, currentSituation);//[Random.Range(0, predecessorSituations.Count)];
-            //List<AISituation> predecessorSituations = profile.getPredecessorSituations(targetSituation);
-            //targetSituation = predecessorSituations[Random.Range(0, predecessorSituations.Count)];
-            //targetSituation = AdjustTarget(targetSituation, currentSituation);
-        }
+        if (randomGoal)
+            targetSituation = PickTarget(goalSituations, currentSituation);
+        else if (informedGoal)
+            targetSituation = PickInformedTarget(goalSituations, currentSituation);
+        else if (stableGoal)
+            targetSituation = PickFirstTarget(goalSituations, currentSituation);
 
         if (debugLogging)
         {
@@ -369,22 +417,22 @@ public class TransitionSolver : MonoBehaviour
         Stopwatch sw = Stopwatch.StartNew();
 
         //Setting ustff up for A* search
-        PriorityQueue<AISituation> pendingKnownSituations = new PriorityQueue<AISituation>();
-        PriorityQueue<AISituation> pendingUnknownSituations = new PriorityQueue<AISituation>();
+        PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingKnownSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
+        PriorityQueue<KeyValuePair<AISituation, List<Transition>>> pendingUnknownSituations = new PriorityQueue<KeyValuePair<AISituation, List<Transition>>>();
 
-        Dictionary<AISituation, AISituation> observedKnownSituations = new Dictionary<AISituation, AISituation>();
-        Dictionary<AISituation, AISituation> observedUnknownSituations = new Dictionary<AISituation, AISituation>();
+        Dictionary<AISituation, List<Transition>> observedKnownSituations = new Dictionary<AISituation, List<Transition>>();
+        Dictionary<AISituation, List<Transition>> observedUnknownSituations = new Dictionary<AISituation, List<Transition>>();
 
+        List<Transition> currentTransitions = new List<Transition>();
         if(transitions.ContainsKey(currentSituation))
-            pendingKnownSituations.Enqueue(currentSituation, 
+            pendingKnownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions), 
                                             0 + heuristic(currentSituation, targetSituation));
-        pendingUnknownSituations.Enqueue(currentSituation,
+        pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(currentSituation, currentTransitions),
                                             0 + heuristic(currentSituation, targetSituation));
 
         //Mostly used for debugging which states have been explored
         //And keeping track of the most viable states
         List<KeyValuePair<AISituation, float>> exploredStates = new List<KeyValuePair<AISituation, float>>();
-        List<Transition> plan;
 
         while ((pendingKnownSituations.Count > 0 || pendingUnknownSituations.Count > 0))
         {
@@ -394,87 +442,79 @@ public class TransitionSolver : MonoBehaviour
                 break;
             }
 
-            //Dequeuing the lowest priority state
-            PriorityQueue<AISituation>.Node node;
+
+            //Used to differentiate between looking at the known transitions for this state or looking at the action effects on this state
+            bool isKnown = pendingKnownSituations.Count > 0;
+
+            PriorityQueue<KeyValuePair<AISituation, List<Transition>>>.Node node;
             if (pendingKnownSituations.Count > 0)
                 node = pendingKnownSituations.Dequeue();
             else
                 node = pendingUnknownSituations.Dequeue();
 
             float priority = node.Priority;
-            currentSituation = node.Value;
+            KeyValuePair<AISituation, List<Transition>> pair = node.Value;
+            currentSituation = pair.Key;
+            currentTransitions = pair.Value;
             priority -= heuristic(currentSituation, targetSituation);
 
 
             //Debugging what was explored
-            if(debugLogging)
-                exploredStates.Add(new KeyValuePair<AISituation, float>(currentSituation, priority + heuristic(currentSituation, targetSituation)));
+            exploredStates.Add(new KeyValuePair<AISituation, float>(currentSituation, priority + heuristic(currentSituation, targetSituation)));
 
             //print("Looking at state: " + currentSituation + " with priority " + priority);
             if (isGoal(currentSituation))    //Might want to re-add in the check that the current plan is non-empty
             {
-                // Backtrack        
-                plan = new List<Transition>();
-                while (currentSituation.parentAction != null)
-                {
-                    plan.Add(new Transition(currentSituation.parentSituation, currentSituation.parentAction, currentSituation));
-                    currentSituation = currentSituation.parentSituation;
-                }
-
-                plan.Reverse();
                 if(debugLogging)
                 {
                     print("Time elapsed to plan: " + sw.ElapsedMilliseconds);
                     WriteExploration(exploredStates);
-                    WritePlan(plan);
+                    WritePlan(currentTransitions);
                 }
 
-                return plan;
+                return currentTransitions;
             }
-
-            //Used to differentiate between looking at the known transitions for this state or looking at the action effects on this state
-            bool isKnown = pendingKnownSituations.Count > 0;
 
             if (isKnown)
             {
-                if (observedKnownSituations.ContainsKey(currentSituation))
-                    continue;
-
-                observedKnownSituations.Add(currentSituation, currentSituation);
-
-                List<Transition> availableTransitions = transitions[currentSituation];
-                foreach (Transition transition in availableTransitions)
+                if (!observedKnownSituations.ContainsKey(currentSituation))
                 {
-                    //TODO hack to deal with faulty data
-                    if (transition.action.duration > 200)
-                        continue;
+                    observedKnownSituations.Add(currentSituation, currentTransitions);
 
-                    if (!ValidMoveTable[currentSituation.status].Contains(transition.action.action))
-                        continue;
-                    if (!currentSituation.grounded && !(transition.action.action == Action.AirdashLeft 
-                        || transition.action.action == Action.AirdashRight || transition.action.action == Action.AirAttack))
-                        continue;
+                    List<Transition> availableTransitions = transitions[currentSituation];
+                    foreach (Transition transition in availableTransitions)
+                    {
+                        //TODO hack to deal with faulty data
+                        if (transition.action.duration > 200)
+                            continue;
 
-                    if (observedKnownSituations.ContainsKey(transition.result) && observedUnknownSituations.ContainsKey(transition.result))
-                        continue;
+                        if (!ValidMoveTable[currentSituation.status].Contains(transition.action.action))
+                            continue;
+                        if (!currentSituation.grounded && !(transition.action.action == Action.AirdashLeft 
+                            || transition.action.action == Action.AirdashRight || transition.action.action == Action.AirAttack))
+                            continue;
 
-                    AISituation newState = transition.result.Copy();
-                    newState.parentAction = transition.action;
-                    newState.parentSituation = currentSituation;
+                        if (observedKnownSituations.ContainsKey(transition.result) && observedUnknownSituations.ContainsKey(transition.result))
+                            continue;
 
-                    if (transitions.ContainsKey(newState))
-                        pendingKnownSituations.Enqueue(newState,   
-                                                        priority + 1.0f + heuristic(newState, targetSituation));
-                    //No matter what, this state shows up on our list of states that will be examined via action effects
-                    pendingUnknownSituations.Enqueue(newState,
-                                                        priority + 1.0f + heuristic(newState, targetSituation));
+                        List<Transition> latestTransitions = new List<Transition>();
+                        latestTransitions.AddRange(currentTransitions);
+                        latestTransitions.Add(transition);
+
+                        if (transitions.ContainsKey(transition.result))
+                            pendingKnownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions),   
+                                                            priority + 1.0f + heuristic(transition.result, targetSituation));
+                        //No matter what, this state shows up on our list of states that will be examined via action effects
+                        pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions),
+                                                            priority + 1.0f + heuristic(transition.result, targetSituation));
+                    }
                 }
             }
             else
             {
                 if(!observedUnknownSituations.ContainsKey(currentSituation))
                 {
-                    observedUnknownSituations.Add(currentSituation, currentSituation);
+                    observedUnknownSituations.Add(currentSituation, currentTransitions);
                     //Debug
                     //print("Looking at situation " + currentSituation);
                     //print("target situation is " + targetSituation);
@@ -502,9 +542,11 @@ public class TransitionSolver : MonoBehaviour
                         //Debug
                         //print("Action is " + action + " From " + currentSituation + " Results in " + newSituation);
 
-                        AISituation newState = newSituation.Copy();
-                        newState.parentAction = action;
-                        newState.parentSituation = currentSituation;
+                        Transition transition = new Transition(currentSituation, action, newSituation);
+
+                        List<Transition> latestTransitions = new List<Transition>();
+                        latestTransitions.AddRange(currentTransitions);
+                        latestTransitions.Add(transition);
 
                         //Priority here for taking a new action is 
                         //(1+success rate of action) * (1+similarity of other situation to current situation)
@@ -515,12 +557,12 @@ public class TransitionSolver : MonoBehaviour
 
                         //Right now we're not exploring the unknown transitions from this state, which could be bad?
                         //Hard to say if we'll get significantly more cases where we pick a random action
-                        if (transitions.ContainsKey(newState))
-                            pendingKnownSituations.Enqueue(newState,
-                                                            pendingPriority + heuristic(newState, targetSituation));
+                        if (transitions.ContainsKey(transition.result))
+                            pendingKnownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions),
+                                                            pendingPriority + heuristic(transition.result, targetSituation));
                         //No matter what, this state shows up on our list of states that will be examined via action effects
-                        pendingUnknownSituations.Enqueue(newState,
-                                                            pendingPriority + heuristic(newState, targetSituation));
+                        pendingUnknownSituations.Enqueue(new KeyValuePair<AISituation, List<Transition>>(transition.result, latestTransitions),
+                                                            pendingPriority + heuristic(transition.result, targetSituation));
 
                         //**********************Old way of using action effects by iterating over a table*************************/
                         /*
@@ -567,26 +609,21 @@ public class TransitionSolver : MonoBehaviour
         }
 
         //If we timed out, return the best plan we have so far.
-        if(debugLogging)
+    if(debugLogging)
             WriteExploration(exploredStates);
 
         exploredStates.Sort((x, y) => (int)(x.Value - y.Value));
         AISituation bestSituation = exploredStates[0].Key;
 
-        // Backtrack from the best Situation
-        plan = new List<Transition>();
-        currentSituation = bestSituation;
-        while (currentSituation.parentAction != null)
-        {
-            plan.Add(new Transition(currentSituation.parentSituation, currentSituation.parentAction, currentSituation));
-            currentSituation = currentSituation.parentSituation;
-        }
-
-        plan.Reverse();
+        List<Transition> plan = new List<Transition>();
+        if (observedKnownSituations.ContainsKey(bestSituation))
+            plan = observedKnownSituations[bestSituation];
+        else
+            plan = observedUnknownSituations[bestSituation];
 
         if (debugLogging)
         {
-            print("Following best available situation");
+            print("BestGuess");
             WritePlan(plan);
         }
 
@@ -600,44 +637,41 @@ public class TransitionSolver : MonoBehaviour
         */
     }
 
-    //TODO: Need to make picking a target balance between choosing a situation that is easier to achieve and one that is more applicable
+     //TODO: Need to make picking a target balance between choosing a situation that is easier to achieve and one that is more applicable
     //to this situation. A real life example is going for the atomic collider -> rapid cancel combo to side switch out of the corner
     //and get the big corner damage versus not doing that combo when it would put us in the corner and not lead to the same massive damage.
     private AISituation PickTarget(List<AISituation> candidateSituations, AISituation currentSituation)
     {
-        float minDist = float.MaxValue;
         AISituation bestSituation = candidateSituations[0];
-        //foreach(AISituation sit in candidateSituations)
-        //{
-        //    float dist = AISituation.Similarity(sit, currentSituation);
-        //    if (dist < minDist)
-        //    {
-        //        minDist = dist;
-        //        bestSituation = sit;
-        //    }
-        //}
-        
         ////Random selection code
         bestSituation = candidateSituations[Random.Range(0, candidateSituations.Count)];
         return bestSituation;
+    }
 
+    private AISituation PickFirstTarget(List<AISituation> candidateSituations, AISituation currentSituation)
+    {
+        AISituation bestSituation = candidateSituations[0];
+        return bestSituation;
+    }
+
+    private AISituation PickInformedTarget(List<AISituation> candidateSituations, AISituation currentSituation)
+    {
         //Variation code to use after debugging is done
-        /*
-        float distTotal = candidateSituations.Select(x => AISituation.Similarity(x, currentSituation)).Sum();
+        float distTotal = candidateSituations.Select(x => AISituation.Similarity(x, currentSituation) 
+                                                                * (x.opponentStatus == PlayerStatus.FreshBlock ? 0.3f : 1.0f)).Sum();
         float rng = Random.Range(0, distTotal);
         float runningSum = 0.0f;
         foreach (AISituation sit in candidateSituations)
         {
             float dist = AISituation.Similarity(sit, currentSituation);
-            print(dist);
-            print(distTotal);
+            //print(dist);
+            //print(distTotal);
             runningSum += dist;
             if (rng < runningSum)
                 return sit;
         }
         print("shoudn't be here");
         return candidateSituations[0];
-        */
     }
 
     //We need to do something like this to better direct the search towards one of many viable goals.
@@ -697,11 +731,12 @@ public class TransitionSolver : MonoBehaviour
         //return isPrimaryGoal(situation);
     }
 
-    public bool isPrimaryGoal(AISituation situation)
+    public bool meetsGoalConditions(AISituation situation)
     {
         if (searchSpecificTarget)
             return situation.Equals(targetSituation);    //Used to show the proof of concept. That is, the agent can navigate to the desired state
         else
-            return situation.opponentStatus == PlayerStatus.FreshHit;    //We just want to get to a state where we hit the opponent
+            //We just want to get to a state where we hit the opponent
+            return situation.opponentStatus == PlayerStatus.FreshHit || situation.opponentStatus == PlayerStatus.FreshBlock; 
     }
 }

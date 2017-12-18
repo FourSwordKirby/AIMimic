@@ -14,6 +14,8 @@ public class EventRecorder : MonoBehaviour {
     public Session currentSession;
     List<Session> sessions;
 
+    public static EventRecorder instance;
+
     void Awake()
     {
         sessions = new List<Session>(); 
@@ -23,6 +25,7 @@ public class EventRecorder : MonoBehaviour {
         {
             player2.sprite.color = Color.yellow;
         }
+        instance = this;
     }
 
 
@@ -30,7 +33,7 @@ public class EventRecorder : MonoBehaviour {
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
-            WriteToLog(0, 0);
+            WriteToLog();
 
         if (roundInProgress && GameManager.instance.roundOver)
         {
@@ -66,21 +69,15 @@ public class EventRecorder : MonoBehaviour {
     //    WriteToLog(GameManager.instance.rematchUI.p1Class, GameManager.instance.rematchUI.p2Class);
     //}
 
-    public void WriteToLog(int p1Class, int p2Class)
+    public void WriteToLog(string name = "")
     {
         //Catchall for any incomplete session that we haven't logged
         LogSession();
-
-        int pClass = (GameManager.instance.p1 == this.player2)? p1Class : p2Class;
-
-        string strClass = pClass == 1 ? "offense" : "defense";
         foreach (Session session in sessions)
         {
-            foreach (GameEvent snapshot in session.snapshots)
-                snapshot.labels.Add(strClass);
-            session.WriteToLog();
+            session.WriteToLog(name);
         }
-        Debug.Log("Log Written");
+        Debug.Log("Event Log Written");
     }
 
 

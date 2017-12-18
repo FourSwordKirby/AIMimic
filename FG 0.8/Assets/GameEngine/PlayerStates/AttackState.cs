@@ -28,7 +28,7 @@ public class AttackState : State<Player>
 
         startup = 0.05f * Application.targetFrameRate;
         duration = 0.05f * Application.targetFrameRate;
-        endlag = 0.25f * Application.targetFrameRate;
+        endlag = 0.5f * Application.targetFrameRate;        //COMMENTED OUT FOR RESEARCH 0.25f * Application.targetFrameRate;
 
         frameCounter = 0;
     }
@@ -54,7 +54,7 @@ public class AttackState : State<Player>
         }
 
 
-        if (player.comboCount >= 2)
+        if (player.comboCount >= Player.COMBO_LIMIT)
         {
             player.chainable = false;
             meleeHitbox.GetComponent<Hitbox>().knockdown = true;
@@ -143,7 +143,7 @@ public class AttackState : State<Player>
         this.player.selfBody.drag = 0.0f;
         player.chainable = false;
 
-        meleeHitbox.GetComponent<Hitbox>().knockdown = false;
+        //COMMENTED OUT FOR RESEARCH meleeHitbox.GetComponent<Hitbox>().knockdown = false;
         player.hitboxManager.deactivateHitBox("MeleeHitbox");
         meleeHitbox.GetComponent<SpriteRenderer>().color = Color.clear;
 

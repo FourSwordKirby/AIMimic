@@ -21,10 +21,7 @@ public class Session {
         roundMetaData = new RoundMetadata(0, 0);
         snapshots = new List<GameEvent>();
 
-        directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + this.playerProfileName + "/";
-        Directory.CreateDirectory(directoryPath);
-
-        playerDir = new DirectoryInfo(directoryPath);
+        directoryPath = Application.streamingAssetsPath + "/PlayerLogs/";
     }
 
     public void AddSnapshot(GameEvent snapshot)
@@ -32,9 +29,20 @@ public class Session {
         snapshots.Add(snapshot);
     }
 
-    public void WriteToLog()
+    public void WriteToLog(string logName = "")
     {
-        filePath = directoryPath + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
+        if(logName == "")
+        {
+            Directory.CreateDirectory(directoryPath + this.playerProfileName + "/");
+            playerDir = new DirectoryInfo(directoryPath + this.playerProfileName + "/");
+            filePath = directoryPath + this.playerProfileName + "/" + "Log_" + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
+        }
+        else
+        {
+            Directory.CreateDirectory(directoryPath + logName + "/");
+            playerDir = new DirectoryInfo(directoryPath + logName + "/");
+            filePath = directoryPath + logName + "/" + logName + playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count() + ".txt";
+        }
 
         string datalog = "";//"Metadata";
 
@@ -68,10 +76,10 @@ public class Session {
     {
         string directoryPath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/";
         DirectoryInfo playerDir = new DirectoryInfo(directoryPath);
-        if(sessionNumber == -1)
-            sessionNumber  = playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count()-1;
+        if (sessionNumber == -1)
+            sessionNumber = playerDir.GetFiles().Where(x => !x.Name.EndsWith(".meta")).Count()-1;
 
-        string filePath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/" + "Log_" + sessionNumber + ".txt";
+        string filePath = Application.streamingAssetsPath + "/PlayerLogs/" + playerProfileName + "/" + playerProfileName + sessionNumber + ".txt";
 
         //deserialize
         string contents = File.ReadAllText(filePath);

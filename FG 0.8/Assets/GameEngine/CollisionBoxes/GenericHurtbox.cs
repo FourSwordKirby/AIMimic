@@ -40,7 +40,7 @@ public class GenericHurtbox : Hurtbox {
             if (owner.isBlocking && !((hitbox.type == Hitbox.hitType.low && !owner.isCrouching) || (hitbox.type == Hitbox.hitType.high && owner.isCrouching)))
             {
                 hitbox.owner.selfBody.velocity -= 1.5f * hitbox.owner.facingDirection.x * Vector2.right;
-                hitbox.owner.chainable = true;
+                //COMMENTED OUT FOR RESEARCH hitbox.owner.chainable = true;
                 hitbox.owner.ActionFsm.SuspendState(new HitlagState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
 
                 TakeDamage(hitbox.chipDamage);
@@ -52,7 +52,7 @@ public class GenericHurtbox : Hurtbox {
             else
             {
                 hitbox.owner.selfBody.velocity -= 0.25f * hitbox.owner.facingDirection.x * Vector2.right;
-                hitbox.owner.chainable = true;
+                //COMMENTED OUT FOR RESEARCH hitbox.owner.chainable = true;
                 hitbox.owner.ActionFsm.SuspendState(new HitlagState(hitbox.owner, hitbox.owner.ActionFsm, hitbox.hitlag, hitbox.owner.ActionFsm.CurrentState));
                 
                 TakeDamage(hitbox.damage);
@@ -68,8 +68,8 @@ public class GenericHurtbox : Hurtbox {
                 
                 GameManager.AddCombo(hitbox.owner);
                 GameManager.SpawnHitIndicator(hitLocation);
-                EventManager.instance.RecordHit(hitbox.owner, owner, hitbox, hitbox.owner.comboCount);
 
+                EventManager.instance.RecordHit(hitbox.owner, owner, hitbox, hitbox.owner.comboCount);
             }
         }
     }

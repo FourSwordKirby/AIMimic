@@ -606,7 +606,7 @@ MonoBehaviour:
   health: 10000
   meter: 0
   enabled: 1
-  attacking: 0
+  locked: 0
   suspended: 0
   stunned: 0
   knockedDown: 0
@@ -739,7 +739,7 @@ MonoBehaviour:
   blockstun: 3
   isProjectile: 0
   type: 2
-  knockdown: 0
+  knockdown: 1
   prioirty: 0
   meterGain: 0
 --- !u!114 &114740249426233126
@@ -787,7 +787,7 @@ MonoBehaviour:
   blockstun: 12
   isProjectile: 0
   type: 0
-  knockdown: 0
+  knockdown: 1
   prioirty: 0
   meterGain: 0
 --- !u!212 &212000010195425386

@@ -540,10 +540,11 @@ public class AISituation : System.IEquatable<AISituation>
 {
     public int xPos;
     public int yPos;
-    public int distance;
 
     public int opponentXPos;
     public int opponentYPos;
+
+    public int distance;
 
     public xMovement xVel;
     public yMovement yVel;
@@ -582,7 +583,7 @@ public class AISituation : System.IEquatable<AISituation>
             opponentYPos = (int)(snapshot.p1Position.y);
         }
 
-        distance = Mathf.Abs(xPos - opponentXPos);
+        distance = xPos - opponentXPos;
 
         //Velocity
         if (isPlayer1)
@@ -766,6 +767,45 @@ public class AISituation : System.IEquatable<AISituation>
         Debug.Log("this code shouldn't be called");
     }
 
+    public bool nominallyEquals(AISituation situation)
+    {
+        return distance == situation.distance &&
+                yPos == situation.yPos &&
+                opponentYPos == situation.opponentYPos &&
+                //Don't account for health for now bc it isn't pertient towards making the AI navigate neutral effectively
+                //health == situation.health &&
+                //opponentHealth == situation.opponentHealth &&
+
+                xVel == situation.xVel &&
+                yVel == situation.yVel &&
+                opponentXVel == situation.opponentXVel &&
+                opponentYVel == situation.opponentYVel &&
+                grounded == situation.grounded &&
+                opponentGrounded == situation.opponentGrounded &&
+                status == situation.status &&
+                opponentStatus == situation.opponentStatus;
+    }
+
+    public bool playerEquals(AISituation situation)
+    {
+        return xPos == situation.xPos &&
+                   yPos == situation.yPos &&
+                   xVel == situation.xVel &&
+                   yVel == situation.yVel &&
+                   grounded == situation.grounded &&
+                   status == situation.status;
+    }
+
+    public bool opponentEquals(AISituation situation)
+    {
+        return opponentXPos == situation.opponentXPos &&
+                opponentYPos == situation.opponentYPos &&
+                opponentXVel == situation.opponentXVel &&
+                opponentYVel == situation.opponentYVel &&
+                opponentGrounded == situation.opponentGrounded &&
+                opponentStatus == situation.opponentStatus;
+    }
+
     public bool Equals(AISituation situation)
     {
         return xPos == situation.xPos &&
@@ -835,10 +875,14 @@ public class AISituation : System.IEquatable<AISituation>
     internal static float Similarity(AISituation x, AISituation y)
     {
         SituationChange diff = new SituationChange(x, y);
+
+        int xDist1 = x.xPos - x.opponentXPos;
+        int xDist2 = x.xPos - x.opponentXPos;
+
         return ((
-            5.0f*((20.0f-diff.xPosChange)/ 20.0f)
+            5.0f*((20.0f-Mathf.Abs(xDist1 - xDist2))/ 20.0f)
             + (diff.yPosChange == 0 ? 1 : 0)
-            + 5.0f * ((20.0f - diff.opponentXPosChange) / 20.0f)
+            //+ 5.0f * ((20.0f - diff.opponentXPosChange) / 20.0f)
             + (diff.opponentYPosChange == 0 ? 1 : 0)
             + (diff.xVelChange == 0 ? 1 : 0)
             + (diff.yVelChange == 0 ? 1 : 0)
@@ -892,17 +936,11 @@ public class SituationChange : System.IEquatable<SituationChange>
     public int healthChange;
     public int opponentHealthChange;
 
-    //public int corneredChange;
-    //public int opponentCorneredChange;
-
     public bool resultingGrounded;
     public bool opponentResultingGrounded;
 
     public PlayerStatus resultingStatus;
     public PlayerStatus opponentResultingStatus;
-
-    //public int statusChange;
-    //public int opponentStatusChange;
 
     public override int GetHashCode()
     {
@@ -988,14 +1026,21 @@ public class SituationChange : System.IEquatable<SituationChange>
         newSituation.health = (Health)Mathf.Clamp((int)prior.health + (int)change.healthChange, 0, healthMax);
         newSituation.opponentHealth = (Health)Mathf.Clamp((int)prior.opponentHealth + (int)change.opponentHealthChange, 0, healthMax);
 
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!! Important Change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        ///We do this because it's hard to predict how the opponent will move, so we just assume they stay in the same place
+        ///Figuring out exactly how the opponent moves would be a project in of itself
+        newSituation.opponentXPos = prior.opponentXPos;
+        newSituation.opponentYPos = prior.opponentYPos;
+
+        newSituation.opponentXVel = prior.opponentXVel;
+        newSituation.opponentYVel = prior.opponentYVel;
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!! Important Change !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         newSituation.grounded = change.resultingGrounded;
         newSituation.opponentGrounded = change.opponentResultingGrounded;
 
         newSituation.status = change.resultingStatus;
         newSituation.opponentStatus = change.opponentResultingStatus;
-        //You can't apply change on the status bc that's jank and doesn't really work lol
-        //newSituation.status = (PlayerStatus)Mathf.Clamp((int)prior.status + (int)change.statusChange, 0, statusMax);
-        //newSituation.opponentStatus = (PlayerStatus)Mathf.Clamp((int)prior.opponentStatus + (int)change.opponentStatusChange, 0, statusMax);
 
         return newSituation;
     }

@@ -6,6 +6,8 @@ import glob, os, sys
 def ParsePlayerLogs(player_name):
     playerData = []
     roundData = []
+    owd = os.getcwd()
+
     os.chdir(player_name)
     lastSeenTime = 0.0
 
@@ -22,12 +24,13 @@ def ParsePlayerLogs(player_name):
                 if currentTime < lastSeenTime:
                     playerData.append(roundData)
                     roundData = []
-
                 roundData.append(data)
                 lastSeenTime = currentTime
 
     if len(roundData) > 0:
         playerData.append(roundData)
+
+    os.chdir(owd)
     return playerData
 
 if __name__ == '__main__':

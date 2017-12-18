@@ -16,5 +16,380 @@
   {}
 \endgroup
 
-\sortlist[entry]{nyt/global/}\endsortlist
+\sortlist[entry]{nyt/global/}
+  \entry{FightingAIComparison}{inbook}{}
+    \name{author}{3}{}{%
+      {{hash=CBH}{%
+         family={Cho},
+         familyi={C\bibinitperiod},
+         given={Byeong\bibnamedelima Heon},
+         giveni={B\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+      {{hash=PCJ}{%
+         family={Park},
+         familyi={P\bibinitperiod},
+         given={Chang\bibnamedelima Joon},
+         giveni={C\bibinitperiod\bibinitdelim J\bibinitperiod},
+      }}%
+      {{hash=YKH}{%
+         family={Yang},
+         familyi={Y\bibinitperiod},
+         given={Kwang\bibnamedelima Ho},
+         giveni={K\bibinitperiod\bibinitdelim H\bibinitperiod},
+      }}%
+    }
+    \name{editor}{3}{}{%
+      {{hash=ML}{%
+         family={Ma},
+         familyi={M\bibinitperiod},
+         given={Lizhuang},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=RM}{%
+         family={Rauterberg},
+         familyi={R\bibinitperiod},
+         given={Matthias},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=NR}{%
+         family={Nakatsu},
+         familyi={N\bibinitperiod},
+         given={Ryohei},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Springer Berlin Heidelberg}%
+    }
+    \strng{namehash}{CBHPCJYKH1}
+    \strng{fullhash}{CBHPCJYKH1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2007}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{abstract}{%
+    Recently many studies have attempted to implement intelligent characters
+  for fighting action games. They used genetic algorithms, neural networks, and
+  evolutionary neural networks to create intelligent characters. This study
+  quantitatively compared the performance of these three AI techniques in the
+  same game and experimental environments, and analyzed the results of
+  experiments. As a result, neural network and evolutionary neural network
+  showed excellent performance in the final convergence score ratio while
+  evolutionary neural network and genetic algorithms showed excellent
+  performance in convergence speed. In conclusion, evolutionary neural network
+  which showed excellent results in both the final convergence score ratio and
+  the convergence score is most appropriate AI technique for fighting action
+  games.%
+    }
+    \field{booktitle}{Entertainment Computing -- ICEC 2007: 6th International
+  Conference, Shanghai, China, September 15-17, 2007. Proceedings}
+    \verb{doi}
+    \verb 10.1007/978-3-540-74873-1_8
+    \endverb
+    \field{isbn}{978-3-540-74873-1}
+    \field{pages}{55\bibrangedash 65}
+    \field{title}{Comparison of AI Techniques for Fighting Action Games -
+  Genetic Algorithms/Neural Networks/Evolutionary Neural Networks}
+    \verb{url}
+    \verb https://doi.org/10.1007/978-3-540-74873-1_8
+    \endverb
+    \list{location}{1}{%
+      {Berlin, Heidelberg}%
+    }
+    \field{year}{2007}
+  \endentry
+
+  \entry{SuperSmashBros}{article}{}
+    \name{author}{3}{}{%
+      {{hash=FV}{%
+         family={Firoiu},
+         familyi={F\bibinitperiod},
+         given={Vlad},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=WWF}{%
+         family={Whitney},
+         familyi={W\bibinitperiod},
+         given={William\bibnamedelima F.},
+         giveni={W\bibinitperiod\bibinitdelim F\bibinitperiod},
+      }}%
+      {{hash=TJB}{%
+         family={Tenenbaum},
+         familyi={T\bibinitperiod},
+         given={Joshua\bibnamedelima B.},
+         giveni={J\bibinitperiod\bibinitdelim B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FVWWFTJB1}
+    \strng{fullhash}{FVWWFTJB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2017}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \verb{eprint}
+    \verb 1702.06230
+    \endverb
+    \field{title}{Beating the World's Best at Super Smash Bros. with Deep
+  Reinforcement Learning}
+    \verb{url}
+    \verb http://arxiv.org/abs/1702.06230
+    \endverb
+    \field{volume}{abs/1702.06230}
+    \field{journaltitle}{CoRR}
+    \field{eprinttype}{arXiv}
+    \field{year}{2017}
+  \endentry
+
+  \entry{simil}{article}{}
+    \name{author}{6}{}{%
+      {{hash=HR}{%
+         family={Hamid},
+         familyi={H\bibinitperiod},
+         given={Raffay},
+         giveni={R\bibinitperiod},
+      }}%
+      {{hash=MS}{%
+         family={Maddi},
+         familyi={M\bibinitperiod},
+         given={Siddhartha},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=JA}{%
+         family={Johnson},
+         familyi={J\bibinitperiod},
+         given={Amos},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=BA}{%
+         family={Bobick},
+         familyi={B\bibinitperiod},
+         given={Aaron},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=EI}{%
+         family={Essa},
+         familyi={E\bibinitperiod},
+         given={Irfan},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=IC}{%
+         family={Isbell},
+         familyi={I\bibinitperiod},
+         given={Charles},
+         giveni={C\bibinitperiod},
+      }}%
+    }
+    \keyw{Temporal reasoning, Scene analysis, Computer vision}
+    \strng{namehash}{HR+1}
+    \strng{fullhash}{HRMSJABAEIIC1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \verb{doi}
+    \verb https://doi.org/10.1016/j.artint.2009.05.002
+    \endverb
+    \field{issn}{0004-3702}
+    \field{number}{14}
+    \field{pages}{1221 \bibrangedash  1244}
+    \field{title}{A novel sequence representation for unsupervised analysis of
+  human activities}
+    \verb{url}
+    \verb http://www.sciencedirect.com/science/article/pii/S0004370209000629
+    \endverb
+    \field{volume}{173}
+    \field{journaltitle}{Artificial Intelligence}
+    \field{year}{2009}
+  \endentry
+
+  \entry{DrivingPlayerModeler}{article}{}
+    \name{author}{2}{}{%
+      {{hash=JTRDN}{%
+         family={Julian\bibnamedelima Togelius},
+         familyi={J\bibinitperiod\bibinitdelim T\bibinitperiod},
+         given={Renzo De\bibnamedelima Nardi},
+         giveni={R\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim
+  N\bibinitperiod},
+      }}%
+      {{hash=LSM}{%
+         family={Lucas},
+         familyi={L\bibinitperiod},
+         given={Simon\bibnamedelima M.},
+         giveni={S\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JTRDNLSM1}
+    \strng{fullhash}{JTRDNLSM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2007}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{title}{Towards automatic personalised content creation for racing
+  games}
+    \field{journaltitle}{R2007 IEEE Symposium on Computational Intelligence and
+  Games}
+    \field{year}{2007}
+  \endentry
+
+  \entry{MarioImitation2}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=LG}{%
+         family={Lee},
+         familyi={L\bibinitperiod},
+         given={G.},
+         giveni={G\bibinitperiod},
+      }}%
+      {{hash=LM}{%
+         family={Luo},
+         familyi={L\bibinitperiod},
+         given={M.},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=ZF}{%
+         family={Zambetta},
+         familyi={Z\bibinitperiod},
+         given={F.},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=LX}{%
+         family={Li},
+         familyi={L\bibinitperiod},
+         given={X.},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \keyw{Markov processes;computer games;learning (artificial
+  intelligence);Markov decision process;Super Mario controller
+  learning;apprenticeship learning;artificial intelligence;human
+  play;human-like behaviour;human-like imitation problem;inverse reinforcement
+  learning;player behaviour policy;reward function;Algorithm design and
+  analysis;Convergence;Educational institutions;Games;Learning (artificial
+  intelligence);Prediction algorithms}
+    \strng{namehash}{LG+1}
+    \strng{fullhash}{LGLMZFLX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2014}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{booktitle}{2014 IEEE Congress on Evolutionary Computation (CEC)}
+    \verb{doi}
+    \verb 10.1109/CEC.2014.6900246
+    \endverb
+    \field{issn}{1089-778X}
+    \field{pages}{1\bibrangedash 8}
+    \field{title}{Learning a Super Mario controller from examples of human
+  play}
+    \field{year}{2014}
+    \warn{\item Invalid format of field 'month'}
+  \endentry
+
+  \entry{MarioImitation}{article}{}
+    \name{author}{4}{}{%
+      {{hash=OJ}{%
+         family={Ortega},
+         familyi={O\bibinitperiod},
+         given={Juan},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=SN}{%
+         family={Shaker},
+         familyi={S\bibinitperiod},
+         given={Noor},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=TJ}{%
+         family={Togelius},
+         familyi={T\bibinitperiod},
+         given={Julian},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=YGN}{%
+         family={Yannakakis},
+         familyi={Y\bibinitperiod},
+         given={Georgios\bibnamedelima N.},
+         giveni={G\bibinitperiod\bibinitdelim N\bibinitperiod},
+      }}%
+    }
+    \keyw{Game AI, Neuroevolution, Dynamic scripting, Imitation learning,
+  Behaviour cloning, Behaviour imitation}
+    \strng{namehash}{OJ+1}
+    \strng{fullhash}{OJSNTJYGN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2013}
+    \field{sortinit}{O}
+    \field{sortinithash}{O}
+    \verb{doi}
+    \verb https://doi.org/10.1016/j.entcom.2012.10.001
+    \endverb
+    \field{issn}{1875-9521}
+    \field{number}{2}
+    \field{pages}{93 \bibrangedash  104}
+    \field{title}{Imitating human playing styles in Super Mario Bros}
+    \verb{url}
+    \verb http://www.sciencedirect.com/science/article/pii/S1875952112000183
+    \endverb
+    \field{volume}{4}
+    \field{journaltitle}{Entertainment Computing}
+    \field{year}{2013}
+  \endentry
+
+  \entry{MultiObjectiveMimic}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=VHN}{%
+         family={Van\bibnamedelima Hoorn},
+         familyi={V\bibinitperiod\bibinitdelim H\bibinitperiod},
+         given={Niels},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=TJ}{%
+         family={Togelius},
+         familyi={T\bibinitperiod},
+         given={Julian},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=WD}{%
+         family={Wierstra},
+         familyi={W\bibinitperiod},
+         given={Daan},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Schmidhuber},
+         familyi={S\bibinitperiod},
+         given={J\"{u}rgen},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {IEEE Press}%
+    }
+    \strng{namehash}{VHN+1}
+    \strng{fullhash}{VHNTJWDSJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{labelyear}{2009}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{booktitle}{Proceedings of the Eleventh Conference on Congress on
+  Evolutionary Computation}
+    \field{isbn}{978-1-4244-2958-5}
+    \field{pages}{652\bibrangedash 659}
+    \field{series}{CEC'09}
+    \field{title}{Robust Player Imitation Using Multiobjective Evolution}
+    \verb{url}
+    \verb http://dl.acm.org/citation.cfm?id=1689599.1689684
+    \endverb
+    \list{location}{1}{%
+      {Trondheim, Norway}%
+    }
+    \field{year}{2009}
+    \warn{\item Can't use 'location' + 'address'}
+  \endentry
+\endsortlist
 \endinput
