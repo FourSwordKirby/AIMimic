@@ -24,6 +24,7 @@ public class TransitionSolver : MonoBehaviour
 
     public string playerName;
     public int logNumber;
+    public bool loadAll;
     public Player controlledPlayer;
 
     TransitionProfile profile;
@@ -45,7 +46,17 @@ public class TransitionSolver : MonoBehaviour
 
     public void LoadTransitions()
     {
-        profile = TransitionProfile.LoadTransitions(playerName, logNumber);
+        if(!loadAll)
+            profile = TransitionProfile.LoadTransitions(playerName, logNumber);
+        else
+        {
+            profile = new TransitionProfile();
+            for(int j = 1; j < 4; j++)
+            {
+                TransitionProfile p_new = TransitionProfile.LoadTransitions(playerName, j);
+                profile = TransitionProfile.CombineTransitions(profile, p_new);
+            }
+        }
 
         playerTransitions = profile.getPlayerTransitions();
         actionEffects = profile.getActionEffects();

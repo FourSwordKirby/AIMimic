@@ -1007,6 +1007,7 @@ MonoBehaviour:
   timeout: 50
   playerName: Experiment-Blocking
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -1496,6 +1497,7 @@ MonoBehaviour:
   timeout: 0
   playerName: Debug
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -1647,6 +1649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfileName: Brandon
   logNumber: 2
+  loadAll: 0
   dataRecorder: {fileID: 1138904622}
   AIPlayer: {fileID: 2021633135}
   Opponent: {fileID: 173988561}
@@ -2066,7 +2069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &524301618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2080,7 +2083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1: {fileID: 1283966610}
   p2: {fileID: 146597318}
-  currentTestName: Lemur
+  currentTestName: James
   roundLength: 1250
   sampleCount: 15
 --- !u!4 &524301619
@@ -2745,6 +2748,7 @@ MonoBehaviour:
   timeout: 0
   playerName: JumpOverOpponent
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -2919,7 +2923,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &681679986
 Transform:
   m_ObjectHideFlags: 0
@@ -2954,8 +2958,9 @@ MonoBehaviour:
   perceptionDelay: 0
   perceptionLeeway: 10
   timeout: 50
-  playerName: Evan3
+  playerName: Test
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -3107,6 +3112,7 @@ MonoBehaviour:
   timeout: 50
   playerName: Experiment
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -6029,6 +6035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerProfileName: Brandon
   logNumber: 2
+  loadAll: 0
   dataRecorder: {fileID: 1138904622}
   AIPlayer: {fileID: 2021633135}
   Opponent: {fileID: 173988561}
@@ -7272,6 +7279,7 @@ MonoBehaviour:
   timeout: 50
   playerName: Experiment
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -7356,7 +7364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1620757031
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8413,6 +8421,7 @@ MonoBehaviour:
   timeout: 50
   playerName: Roger-Normal
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -9569,6 +9578,7 @@ MonoBehaviour:
   timeout: 0
   playerName: JumpOverOpponent
   logNumber: 0
+  loadAll: 0
   controlledPlayer: {fileID: 2021633135}
   goalSituations: []
   desiredTransitions: []
@@ -9606,7 +9616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2037977803
 Transform:
   m_ObjectHideFlags: 0
@@ -9631,8 +9641,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce9815cd8fc7cb488b69fa92c189f5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: krystal
-  playerLog: 1
+  playerName: James
+  playerLog: 0
+  loadAll: 1
   ngram: {fileID: 262404958}
   ghost: {fileID: 1299767549}
   AI: {fileID: 681679987}

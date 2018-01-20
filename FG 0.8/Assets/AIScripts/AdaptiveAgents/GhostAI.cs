@@ -17,6 +17,7 @@ public class GhostAI : MonoBehaviour
 {
     public string playerProfileName;
     public int logNumber;
+    public bool loadAll;
     public EventRecorder dataRecorder;
 
     public Player AIPlayer;
@@ -49,18 +50,39 @@ public class GhostAI : MonoBehaviour
 
         AIPlayer.sprite.color = Color.magenta;
 
-        priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
 
-        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
-
-        for(int i = 0; i < priorSnapshots.Count; i++)
+        if (!loadAll)
         {
-            GameEvent snapshot = priorSnapshots[i];
-            AISituation situation = new AISituation(snapshot);
+            priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
+            priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
 
-            if (!frequencyTable.ContainsKey(situation))
-                frequencyTable.Add(situation, new ActionLookupTable());
-            frequencyTable[situation].IncreaseFrequency(snapshot.p1Action);
+            for (int i = 0; i < priorSnapshots.Count; i++)
+            {
+                GameEvent snapshot = priorSnapshots[i];
+                AISituation situation = new AISituation(snapshot);
+
+                if (!frequencyTable.ContainsKey(situation))
+                    frequencyTable.Add(situation, new ActionLookupTable());
+                frequencyTable[situation].IncreaseFrequency(snapshot.p1Action);
+            }
+        }
+        else
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                priorSnapshots = Session.RetrievePlayerSession(playerProfileName, j);
+                priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
+
+                for (int i = 0; i < priorSnapshots.Count; i++)
+                {
+                    GameEvent snapshot = priorSnapshots[i];
+                    AISituation situation = new AISituation(snapshot);
+
+                    if (!frequencyTable.ContainsKey(situation))
+                        frequencyTable.Add(situation, new ActionLookupTable());
+                    frequencyTable[situation].IncreaseFrequency(snapshot.p1Action);
+                }
+            }
         }
     }
 

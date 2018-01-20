@@ -12,6 +12,7 @@ public class NgramAI : MonoBehaviour
 {
     public string playerProfileName;
     public int logNumber;
+    public bool loadAll;
     public EventRecorder dataRecorder;
 
     public Player AIPlayer;
@@ -30,28 +31,52 @@ public class NgramAI : MonoBehaviour
 
         AIPlayer.sprite.color = Color.green;
 
-        priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
-        priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
-
-        Debug.Log(priorSnapshots.Count);
-
-        Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
-        for(int i = 0; i < priorSnapshots.Count; i++)
+        if(!loadAll)
         {
-            GameEvent snapshot = priorSnapshots[i];
-            string historyString = currentHistory[0] + " " + currentHistory[1];
-            if(!ngramHistory.ContainsKey(historyString))
-                ngramHistory.Add(historyString, new List<Action>());
-            ngramHistory[historyString].Add(snapshot.p1Action);
-            currentHistory[0] = currentHistory[1];
-            currentHistory[1] = snapshot.p1Action;
+            priorSnapshots = Session.RetrievePlayerSession(playerProfileName, logNumber);
+            priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
+
+            Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
+            for (int i = 0; i < priorSnapshots.Count; i++)
+            {
+                GameEvent snapshot = priorSnapshots[i];
+                string historyString = currentHistory[0] + " " + currentHistory[1];
+                if (!ngramHistory.ContainsKey(historyString))
+                    ngramHistory.Add(historyString, new List<Action>());
+                ngramHistory[historyString].Add(snapshot.p1Action);
+                currentHistory[0] = currentHistory[1];
+                currentHistory[1] = snapshot.p1Action;
+            }
         }
+        else
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                priorSnapshots = Session.RetrievePlayerSession(playerProfileName, j);
+                priorSnapshots = priorSnapshots.OrderBy(x => x.frameTaken).ToList();
+
+                Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
+                for (int i = 0; i < priorSnapshots.Count; i++)
+                {
+                    GameEvent snapshot = priorSnapshots[i];
+                    string historyString = currentHistory[0] + " " + currentHistory[1];
+                    if (!ngramHistory.ContainsKey(historyString))
+                        ngramHistory.Add(historyString, new List<Action>());
+                    ngramHistory[historyString].Add(snapshot.p1Action);
+                    currentHistory[0] = currentHistory[1];
+                    currentHistory[1] = snapshot.p1Action;
+                }
+            }
+        }
+
+
     }
 
     int frameInterval = 5;
     Action[] currentHistory = new Action[2] { Action.Stand, Action.Stand }; //Dummy 2 gram model used
 
     public Action lastAction;
+
     void Update()
     {
         if (GameManager.instance.currentFrame % frameInterval == 0)

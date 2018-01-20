@@ -103,6 +103,25 @@ public class TransitionProfile
     }
 
 
+    public static TransitionProfile CombineTransitions(TransitionProfile t1, TransitionProfile t2)
+    {
+        TransitionProfile profile = new TransitionProfile();
+        foreach(AISituation sit in t1.playerTransitions.Keys)
+        {
+            if (!profile.playerTransitions.ContainsKey(sit))
+                profile.playerTransitions.Add(sit, new List<Transition>());
+            profile.playerTransitions[sit].AddRange(t1.playerTransitions[sit]);
+        }
+        foreach (AISituation sit in t2.playerTransitions.Keys)
+        {
+            if (!profile.playerTransitions.ContainsKey(sit))
+                profile.playerTransitions.Add(sit, new List<Transition>());
+            profile.playerTransitions[sit].AddRange(t2.playerTransitions[sit]);
+        }
+
+        return profile;
+    }
+
     public delegate bool IsGoal(AISituation x);
     public List<AISituation> getGoalSituations(IsGoal isGoal)
     {

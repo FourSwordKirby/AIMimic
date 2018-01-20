@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.17)  18 DEC 2017 00:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6300 64-bit) (preloaded format=pdflatex 2017.5.17)  19 DEC 2017 14:46
 entering extended mode
 **./main.tex
 (main.tex
@@ -1837,22 +1837,16 @@ Package csquotes Info: ... found 'babel' package.
 LaTeX Warning: Label `' multiply defined.
 
 
-LaTeX Warning: Label `sub@' multiply defined.
-
-
 LaTeX Warning: Label `' multiply defined.
 
 
 LaTeX Warning: Label `sub@' multiply defined.
 
 
-LaTeX Warning: Label `transitions' multiply defined.
-
-
 LaTeX Warning: Label `' multiply defined.
 
 
-LaTeX Warning: Label `' multiply defined.
+LaTeX Warning: Label `sub@' multiply defined.
 
 ) (Chapters/Chapter4-1.aux
 
@@ -1860,10 +1854,22 @@ LaTeX Warning: Label `gamestate' multiply defined.
 
 ) (Chapters/Chapter5.aux
 
-LaTeX Warning: Label `' multiply defined.
+LaTeX Warning: Label `Similarity' multiply defined.
 
 
-LaTeX Warning: Label `sub@' multiply defined.
+LaTeX Warning: Label `Similarity' multiply defined.
+
+
+LaTeX Warning: Label `Effectiveness1' multiply defined.
+
+
+LaTeX Warning: Label `Effectiveness2' multiply defined.
+
+
+LaTeX Warning: Label `Effectiveness1' multiply defined.
+
+
+LaTeX Warning: Label `Effectiveness2' multiply defined.
 
 
 LaTeX Warning: Label `' multiply defined.
@@ -2183,7 +2189,7 @@ Package scrlayer-scrpage Warning: \headheight to low.
 (scrlayer-scrpage)                e.g., setting geometry's option
 (scrlayer-scrpage)                `head=21.896pt'.
 (scrlayer-scrpage)                I'll also decrease \topmargin on input line 1
-62.
+67.
 
 
 Overfull \vbox (3.04236pt too high) has occurred while \output is active []
@@ -2207,7 +2213,7 @@ Overfull \vbox (3.04236pt too high) has occurred while \output is active []
 
 ]
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 181.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 190.
  (main.toc
 1: section
 [7])
@@ -2233,13 +2239,6 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <24.88> not available
 [11] [12
 
 ]
---------------------
- Dedicatory
---------------------
-1: section
-[13] [14
-
-]
 1: section
 \openout2 = `Chapters/Chapter1.aux'.
 
@@ -2263,14 +2262,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
 
 
 
-] [4]
-
-LaTeX Warning: Citation 'Ghost AI' on page 5 undefined on input line 21.
-
-
-LaTeX Warning: Citation 'Ghost AI2' on page 5 undefined on input line 21.
-
-[5]) [6] [7]
+] [4] [5]) [6] [7]
 \openout2 = `Chapters/Chapter3.aux'.
 
  (Chapters/Chapter3.tex [8
@@ -2279,14 +2271,14 @@ LaTeX Warning: Citation 'Ghost AI2' on page 5 undefined on input line 21.
 
 ]
 Chapter 3.
-<Figures/LearningExample1.png, id=331, 626.34pt x 333.49594pt>
+<Figures/LearningExample1.png, id=329, 626.34pt x 333.49594pt>
 File: Figures/LearningExample1.png Graphic file (type png)
 
 <use Figures/LearningExample1.png>
 Package pdftex.def Info: Figures/LearningExample1.png used on input line 11.
 (pdftex.def)             Requested size: 161.60916pt x 86.05045pt.
 
-<Figures/LearningExample2.png, id=332, 626.34pt x 333.49594pt>
+<Figures/LearningExample2.png, id=330, 626.34pt x 333.49594pt>
 File: Figures/LearningExample2.png Graphic file (type png)
 
 <use Figures/LearningExample2.png>
@@ -2295,14 +2287,14 @@ Package pdftex.def Info: Figures/LearningExample2.png used on input line 17.
 
 1: section
 [9 <./Figures/LearningExample1.png> <./Figures/LearningExample2.png>]
-<Figures/Flowchart.png, id=338, 1142.76938pt x 530.73282pt>
+<Figures/Flowchart.png, id=336, 1142.76938pt x 530.73282pt>
 File: Figures/Flowchart.png Graphic file (type png)
 
 <use Figures/Flowchart.png>
 Package pdftex.def Info: Figures/Flowchart.png used on input line 35.
 (pdftex.def)             Requested size: 404.02908pt x 187.63808pt.
  [10 <./Figures/Flowchart.png>]
-<Figures/SearchFlowChart.png, id=345, 712.53703pt x 535.6261pt>
+<Figures/SearchFlowChart.png, id=343, 712.53703pt x 535.6261pt>
 File: Figures/SearchFlowChart.png Graphic file (type png)
 
 <use Figures/SearchFlowChart.png>
@@ -2314,94 +2306,110 @@ Package pdftex.def Info: Figures/SearchFlowChart.png used on input line 50.
 
  (Chapters/Chapter4.tex
 Chapter 4.
-LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 8.
-<Figures/Demonstration.png, id=358, 626.34pt x 333.49594pt>
-File: Figures/Demonstration.png Graphic file (type png)
 
-<use Figures/Demonstration.png>
-Package pdftex.def Info: Figures/Demonstration.png used on input line 49.
-(pdftex.def)             Requested size: 313.16922pt x 166.74756pt.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 7.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\delta' on input line 7.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 7.
+
+<Figures/ActionDelta.png, id=353, 626.34pt x 333.49594pt>
+File: Figures/ActionDelta.png Graphic file (type png)
+
+<use Figures/ActionDelta.png>
+Package pdftex.def Info: Figures/ActionDelta.png used on input line 12.
+(pdftex.def)             Requested size: 404.02908pt x 215.13121pt.
 
 1: section
 [13
 
 
 
-] <Figures/Example1.png, id=363, 626.34pt x 333.49594pt>
-File: Figures/Example1.png Graphic file (type png)
-
-<use Figures/Example1.png>
-Package pdftex.def Info: Figures/Example1.png used on input line 66.
-(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
-
-<Figures/Example2.png, id=364, 626.34pt x 333.49594pt>
-File: Figures/Example2.png Graphic file (type png)
-
-<use Figures/Example2.png>
-Package pdftex.def Info: Figures/Example2.png used on input line 72.
-(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
-
-<Figures/Example3.png, id=365, 626.34pt x 333.49594pt>
-File: Figures/Example3.png Graphic file (type png)
-
-<use Figures/Example3.png>
-Package pdftex.def Info: Figures/Example3.png used on input line 78.
-(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
- [14 <./Figures/Demonstration.png> <./Figures/Example1.png> <./Figures/Example2
-.png> <./Figures/Example3.png>]
-Overfull \hbox (67.37682pt too wide) in paragraph at lines 131--151
- [][] 
- []
-
-[15]
-Overfull \hbox (49.98898pt too wide) in paragraph at lines 186--195
- [][] 
- []
-
-[16] [17] [18]
+ <./Figures/ActionDelta.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 342.
+(hyperref)                removing `math shift' on input line 19.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\delta' on input line 342.
+(hyperref)                removing `\delta' on input line 19.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 342.
+(hyperref)                removing `math shift' on input line 19.
 
-<Figures/ActionDelta.png, id=394, 626.34pt x 333.49594pt>
-File: Figures/ActionDelta.png Graphic file (type png)
-
-<use Figures/ActionDelta.png>
-Package pdftex.def Info: Figures/ActionDelta.png used on input line 347.
-(pdftex.def)             Requested size: 404.02908pt x 215.13121pt.
- [19 <./Figures/ActionDelta.png>]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 354.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\delta' on input line 354.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 354.
-
-[20] <Figures/SearchSpecificFlowchart.png, id=403, 728.7225pt x 493.0922pt>
+[14] <Figures/SearchSpecificFlowchart.png, id=364, 728.7225pt x 493.0922pt>
 File: Figures/SearchSpecificFlowchart.png Graphic file (type png)
 
 <use Figures/SearchSpecificFlowchart.png>
 Package pdftex.def Info: Figures/SearchSpecificFlowchart.png used on input line
- 367.
+ 36.
 (pdftex.def)             Requested size: 404.02908pt x 273.3835pt.
-) [21 <./Figures/SearchSpecificFlowchart.png>] [22]
+ [15 <./Figures/SearchSpecificFlowchart.png>] <Figures/Demonstration.png, id=37
+2, 626.34pt x 333.49594pt>
+File: Figures/Demonstration.png Graphic file (type png)
+
+<use Figures/Demonstration.png>
+Package pdftex.def Info: Figures/Demonstration.png used on input line 82.
+(pdftex.def)             Requested size: 313.16922pt x 166.74756pt.
+ [16 <./Figures/Demonstration.png>]
+<Figures/Example1.png, id=378, 626.34pt x 333.49594pt>
+File: Figures/Example1.png Graphic file (type png)
+
+<use Figures/Example1.png>
+Package pdftex.def Info: Figures/Example1.png used on input line 99.
+(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
+
+<Figures/Example2.png, id=379, 626.34pt x 333.49594pt>
+File: Figures/Example2.png Graphic file (type png)
+
+<use Figures/Example2.png>
+Package pdftex.def Info: Figures/Example2.png used on input line 105.
+(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
+
+<Figures/Example3.png, id=380, 626.34pt x 333.49594pt>
+File: Figures/Example3.png Graphic file (type png)
+
+<use Figures/Example3.png>
+Package pdftex.def Info: Figures/Example3.png used on input line 111.
+(pdftex.def)             Requested size: 121.20995pt x 64.5353pt.
+
+Overfull \hbox (67.37682pt too wide) in paragraph at lines 163--182
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[17 <./Figures/Example1.png> <./Figures/Example2.png> <./Figures/Example3.png>]
+
+Overfull \hbox (49.98898pt too wide) in paragraph at lines 219--228
+ [][] 
+ []
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 292--293
+
+ []
+
+[19] [20] [21]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 387.
+LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 392.
+ [22]) [23]
 \openout2 = `Chapters/Chapter4-1.aux'.
 
- (Chapters/Chapter4-1.tex
+ (Chapters/Chapter4-1.tex [24
+
+
+
+]
 Chapter 5.
 
 Overfull \hbox (33.48738pt too wide) in paragraph at lines 7--37
@@ -2426,125 +2434,120 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 )
 1: section
-[23
-
-
-
-] [24]
+[25] [26]
 \openout2 = `Chapters/Chapter5.aux'.
 
  (Chapters/Chapter5.tex
 Chapter 6.
 1: section
-[25
+[27
 
 
 
-]
-Overfull \hbox (46.90997pt too wide) in paragraph at lines 23--43
+] [28]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[29]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (25.41225pt too wide) in paragraph at lines 232--250
  [][] 
  []
 
 
-Overfull \hbox (22.99268pt too wide) in paragraph at lines 52--70
- [][] 
- []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/HeatmapOrig.png, id=427, 1129.21875pt x 752.8125pt>
+[30] <Figures/HeatmapOrig.png, id=449, 571.7611pt x 295.47891pt>
 File: Figures/HeatmapOrig.png Graphic file (type png)
 
 <use Figures/HeatmapOrig.png>
-Package pdftex.def Info: Figures/HeatmapOrig.png used on input line 80.
-(pdftex.def)             Requested size: 121.20995pt x 80.79941pt.
+Package pdftex.def Info: Figures/HeatmapOrig.png used on input line 263.
+(pdftex.def)             Requested size: 161.60916pt x 83.51802pt.
 
-<Figures/HeatmapNgram.png, id=428, 1129.21875pt x 752.8125pt>
+<Figures/HeatmapNgram.png, id=450, 561.97453pt x 293.22047pt>
 File: Figures/HeatmapNgram.png Graphic file (type png)
 
 <use Figures/HeatmapNgram.png>
-Package pdftex.def Info: Figures/HeatmapNgram.png used on input line 86.
-(pdftex.def)             Requested size: 121.20995pt x 80.79941pt.
+Package pdftex.def Info: Figures/HeatmapNgram.png used on input line 269.
+(pdftex.def)             Requested size: 161.60916pt x 84.32036pt.
 
-<Figures/HeatmapGhost.png, id=429, 1129.21875pt x 752.8125pt>
+<Figures/HeatmapGhost.png, id=451, 560.4689pt x 299.99579pt>
 File: Figures/HeatmapGhost.png Graphic file (type png)
 
 <use Figures/HeatmapGhost.png>
-Package pdftex.def Info: Figures/HeatmapGhost.png used on input line 92.
-(pdftex.def)             Requested size: 121.20995pt x 80.79941pt.
+Package pdftex.def Info: Figures/HeatmapGhost.png used on input line 275.
+(pdftex.def)             Requested size: 161.60916pt x 86.50217pt.
 
-<Figures/HeatmapAI.png, id=430, 1129.21875pt x 752.8125pt>
+<Figures/HeatmapAI.png, id=452, 566.49141pt x 293.97328pt>
 File: Figures/HeatmapAI.png Graphic file (type png)
 
 <use Figures/HeatmapAI.png>
-Package pdftex.def Info: Figures/HeatmapAI.png used on input line 98.
-(pdftex.def)             Requested size: 121.20995pt x 80.79941pt.
+Package pdftex.def Info: Figures/HeatmapAI.png used on input line 281.
+(pdftex.def)             Requested size: 161.60916pt x 83.86398pt.
 
-<Figures/HeatmapOther.png, id=431, 1129.21875pt x 752.8125pt>
-File: Figures/HeatmapOther.png Graphic file (type png)
 
-<use Figures/HeatmapOther.png>
-Package pdftex.def Info: Figures/HeatmapOther.png used on input line 104.
-(pdftex.def)             Requested size: 121.20995pt x 80.79941pt.
- [26 <./Figures/HeatmapOrig.png> <./Figures/HeatmapNgram.png> <./Figures/Heatma
-pGhost.png> <./Figures/HeatmapAI.png> <./Figures/HeatmapOther.png>]) [27]
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[31]) [32 <./Figures/HeatmapOrig.png> <./Figures/HeatmapNgram.png> <./Figures/H
+eatmapGhost.png> <./Figures/HeatmapAI.png>]
 \openout2 = `Chapters/Chapter6.aux'.
 
- (Chapters/Chapter6.tex [28
-
-
-
-]
+ (Chapters/Chapter6.tex
 Chapter 7.
 1: section
-[29]) [30]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 229.
+[33
+
+
+
+]) [34]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 238.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-Overfull \hbox (3.7463pt too wide) in paragraph at lines 229--229
+Overfull \hbox (3.7463pt too wide) in paragraph at lines 238--238
 \T1/ppl/m/n/10.95 works/Evolutionary Neu-ral Net-works. In: \T1/ppl/m/it/10.95
  En-ter-tain-ment Com-put-ing -- ICEC 2007:
  []
 
 1: section
-[31
+[35
 
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 233.
- [32]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 233.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 242.
+ [36]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 242.
  (main.aux (Chapters/Chapter1.aux) (Chapters/Chapter2.aux)
 (Chapters/Chapter3.aux) (Chapters/Chapter4.aux) (Chapters/Chapter4-1.aux)
 (Chapters/Chapter5.aux) (Chapters/Chapter6.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 233.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 233.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 242.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 242.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A58875B38BBE6905F28CD91D320D169E;5774.
-
-
-LaTeX Warning: There were undefined references.
+(rerunfilecheck)             Checksum: A60A975968BE377B5982C7A00186FF45;5523.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
 
-Package biblatex Warning: Please (re)run BibTeX on the file(s):
-(biblatex)                main
-(biblatex)                and rerun LaTeX afterwards.
+Package biblatex Warning: Please rerun LaTeX.
+(biblatex)                Page breaks have changed.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 35823 strings out of 493328
- 717085 string characters out of 3139110
- 953890 words of memory out of 3000000
- 38790 multiletter control sequences out of 15000+200000
- 591726 words of font info for 143 fonts, out of 3000000 for 9000
+ 35832 strings out of 493328
+ 717211 string characters out of 3139110
+ 955158 words of memory out of 3000000
+ 38792 multiletter control sequences out of 15000+200000
+ 590049 words of font info for 141 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,20n,82p,10379b,2306s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,21n,77p,10379b,2306s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Roger Liu\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi
 600\ectt1095.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/base/8r.enc}<C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Fi
@@ -2556,9 +2559,9 @@ MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Program Files/MiKTeX 2.9/fon
 ts/type1/urw/palatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/p
 alatino/uplr8a.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8
 a.pfb>
-Output written on main.pdf (46 pages, 2557269 bytes).
+Output written on main.pdf (48 pages, 893139 bytes).
 PDF statistics:
- 579 PDF objects out of 1000 (max. 8388607)
- 112 named destinations out of 1000 (max. 500000)
- 364 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 609 PDF objects out of 1000 (max. 8388607)
+ 121 named destinations out of 1000 (max. 500000)
+ 343 words of extra memory for PDF output out of 10000 (max. 10000000)
 

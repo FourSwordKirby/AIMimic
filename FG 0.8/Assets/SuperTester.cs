@@ -6,6 +6,7 @@ public class SuperTester : MonoBehaviour {
 
     public string playerName;
     public int playerLog;
+    public bool loadAll;
 
     public NgramAI ngram;
     public GhostAI ghost;
@@ -19,10 +20,13 @@ public class SuperTester : MonoBehaviour {
     {
         currentTimeStep++;
         ngram.playerProfileName = playerName;
+        ngram.loadAll = loadAll;
         ngram.logNumber = playerLog;
         ghost.playerProfileName = playerName;
+        ghost.loadAll = loadAll;
         ghost.logNumber = playerLog;
         AI.playerName = playerName;
+        AI.loadAll = loadAll;
         AI.logNumber = (playerLog+1);
     }
 
@@ -30,21 +34,21 @@ public class SuperTester : MonoBehaviour {
 	void Update () {
         if(currentTimeStep % 3 == 0)
         {
-            tester.currentTestName = playerName + "ngram";
+            tester.currentTestName = playerName + (loadAll ? "All" : "") + "ngram";
             ngram.gameObject.SetActive(true);
             ghost.gameObject.SetActive(false);
             AI.gameObject.SetActive(false);
         }
         else if (currentTimeStep % 3 == 1)
         {
-            tester.currentTestName = playerName + "ghost";
+            tester.currentTestName = playerName + (loadAll ? "All" : "") + "ghost";
             ngram.gameObject.SetActive(false);
             ghost.gameObject.SetActive(true);
             AI.gameObject.SetActive(false);
         }
         else if (currentTimeStep % 3 == 2)
         {
-            tester.currentTestName = playerName + "AI";
+            tester.currentTestName = playerName + (loadAll ? "All" : "") + "AI";
             ngram.gameObject.SetActive(false);
             ghost.gameObject.SetActive(false);
             AI.gameObject.SetActive(true);
